@@ -1,0 +1,166 @@
+{% extends 'account/dashboard_base.html' %}
+{% load staticfiles %}
+{% load producttags %}
+
+{% block dashboard_css %}
+    <link rel="stylesheet" href="{% static 'css/dashboard/purchase_list.css' %}">
+{% endblock %}
+
+{% block dashboard_js %}
+    <script type="text/javascript" src="{% static 'js/SendBird-SDK-JavaScript-master/SendBird.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/dashboard/list.js' %}"></script>
+    <script type="text/javascript">
+        $(function () {
+            var sb = new SendBird({
+                appId: '68C1D6E3-BFC1-4B8E-B11C-6B1FBE0D3AAA'
+            });
+
+            sb.connect('{{ user.email }}', '{{ user.access_token }}', function (user, error) {
+                if (error) {
+                    //ToDO : 에러 구문 처리
+                    console.log(error);
+                } else {
+                    $('.item-list').on('click', '.more', function () {
+                        $(this).parent().find('.item-info').show();
+
+                        var seller = $(this).attr('data-seller-id');
+                        var userIds = ['{{ user.email }}', seller];
+
+                        sb.GroupChannel.createChannelWithUserIds(userIds, true, function (channel, error) {
+                            if (error) {
+                                console.error(error);
+                            }
+
+                            var messageListQuery = channel.createPreviousMessageListQuery();
+
+                            messageListQuery.load(20, true, function (messageList, error) {
+                                if (error) {
+                                    console.error(error);
+                                }
+                                console.log(messageList);
+                            });
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block dashboard_content %}
+    <div class="dashboard-content">
+        <div class="dashboard-info">
+            <div class="dashboard-info-summary info-order-wish">
+                <div class="dashboard-info-summary-title">
+                    위시리스트
+                </div>
+                <div class="dashboard-info-summary-count">
+                    <a href="{% url 'wish_list' %}" class="dashboard-info-img">
+                        <img src="{% static 'img/buyer_01.png' %}" style="margin-left: -5px;">
+                    </a>
+                </div>
+            </div>
+            <div class="dashboard-info-summary info-order-cart">
+                <div class="dashboard-info-summary-title">
+                    장바구니
+                </div>
+                <div class="dashboard-info-summary-count">
+                    <a href="{% url 'cart' %}" class="dashboard-info-img">
+                        <img src="{% static 'img/buyer_02.png' %}" style="margin-left: -8px;">
+                    </a>
+                </div>
+            </div>
+            <div class="dashboard-info-summary info-order-process">
+                <div class="dashboard-info-summary-title">
+                    구매관리
+                </div>
+                <div class="dashboard-info-summary-count">
+                    <a href="{% url 'purchase_list' %}" class="dashboard-info-img active">
+                        <img src="{% static 'img/buyer_03.png' %}">
+                    </a>
+                </div>
+            </div>
+            <div class="dashboard-info-summary info-order-history">
+                <div class="dashboard-info-summary-title">
+                    구매내역
+                </div>
+                <div class="dashboard-info-summary-count">
+                    <div class="dashboard-info-img">
+                        <img src="{% static 'img/buyer_04.png' %}" style="margin-left: -5px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dashboard-purchase-list">
+            <div class="purchase-list-nav">
+                <ul>
+                    <li>전체(0)</li>
+                    <li>작업대기(0)</li>
+                    <li>작업진행(0)</li>
+                    <li>작업완료(0)</li>
+                    <li>거래완료(0)</li>
+                    <li>취소(0)</li>
+                </ul>
+            </div>
+            <div class="item-list">
+                {% for item in list %}
+                    <div class="item">
+                        <div class="image">
+                            {% for obj in item.cart.items.all %}
+                                {% if forloop.counter0 == 0 %}
+                                    <img src="{{ obj.product.get_image_url }}">
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="title">
+                            {% for obj in item.cart.items.all %}
+                                {% if forloop.counter0 == 0 %}
+                                    <h3>{{ obj.product.title|truncatechars:27 }}</h3>
+                                    <div class="meta">
+                                        <p class="price">{{ item.order_total }}원</p>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+
+                        {% for obj in item.cart.items.all %}
+                            {% if forloop.counter0 == 0 %}
+                                <div class="seller">
+                                    <p>{{ obj.product.seller }}</p>
+                                    <button>문의하기</button>
+                                </div>
+                                <div class="more" data-seller-id="{{ obj.product.seller.user }}">
+                                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        <div class="item-info">
+                            <div class="purchase-info">
+                                {% for obj in item.cart.items.all %}
+                                    {% if forloop.counter0 == 0 %}
+                                        <p>주문번호 {{ item.order_id }}</p>
+                                        <p>판매자 {{ obj.product.seller }}</p>
+                                        <p>결제금액 {{ item.order_total }}</p>
+                                        <p>결제 수단
+                                            {% if item.type == 'card' %}
+                                                신용카드
+                                            {% elif item.type == 'phone' %}
+                                                휴대폰결제
+                                            {% endif %}
+                                        </p>
+                                        <p>결제 날짜 {{ item.created }}</p>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="message">
+                                <div class="chat-canvas">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

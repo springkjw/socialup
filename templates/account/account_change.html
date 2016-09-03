@@ -1,0 +1,28 @@
+{% extends 'account/dashboard_base.html' %}
+{% load staticfiles %}
+
+{% block dashboard_js %}
+     <script type="text/javascript" src="{% static 'js/accounts.js' %}"></script>
+{% endblock %}
+
+{% block dashboard_content %}
+    <div class="dashboard-content">
+        <div class="dashboard-nav">
+            정보수정
+        </div>
+        <div class="dashboard-change-form">
+            <form class="change_form" id="change_form" method="POST" action="{% url 'change_info' %}" enctype="multipart/form-data">{%  csrf_token %}
+                <div class="image">
+                    <img src="{{ user.get_avatar }}">
+                    <div class="add_image"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                </div>
+                <p>
+                    <label for="id_email">이메일</label>
+                    <input id="id_email" maxlength="255" name="email" type="email" value="{{ request.user.email }}" disabled="">
+                </p>
+                {{ form.as_p }}
+                <button class="change_button" type="submit">변경하기</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

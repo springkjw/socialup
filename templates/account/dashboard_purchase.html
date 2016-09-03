@@ -1,0 +1,247 @@
+{% extends 'account/dashboard_base.html' %}
+{% load staticfiles %}
+
+{% block dashboard_css %}
+    <link rel="stylesheet" href="{% static 'css/dashboard/purchase.css' %}">
+{% endblock %}
+
+csrfmiddlewaretoken : "{{ csrf_token }}"
+
+{% block dashboard_js %}
+    <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.1.js"></script>
+    <script type="text/javascript" src="{% static 'js/dashboard/purchase.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/autoNumeric-min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/mask.js' %}"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.point .button button').on('click', function () {
+                $('.point-input input').autoNumeric('set', '{{ user.point }}');
+
+                var total = parseInt({{ order.order_total }}) - parseInt({{ user.point }});
+                var _total = total + '<span>원</span>';
+
+                $('.billing-info .total h1').html(_total).digits();
+            });
+
+            $('.pay-info .discount #point').on('keyup', function () {
+                var point = $(this).autoNumeric('get');
+                var total = parseInt({{ order.order_total }}) - parseInt(point);
+                var _total = total + '<span>원</span>';
+
+                $('.billing-info .total h1').html(_total).digits();
+            });
+
+            $('.dashboard-purchase-bill .dashboard-charge-button').on('click', function (e) {
+                var is_checked = $('.pay-info .pay-option input[type="radio"]').is(':checked');
+                if (is_checked === true) {
+                    var buyer_name = $('.buyer-info input[name="name"]').val();
+                    var buyer_phone = $('.buyer-info input[name="phone"]').val();
+                    var buyer_type = $('.pay-info .pay-option input:checked').val();
+
+                    if (buyer_name !== '' && buyer_phone !== '') {
+                        var point_info = $('.pay-info .discount #point').autoNumeric('get');
+                        var order_info = "{{ order.order_id }}";
+
+                        var total_info = AjaxGetTransaction(e, order_info, point_info, buyer_type);
+
+                        if (total_info !== '') {
+                            IMP.request_pay({
+                                pg: 'html5_inicis',
+                                escrow: false,
+                                digital: true,
+                                pay_method: buyer_type,
+                                merchant_uid: order_info,
+                                name: '결제테스트',
+                                amount: total_info,
+                                buyer_email: "{{ user.email }}",
+                                buyer_name: buyer_name,
+                                buyer_tel: buyer_phone
+                            }, function (rsp) {
+                                if (rsp.success) {
+                                    var msg = '결제가 완료되었습니다.';
+                                    msg += '고유ID : ' + rsp.imp_uid;
+                                    msg += '상점 거래ID : ' + rsp.merchant_uid;
+                                    msg += '결제 금액 : ' + rsp.paid_amount;
+                                    msg += '카드 승인번호 : ' + rsp.apply_num;
+                                    console.log(msg);
+                                    ImpTransaction(e, rsp.merchant_uid, rsp.imp_uid, rsp.paid_amount);
+
+                                } else {
+                                    var msg = '결제에 실패하였습니다.';
+                                    msg += '에러내용 : ' + rsp.error_msg;
+                                    console.log(msg);
+                                }
+                            });
+                        }
+                    } else {
+                        alert('결제자 정보를 입력해주세요.');
+                    }
+                } else {
+                    alert('결제정보를 선택해주세요.');
+                }
+            });
+        });
+
+        function AjaxGetTransaction(e, order, point, type) {
+            e.preventDefault();
+            var pay_total = '';
+
+            var request = $.ajax({
+                method: "POST",
+                url: '{% url "checkout" %}',
+                async: false,
+                data: {
+                    order: order,
+                    point: point,
+                    type: type
+                }
+            });
+
+            request.done(function (data) {
+                if (data.works) {
+                    pay_total = data.total;
+                }
+            });
+
+            request.fail(function (jqXHR, textStatus) {
+                if (jqXHR.status == 404) {
+                    alert("페이지가 존재하지 않습니다.");
+                } else if (jqXHR.status == 403) {
+                    alert("로그인 해주세요.");
+                } else {
+                    alert("문제가 발생했습니다. 다시 시도해주세요.");
+                }
+            });
+
+            return pay_total;
+        }
+
+        function ImpTransaction(e, merchant_id, imp_id, amount) {
+            e.preventDefault();
+
+            var request = $.ajax({
+                method: "POST",
+                url: '{% url "validation" %}',
+                async: false,
+                data: {
+                    merchant_id: merchant_id,
+                    imp_id: imp_id,
+                    amount: amount
+                }
+            });
+
+            request.done(function (data) {
+                if (data.works) {
+                    alert("결제가 완료되었습니다.");
+                }
+            });
+
+            request.fail(function (jqXHR, textStatus) {
+                if (jqXHR.status == 404) {
+                    alert("페이지가 존재하지 않습니다.");
+                } else if (jqXHR.status == 403) {
+                    alert("로그인 해주세요.");
+                } else {
+                    alert("문제가 발생했습니다. 다시 시도해주세요.");
+                }
+            });
+        }
+    </script>
+{% endblock %}
+
+{% block dashboard_content %}
+    <div class="dashboard-purchase">
+        <div class="item-list">
+            {% for item in cart %}
+                <div class="item">
+                    <div class="item-image">
+                        <img src="{{ item.item.0.item.product.get_image_url }}">
+                    </div>
+                    <div class="item-info">
+                        <div class="item-seller">
+                            {{ item.item.0.item.product.seller }}
+                        </div>
+                        <div class="item-title">
+                            {{ item.item.0.item.product }}
+                        </div>
+                        <div class="item-subtitle">
+                            {% for list in item.item %}
+                                {% if forloop.last %}
+                                    {{ list }}
+                                {% else %}
+                                    {{ list }} +
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="item-price">
+                        <h2>{{ item.price }}원</h2>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="billing-info">
+            <div class="pay-info">
+                <div class="discount">
+                    <h2>할인/적립금</h2>
+                    <div class="mileage">
+                        <div class="mileage-input">
+                            <h3>적립금</h3>
+                            <input type="tel" id="mileage" name="mileage" value="0" data-max="0">
+                            <h3 class="unit">원</h3>
+                        </div>
+                        <div class="button">
+                            <button>전액사용</button>
+                            <span>(사용가능 적립금 0원)</span>
+                        </div>
+                    </div>
+                    <div class="point">
+                        <div class="point-input">
+                            <h3>포인트</h3>
+                            <input type="tel" id="point" name="point" value="0" data-max="{{ user.point }}">
+                            <h3 class="unit">원</h3>
+                        </div>
+                        <div class="button">
+                            <button>전액사용</button>
+                            <span>(사용가능 포인트 {{ user.point }}원)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pay">
+                    <h2>결제정보</h2>
+                    <div class="pay-option">
+                        <label>
+                            <input type="radio" class="radio" name="type" value="card" id="">
+                            카드결제
+                        </label>
+                        <label>
+                            <input type="radio" class="radio" name="type" value="phone" id="">
+                            핸드폰결제
+                        </label>
+                        <label>
+                            <input type="radio" class="radio" name="type" value="trans" id="">
+                            실시간 계좌이체
+                        </label>
+                        <label>
+                            <input type="radio" class="radio" name="type" value="vbank" id="">
+                            가상계좌 입금
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="total">
+                <h2>결제 금액</h2>
+                <h1>{{ order.order_total }}<span>원</span></h1>
+            </div>
+        </div>
+        <div class="buyer-info">
+            <label for="name">결제자명</label>
+            <input type="text" name="name">
+            <label for="phone">휴대폰 번호</label>
+            <input type="text" name="phone">
+        </div>
+        <div class="dashboard-purchase-bill">
+            <button class="dashboard-charge-button">결제하기</button>
+        </div>
+    </div>
+{% endblock %}

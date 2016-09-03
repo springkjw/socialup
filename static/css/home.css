@@ -1,0 +1,279 @@
+.survey {
+    width: 770px;
+    height: 370px;
+    margin: 0 auto;
+    position: absolute;
+    top: 215px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(255, 255, 255, .75);
+    text-align: center;
+}
+
+.survey .survey-title {
+    margin-top: 60px;
+    font-size: 22px;
+    font-weight: 400;
+    color: #666;
+}
+
+.survey .survey-title #italic {
+    font-style: italic;
+    font-weight: bold;
+}
+
+.survey .survey-subtitle {
+    font-size: 16px;
+    font-weight: 300;
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+
+.checkbox {
+    font-size: 14px;
+    width: 550px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.survey table {
+    width: 100%;
+}
+
+.survey table td {
+    width: 20%;
+    height: 30px;
+    text-align: left;
+}
+
+.survey input[type=checkbox] {
+    display: none;
+}
+
+.survey label {
+    cursor: pointer;
+}
+
+.survey label:before {
+    content: "\2713";
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background-color: transparent;
+    line-height: 16px;
+    font-size: 16px;
+    color: transparent;
+    border: 1px solid rgba(0, 0, 0, .2);
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.survey input[type=checkbox]:checked + label:before {
+    content: "\2713";
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+    line-height: 16px;
+    cursor: pointer;
+}
+
+.special-service {
+    margin-top: 60px;
+    margin-bottom: 50px;
+}
+
+.special-service .special-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333333;
+
+}
+
+.special-service .special-title .special-subtitle {
+    font-size: 14px;
+    font-weight: 500;
+    color: #888;
+    margin-top: 5px;
+}
+
+.special-service .special-sort {
+    position: absolute;
+    right: 0;
+    top: 30px;
+}
+
+.special-service .special-sort li {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: inherit;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+}
+
+.special-service .special-sort li.active {
+    color: #333;
+}
+
+.jumbotron .survey-pagination {
+    margin-top: 15px;
+    margin-right: -15px;
+}
+
+.jumbotron .survey-pagination i {
+    margin-right: 15px;
+    font-size: 12px;
+    color: #555555;
+    opacity: 0.5;
+}
+
+.jumbotron .survey-pagination i.active {
+    opacity: 1;
+}
+
+.jumbotron .survey img.fa-angle-left{
+    font-size: 92px;
+    font-weight: 100;
+    margin-top: 160px;
+    left: 30px;
+    color: #999999;
+    cursor: pointer;
+    position: absolute;
+}
+
+.jumbotron .survey img.fa-angle-right{
+    font-size: 92px;
+    font-weight: 100;
+    margin-top: 160px;
+    right: 30px;
+    color: #999999;
+    cursor: pointer;
+    position: absolute;
+}
+
+.jumbotron .survey .steps {
+    height: 130px;
+}
+
+.jumbotron .survey .survey-complete {
+    width: 160px;
+    height: 55px;
+    background: transparent;
+    border: 4px solid #648efc;
+    position: absolute;
+    right: 45px;
+    top: 265px;
+    font-weight: bold;
+}
+
+.special-info {
+    position: relative;
+}
+
+.special-list {
+    position: relative;
+    margin-top: 55px;
+}
+
+.list-card {
+    float: left;
+    width: 225px;
+    height: 265px;
+    background: white;
+    margin-right: 20px;
+    padding-bottom: 10px;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 3px 6px 4px rgba(0, 0, 0, .05);
+}
+
+.list-card.last {
+    margin-right: 0;
+}
+
+.list-card.card-last {
+    margin-right: 0;
+}
+
+.card-subtitle {
+    margin-top: 3px;
+}
+
+.list-card .card-price {
+    float: right;
+    position: absolute;
+    top: 10px;
+    right: -5px;
+    z-index: 4;
+    background: #648efc;
+    padding-top: 3px;
+    padding-bottom: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.list-card .card-price-back {
+    float: right;
+    position: absolute;
+    top: 28px;
+    right: -5px;
+    z-index: 1;
+    width: 5px;
+    height: 10px;
+    background: #3D3D3D;
+}
+
+.list-card .card-image {
+    position: relative;
+    width: 225px;
+    height: 172px;
+}
+
+.list-card .card-image img {
+    width: 225px;
+    height: 172px;
+}
+
+.list-card .card-info {
+    padding: 15px;
+    margin-top: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #333;
+}
+
+.list-card .card-author {
+    font-size: 13px;
+    color: #777777;
+    font-weight: 400;
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+}
+
+.list-card .card-author .card-author-info {
+    float: left;
+}
+
+.list-card .card-author .card-author-info-rating {
+    float: right;
+    right: 30px;
+    position: absolute;
+}
+
+.list-card .card-author .card-author-info-rating  i {
+    font-size: 14px;
+    color: #b1c6fc;
+}
+
+.list-card .card-author .card-author-info-rating  i.active {
+    color: #648efc;
+}
+
+.row {
+    height: 330px;
+}

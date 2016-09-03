@@ -1,0 +1,607 @@
+.step {
+    width: 95%;
+    height: 88px;
+    background: rgba(242, 242, 242, 0.49);
+    border: 2px solid #DEDEDE;
+    margin: 0 auto;
+}
+
+.required {
+    color: #648efc;
+    margin-right: 5px;
+}
+
+.step_num {
+    display: inline-block;
+    width: 245px;
+    height: 70px;
+    text-align: center;
+    margin-top: 10px;
+    color: rgba(0, 0, 0, .6);
+}
+
+.step_num .title {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.step_num.active {
+    color: #648efc;
+}
+
+.step_num.active .title {
+    color: #648efc;
+}
+
+.step_num p {
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 5px;
+}
+
+.step_num.border {
+    border-left: 1px solid #DEDEDE;
+}
+
+.step_num.first {
+    margin-left: 20px;
+    border-left: 0;
+}
+
+.area {
+    width: 95%;
+    background: rgba(242, 242, 242, 0.49);
+    border: 2px solid #DEDEDE;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.steps_ {
+    /*display: none;*/
+}
+
+.step1 {
+    display: block;
+}
+
+.info {
+    overflow: auto;
+    padding-bottom: 35px;
+}
+
+.info .form-left {
+    float: left;
+    margin-left: 80px;
+    width: 150px;
+}
+
+.info .form-right {
+    float: left;
+    margin-top: 33px;
+    margin-left: 27px;
+    text-align: right;
+}
+
+.title {
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, .8);
+}
+
+.area form {
+    margin-top: 25px;
+}
+
+.info .post_image {
+    width: 140px;
+    color: rgba(0, 0, 0, .7);
+    font-size: 12px;
+    position: relative;
+}
+
+.info #id_image {
+    display: none;
+}
+
+.info #post_image {
+    width: 150px;
+    height: 123px;
+    outline: none;
+    position: relative;
+    margin-top: 15px;
+    background: white;
+    cursor: pointer;
+}
+
+.info #default_image {
+    width: 70px;
+    position: absolute;
+    top: 50px;
+    left: 42px;
+    cursor: pointer;
+}
+
+.info .post_image p {
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, .7);
+    text-align: left;
+}
+
+.info .post_image span {
+    color: #648efc;
+    margin-right: 5px;
+}
+
+.info .post_image img {
+    border: 0;
+}
+
+.info .post_image h2 {
+    position: absolute;
+    top: 111px;
+    left: 28px;
+    font-size: 10px;
+    color: red;
+    cursor: pointer;
+}
+
+.info input {
+    width: 280px;
+    padding: 8px 10px 8px 15px;
+    vertical-align: top;
+    font-size: 12px;
+    border: 1px solid #DEDEDE;
+    color: rgba(0, 0, 0, .7);
+}
+
+.info .form-top {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.info .form-desc {
+    width: 320px;
+    position: absolute;
+    left: 290px;
+    top: 60px;
+}
+
+.info .form-desc h2 {
+    font-size: 12px;
+    text-align: left;
+    color: rgba(219, 40, 40, .8);
+    margin-top: 5px;
+}
+
+.info .form-bottom {
+    width: 680px;
+    margin: 0 auto;
+}
+
+.info .form-bottom h2 {
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, .7);
+    text-align: left;
+}
+
+.info .note-editor button {
+    width: 15px;
+    height: 15px;
+}
+
+.area table {
+    width: 488px;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 13px;
+}
+
+.area table td {
+    width: 15%;
+    height: 35px;
+    text-align: left;
+}
+
+.area input[type=checkbox] {
+    display: none;
+}
+
+.area table label {
+    cursor: pointer;
+}
+
+.area table label:before {
+    content: "\2713";
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background-color: transparent;
+    line-height: 16px;
+    font-size: 16px;
+    color: transparent;
+    border: 1px solid rgba(0, 0, 0, .2);
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.area table input[type=checkbox]:checked + label:before {
+    content: "\2713";
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+    line-height: 16px;
+    cursor: pointer;
+}
+
+.filter p {
+    font-size: 13px;
+    margin-top: 35px;
+    display: inline-block;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, .7);
+}
+
+.price .form-area {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.price .variation_title {
+    width: 125px;
+    padding: 8px 10px 8px 15px;
+    vertical-align: top;
+    font-size: 12px;
+    border: 1px solid #DEDEDE;
+    background: rgba(242, 242, 242, 0.49);
+    color: rgba(0, 0, 0, .7);
+    margin-right: 10px;
+}
+
+.price .variation_price {
+    width: 125px;
+    padding: 8px 10px 8px 15px;
+    vertical-align: top;
+    font-size: 12px;
+    border: 1px solid #DEDEDE;
+    background: rgba(242, 242, 242, 0.49);
+    color: rgba(0, 0, 0, .7);
+    margin-right: 8px;
+}
+
+.price .unit {
+    font-size: 13px;
+    position: absolute;
+    top: 38px;
+}
+
+.price #id_workContent {
+    width: 297px;
+    padding: 8px 10px 8px 15px;
+    vertical-align: top;
+    font-size: 12px;
+    border: 1px solid #DEDEDE;
+    background: rgba(242, 242, 242, 0.49);
+    color: rgba(0, 0, 0, .7);
+    margin-top: 20px;
+}
+
+.price #id_workingDay {
+    width: 90px;
+    padding: 8px 10px 8px 15px;
+    vertical-align: top;
+    font-size: 12px;
+    border: 1px solid #DEDEDE;
+    background: rgba(242, 242, 242, 0.49);
+    color: rgba(0, 0, 0, .7);
+    margin-top: 20px;
+}
+
+.price .options {
+    width: 12px;
+    height: 12px;
+    border: 1px solid rgba(0, 0, 0, .3);
+    background: white;
+    padding: 3px;
+    font-size: 12px;
+    font-weight: 100;
+    color: rgba(0, 0, 0, .5);
+    cursor: pointer;
+    position: absolute;
+    right: 175px;
+    top: 35px;
+}
+
+.price .price_field {
+    position: relative;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.price .extra {
+    position: relative;
+}
+
+.price #day_label {
+    font-size: 13px;
+    position: absolute;
+    top: 82px;
+    left: 230px;
+    color: #648efc;
+}
+
+.price #days {
+    font-size: 13px;
+    position: absolute;
+    top: 83px;
+    right: 300px;
+}
+
+.request {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.request .form-top {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.request .form-area {
+    text-align: right;
+    width: 645px;
+    margin: 0 auto;
+}
+
+.request textarea {
+    width: 500px;
+    height: 35px;
+    padding: 8px 10px 8px 15px;
+    vertical-align: top;
+    font-size: 12px;
+    border: 1px solid #DEDEDE;
+    color: rgba(0, 0, 0, .7);
+    outline: none;
+    resize: none;
+}
+
+.request .form-bottom {
+    width: 680px;
+    margin: 0 auto;
+}
+
+.request .form-bottom h2 {
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, .7);
+    text-align: left;
+}
+
+.request .note-editor button {
+    width: 15px;
+    height: 15px;
+}
+
+.sns .form-area {
+    margin-top: 30px;
+}
+
+.sns .form-area input {
+    width: 294px;
+    height: 30px;
+}
+
+.upload-title {
+    margin-left: 17px;
+    margin-bottom: 15px;
+    margin-top: 50px;
+}
+
+.upload-title h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: rgba(0, 0, 0, .7);
+    display: inline-block;
+}
+
+.upload-title p {
+    font-size: 14px;
+    font-weight: 400;
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.upload-title span {
+    color: #648efc;
+    margin-right: 5px;
+}
+
+.area-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin-left: 18px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.area-title span {
+    font-size: 12px;
+    margin-left: 10px;
+    color: rgba(0, 0, 0, .5);
+}
+
+.form-input {
+    margin-top: 5px;
+    position: relative;
+}
+
+.form-input label {
+    line-height: 33px;
+    font-weight: 500;
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+.form-input label span {
+    color: #648efc;
+    margin-right: 5px;
+}
+
+.form-input p {
+    font-size: 10px;
+    color: rgba(0, 0, 0, .5);
+    position: absolute;
+    top: 28px;
+    left: 16px;
+}
+
+.form-input .description {
+    text-align: left;
+    display: block;
+}
+
+#description p {
+    position: relative;
+    text-align: left;
+    top: 0;
+    margin-top: 5px;
+    font-size: 11px;
+    color: rgba(0, 0, 0, .7);
+}
+
+#description .sub-description {
+    margin-bottom: 15px;
+}
+
+.form-url-input {
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+}
+
+.form-url-input.add-url-input {
+    margin-top: 5px;
+    position: relative;
+}
+
+.form-url-input.add-url-input input {
+    margin-left: 10px;
+    float: right;
+}
+
+.form-url-input .button {
+    width: 31px;
+    height: 31px;
+    border: 1px solid #DEDEDE;
+    background: #F2F2F2;
+    font-size: 23px;
+    font-weight: 700;
+    color: rgba(0, 0, 0, .5);
+    position: absolute;
+    top: 0;
+    cursor: pointer;
+    text-align: center;
+    line-height: 33px;
+    right: 0;
+}
+
+.form-input .config {
+    width: 80px;
+    height: 31px;
+    border: 1px solid #DEDEDE;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, .5);
+    position: absolute;
+    top: 0;
+    cursor: pointer;
+    text-align: center;
+    line-height: 33px;
+    right: 0;
+}
+
+.buttons {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.buttons button {
+    width: 112px;
+    height: 42px;
+    background: #648efc;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.steps_ {
+    display: none;
+}
+
+.steps_.active {
+    display: block;
+}
+
+.buttons .final {
+    display: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 140px;
+}
+
+.form-url-input input[type=checkbox] {
+    display: none;
+}
+
+.form-url-input label {
+    cursor: pointer;
+    font-size: 12px;
+    position: absolute;
+    right: -72px;
+    top: 1px;
+    width: 60px
+}
+
+.form-url-input label:before {
+    content: "\2713";
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background-color: transparent;
+    line-height: 16px;
+    font-size: 16px;
+    color: transparent;
+    border: 1px solid rgba(0, 0, 0, .2);
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.form-url-input input[type=checkbox]:checked + label:before {
+    content: "\2713";
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+    line-height: 16px;
+    cursor: pointer;
+}
+
+.area .middle-top {
+    border-top: 1px solid rgba(0, 0, 0, .3);
+    width: 600px;
+    margin: 0 auto;
+}
+
+.area .middle-bottom {
+    border-bottom: 1px solid rgba(0, 0, 0, .3);
+    width: 600px;
+    margin: 0 auto;
+}
+
+ {
+    height: 400px !important;
+}

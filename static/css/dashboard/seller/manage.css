@@ -1,0 +1,39 @@
+.dashboard-nav {
+    position: relative;
+}
+
+.dashboard-nav .premium {
+    width: 88px;
+    height: 30px;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    font-size: 12px;
+    background: #403dc1;
+    padding: 3px 10px 3px 10px;
+    color: white;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.advertise {
+    margin-top: 15px;
+    height: 137px !important;
+}
+
+.dashboard-product-manage .product-list-nav {
+    margin-top: 25px;
+    /*text-align: center;*/
+    margin-left: 25px;
+}
+
+.dashboard-product-manage .product-list-nav ul li {
+    display: inline-block;
+    font-size: 14px;
+    color: rgba(0, 0, 0, .6);
+    font-weight: 600;
+    width: 80px;
+    text-align: center;
+    cursor: pointer;
+}

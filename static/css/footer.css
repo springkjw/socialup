@@ -1,0 +1,20 @@
+footer {
+    position: relative;
+    margin-top: 120px;
+    height: 80px;
+    border-top: 4px solid #F2F2F2;
+    padding: 20px 0 20px 0;
+    font-size: 12px;
+    color: rgba(0, 0, 0, .6);
+    line-height: 25px;
+    min-width: 1000px;
+    width: 100%;
+}
+
+footer p {
+
+}
+
+footer .container {
+    margin-top: 0;
+}

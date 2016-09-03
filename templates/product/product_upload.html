@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load producttags %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/product.css' %}">
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{% static 'js/product.js' %}"></script>
+    {% block dashboard_js %}
+    {% endblock %}
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard_container">
+        <div class="dashboard-header">
+            <div class="dashboard-title">
+                포스팅 게시
+            </div>
+            <div class="dashboard-sub">
+                <ul>
+                    <li id="header-wish"><a href="{% url 'wish_list' %}">위시리스트
+                        <span>({{ user.id|user_wish_count }})</span></a></li>
+                    <li id="header-cart"><a href="{% url 'cart' %}">장바구니
+                        <span>({{ request.session.cart_id|user_cart_count }})</span></a></li>
+                    <li id="header-buy">구매내역 <span>(5)</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="upload-title">
+            <h1>상품 등록</h1>
+            <p><span>*</span>은 필수 항목입니다</p>
+        </div>
+        <div class="step">
+            <div class="step_num border first active" id="step1_">
+                <div class="title" id="step1">
+                    STEP1
+                </div>
+                <p>기본정보</p>
+            </div>
+            <div class="step_num border" id="step2_">
+                <div class="title" id="step2">
+                    STEP2
+                </div>
+                <p>상세정보</p>
+            </div>
+            <div class="step_num border" id="step3_">
+                <div class="title" id="step3">
+                    STEP3
+                </div>
+                <p>가격 및 옵션</p>
+            </div>
+        </div>
+        <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+            <div class="steps_ step1 active">
+                <div class="area-title">
+                    기본정보
+                </div>
+                <div class="area info">
+                    <div class="form-area" style="margin-top: 30px;">
+                        <div class="form-left">
+                            <div class="post_image">
+                                <p><span>*</span>메인 이미지 등록</p>
+                                <img id="post_image" src="">
+                                <img id="default_image" src="{% static 'img/upload_image.png' %}">
+                                <h2>2MB 이내로 올려주세요!<br/>권장 사이즈: 430*320</h2>
+                            </div>
+                            {{ form.image }}
+                        </div>
+                        <div class="form-right">
+                            <div class="form-input">
+                                <label><span>*</span>제목</label>
+                                {{ form.title }}
+                            </div>
+                            <div class="form-input">
+                                <label><span>*</span>SNS 주소</label>
+                                <div class="form-url-input">
+                                    <input id="id_url" name="url" placeholder="주소 공개시 광고주의 신뢰도가 높아집니다." type="text">
+                                    <div class="button add_url">+</div>
+                                    <input type="checkbox" id="is_active" checked><label
+                                        for="is_active">비공개</label>
+                                </div>
+                            </div>
+                            <div class="form-input" style="position:relative;">
+                                <label>연락처</label>
+                                <input id="id_phone" name="phone" type="text">
+                                <div class="button config">인증하기</div>
+                            </div>
+                            <div class="form-input" style="clear: both;">
+                                <label><span>*</span>SNS 영향력</label>
+                                {{ form.influence }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="area-title">
+                    SNS 필터 등록
+                    <span>광고주가 쉽고 빠르게 운영자님의 SNS를 찾을 수 있습니다</span>
+                </div>
+                <div class="area filter">
+                    <div class="title">
+                        <span class="required">*</span>광고 가능한 SNS 종류
+                        <p>(복수 선택 가능)</p>
+                    </div>
+                    <div class="form-area">
+                        <table>
+                            {% for choice in type_form.type %}
+                                {% cycle '<tr>' '' '' '' '' %}
+                                <td>
+                                    {{ choice.tag }}
+                                    <label for="id_type_{{ forloop.counter0 }}">
+                                        {{ choice.choice_label }}
+                                    </label>
+                                </td>
+                                {% cycle '' '' '' '' '</tr>' %}
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="title middle-top">
+                        <span class="required">*</span>주로 다루는 주제
+                        <p>(복수 선택 가능)</p>
+                    </div>
+                    <div class="form-area middle-bottom">
+                        <table>
+                            {% for choice in tag_form.tag %}
+                                {% cycle '<tr>' '' '' '' '' %}
+                                <td>
+                                    {{ choice.tag }}
+                                    <label for="id_tag_{{ forloop.counter0 }}">
+                                        {{ choice.choice_label }}
+                                    </label>
+                                </td>
+                                {% cycle '' '' '' '' '</tr>' %}
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="title">
+                        <span class="required">*</span>주로 참여하는 타겟층
+                        <p>(복수 선택 가능)</p>
+                    </div>
+                    <div class="form-area">
+                        <table>
+                            {% for choice in target_form.target %}
+                                {% cycle '<tr>' '' '' '' '' %}
+                                <td>
+                                    {{ choice.tag }}
+                                    <label for="id_target_{{ forloop.counter0 }}">
+                                        {{ choice.choice_label }}
+                                    </label>
+                                </td>
+                                {% cycle '' '' '' '' '</tr>' %}
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="steps_ step2">
+                <div class="area-title">
+                    상세정보
+                </div>
+                <div class="area request">
+                    <div class="form-area">
+                        <div class="form-input">
+                            <label><span>*</span>유의사항</label>
+                            {{ form.required }}
+                            <p>결제 전 고객에게 보임</p>
+                        </div>
+                        <div class="form-input">
+                            <label><span>*</span>지시사항</label>
+                            {{ form.command }}
+                            <p>결제 후 고객에게 보임</p>
+                        </div>
+                        <div class="form-input">
+                            <label><span>*</span>환불 및 A/S 규정</label>
+                            {{ form.refund }}
+                        </div>
+                        <div class="form-input" id="description">
+                            <label class="description"><span>*</span>상품 상세 내용</label>
+                            <div class="sub-description">
+                                <p>&#183;별도의 문의 없이도 의뢰가 가능하도록 상품에 대해 구체적으로 명시해주세요.</p>
+                                <p>&#183;연락처(전화번호/이메일 등), 사이트 링크 기재가 불가능하며, 기재시 서비스 이용에 제한이 됩니다.</p>
+                                <p>&#183;법 혹은 타 회사의 약관과 저촉되는 상품은 판매가 불가능합니다.</p>
+                            </div>
+                            {{ form.description }}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="steps_ step3">
+                <div class="area-title">
+                    가격 및 옵션
+                </div>
+                <div class="area price">
+                    <div class="form-area">
+                        {{ formset.management_form }}
+                        {% for field in formset %}
+                            <div class="price_field">
+                                {% for input in field %}
+                                    {% if forloop.counter0 == 1 %}
+                                        {{ input }}<span class="unit">원</span>{{ input.errors }}
+                                        <div class="options plus">
+                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                        </div>
+                                    {% else %}
+                                        {{ input }} {{ input.errors }}
+                                    {% endif %}
+                                {% endfor %}
+                                {% if forloop.counter0 == 0 %}
+                                    <div class="extra">
+                                        {{ form.workContent }}<br/>
+                                        <span id="day_label">- 기본 작업일</span>{{ form.workingDay }}<span
+                                            id="days">일</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="buttons">
+                <button class="final" type="submit">동의하고 등록하기</button>
+            </div>
+        </form>
+        <div class="buttons">
+            <button class="start">다음 단계</button>
+        </div>
+    </div>
+{% endblock %}

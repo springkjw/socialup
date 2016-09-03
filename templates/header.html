@@ -1,0 +1,53 @@
+{% load staticfiles %}
+<div id="header">
+    <div class="inner">
+        <div id="logo">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'img/logo.png' %}">
+            </a>
+        </div>
+        <div id="gnb">
+            <nav role="navigation" itemscope itemtype="">
+                <form>
+                    <input type="text" name="search" value="" id="gnb-search" placeholder="무엇을 찾고 계시나요?">
+                    <img class="fa-search" src="{% static 'img/search.png' %}">
+                </form>
+            </nav>
+        </div>
+        <div id="header_tnb">
+            {% if user.is_authenticated %}
+                <a id="point" href="#">
+                    point <span id="money">{{ user.point }}</span>
+                </a>
+                <a id="message" href="#">
+                    MESSAGE
+                    <i class="fa fa-circle" aria-hidden="true"></i>
+                </a>
+                <a id="doing" href="#">
+                    DOING
+                    <i class="fa fa-circle" aria-hidden="true"></i>
+                </a>
+                <a id="header-profile" href="#">
+                    <img class="profile-image" src="{{ user.get_avatar }}">
+                </a>
+            {% else %}
+                <a id="signup" href="{% url 'account_signup' %}">
+                    JOIN
+                </a>
+                <a id="login" href="{% url 'account_login' %}">
+                    LOGIN
+                </a>
+            {% endif %}
+        </div>
+        <div class="header-dropdown" style='display:none;'>
+            <ul>
+                <a href="{% url 'dashboard' %}"><li>마이소셜업</li></a>
+                <li>구매<span><i class="fa fa-caret-right" aria-hidden="true"></i></span></li>
+                <li>판매<span><i class="fa fa-caret-right" aria-hidden="true"></i></span></li>
+                <li>찜목록</li>
+                <li>계정설정</li>
+                <a href="{% url 'account_logout' %}"><li id="logout">로그아웃</li></a>
+            </ul>
+        </div>
+    </div>
+</div>

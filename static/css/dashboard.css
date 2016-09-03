@@ -1,0 +1,407 @@
+body {
+    background: white;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.dashboard-header {
+    border-bottom: 3px solid #648efc;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    position: relative;
+    height: 25px;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.dashboard-header .dashboard-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #3D3D3D;
+    position: absolute;
+}
+
+.dashboard-header .dashboard-sub {
+    font-size: 16px;
+    font-weight: 300;
+    color: #777;
+    position: absolute;
+    right: 15px;
+}
+
+.dashboard-header .dashboard-sub li {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.dashboard-header .dashboard-sub li span {
+    color: #648efc;
+}
+
+.dashboard-header .dashboard-sub li#header-buy {
+    margin-right: 0;
+}
+
+.dashboard-content {
+    float: right;
+    width: 565px;
+}
+
+.dashboard-content .dashboard-info {
+    border: 2px solid #DADADA;
+    width: 561px;
+    height: 195px;
+}
+
+.dashboard-content .dashboard-info-summary {
+    display: inline-block;
+    width: 90px;
+    margin-top: 35px;
+    margin-bottom: 45px;
+    height: 121px;
+    padding: 0 23px 0 20px;
+}
+
+.dashboard-content .dashboard-info-summary .dashboard-info-summary-title {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.dashboard-content .dashboard-info-summary {
+    border-right: 1px solid #DADADA;
+}
+
+.dashboard-content .dashboard-info-summary.info-order-history{
+    border-right: none;
+}
+
+.dashboard-content .dashboard-info-summary .dashboard-info-summary-count {
+    width: 100%;
+    height: 100%;
+    margin-top: 12px;
+}
+
+.dashboard-content .dashboard-info-summary .dashboard-info-img {
+    float: left;
+    background: #DEDEDE;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    text-align:center;
+}
+
+.dashboard-content .dashboard-info-summary .dashboard-info-img:before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+}
+
+.dashboard-content .dashboard-info-img img {
+    vertical-align: middle;
+    display: inline-block;
+    height: 60%;
+    width: 60%;
+}
+
+.dashboard-content .dashboard-info-summary .dashboard-info-img.active {
+    background: #648efc;
+}
+
+.dashboard-content .dashboard-info-summary .dashboard-info-num {
+    float: right;
+    font-size: 72px;
+    font-weight: 400;
+    color: #DEDEDE;
+    line-height: 96px;
+    margin-right: 10px;
+}
+
+.dashboard-content .dashboard-info-summary .dashboard-info-num.active {
+    color: #648efc;
+}
+
+.dashboard-content .dashboard-nav {
+    border: 2px solid #DADADA;
+    width: 530px;
+    height: 100px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 100px;
+    padding-left: 30px;
+    color: #555555;
+}
+
+.dashboard-content .dashboard-billing {
+    border: 2px solid #DADADA;
+    width: 490px;
+    margin-top: 15px;
+    padding: 30px 35px 60px 35px;
+}
+
+.dashboard-content .dashboard-billing .dashboard-current-point {
+    border-bottom: 1px solid #DADADA;
+    padding-bottom: 5px;
+}
+
+.dashboard-content .dashboard-billing .dashboard-billing-title {
+    font-size: 16px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.dashboard-content .dashboard-billing .dashboard-current-point .dashboard-point {
+    font-size: 24px;
+    font-weight: 600;
+    margin-left: 15px;
+    display: inline-block;
+    color: #648efc;
+}
+
+.dashboard-content .dashboard-billing .dashboard-charge-point {
+    border-bottom: 1px solid #DADADA;
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+
+.dashboard-content .dashboard-billing .dashboard-charge-point .dashboard-billing-radio {
+    font-size: 17px;
+    font-weight: 300;
+    margin-left: 20px;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.dashboard-content .dashboard-billing .dashboard-charge-point .dashboard-billing-radio .control {
+    margin-right: 10px;
+    font-size: 14px;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.dashboard-content .dashboard-billing .dashboard-charge-point .billing-more {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 10px 3px 10px;
+    border: 2px solid #DADADA;
+    background: #DEDEDE;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.dashboard-content .dashboard-billing .dashboard-charge-type {
+    border-bottom: 1px solid #DADADA;
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+
+.dashboard-content .dashboard-billing .dashboard-charge-type .dashboard-billing-radio {
+    font-size: 14px;
+    font-weight: 300;
+    margin-left: 20px;
+    display: inline-block;
+}
+
+.dashboard-content .dashboard-billing .dashboard-charge-type .dashboard-billing-radio .control {
+    margin-right: 13px;
+}
+
+.dashboard-content .dashboard-billing .dashboard-charge-type .dashboard-billing-radio .control img {
+    vertical-align: middle;
+}
+
+.dashboard-content .dashboard-billing .dashboard-charge-description {
+    font-size: 12px;
+    color: rgba(0, 0, 0, .3);
+    margin-top: 20px;
+}
+
+.dashboard-content .dashboard-billing .dashboard-charge-total {
+    text-align: center;
+    margin-top: 38px;
+    font-size: 20px;
+}
+
+.dashboard-content .dashboard-billing .dashboard-charge-total #total {
+    font-size: 20px;
+    font-weight: 600;
+    color: #648efc;
+}
+
+.dashboard-content .dashboard-billing .dashboard-charge-total #vat {
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, .7);
+}
+
+.dashboard-content .dashboard-billing .dashboard-charge-click {
+    text-align: center;
+}
+
+.dashboard-content .dashboard-billing .dashboard-charge-button {
+    background: #648efc;
+    color: white;
+    width: 122px;
+    height: 43px;
+    font-size: 16px;
+    margin-top: 30px;
+}
+
+.dashboard-content .dashboard-register-seller {
+    margin-top: 35px;
+    padding-left: 35px;
+    min-height: 50px;
+}
+
+.dashboard-content .dashboard-register-seller .dashboard-register-seller-description {
+    font-size: 14px;
+    line-height: 1.4;
+    font-weight: 400;
+    float: left;
+}
+
+.dashboard-content .dashboard-register-seller .dashboard-register-seller-button {
+    float: right;
+    width: 135px;
+    height: 40px;
+    background: #648efc;
+    color: white;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.dashboard-content .dashboard-menu {
+    margin-top: 40px;
+}
+
+.dashboard-content .dashboard-menu table {
+    border-collapse: collapse;
+}
+
+.dashboard-content .dashboard-menu table tr td {
+    border: 2px solid #DADADA;
+    position: relative;
+}
+
+.dashboard-content .dashboard-menu table td {
+    width: 188px;
+    height: 188px;
+    text-align: center;
+    line-height: 188px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #555555;
+    cursor: pointer;
+}
+
+.dashboard-content .dashboard-menu table td i {
+    position: absolute;
+    top: 78px;
+    right: 20px;
+    font-size: 28px;
+    color: #DEDEDE;
+}
+
+.dashboard-content .dashboard-change-form {
+    border: 2px solid #DADADA;
+    width: 515px;
+    margin-top: 20px;
+    padding: 40px 25px 40px 25px;
+    text-align: right;
+}
+
+.dashboard-content .dashboard-change-form input {
+    width: 385px;
+    height: 25px;
+    background: #F2F2F2;
+    margin-bottom: 10px;
+    font-size: 14px;
+    padding: 5px 10px;
+    margin-right: 35px;
+}
+
+.dashboard-content .dashboard-change-form textarea {
+    width: 365px;
+    height: 215px;
+    background: #F2F2F2;
+    margin-bottom: 20px;
+    border: none;
+    resize: none;
+    outline: 0;
+    font-size: 14px;
+    padding-top: 15px;
+    padding-right: 25px;
+    padding-bottom: 20px;
+    padding-left: 15px;
+    margin-right: 35px;
+}
+
+.dashboard-content .dashboard-change-form label {
+    font-size: 14px;
+    margin-right: 8px;
+    color: #3D3D3D;
+}
+
+.dashboard-content .dashboard-change-form label[for=id_description] {
+    vertical-align: top;
+}
+
+.dashboard-content .dashboard-change-form #id_media {
+    display: none;
+}
+
+.dashboard-content .dashboard-change-form .image {
+    margin-bottom: 35px;
+    position: relative;
+    text-align: center;
+}
+
+.dashboard-content .dashboard-change-form .image img {
+    width: 100px;
+    height : 100px;
+    border-radius: 50%;
+}
+
+.dashboard-content .dashboard-change-form .add_image {
+    position: absolute;
+    z-index: 3;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    bottom: 0;
+    right: 210px;
+    color: white;
+    background: #648efc;
+    cursor: pointer;
+    text-align: center;
+    line-height: 36px;
+}
+
+
+.dashboard-content .dashboard-change-form .change_button {
+    width: 95px;
+    height: 45px;
+    color: white;
+    font-size: 16px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: #648efc;
+    margin-right: 200px;
+}
+
+.dashboard-menu .sub-info {
+    position: absolute;
+    top: 110px;
+    left: 80px;
+    background: #648efc;
+    height: 25px;
+    width: 25px;
+    font-size: 14px;
+    color: white;
+    line-height: 25px;
+    border-radius: 50%;
+}

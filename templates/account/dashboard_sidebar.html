@@ -1,0 +1,77 @@
+<div class="dashboard-side">
+    <div class="user-profile">
+        <div class="image">
+            <img class="profile-image" src="{{ user.get_avatar }}">
+        </div>
+        <div class="user-info">
+            <div class="user-info-top">
+                <div class="user-name">
+                    {{ user.get_short_name }}
+                </div>
+                <div class="change-info">
+                    <a href="{% url 'change_info' %}">정보수정</a>
+                </div>
+            </div>
+            <div class="user-info-bottom">
+                <div class="user-message">
+                    메세지 <span>(3)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="user-money">
+        <h2>포인트</h2>
+        <h3>{{ user.point }}원</h3>
+        <div class="user-money-button">
+            <a href="{% url 'point_charge' %}" class="money-charge">충전하기</a>
+            <a href="{% url 'point_history' %}" class="money-history">충전내역</a>
+        </div>
+    </div>
+    <div class="user-order">
+        <div class="side-menu-title active">
+            구매 <i class="fa fa-angle-up" aria-hidden="true"></i>
+        </div>
+        <div class="side-menu-content">
+            <ul>
+                <li><a href="{% url 'wish_list' %}">- 위시리스트</a></li>
+                <li><a href="{% url 'cart' %}">- 장바구니</a></li>
+                <li><a href="{% url 'purchase_list' %}">- 구매관리</a></li>
+                <li><a href="#">- 구매내역</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="user-sell">
+        <div class="side-menu-title">
+            판매 <i class="fa fa-angle-up" aria-hidden="true"></i>
+        </div>
+        <div class="side-menu-content">
+            <ul>
+                <li><a href="{% url 'product_upload' %}">- 상품등록</a></li>
+                <li><a href="{% url 'product_manage' %}">- 상품관리</a></li>
+                <li><a href="#">- 주문 / 판매관리</a></li>
+                <li><a href="#">- 정산 / 수익관리</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="user-question">
+        <div class="side-menu-title">
+            문의 <i class="fa fa-angle-up" aria-hidden="true"></i>
+        </div>
+        <div class="side-menu-content">
+            <ul>
+                <li><a href="#">- 문의내역</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="user-using">
+        <div class="side-menu-title">
+            입찰내역 <i class="fa fa-angle-up" aria-hidden="true"></i>
+        </div>
+        <div class="side-menu-content">
+            <ul>
+                <li><a href="#">- 입찰관리</a></li>
+                <li><a href="#">- 입찰 상품 안내</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

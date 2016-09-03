@@ -1,0 +1,155 @@
+.dashboard-side {
+    float: left;
+    width: 219px;
+    border: 1px solid #DEDEDE;
+    min-height: 100px;
+    box-shadow: 2px 5px 3px rgba(0, 0, 0, .15);
+}
+
+.dashboard-side .user-profile {
+    height: 100px;
+    margin-top: 20px;
+    margin-bottom: -20px;
+    padding-left: 15px;
+}
+
+.dashboard-side .user-profile .image {
+    width: 60px;
+    height: 60px;
+    float: left;
+}
+
+.dashboard-side .user-profile .image img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.dashboard-side .user-profile .user-info {
+    float: right;
+    width: 130px;
+}
+
+.dashboard-side .user-info .user-info-top {
+    width: 100%;
+    margin-top: 5px;
+}
+
+.dashboard-side .user-info .user-info-top .user-name {
+    float: left;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.dashboard-side .user-info .user-info-top .change-info {
+    margin-right: 10px;
+    float: right;
+}
+
+.dashboard-side .user-info .user-info-top .change-info a {
+    color: white;
+    background: #648efc;
+    font-size: 12px;
+    font-weight: 100;
+    padding: 2px 3px 2px 3px;
+}
+
+.dashboard-side .user-info .user-info-bottom {
+    width: 100%;
+}
+
+.dashboard-side .user-info .user-info-bottom .user-message {
+    margin-top: 15px;
+    font-size: 12px;
+    font-weight: 200;
+}
+
+.dashboard-side .user-info .user-info-bottom .user-message span {
+    color: #648efc;
+    font-weight: 700;
+}
+
+.dashboard-side .user-info .user-info-bottom .user-message {
+    float: left;
+}
+
+.dashboard-side .user-money {
+    height: 185px;
+    background: #648efc;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: white;
+    text-align: center;
+}
+
+.dashboard-side .user-money h2 {
+    font-size: 16px;
+    font-weight: 300;
+    padding-top: 35px;
+}
+
+.dashboard-side .user-money h3 {
+    font-size: 28px;
+    font-weight: bold;
+    padding-top: 15px;
+}
+
+.dashboard-side .user-money .user-money-button {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.dashboard-side .user-money a {
+    background: transparent;
+    border: 1px solid white;
+    padding: 8px 18px 8px 18px;
+    font-size: 12px;
+    font-weight: 100;
+}
+
+.dashboard-side .user-money .money-history {
+    margin-left: 7px;
+}
+
+.dashboard-side .side-menu-title {
+    height: 16px;
+    width: 185px;
+    position: relative;
+    padding: 22px 18px 22px 18px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #777;
+    border-top: 1px solid #DEDEDE;
+    border-bottom: 1px solid #DEDEDE;
+}
+
+.dashboard-side .side-menu-title.active {
+    font-size: 16px;
+    font-weight: 500;
+    color: #777;
+    background: #DEDEDE;
+}
+
+.dashboard-side .side-menu-title i {
+    font-size: 28px;
+    color: #DEDEDE;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.dashboard-side .side-menu-title.active i {
+    color: #777;
+}
+
+.dashboard-side .side-menu-content {
+    padding: 23px 23px 10px 23px;
+}
+
+.dashboard-side .side-menu-content li {
+    margin-bottom: 12px;
+    font-size: 12px;
+    font-weight: 300;
+    color: #777777;
+}

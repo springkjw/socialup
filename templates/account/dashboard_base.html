@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load producttags %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard_sidebar.css' %}">
+    {% block dashboard_css %}
+    {% endblock %}
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{% static 'js/dashboard.js' %}"></script>
+    {% block dashboard_js %}
+    {% endblock %}
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard_container">
+        <div class="dashboard-header">
+            <div class="dashboard-title">
+                포스팅 게시
+            </div>
+            <div class="dashboard-sub">
+                <ul>
+                    <li id="header-wish"><a href="{% url 'wish_list' %}">위시리스트 <span>({{ user.id|user_wish_count }})</span></a></li>
+                    <li id="header-cart"><a href="{% url 'cart' %}">장바구니 <span>({{ request.session.cart_id|user_cart_count }})</span></a></li>
+                    <li id="header-buy">구매내역 <span>(5)</span></li>
+                </ul>
+            </div>
+        </div>
+
+        {% include  'account/dashboard_sidebar.html' %}
+
+        {% block dashboard_content %}
+        {% endblock %}
+    </div>
+{% endblock %}

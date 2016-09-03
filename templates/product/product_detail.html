@@ -1,0 +1,303 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load producttags %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/product_detail.css' %}">
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{% static 'js/product-detail.js' %}"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.product-button .wish-list').on('click', function () {
+                $.ajax({
+                    method: 'GET',
+                    url: '/product/' + '{{ product.id }}',
+                    data: {
+                        wish: {{ product.id }}
+                    },
+                    success: function (data) {
+                        if (data['status'] == 'success') {
+                            alert('위시리스트에 성공적으로 담겼습니다.');
+                        } else {
+                            alert('이미 위시리스트에 있습니다.');
+                        }
+                    }
+                });
+            });
+
+            $('.product-button .cart').on('click', function () {
+                var item = get_item();
+
+                $.ajax({
+                    method: 'GET',
+                    url: '/product/' + '{{ product.id }}' + '/',
+                    data: {
+                        cart: item
+                    },
+                    success: function (data) {
+                        if (data['status'] == 'success') {
+                            alert('장바구니에 성공적으로 담겼습니다.');
+                        }
+                    }
+                });
+            });
+
+            $('.product-button .purchase').on('click', function () {
+                var item = get_item();
+
+                $.ajax({
+                    method: 'POST',
+                    url: '/product/' + '{{ product.id }}' + '/',
+                    data: {
+                        csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+                        cart: item
+                    },
+                    success: function (data) {
+                        if (data['status'] == 'success') {
+                            window.location.href = '/dashboard/purchase/' + data.cart_id;
+                        }
+                    }
+                });
+            });
+        });
+
+        function get_item() {
+            var item = [];
+            item.push('{{ default_price.id }}');
+
+            $('.product-option input:checked').each(function () {
+                var option_id = $(this).parent().attr('data-id');
+                item.push(option_id);
+            });
+
+            return item;
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="content">
+            <div class="product-top">
+                <div class="info-left">
+                    <img class="product-image" src="{{ product.get_image_url }}">
+                    <div class="product-seller">
+                        <div class="seller-id">
+                            <h2 class="header">{{ product.seller }}</h2>
+                            <i class="fa fa-heart" aria-hidden="true"></i>
+                        </div>
+                        <div class="seller-rating" data-rating="{{ product.rating }}">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="seller-info">
+                        <div class="seller-img">
+                            <img id="seller" src="{{ product.seller.user.get_avatar }}">
+                        </div>
+                        <div class="seller-detail-info">
+                            <div class="seller-detail-info-top">
+                                <div class="seller-info-item seller-detail-total">
+                                    총 작업 갯수
+                                    <h2>{{ count }}개</h2>
+                                </div>
+                                <div class="seller-info-item seller-detail-rating">
+                                    고객 만족도
+                                    <h2>{{ rating }}%</h2>
+                                </div>
+                            </div>
+                            <div class="seller-detail-info-bottom">
+                                전문가 소개
+                                <p>
+                                    {{ product.seller.description }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="seller-contact">
+                        <h2>판매자에게 1:1 문의하기</h2>
+                        <h3>({{ product.seller.user.last_login|time_since }} 활동)</h3>
+                    </div>
+                </div>
+                <div class="info-right">
+                    <div class="product-info">
+                        <div class="product-title">
+                            <h2 id="product-title">{{ product.title }}</h2>
+                        </div>
+                        <div class="product-price">
+                            <h2 id="product-price"
+                                data-price="{{ default_price.price }}">{{ default_price.price }}원~</h2>
+                            <p>({{ product.workContent }})</p>
+                        </div>
+                        <div class="product-analytics">
+                            {% for item in sns.analytics.all %}
+                                {% if forloop.counter0 == 0 %}
+                                    {{ item.analytics }} : {{ item.outcome|round_count }} /
+                                {% else %}
+                                    {{ item.analytics }} : {{ item.outcome|round_count }}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="product-type">
+                            테마 :
+                            {% for item in product.tags.all %}
+                                {% if forloop.counter0 != 0 %}
+                                    , {{ item.get_tag_display }}
+                                {% else %}
+                                    {{ item.get_tag_display }}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="product-caution">
+                        <h2 id="product-caution">
+                            {% if product.required %}
+                                유의사항 : {{ product.required|truncatechars:24 }}
+                            {% else %}
+                                유의사항이 없습니다.
+                            {% endif %}
+                        </h2>
+                    </div>
+                    <div class="product-option">
+                        <div class="product-dropdown">
+                            <input id="product-option" value="옵션" name="product-option" placeholder="" readonly>
+                            <div class="product-dropdown-icon">
+                                <i class="fa fa-caret-down" aria-hidden="true"></i>
+                            </div>
+                            <ul class="product-list" style="display: none;">
+                                {% for item in variation %}
+                                    {% if item.title != '기본가' %}
+                                        <li id="product-option" data-id="{{ item.id }}" data-price="{{ item.price }}"
+                                            data-item="{{ item }}">
+                                            <input type="checkbox" id="product-item-{{ forloop.counter }}"><label
+                                                for="product-item-{{ forloop.counter }}">{{ item }}</label>
+                                            <h3>+ {{ item.price }}원</h3>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="product-select-list">
+                            <div class="product-select-item">
+                                기본- <span>{{ default_price.price }}</span>원
+                            </div>
+                        </div>
+                        <div class="product-total">
+                            총 상품금액 : <span id="product-total">{{ default_price.price }}</span><span
+                                id="product-unit">원</span>
+                        </div>
+                    </div>
+                    <div class="product-button">
+                        <form method="GET" action="">
+                            <button class="wish-list">위시리스트</button>
+                        </form>
+                        {% csrf_token %}
+                        <button class="cart">장바구니</button>
+                        <button class="purchase">바로구매</button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-info-bottom">
+                <div class="product-menu">
+                    <ul>
+                        <li id="detail-info">
+                            상품상세정보
+                        </li>
+                        <li id="use-info">
+                            이용방법 및 주의사항
+                        </li>
+                        <li id="review-info">
+                            고객후기
+                        </li>
+                        <li id="caution-info">
+                            포스팅 유의사항
+                        </li>
+                    </ul>
+                </div>
+                <div class="top" onclick="scroll(0,0)">
+                    <i class="fa fa-caret-up" aria-hidden="true"></i> TOP
+                </div>
+            </div>
+            <div class="product-bottom">
+                <div class="tab product-info">
+                    <div class="product-content product-detail-info">
+                        <div class="tab-title">
+                            상품상세정보
+                        </div>
+                        <div class="tab-content">
+                            {{ product.description|safe }}
+                        </div>
+                    </div>
+                    <div class="product-content product-detail-use">
+                        <div class="tab-title">
+                            이용방법 및 주의사항
+                        </div>
+                        <div class="tab-content">
+                            {% if product.refund %}
+                                {{ product.refund|safe }}
+                            {% else %}
+                                2주 안에 주문 수량이 떨어졌을 경우 100% 복구해드립니다.<br/>
+                                환불규정 : 셋팅이 진행된 후에는 환불이 불가하며, 작업이 당초 약정일자보다 지연되거나<br/>
+                                그에 상응하는 사안이 발생했을 경우, 협의에 따라 환불이 가능합니다.
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="product-content product-detail-review">
+                        <div class="tab-title">
+                            고객후기
+                        </div>
+                        <div class="tab-content">
+                            <div class="total-rating seller-rating" data-rating="{{ product.rating }}">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <span>({{ reviews_count }})</span>
+                            </div>
+                            {% for review in reviews %}
+                                <div class="tab-review">
+                                    <div class="seller-rating" data-rating="{{ review.rating }}">
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="review-content">
+                                        {{ review.review }}
+                                    </div>
+                                    <div class="review-timestamp">
+                                        {{ review.updated|date:'Y.m.d' }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="product-content product-detail-caution">
+                        <div class="tab-title">
+                            포스팅 유의사항
+                        </div>
+                        <div class="tab-content">
+                            <div class="seller-img">
+                                <img id="seller" src="{{ product.seller.user.get_avatar }}">
+                            </div>
+                            <div class="tab-caution">
+                                {% if product.required %}
+                                    {{ product.required }}
+                                {% else %}
+                                    유의사항이 없습니다.
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

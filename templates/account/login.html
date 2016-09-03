@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load account socialaccount %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+    <style type="text/css">
+        .bg_container {
+            background-image: url("{% static 'img/01.png' %}");
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+
+            min-height: 100%;
+            min-width: 1024px;
+
+            width: 100%;
+            height: auto;
+            overflow: auto;
+            top: 88px;
+            left: 0;
+        }
+
+        footer {
+            margin-top: 0;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="bg_container">
+        <div class="auth-logo">
+            <img src="{% static 'img/logo2.png' %}">
+        </div>
+        <div class="auth-area">
+            <form class="login" id="login_form" method="post" action="{% url 'account_login' %}">{% csrf_token %}
+                {% for field in form %}
+                    {% if forloop.counter0 != 2 %}
+                        {{ field.label_tag }}<br/>
+                        {{ field }}
+                        {{ field.errors }}<br/>
+                    {% else %}
+                        {{ field }}
+                        {{ field.label_tag }}
+                        {{ field.errors }}<br/>
+                    {% endif %}
+                {% endfor %}
+                {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                {% endif %}
+                <button type="submit">로그인</button>
+            </form>
+            <div class="socialaccount_ballot facebook-login">
+                <ul class="socialaccount_providers">
+                    <img id="facebook_logo_login" src="{% static 'img/facebook_logo.png' %}">
+                    {% include "socialaccount/snippets/provider_list.html" with process="login" %}으로 로그인
+                    </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="auth-other">
+                <a class="auth-other-left" href="{% url 'account_signup' %}">회원가입</a>
+                <a class="auth-other-right" href="{% url 'account_reset_password' %}">비밀번호 찾기</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

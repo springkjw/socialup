@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load account socialaccount %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+    <style type="text/css">
+        .bg_container {
+            background-image: url("{% static 'img/02.png' %}");
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+
+            min-height: 100%;
+            min-width: 1024px;
+
+            width: 100%;
+            height: auto;
+            overflow: auto;
+            top: 88px;
+            left: 0;
+        }
+
+        footer {
+            margin-top: 0;
+        }
+    </style>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{% static 'js/auth.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="bg_container">
+        <div class="auth-logo">
+            <img src="{% static 'img/logo2.png' %}">
+        </div>
+        <div class="auth-area">
+            <div class="socialaccount_ballot">
+                <ul class="socialaccount_providers">
+                    <img id="facebook_logo_signup" src="{% static 'img/facebook_logo.png' %}">
+                    {% include "socialaccount/snippets/provider_list.html" with process="login" %}으로 1초만에 가입하기
+                    </a>
+                    </li>
+                </ul>
+                <div class="login-or">또는</div>
+            </div>
+
+
+            <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">{% csrf_token %}
+                {% for field in form %}
+                    {% if field.label != 'Confirmation key' %}
+                        {{ field.label_tag }}<br/>
+                        {{ field }}
+                        {{ field.errors }}<br/>
+                    {% endif %}
+                {% endfor %}
+                {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                {% endif %}
+                <div class="auth-agreement">
+                    <div class="auth-agreement-title">
+                        <input type="checkbox" class="" id="agreenment1"><label for="agreenment1">개인정보 취급방침 동의</label>
+                        <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="auth-agreement-content">
+                        {% include 'account/auth/auth_paper_1.html' %}
+                    </div>
+                </div>
+                <div class="auth-agreement">
+                    <div class="auth-agreement-title">
+                        <input type="checkbox" class="" id="agreenment2"><label for="agreenment2">서비스 이용 약관</label>
+                        <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="auth-agreement-content">
+                        {% include 'account/auth/auth_paper_2.html' %}
+                    </div>
+                </div>
+                <button type="submit">동의하고 이메일 인증하기</button>
+            </form>
+
+            <div class="auth-description">
+                <p>- [이메일로 인증하기]가 완료되기 이전에는, 이메일 주소가 수집되지 않습니다.</p>
+                <p>- 인증 이메일 본문의 '인증하기'를 클릭해주세요.</p>
+                <p>- '동의하고 가입완료' 버튼 클릭 후 가입 완료됩니다.</p>
+            </div>
+            <div class="auth-other">
+                <a class="auth-other-left" href="{% url 'account_login' %}">로그인</a>
+                <a class="auth-other-right" href="{% url 'account_reset_password' %}">비밀번호 찾기</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

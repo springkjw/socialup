@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+    <style type="text/css">
+        .container {
+            background-image: url("{% static 'img/01.png' %}");
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+
+            min-height: 100%;
+            min-width: 1024px;
+
+            width: 100%;
+            height: auto;
+
+            position: absolute;
+            top: 88px;
+            left: 0;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="auth-logo">
+        <img src="{% static 'img/logo2.png' %}">
+    </div>
+    <div class="auth-area">
+        <div class="verification-email">
+            <h2>등록하신 이메일 인증이 필요합니다</h2>
+            <h3>메일함에서 인증메일을 확인해주세요!</h3>
+            <div class="button">
+                <a href="{% url 'account_login' %}">확인</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

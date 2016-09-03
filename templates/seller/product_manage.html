@@ -1,0 +1,32 @@
+{% extends 'account/dashboard_base.html' %}
+{% load staticfiles %}
+
+{% block dashboard_css %}
+    <link rel="stylesheet" href="{% static 'css/dashboard/seller/manage.css' %}">
+{% endblock %}
+
+{% block dashboard_content %}
+    <div class="dashboard-content">
+        <div class="dashboard-nav">
+            상품관리
+            <div class="premium">
+                프리미엄 신청
+            </div>
+        </div>
+        <div class="dashboard-nav advertise">
+
+        </div>
+        <div class="dashboard-product-manage">
+            <div class="product-list-nav">
+                <ul>
+                    <li>전체(0)</li>
+                    <li>작업대기(0)</li>
+                    <li>작업진행(0)</li>
+                    <li>작업완료(0)</li>
+                    <li>거래완료(0)</li>
+                    <li>취소(0)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

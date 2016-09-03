@@ -1,0 +1,195 @@
+.dashboard-content .dashboard-history {
+    border: 2px solid #DADADA;
+    width: 495px;
+    margin-top: 35px;
+    padding: 35px 31px 21px 35px;
+}
+
+.dashboard-content .dashboard-history-title {
+    text-align: center;
+}
+
+.dashboard-content .dashboard-history .history-block {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.dashboard-content .dashboard-history .history-current-point {
+    text-align: center;
+    vertical-align: top;
+    font-size: 12px;
+    height: 39px;
+    padding-right: 30px;
+    margin-top: -12px;
+}
+
+.dashboard-content .dashboard-history .history-current-point h2 {
+    font-size: 24px;
+    font-weight: 500;
+    margin-top: 5px;
+    color: #648efc;
+}
+
+.dashboard-content .dashboard-history .history-large {
+    font-size: 16px;
+    font-weight: 400;
+    width: 130px;
+    text-align: center;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    color: rgba(0, 0, 0, .7);
+    cursor: pointer;
+}
+
+.dashboard-content .dashboard-history .history-large.active {
+    color: #648efc;
+}
+
+.dashboard-content .dashboard-history .border-left {
+    border-left: 1px solid rgba(0, 0, 0, .2);
+}
+
+.dashboard-content .dashboard-history .border-all {
+    border-right: 1px solid rgba(0, 0, 0, .2);
+    border-left: 1px solid rgba(0, 0, 0, .2);
+}
+
+.dashboard-content .dashboard-history-period {
+    margin-top: 40px;
+    height: 25px;
+}
+
+.dashboard-content .dashboard-history-period .dashboard-period-button {
+    float: left;
+    width: 49px;
+    height: 25px;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, .7);
+    text-align: center;
+    line-height: 25px;
+    border-top: 1px solid rgba(0, 0, 0, .3);
+    border-right: 1px solid rgba(0, 0, 0, .3);
+    border-bottom: 1px solid rgba(0, 0, 0, .3);
+    cursor: pointer;
+}
+
+.dashboard-content .dashboard-history-period .one_month {
+    border-left: 1px solid rgba(0, 0, 0, .3);
+}
+
+.dashboard-content .dashboard-history-period .dashboard-period-button.active {
+    color: white;
+    background: #648efc;
+}
+
+.dashboard-content .dashboard-history-period .dashboard-period-button-group {
+    float: left;
+}
+
+.dashboard-content .dashboard-history-period .dashboard-period-input-group {
+    margin-left: 15px;
+    float: left;
+}
+
+.dashboard-content .dashboard-history-period .dashboard-period-input-group input {
+    border: 1px solid rgba(0, 0, 0, .3);
+    padding: 4px 7px 4px 7px;
+    width: 70px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 100;
+}
+
+.dashboard-content .dashboard-history-period .dashboard-period-btn {
+    width: 60px;
+    height: 28px;
+    font-size: 12px;
+    background: #648efc;
+    color: white;
+    margin-left: 10px;
+    float: left;
+}
+
+.dashboard-content .dashboard-history-table {
+    width: 476px;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 30px;
+    display: none;
+}
+
+.dashboard-content .dashboard-history-table.active {
+    display: block;
+}
+
+.dashboard-content .dashboard-history-table table {
+    border-collapse: separate;
+    border-spacing: 0 6px;
+}
+
+.dashboard-content .dashboard-history-table thead {
+    font-weight: 600;
+    margin-bottom: 10px;
+    height: 25px;
+    line-height: 25px;
+}
+
+.dashboard-history-table tbody tr {
+    height: 26px;
+    line-height: 26px;
+}
+
+.dashboard-history-table tbody td {
+    border-top: 1px solid rgba(0, 0, 0, .25);
+    border-bottom: 1px solid rgba(0, 0, 0, .25);
+}
+
+.dashboard-history-table .history-num-c {
+    width: 65px;
+    border-left: 1px solid rgba(0, 0, 0, .25);
+}
+
+.dashboard-history-table .history-date-c {
+    width: 75px;
+}
+
+.dashboard-history-table .history-type-c {
+    width: 145px;
+}
+
+.dashboard-history-table .history-amount-c {
+    width: 160px;
+}
+
+.dashboard-history-table .history-status-c {
+    width: 90px;
+}
+.dashboard-history-table .history-receipt-c {
+    width: 125px;
+    border-right: 1px solid rgba(0, 0, 0, .25);
+}
+
+
+.dashboard-history-table .history-num-u {
+    width: 65px;
+    border-left: 1px solid rgba(0, 0, 0, .25);
+}
+
+.dashboard-history-table .history-date-u {
+    width: 75px;
+}
+
+.dashboard-history-table .history-product-u {
+    width: 270px;
+    font-size: 12px;
+}
+
+.dashboard-history-table .history-amount-u {
+    width: 160px;
+}
+
+.dashboard-history-table .history-status-u {
+    width: 90px;
+    border-right: 1px solid rgba(0, 0, 0, .25);
+}

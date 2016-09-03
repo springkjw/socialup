@@ -1,0 +1,154 @@
+{% extends 'account/dashboard_base.html' %}
+{% load staticfiles %}
+
+{% block dashboard_css %}
+    <link rel="stylesheet" href="{% static 'css/dashboard/cart.css' %}">
+{% endblock %}
+
+{% block dashboard_js %}
+    <script type="text/javascript" src="{% static 'js/dashboard/cart.js' %}"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.buy').on('click', function () {
+                console.log('a');
+                var item = get_item($(this));
+
+                $.ajax({
+                    method: 'POST',
+                    url: '{% url "cart" %}',
+                    data: {
+                        csrfmiddlewaretoken: $(this).parent().find('input[name="csrfmiddlewaretoken"]').val(),
+                        cart: item
+                    },
+                    success: function (data) {
+                        if (data['status'] == 'success') {
+                            window.location.href = '/dashboard/purchase/' + data.cart_id;
+                        }
+                    }
+                });
+            });
+        });
+
+        function get_item(ele) {
+            var item = [];
+            ele.parent().parent().parent().parent().find('.dashboard-cart-item-meta .cart-item').each(function () {
+                var option_id = $(this).attr('data-id');
+                item.push(option_id);
+            });
+
+            return item;
+        }
+    </script>
+{% endblock %}
+
+{% block dashboard_content %}
+    <div class="dashboard-content">
+        <div class="dashboard-info">
+            <div class="dashboard-info-summary info-order-wish">
+                <div class="dashboard-info-summary-title">
+                    위시리스트
+                </div>
+                <div class="dashboard-info-summary-count">
+                    <a href="{% url 'wish_list' %}" class="dashboard-info-img">
+                        <img src="{% static 'img/buyer_01.png' %}" style="margin-left: -5px;">
+                    </a>
+                </div>
+            </div>
+            <div class="dashboard-info-summary info-order-cart">
+                <div class="dashboard-info-summary-title">
+                    장바구니
+                </div>
+                <div class="dashboard-info-summary-count">
+                    <a href="{% url 'cart' %}" class="dashboard-info-img active">
+                        <img src="{% static 'img/buyer_02.png' %}" style="margin-left: -8px;">
+                    </a>
+                </div>
+            </div>
+            <div class="dashboard-info-summary info-order-process">
+                <div class="dashboard-info-summary-title">
+                    구매관리
+                </div>
+                <div class="dashboard-info-summary-count">
+                    <a href="{% url 'purchase_list' %}" class="dashboard-info-img">
+                        <img src="{% static 'img/buyer_03.png' %}">
+                    </a>
+                </div>
+            </div>
+            <div class="dashboard-info-summary info-order-history">
+                <div class="dashboard-info-summary-title">
+                    구매내역
+                </div>
+                <div class="dashboard-info-summary-count">
+                    <div class="dashboard-info-img">
+                        <img src="{% static 'img/buyer_04.png' %}" style="margin-left: -5px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dashboard-cart">
+            {% for product in object.item %}
+                <div class="dashboard-cart-item">
+                    <div class="dashboard-cart-item-image">
+                        <a href="{{ product.0.item.product.get_absolute_url }}">
+                            <img src="{{ product.0.item.product.get_image_url }}">
+                        </a>
+                    </div>
+                    <div class="dashboard-cart-item-title">
+                        <h3>
+                            <a href="{{ product.0.item.product.get_absolute_url }}">{{ product.0.item.product|truncatechars:33 }}</a>
+                        </h3>
+                        <div class="dashboard-cart-item-meta">
+                            {% for c in product %}
+                                <div class="cart-item" data-id="{{ c.item.id }}">
+                                    {{ c.item }} - <span class="item-money">{{ c.item.price }}</span>원
+                                    {% if c.item.title != '기본가' %}
+                                        <form method="GET" id="delete-form" action="{% url 'cart' %}">
+                                            <input type="hidden" name="item" value="{{ c.item.id }}"/>
+                                            <input type="hidden" name="delete" value="true"/>
+                                            <button type="submit"><i class="fa fa-times" aria-hidden="true"></i>
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="dashboard-cart-item-seller">
+                        <p>{{ product.0.item.product.seller }}</p>
+                        <button>문의하기</button>
+                    </div>
+                    <div class="dashboard-cart-item-more">
+                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </div>
+                    <div class="dashboard-cart-item-popup">
+                        <ul>
+                            <li id="popup-buy">
+                                {% csrf_token %}
+                                <input class="buy" id="cart-buy" value="바로구매"/>
+                            </li>
+                            <li id="popup-delete">
+                                <form method="GET" id="delete-form" action="{% url 'cart' %}">
+                                    <input type="hidden" name="product_item" value="{{ product.0.item.product.id }}"/>
+                                    <input type="hidden" name="delete" value="true"/>
+                                    <input id="cart_delete" type="submit" value="삭제하기"/>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="dashboard-cart-total">
+            {#            <div class="dashboard-cart-bill">#}
+            {#                <p>결제정보</p>#}
+            {#            </div>#}
+            <div class="dashboard-cart-subtotal">
+                <p>상품 금액</p>
+                <h1><span id="money">{{ object.cart.subtotal }}</span><span id="unit">원</span></h1>
+            </div>
+        </div>
+        <div class="dashboard-cart-purchase">
+            <a href="{% url 'purchase' cart_id=object.cart.id %}" id="purchase">구매하기</a>
+        </div>
+    </div>
+{% endblock %}

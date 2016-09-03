@@ -1,0 +1,37 @@
+.dashboard-billing-radio #etc-money {
+    display: none;
+}
+
+.dashboard-billing-radio #etc-money input[type=tel] {
+    border: 1px solid rgba(0, 0, 0, .3);
+    font-size: 12px;
+    font-weight: 300;
+    padding: 5px 5px 5px 15px;
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-top: 10px;
+    width: 100px;
+}
+
+.dashboard-charge-info {
+    margin: 0 auto;
+    width: 250px;
+    padding-top: 40px;
+    padding-left: 60px;
+}
+
+.dashboard-charge-info label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: 5px;
+    float: left;
+}
+
+.dashboard-charge-info input {
+    border: 1px solid rgba(0, 0, 0, .3);
+    font-size: 12px;
+    font-weight: 300;
+    padding: 5px 5px 5px 10px;
+    margin-top: 5px;
+    margin-left: 15px;
+}

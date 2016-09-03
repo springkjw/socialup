@@ -1,0 +1,110 @@
+{% extends 'account/dashboard_base.html' %}
+{% load staticfiles %}
+{% load producttags %}
+
+{% block dashboard_css %}
+    <link rel="stylesheet" href="{% static 'css/dashboard/history.css' %}">
+{% endblock %}
+
+{% block dashboard_js %}
+    <script type="text/javascript" src="{% static 'js/dashboard/history.js' %}"></script>
+{% endblock %}
+
+{% block dashboard_content %}
+    <div class="dashboard-content">
+        <div class="dashboard-nav">
+            충전 / 사용내역
+        </div>
+        <div class="dashboard-history">
+            <div class="dashboard-history-title">
+                <div class="history-block history-current-point">
+                    <p>나의 포인트</p>
+                    <h2>{{ user.point }}원</h2>
+                </div>
+{#                <div class="history-block history-large border-left">#}
+{#                    전체#}
+{#                </div>#}
+                <div class="history-block history-large border-all active">
+                    충전
+                </div>
+                <div class="history-block history-large">
+                    사용
+                </div>
+            </div>
+            <div class="dashboard-history-period">
+                <div class="dashboard-period-button-group">
+                    <div class="dashboard-period-button one_month active">
+                        1개월
+                    </div>
+                    <div class="dashboard-period-button three_month">
+                        3개월
+                    </div>
+                    <div class="dashboard-period-button six_month">
+                        6개월
+                    </div>
+                    <div class="dashboard-period-button twelve_month">
+                        12개월
+                    </div>
+                </div>
+                <div class="dashboard-period-input-group">
+                    <label for="start_date"></label>
+                    <input type="text" name="start_date" id="start_date" value="" readonly>
+                    ~
+                    <label for="end_date"></label>
+                    <input type="text" name="end_date" id="end_date" value="" readonly>
+                </div>
+                <button type="submit" class="dashboard-period-btn">조회</button>
+            </div>
+            <div class="dashboard-history-table charge-history active">
+                <table >
+                    <thead>
+                        <tr>
+                            <td>번호</td>
+                            <td>날짜</td>
+                            <td>결제수단</td>
+                            <td>충전금액</td>
+                            <td>상태</td>
+                            <td>전표출력</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in history_charge reversed %}
+                            <tr>
+                                <td class="history-num-c">{{ forloop.revcounter }}</td>
+                                <td class="history-date-c">{{ item.timestamp|date:"m.d" }}</td>
+                                <td class="history-type-c">{{ item.type }}</td>
+                                <td class="history-amount-c">{{ item.amount }}원</td>
+                                <td class="history-status-c">{{ item.status }}</td>
+                                <td class="history-receipt-c"><a href="{{ item.receipt }}" target="_blank">[전표출력]</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="dashboard-history-table use-history">
+                <table >
+                    <thead>
+                        <tr>
+                            <td>번호</td>
+                            <td>날짜</td>
+                            <td>내용</td>
+                            <td>사용금액</td>
+                            <td>상태</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in history_usage reversed %}
+                            <tr>
+                                <td class="history-num-u">{{ forloop.revcounter }}</td>
+                                <td class="history-date-u">{{ item.timestamp|date:"m.d" }}</td>
+                                <td class="history-product-u"><a href="{{ item.product.get_absolute_url }}">{{ item.product.title|truncatechars:23 }}</a></td>
+                                <td class="history-amount-u">{{ item.amount|multi_minus }}원</td>
+                                <td class="history-status-u">{{ item.status }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

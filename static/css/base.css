@@ -1,0 +1,68 @@
+body {
+    text-rendering: optimizeLegibility;
+    color: #222;
+    background: #fff;
+    letter-spacing: 0.03em;
+}
+
+html, body {
+    position: relative;
+    min-width: 960px;
+    height: 100%;
+    min-height: 100%;
+}
+
+html, body, span, h1, h2, h3, h4, h5, h6, p, a, strong, b, u, i, div, table, ul, li, tr, td, th, nav, footer, button, input{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    line-height: 0;
+    vertical-align: baseline;
+    outline: 0;
+    word-wrap: break-word;
+    font: inherit;
+}
+
+ol, ul, li {
+    list-style: none;
+}
+
+a, button {
+    color: inherit;
+    outline: none;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+section {
+    margin: 0 auto;
+    max-width: 1000px;
+    padding: 0 10px;
+}
+
+.jumbotron {
+    width: 100%;
+    background: #999999;
+    min-height: 622px;
+}
+
+img {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+.container {
+    width: 960px;
+    margin: 0 auto;
+    position: relative;
+    overflow:auto;
+}
+
+.dashboard_container {
+    width: 807px;
+    margin: 0 auto;
+    overflow:auto;
+}

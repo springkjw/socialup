@@ -1,0 +1,268 @@
+.dashboard-side {
+    display: none;
+}
+
+.dashboard-purchase {
+    width: 700px;
+    height: 1000px;
+    padding: 10px;
+    margin: 0 auto;
+    border: 2px solid #DADADA;
+}
+
+.dashboard-purchase .billing-info {
+    border: 2px solid #DADADA;
+    width: 560px;
+    height: 275px;
+    margin: 0 auto;
+}
+
+.dashboard-purchase .pay-info h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #3D3D3D;
+    margin-bottom: 20px;
+}
+
+.dashboard-purchase .discount {
+    position: relative;
+}
+
+.dashboard-purchase .mileage {
+    position: relative;
+    height: 31px;
+}
+
+.dashboard-purchase .point {
+    position: relative;
+}
+
+.dashboard-purchase .mileage-input {
+    width: 175px;
+    height: 30px;
+    position: relative;
+    float: left;
+    border-bottom: 1px solid rgba(0, 0, 0, .25);
+}
+
+.dashboard-purchase .mileage-input h3 {
+    left: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #3D3D3D;
+    line-height: 32px;
+    float: left;
+}
+
+.dashboard-purchase .mileage-input h3.unit {
+    right: 0;
+}
+
+.dashboard-purchase .mileage-input input {
+    padding: 7px 5px 5px 5px;
+    width: 110px;
+    color: #648efc;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: right;
+    float: left;
+}
+
+.dashboard-purchase .mileage .button {
+    float: left;
+    margin-left: 10px;
+    padding-top: 5px;
+}
+
+.dashboard-purchase .mileage .button button {
+    font-size: 10px;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, .25);
+    padding: 3px 10px 3px 10px;
+}
+
+.dashboard-purchase .mileage .button span {
+    font-size: 10px;
+}
+
+.dashboard-purchase .point-input {
+    width: 175px;
+    height: 30px;
+    position: relative;
+    float: left;
+    border-bottom: 1px solid rgba(0, 0, 0, .25);
+}
+
+.dashboard-purchase .point-input h3 {
+    left: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #3D3D3D;
+    line-height: 32px;
+    float: left;
+}
+
+.dashboard-purchase .point-input h3.unit {
+    right: 0;
+}
+
+.dashboard-purchase .point-input input {
+    padding: 7px 5px 5px 5px;
+    width: 110px;
+    color: #648efc;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: right;
+    float: left;
+}
+
+.dashboard-purchase .point .button {
+    float: left;
+    margin-left: 10px;
+    padding-top: 5px;
+}
+
+.dashboard-purchase .point .button button {
+    font-size: 10px;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, .25);
+    padding: 3px 10px 3px 10px;
+}
+
+.dashboard-purchase .point .button span {
+    font-size: 10px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.dashboard-purchase .pay {
+    clear: both;
+    margin-top: 80px;
+}
+
+.dashboard-purchase .pay .pay-option label {
+    font-size: 12px;
+    margin-right: 10px;
+}
+
+.dashboard-purchase .pay-info {
+    float: left;
+    padding: 25px 0 30px 25px;
+}
+
+.dashboard-purchase .total {
+    float: right;
+    background: #F2F2F2;
+    width: 145px;
+    height: 100%;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.dashboard-purchase .total h2 {
+    margin-top: 175px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.dashboard-purchase .total h1 {
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: -.02em;
+}
+
+.dashboard-purchase .item {
+    width: 520px;
+    margin: 0 auto;
+    padding: 40px 20px 10px 20px;
+    margin-bottom: 20px;
+}
+
+.dashboard-purchase .item .item-image {
+    width: 70px;
+    height: 70px;
+    display: inline-block;
+}
+
+.dashboard-purchase .item .item-image img {
+    width: 100%;
+    height: 100%;
+}
+
+.dashboard-purchase .item .item-info {
+    width: 285px;
+    margin-left: 30px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.dashboard-purchase .item .item-info .item-seller {
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.dashboard-purchase .item .item-info .item-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.dashboard-purchase .item .item-info .item-subtitle {
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.dashboard-purchase .item .item-price {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.dashboard-purchase .item .item-price h2 {
+    text-align: right;
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 30px;
+    margin-left: 50px;
+}
+
+.dashboard-purchase .buyer-info {
+    border: 2px solid #DADADA;
+    width: 510px;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 25px;
+    display: none;
+}
+
+.dashboard-purchase .buyer-info label {
+    font-size: 16px;
+    font-weight: 700;
+    color: #3D3D3D;
+    margin-bottom: 20px;
+}
+
+.dashboard-purchase .buyer-info input {
+    border: 1px solid rgba(0, 0, 0, .2);
+    margin-left: 5px;
+    margin-right: 15px;
+    font-size: 12px;
+    padding: 5px 10px 5px 10px;
+}
+
+.dashboard-purchase .dashboard-purchase-bill {
+    text-align: center;
+    margin-top: 35px;
+}
+
+.dashboard-purchase .dashboard-purchase-bill .dashboard-charge-button {
+    background: #648efc;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 15px 45px 15px 45px;
+}
