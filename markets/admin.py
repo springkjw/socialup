@@ -3,8 +3,7 @@ from django.contrib import admin
 from django.forms import ValidationError
 from django.forms.models import BaseInlineFormSet
 from django.contrib.contenttypes.admin import GenericTabularInline
-from .models import Product, ProductTag, Variation
-from socials.models import Sns
+from .models import Product, ProductTag, Variation, SnsType, ProductTarget, SnsUrl
 
 
 class TaggedItemInline(GenericTabularInline):
@@ -12,8 +11,18 @@ class TaggedItemInline(GenericTabularInline):
     extra = 1
 
 
-class SnsItemInline(admin.StackedInline):
-    model = Sns
+class SnsItemInline(GenericTabularInline):
+    model = SnsType
+    extra = 1
+
+
+class TargetItemInline(GenericTabularInline):
+    model = ProductTarget
+    extra = 1
+
+
+class UrlItemInline(GenericTabularInline):
+    model = SnsUrl
     extra = 1
 
 
@@ -51,7 +60,7 @@ class VariationInline(admin.StackedInline):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    inlines = [SnsItemInline, VariationInline, TaggedItemInline]
+    inlines = [VariationInline, TaggedItemInline, TargetItemInline, SnsItemInline, UrlItemInline,]
 
     class Meta:
         model = Product

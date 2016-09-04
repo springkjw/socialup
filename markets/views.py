@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render, HttpResponse, Http404
+from django.shortcuts import render, HttpResponse, Http404, HttpResponseRedirect
 from django.forms import inlineformset_factory
 from django.contrib.contenttypes.models import ContentType
-from .models import Product, Variation, ProductTag, SnsType, ProductTarget
-from .forms import ProductForm, VariationForm, TagForm, TypeForm, TargetForm, SnsForm
+from .models import Product, Variation, ProductTag, SnsType, ProductTarget, SnsUrl
+from .forms import ProductForm, VariationForm, TagForm, TypeForm, TargetForm
 from carts.models import WishList
 from carts.views import add_to_cart
-from socials.models import Sns
 from accounts.models import MyUser, Seller
 from reviews.models import ProductReview
 
@@ -99,14 +98,12 @@ def product_detail(request, product_id):
 
 def product_upload(request, product_id=None):
     VariationInlineFormset = inlineformset_factory(Product, Variation, form=VariationForm, extra=1, )
-    SnsInlineFormset = inlineformset_factory(Product, Sns, form=SnsForm, extra=1, )
 
     form = ProductForm()
     formset = VariationInlineFormset()
     tag_form = TagForm()
     type_form = TypeForm()
     target_form = TargetForm()
-    sns_formset = SnsInlineFormset()
 
     # 저장하기 눌렀을 경우
     if request.method == 'POST':
@@ -124,17 +121,34 @@ def product_upload(request, product_id=None):
         type_form = TypeForm(request.POST)
         target_form = TargetForm(request.POST)
 
+        print "start"
         if form.is_valid():
             instance = form.save(commit=False)
             instance.seller = seller
+            instance.save()
+            print "form is valid"
+
+            # save sns url
+            url_list = request.POST.getlist('url')
+            url_active_list = request.POST.get('url_is_active')
+            if url_active_list:
+                is_active = False
+            else:
+                is_active = True
+            for url in url_list:
+                related_object_type = ContentType.objects.get_for_model(instance)
+                SnsUrl.objects.create(
+                    url=url,
+                    is_active=is_active,
+                    content_type=related_object_type,
+                    object_id=instance.id
+                )
 
             # Variations Checking
             formset = VariationInlineFormset(request.POST, instance=instance)
-            sns_formset = SnsInlineFormset(request.POST, instance=instance)
-            if formset.is_valid() and sns_formset.is_valid():
-                instance.save()
+            if formset.is_valid():
+                print "formset is valid"
                 formset.save()
-                sns_formset.save()
 
             if tag_form.is_valid():
                 tags = request.POST.getlist('tag')
@@ -145,6 +159,8 @@ def product_upload(request, product_id=None):
                         content_type=related_object_type,
                         object_id=instance.id
                     )
+                print "tag is valid"
+
             if type_form.is_valid():
                 types = request.POST.getlist('type')
                 for type in types:
@@ -154,6 +170,8 @@ def product_upload(request, product_id=None):
                         content_type=related_object_type,
                         object_id=instance.id
                     )
+                print "type is valid"
+
             if target_form.is_valid():
                 targets = request.POST.getlist('target')
                 for target in targets:
@@ -163,6 +181,12 @@ def product_upload(request, product_id=None):
                         content_type=related_object_type,
                         object_id=instance.id
                     )
+                print "target is valid"
+
+            return HttpResponseRedirect('/dashboard/')
+
+        else:
+            pass
 
     template = 'product/product_upload.html'
     context = {
@@ -170,8 +194,7 @@ def product_upload(request, product_id=None):
         "formset": formset,
         "tag_form": tag_form,
         "type_form": type_form,
-        "target_form": target_form,
-        'sns_formset': sns_formset
+        "target_form": target_form
     }
 
     return render(request, template, context)

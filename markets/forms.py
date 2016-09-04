@@ -1,7 +1,6 @@
 # -*-coding: utf-8 -*-
 from django import forms
-from .models import Product, Variation, product_type, sns_type, product_target
-from socials.models import Sns
+from .models import Product, Variation, product_type, sns_type, product_target, SnsUrl
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 
 
@@ -13,18 +12,6 @@ class ProductForm(forms.ModelForm):
                 'placeholder': '최소 10글자 / 최대 40글자'
             }
         )
-
-        self.fields['workContent'].widget = forms.TextInput(
-            attrs={
-                'placeholder': '기본가 작업 설명 (예:1회성 포스팅)'
-            }
-        )
-
-        self.fields['workingDay'].widget = forms.TextInput(
-            attrs={
-                'placeholder': '기본가 작업일'
-            }
-        )
         self.fields['influence'].widget = forms.TextInput(
             attrs={
                 'placeholder': '예시) 팔로워 10만명, 일평균 방문자수 8천명 등'
@@ -34,7 +21,7 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = (
-        'title', 'image', 'description', 'workContent', 'workingDay', 'required', 'refund', 'influence', 'command',)
+            'title', 'image', 'description', 'required', 'refund', 'influence', 'command',)
         widgets = {
             'foo': SummernoteWidget(),
             'bar': SummernoteInplaceWidget(),
@@ -49,14 +36,17 @@ class VariationForm(forms.ModelForm):
         self.fields['title'].label = ''
         self.fields['price'].label = ''
         self.fields['is_default'].label = ''
+        self.fields['day'].label = ''
 
     class Meta:
         model = Variation
-        fields = ('title', 'price', 'is_default',)
+        fields = ('title', 'price', 'is_default', 'day',)
         widgets = {
             'title': forms.TextInput(attrs={'class': 'variation_title',
                                             'placeholder': '옵션 이름'}),
             'price': forms.TextInput(attrs={'class': 'variation_price'}),
+            'day': forms.TextInput(attrs={'class': 'variation_day',
+                                          'placeholder': '옵션 구매 시 추가 일수'})
         }
 
 
@@ -87,14 +77,4 @@ class TargetForm(forms.Form):
     )
 
 
-class SnsForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault('label_suffix', '')
-        super(SnsForm, self).__init__(*args, **kwargs)
 
-        self.fields['type'].label = ''
-        self.fields['url'].label = ''
-
-    class Meta:
-        model = Sns
-        fields = ('type', 'url',)

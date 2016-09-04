@@ -79,7 +79,7 @@
                                 <div class="form-url-input">
                                     <input id="id_url" name="url" placeholder="주소 공개시 광고주의 신뢰도가 높아집니다." type="text">
                                     <div class="button add_url">+</div>
-                                    <input type="checkbox" id="is_active" checked><label
+                                    <input type="checkbox" id="is_active" name="url_is_active" checked><label
                                         for="is_active">비공개</label>
                                 </div>
                             </div>
@@ -197,26 +197,53 @@
                     <div class="form-area">
                         {{ formset.management_form }}
                         {% for field in formset %}
-                            <div class="price_field">
-                                {% for input in field %}
-                                    {% if forloop.counter0 == 1 %}
-                                        {{ input }}<span class="unit">원</span>{{ input.errors }}
-                                        <div class="options plus">
-                                            <i class="fa fa-plus" aria-hidden="true"></i>
-                                        </div>
-                                    {% else %}
-                                        {{ input }} {{ input.errors }}
-                                    {% endif %}
-                                {% endfor %}
-                                {% if forloop.counter0 == 0 %}
-                                    <div class="extra">
-                                        {{ form.workContent }}<br/>
-                                        <span id="day_label">- 기본 작업일</span>{{ form.workingDay }}<span
-                                            id="days">일</span>
-                                    </div>
-                                {% endif %}
+                            {{ field.is_default }}
+                            <div class="form-input">
+                                <label><span>*</span>기본가</label>
+                                {{ field.price }}
+                                <span class="price_unit">원</span>
+                            </div>
+                            <div class="form-input">
+                                <label><span>*</span>기본가 작업 설명</label>
+                                {{ field.title }}
+                                <span class="price_unit">가 포함됨</span>
+                            </div>
+                            <div class="form-input">
+                                <label><span>*</span>기본 작업일</label>
+                                {{ field.day }}
+                                <span class="price_unit">일</span>
+                            </div>
+                            <div class="title">
+                                옵션추가
+                            </div>
+                            <div class="price-option-area">
+                                <div class="form-input">
+                                    <input class="variation_price" id="id_variation_set-1-price"
+                                           name="variation_set-1-price" placeholder="옵션의 추가 비용">
+                                    <label>원 추가시</label>
+                                </div>
+                                <div class="form-input">
+                                    <input class="variation_title" id="id_variation_set-1-title"
+                                           name="variation_set-1-title" placeholder="추가 비용을 지불 시 제공하는 상품 내용">
+                                </div>
+                                <div class="form-input">
+                                    <input class="variation_day" id="id_variation_set-1-day"
+                                           name="variation_set-1-day" placeholder="옵션 구매 시 추가 일수">
+                                    <label>일 추가</label>
+                                </div>
+                                <div class="options plus">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </div>
                             </div>
                         {% endfor %}
+                    </div>
+                </div>
+                <div class="notice">
+                    <h1>다음 사항을 지키지 않을 시에 판매정지 처리 될 수 있습니다.</h1>
+                    <div class="notice-sub">
+                        <p>1. 계좌이체 외부 결제 등을 통한 직거래를 요구하지 않습니다.</p>
+                        <p>2. SNS에 대한 정보를 허위나 과장하여 등록하지 않습니다.</p>
+                        <p>3. 상품 등록 내용을 모두 지켜 거래를 진행합니다.</p>
                     </div>
                 </div>
             </div>

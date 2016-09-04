@@ -25,8 +25,6 @@ class Product(models.Model):
     target = GenericRelation("ProductTarget", null=True, blank=True)
     influence = models.CharField(max_length=255, null=True, blank=True)
     required = models.TextField(null=True, blank=True)
-    workContent = models.CharField(max_length=120, null=True, blank=True)
-    workingDay = models.PositiveIntegerField(default=0)
     description = summer_fields.SummernoteTextField(null=True, blank=True)
     refund = models.TextField(null=True, blank=True)
     command = models.TextField(null=True, blank=True)
@@ -55,8 +53,9 @@ class Product(models.Model):
 class Variation(models.Model):
     product = models.ForeignKey(Product)
     title = models.CharField(max_length=120)
-    price = models.IntegerField(default=0)
-    sale_price = models.IntegerField(null=True, blank=True)
+    price = models.PositiveIntegerField(default=0)
+    day = models.PositiveIntegerField(default=0)
+    sale_price = models.PositiveIntegerField(null=True, blank=True)
     is_default = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
 
@@ -120,7 +119,7 @@ sns_type = (
 
 
 class SnsType(models.Model):
-    type = models.CharField(choices=product_type, max_length=15, null=False)
+    type = models.CharField(choices=sns_type, max_length=15, null=False)
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey()

@@ -100,11 +100,20 @@
 }
 
 .dashboard-side .user-money a {
-    background: transparent;
     border: 1px solid white;
-    padding: 8px 18px 8px 18px;
+    padding: 6px 15px 6px 15px;
     font-size: 12px;
-    font-weight: 100;
+    font-weight: 500;
+}
+
+.dashboard-side .user-money .money-charge {
+    background: white;
+    color: #648efc;
+}
+
+.dashboard-side .user-money .money-history {
+    background: transparent;
+    color: white;
 }
 
 .dashboard-side .user-money .money-history {
