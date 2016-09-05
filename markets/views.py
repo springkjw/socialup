@@ -147,7 +147,6 @@ def product_upload(request, product_id=None):
             # Variations Checking
             formset = VariationInlineFormset(request.POST, instance=instance)
             if formset.is_valid():
-                print "formset is valid"
                 formset.save()
 
             if tag_form.is_valid():
@@ -159,7 +158,6 @@ def product_upload(request, product_id=None):
                         content_type=related_object_type,
                         object_id=instance.id
                     )
-                print "tag is valid"
 
             if type_form.is_valid():
                 types = request.POST.getlist('type')
@@ -170,7 +168,6 @@ def product_upload(request, product_id=None):
                         content_type=related_object_type,
                         object_id=instance.id
                     )
-                print "type is valid"
 
             if target_form.is_valid():
                 targets = request.POST.getlist('target')
@@ -181,7 +178,6 @@ def product_upload(request, product_id=None):
                         content_type=related_object_type,
                         object_id=instance.id
                     )
-                print "target is valid"
 
             return HttpResponseRedirect('/dashboard/')
 
