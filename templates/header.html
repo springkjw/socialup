@@ -16,8 +16,8 @@
         </div>
         <div id="header_tnb">
             {% if user.is_authenticated %}
-                <a id="point" href="#">
-                    point <span id="money">{{ user.point }}</span>
+                <a id="point" href="{% url 'point_history' %}">
+                    POINT <span id="money">{{ user.point }}</span>
                 </a>
                 <a id="message" href="#">
                     MESSAGE
@@ -40,14 +40,23 @@
             {% endif %}
         </div>
         <div class="header-dropdown" style='display:none;'>
-            <ul>
-                <a href="{% url 'dashboard' %}"><li>마이소셜업</li></a>
-                <li>구매<span><i class="fa fa-caret-right" aria-hidden="true"></i></span></li>
-                <li>판매<span><i class="fa fa-caret-right" aria-hidden="true"></i></span></li>
-                <li>찜목록</li>
-                <li>계정설정</li>
-                <a href="{% url 'account_logout' %}"><li id="logout">로그아웃</li></a>
-            </ul>
+            <a href="{% url 'dashboard' %}">마이소셜업</a>
+            <a href="{% url 'product_upload' %}">포스팅 쓰기</a>
+            <div class="header-menu">구매<span><i class="fa fa-caret-down" aria-hidden="true"></i></span></div>
+            <div class="header-sub-menu buyer">
+                <a href="{% url 'wish_list' %}">- 위시리스트</a>
+                <a href="{% url 'cart' %}">- 장바구니</a>
+                <a href="{% url 'purchase_list' %}">- 구매관리</a>
+                <a href="#">- 구매내역</a>
+            </div>
+            <div class="header-menu">판매<span><i class="fa fa-caret-down" aria-hidden="true"></i></span></div>
+            <div class="header-sub-menu seller">
+                <a>- 상품관리</a>
+                <a>- 주문 / 판매 관리</a>
+                <a>- 정산 / 수익 관리</a>
+            </div>
+            <a href="{% url 'change_info' %}">계정설정</a>
+            <a href="{% url 'account_logout' %}">로그아웃</a>
         </div>
     </div>
 </div>

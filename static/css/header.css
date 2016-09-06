@@ -68,7 +68,7 @@
     line-height: 45px;
 }
 
-#header_tnb>a {
+#header_tnb > a {
     padding: 0 10px;
     display: inline-block;
     height: 100%;
@@ -77,12 +77,12 @@
     cursor: pointer;
 }
 
-#header_tnb>a#signup, #login {
+#header_tnb > a#signup, #login {
     margin-top: 22px;
     margin-right: 15px;
 }
 
-#header_tnb>a>i {
+#header_tnb > a > i {
     color: #648efc;
     font-size: 12px;
     margin-left: 5px;
@@ -116,28 +116,64 @@
     box-shadow: 3px 6px 4px rgba(0, 0, 0, .15);
 }
 
-.header-dropdown li {
+.header-menu.active {
+    color: white !important;
+    background: #648efc;
+}
+
+.header-menu.active + .header-sub-menu {
+    display: block;
+}
+
+.header-dropdown a, .header-dropdown .header-menu {
+    display: block;
     padding-left: 20px;
     padding-top: 5px;
     padding-bottom: 5px;
     font-size: 14px;
     color: #777777;
     border-bottom: 1px solid #DEDEDE;
+    cursor: pointer;
 }
 
-.header-dropdown li span {
+.header-dropdown .header-menu span {
     float: right;
     margin-right: 15px;
 }
 
-.header-dropdown li:hover {
+.header-dropdown a:hover {
     color: white;
     background: #648efc;
     cursor: pointer;
 }
 
-.header-dropdown #logout {
-    border-bottom: none;
+.header-dropdown .header-menu:hover {
+    color: white;
+    background: #648efc;
+    cursor: pointer;
+}
+
+.header-dropdown .header-sub-menu {
+    display: none;
+    border-bottom: 1px solid #DEDEDE;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.header-dropdown .header-sub-menu a {
+    font-size: 12px;
+    border: none;
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: 30px;
+    font-weight: 100;
+}
+
+.header-dropdown .header-sub-menu a:hover {
+    color: #648efc;
+    cursor: pointer;
+    background: white;
+    font-weight: 400;
 }
 
 #point span {
