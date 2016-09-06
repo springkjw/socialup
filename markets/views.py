@@ -200,6 +200,15 @@ def product_upload(request, product_id=None):
     return render(request, template, context)
 
 
+def product_upload_complete(request):
+    template = 'prooduct/product_upload_complete.html'
+    context = {
+
+    }
+
+    return render(request, template, context)
+
+
 def product_manage(request):
     template = 'seller/product_manage.html'
     context = {
