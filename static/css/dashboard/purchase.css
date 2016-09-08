@@ -155,6 +155,10 @@ input[type=number]::-webkit-outer-spin-button {
     padding: 25px 0 30px 25px;
 }
 
+.dashboard-purchase .pay-option {
+    width: 95%;
+}
+
 .dashboard-purchase .total {
     float: right;
     background: #F2F2F2;
