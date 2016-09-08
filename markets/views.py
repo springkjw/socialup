@@ -13,9 +13,11 @@ import json
 
 
 def product_detail(request, product_id):
+    # product_id로 상품 조회
     product = Product.objects.get(id=product_id)
+    # product의 판매자
     seller = product.seller
-
+    # product 판매자 평점 조회
     seller_rating = int(round(seller.rating * 20))
     seller_count = Product.objects.filter(seller=seller).count()
 
@@ -23,9 +25,13 @@ def product_detail(request, product_id):
         product=product
     )
 
-    default = variation.get(title='기본가')
+    # Product 중 기본가에 해당하는 아이템
+    try:
+        default = variation.get(is_default=True)
+    except:
+        default = None
 
-    sns_info = Sns.objects.get(product=product)
+    # sns_info = Sns.objects.get(product=product)
 
     reviews = ProductReview.objects.filter(product=product)
     reviews_count = reviews.count()
@@ -88,7 +94,7 @@ def product_detail(request, product_id):
         'variation': variation,
         'default_price': default,
         'rating': seller_rating,
-        'sns': sns_info,
+        # 'sns': sns_info,
         'reviews': reviews,
         'reviews_count': reviews_count
     }
@@ -197,7 +203,7 @@ def product_upload(request, product_id=None):
 
 
 def product_upload_complete(request):
-    template = 'prooduct/product_upload_complete.html'
+    template = 'product/product_upload_complete.html'
     context = {
 
     }
@@ -206,9 +212,17 @@ def product_upload_complete(request):
 
 
 def product_manage(request):
+    # 판매자가 아닐 경우
+    seller = Seller.objects.get(user=request.user)
+
+    if seller is None:
+        return HttpResponseRedirect('/product/upload/')
+
+    product_list = Product.objects.filter(seller=seller)
+
     template = 'seller/product_manage.html'
     context = {
-        "order_list": order_list
+        "product_list": product_list
     }
 
     return render(request, template, context)

@@ -169,3 +169,5 @@ Temporary Items
 assets/
 socialup/.idea/
 socialup/settings/local.py
+
+db.sqlite3

@@ -99,10 +99,10 @@
 }
 
 #header_tnb .profile-image {
-    width: 55px;
-    height: 55px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
-    margin-top: 16px;
+    margin-top: 20px;
 }
 
 .header-dropdown {
