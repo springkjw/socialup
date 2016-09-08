@@ -14,14 +14,14 @@ def time_since(date, default="just now"):
         (diff.days / 365, "년", "년"),
         (diff.days / 30, "월", "개월"),
         (diff.days / 7, "주", "주"),
-        (diff.days, "일", "days"),
+        (diff.days, "일", "일"),
         (diff.seconds / 3600, "시간", "시간"),
         (diff.seconds / 60, "분", "분"),
         (diff.seconds, "", "초"),
     )
     for period, singular, plural in periods:
         if period:
-            return "%d%s전" % (period, singular if period == 1 else plural)
+            return "%d%s 전" % (period, singular if period == 1 else plural)
     return default
 
 

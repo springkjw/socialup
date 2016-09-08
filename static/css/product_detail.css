@@ -15,7 +15,7 @@ body {
 
 .content .product-top .info-left {
     width: 403px;
-    height: 662px;
+    height: 590px;
     border: 1px solid #DFDFDF;
     float: left;
     margin-right: 25px;
@@ -23,7 +23,6 @@ body {
 
 .content .product-top .info-right {
     width: 379px;
-    height: 794px;
     border: 1px solid #DFDFDF;
     float: left;
 }
@@ -78,7 +77,6 @@ body {
 .content .product-top .seller-info {
     width: 100%;
     height: 189px;
-    border-bottom: 1px solid #DFDFDF;
 }
 
 .content .product-top .seller-info .seller-img {
@@ -161,24 +159,25 @@ body {
     padding-top: 20px;
     padding-right: 20px;
     padding-left: 20px;
-    height: 231px;
     border-bottom: 1px solid #DFDFDF;
 }
 
 .content .product-top .info-right .product-info h2#product-title {
-    font-size: 22px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, .8);
     text-align: center;
 }
 
 .content .product-top .info-right .product-info .product-price {
-    margin-top: 15px;
+    margin-top: 5px;
 }
 
 .content .product-top .info-right .product-info h2#product-price {
-    font-size: 38px;
+    font-size: 44px;
     font-weight: bold;
     text-align: right;
+    letter-spacing: -0.03em;
 }
 
 .content .product-top .info-right .product-analytics {
@@ -218,7 +217,7 @@ body {
 }
 
 .content .product-top .info-right .product-option {
-    height: 350px;
+    min-height: 130px;
     padding-right: 25px;
     padding-left: 25px;
     position: relative;
@@ -290,6 +289,11 @@ body {
     cursor: pointer;
 }
 
+.content .product-top .info-right .product-option .product-dropdown {
+    height: 50px;
+    margin-bottom: 50px;
+}
+
 .content .product-top .info-right .product-option .product-dropdown-icon {
     width: 40px;
     height: 40px;
@@ -305,10 +309,7 @@ body {
 }
 
 .content .product-top .info-right .product-option .product-select-list {
-    width: 308px;
-    position: absolute;
     z-index: 11;
-    bottom: 100px;
     border-bottom: 1px solid #DFDFDF;
     padding-bottom: 10px;
 }
@@ -331,12 +332,10 @@ body {
 }
 
 .content .product-top .info-right .product-option .product-total {
-    padding-bottom: 55px;
     font-size: 16px;
     text-align: right;
-    position: absolute;
-    bottom: 0;
-    right: 50px;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .content .product-top .info-right .product-option #product-total {
@@ -541,5 +540,58 @@ body {
     display: inline-block;
     position: absolute;
     top: 42px;
+    font-size: 13px;
+}
+
+.info-right .product-sub-info {
+    border-bottom: 1px solid #DFDFDF;
+    height: 45px;
+    position: relative;
+    padding-left: 20px;
+    padding-right: 10px;
+}
+
+.info-right .product-sub-info .title {
+    width: 120px;
+    line-height: 45px;
+    float: left;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, .7);
+}
+
+.info-right .product-sub-info .sub-content {
+    float: left;
+    line-height: 45px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, .7);
+}
+
+.info-right .product-sub-info .sub-content .orange {
+    color: orangered;
+}
+
+.info-right .product-sub-info .sub-content .green {
+    color: green;
+    font-weight: 600;
+}
+
+.sub-content .seller-rating i {
+    color: gray;
     font-size: 14px;
+}
+
+.sub-content .ask-seller {
+    background: rgba(0, 0, 0, .6);
+    color: white;
+    display: inline-block;
+    width: 60px;
+    height: 20px;
+    cursor: pointer;
+    text-align: center;
+    position: relative;
+    margin-top: 5px;
+    line-height: 20px;
+    font-size: 10px;
 }

@@ -84,13 +84,13 @@ $(function() {
     $(window).bind('scroll', function () {
         if ($(window).scrollTop() > 965) {
             $('.product-info-bottom').addClass('fixed');
-            $('.product-info-bottom.fixed').css('top', $(this).scrollTop());
+            $('.product-info-bottom.fixed').css('top', $(this).scrollTop() - 70);
             $('.content .product-menu').css('margin-top', '0');
-            $('.content .product-bottom .tab').css('padding-top', '90px');
+            // $('.content .product-bottom .tab').css('padding-top', '90px');
         } else {
             $('.product-info-bottom').removeClass('fixed').removeAttr('style');
             $('.content .product-menu').css('margin-top', '0px');
-            $('.content .product-bottom .tab').css('padding-top', '30px');
+            // $('.content .product-bottom .tab').css('padding-top', '30px');
         }
     });
 
