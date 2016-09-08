@@ -81,6 +81,7 @@
 .special-service {
     margin-top: 60px;
     margin-bottom: 50px;
+    overflow: hidden;
 }
 
 .special-service .special-title {
