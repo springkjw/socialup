@@ -53,15 +53,15 @@ body {
     border: 2px solid #DADADA;
     width: 561px;
     height: 195px;
+    text-align: center;
 }
 
 .dashboard-content .dashboard-info-summary {
     display: inline-block;
-    width: 90px;
+    width: 32%;
     margin-top: 35px;
     margin-bottom: 45px;
     height: 121px;
-    padding: 0 23px 0 20px;
 }
 
 .dashboard-content .dashboard-info-summary .dashboard-info-summary-title {
@@ -73,7 +73,7 @@ body {
     border-right: 1px solid #DADADA;
 }
 
-.dashboard-content .dashboard-info-summary.info-order-history{
+.dashboard-content .dashboard-info-summary.info-order-process{
     border-right: none;
 }
 
@@ -84,7 +84,6 @@ body {
 }
 
 .dashboard-content .dashboard-info-summary .dashboard-info-img {
-    float: left;
     background: #DEDEDE;
     height: 100px;
     width: 100px;
@@ -343,7 +342,6 @@ body {
 
 .dashboard-content .dashboard-change-form label {
     font-size: 14px;
-    margin-right: 8px;
     color: #3D3D3D;
 }
 

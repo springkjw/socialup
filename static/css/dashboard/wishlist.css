@@ -133,3 +133,13 @@
     border-right: 1px solid rgba(0, 0, 0, .2);
     border-left: 1px solid rgba(0, 0, 0, .2);
 }
+
+.no-wishlist {
+    text-align: center;
+    color: #648efc;
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 100px;
+    padding-bottom: 100px;
+    border-bottom: 1px solid #DEDEDE;
+}
