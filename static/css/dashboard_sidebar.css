@@ -38,7 +38,7 @@
 .dashboard-side .user-info .user-info-top .user-name {
     float: left;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 300;
 }
 
 .dashboard-side .user-info .user-info-top .change-info {
@@ -92,6 +92,7 @@
     font-size: 28px;
     font-weight: bold;
     padding-top: 15px;
+    letter-spacing: -.01em;
 }
 
 .dashboard-side .user-money .user-money-button {

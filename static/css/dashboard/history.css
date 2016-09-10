@@ -25,9 +25,10 @@
 
 .dashboard-content .dashboard-history .history-current-point h2 {
     font-size: 24px;
-    font-weight: 500;
+    font-weight: 600;
     margin-top: 5px;
     color: #648efc;
+    letter-spacing: -.01em;
 }
 
 .dashboard-content .dashboard-history .history-large {
@@ -124,6 +125,7 @@
 }
 
 .dashboard-content .dashboard-history-table table {
+    width: 100%;
     border-collapse: separate;
     border-spacing: 0 6px;
 }
@@ -141,13 +143,11 @@
 }
 
 .dashboard-history-table tbody td {
-    border-top: 1px solid rgba(0, 0, 0, .25);
-    border-bottom: 1px solid rgba(0, 0, 0, .25);
+    border-bottom: 1px solid rgba(0, 0, 0, .15);
 }
 
 .dashboard-history-table .history-num-c {
     width: 65px;
-    border-left: 1px solid rgba(0, 0, 0, .25);
 }
 
 .dashboard-history-table .history-date-c {
@@ -165,11 +165,10 @@
 .dashboard-history-table .history-status-c {
     width: 90px;
 }
+
 .dashboard-history-table .history-receipt-c {
     width: 125px;
-    border-right: 1px solid rgba(0, 0, 0, .25);
 }
-
 
 .dashboard-history-table .history-num-u {
     width: 65px;
@@ -192,4 +191,11 @@
 .dashboard-history-table .history-status-u {
     width: 90px;
     border-right: 1px solid rgba(0, 0, 0, .25);
+}
+
+.no-list {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-weight: 500;
+    color: #648efc;
 }

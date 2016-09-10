@@ -183,13 +183,14 @@ body {
 }
 
 .dashboard-content .dashboard-billing .dashboard-charge-point .billing-more {
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 600;
     padding: 3px 10px 3px 10px;
     border: 2px solid #DADADA;
     background: #DEDEDE;
     vertical-align: middle;
-    display: inline-block;
+    border-radius: 3px;
+    color: rgba(0, 0, 0, .6);
 }
 
 .dashboard-content .dashboard-billing .dashboard-charge-type {
@@ -223,6 +224,8 @@ body {
     text-align: center;
     margin-top: 38px;
     font-size: 20px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, .7);
 }
 
 .dashboard-content .dashboard-billing .dashboard-charge-total #total {
@@ -232,7 +235,7 @@ body {
 }
 
 .dashboard-content .dashboard-billing .dashboard-charge-total #vat {
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 400;
     color: rgba(0, 0, 0, .7);
 }

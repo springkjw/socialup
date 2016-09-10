@@ -13,25 +13,32 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
     <script type="text/javascript" src="{% static 'js/autoNumeric-min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/mask.js' %}"></script>
     <script type="text/javascript">
-        $(function() {
-            $('.dashboard-charge-button').on('click', function(e) {
+        $(function () {
+            $('.dashboard-charge-button').on('click', function (e) {
                 var email = $('.dashboard-charge-info #email').val();
                 var name = $('.dashboard-charge-info #name').val();
                 var phone = $('.dashboard-charge-info #phone').val();
-                var amount = parseInt($('.dashboard-charge-total #total').text().replace(',', '').slice(0,-1));
+                var amount = parseInt($('.dashboard-charge-total #total').text().replace(',', '').slice(0, -1));
                 var type = $('.dashboard-charge-type input:checked').val();
 
-                if (email !== '' && name !== '' && phone !== '' && amount !== '' && type !== '') {
+                $.ajax({
+                    type: 'get',
+                    data: {
+                        name: name,
+                        phone: phone
+                    }
+                });
 
+                if (email !== '' && name !== '' && phone !== '' && amount !== '' && type !== '') {
                     var merchant_id = AjaxStoreTransaction(e, amount, type);
-                    if(merchant_id !== '') {
+                    if (merchant_id !== '') {
                         IMP.request_pay({
                             pg: 'html5_inicis',
                             escrow: false,
                             digital: true,
                             pay_method: type,
                             merchant_uid: merchant_id,
-                            name: '포인트충전',
+                            name: '[소셜업]포인트' + amount + '원 충전',
                             amount: amount,
                             buyer_email: email,
                             buyer_name: name,
@@ -43,17 +50,18 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                                 msg += '상점 거래ID : ' + rsp.merchant_uid;
                                 msg += '결제 금액 : ' + rsp.paid_amount;
                                 msg += '카드 승인번호 : ' + rsp.apply_num;
-                                console.log(msg);
                                 ImpTransaction(e, rsp.merchant_uid, rsp.imp_uid, rsp.paid_amount);
 
                             } else {
                                 var msg = '결제에 실패하였습니다.';
                                 msg += '에러내용 : ' + rsp.error_msg;
                                 console.log(msg);
+                                url = '{% url 'point_fail' %}';
+                                $(location).attr('href', url);
                             }
                         });
                     }
-                }else {
+                } else {
                     alert('값을 입력해 주세요.');
                 }
             });
@@ -64,29 +72,31 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
             var merchant_id = '';
 
             var request = $.ajax({
-                method : "POST",
-                url : '{% url "point_checkout" %}',
-                async : false,
-                data : {
-                    amount : amount,
-                    type : type
+                method: "POST",
+                url: '{% url "point_checkout" %}',
+                async: false,
+                data: {
+                    amount: amount,
+                    type: type
                 }
             });
 
-            request.done(function(data) {
-                if(data.works) {
+            request.done(function (data) {
+                if (data.works) {
                     merchant_id = data.merchant_id;
                 }
             });
 
-            request.fail(function(jqXHR, textStatus) {
-                if(jqXHR.status == 404) {
+            request.fail(function (jqXHR, textStatus) {
+                if (jqXHR.status == 404) {
                     alert("페이지가 존재하지 않습니다.");
-                }else if(jqXHR.status == 403) {
+                } else if (jqXHR.status == 403) {
                     alert("로그인 해주세요.");
-                }else {
+                } else {
                     alert("문제가 발생했습니다. 다시 시도해주세요.");
                 }
+                url = '{% url 'point_fail' %}';
+                $(location).attr('href', url);
             });
 
             return merchant_id;
@@ -96,30 +106,33 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
             e.preventDefault();
 
             var request = $.ajax({
-                method : "POST",
-                url : '{% url "point_validation" %}',
-                async : false,
-                data : {
-                    merchant_id : merchant_id,
-                    imp_id : imp_id,
-                    amount : amount
+                method: "POST",
+                url: '{% url "point_validation" %}',
+                async: false,
+                data: {
+                    merchant_id: merchant_id,
+                    imp_id: imp_id,
+                    amount: amount
                 }
             });
 
-            request.done(function(data) {
-                if(data.works) {
-                    alert("결제가 완료되었습니다.");
+            request.done(function (data) {
+                if (data.works) {
+                    url = '{% url 'point_success' %}';
+                    $(location).attr('href', url);
                 }
             });
 
-            request.fail(function(jqXHR, textStatus) {
-                if(jqXHR.status == 404) {
+            request.fail(function (jqXHR, textStatus) {
+                if (jqXHR.status == 404) {
                     alert("페이지가 존재하지 않습니다.");
-                }else if(jqXHR.status == 403) {
+                } else if (jqXHR.status == 403) {
                     alert("로그인 해주세요.");
-                }else {
+                } else {
                     alert("문제가 발생했습니다. 다시 시도해주세요.");
                 }
+                url = '{% url 'point_fail' %}';
+                $(location).attr('href', url);
             });
         }
     </script>
@@ -131,89 +144,97 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
             충전하기
         </div>
         <div class="dashboard-billing">
-            {% if user.is_admin %}
-                <div class="dashboard-current-point">
-                    <div class="dashboard-billing-title">
-                        나의 포인트
-                    </div>
-                    <div class="dashboard-point">
-                        {{ user.point }}원
-                    </div>
+            <div class="dashboard-current-point">
+                <div class="dashboard-billing-title">
+                    나의 포인트
                 </div>
-                <div class="dashboard-charge-point">
-                    <div class="dashboard-billing-title">
-                        충전금액
-                    </div>
-                    <div class="dashboard-billing-radio">
-                        <label class="control control--radio">
-                            <input type="radio" name="amount" value="10000" checked="checked" />
-                            10,000원
-                        </label>
-                        <label class="control control--radio">
-                            <input type="radio" name="amount" value="30000" />
-                            30,000원
-                        </label>
-                        <label class="control control--radio">
-                            <input type="radio" name="amount" value="50000" />
-                            50,000원
-                        </label>
-                        <label class="control control--radio">
-                            <input type="radio" name="amount" value="100000" />
-                            100,000원
-                        </label>
-                        <label class="control control--radio" id="etc-money">
-                            <input type="radio" name="amount" value="" />
-                            <input type="tel" name="amount" />원
-                        </label>
+                <div class="dashboard-point">
+                    {{ user.point }}원
+                </div>
+            </div>
+            <div class="dashboard-charge-point">
+                <div class="dashboard-billing-title">
+                    충전금액
+                </div>
+                <div class="dashboard-billing-radio">
+                    <label class="control control--radio">
+                        <input type="radio" name="amount" value="10000" checked="checked"/>
+                        10,000원
+                    </label>
+                    <label class="control control--radio">
+                        <input type="radio" name="amount" value="30000"/>
+                        30,000원
+                    </label>
+                    <label class="control control--radio">
+                        <input type="radio" name="amount" value="50000"/>
+                        50,000원
+                    </label>
+                    <label class="control control--radio">
+                        <input type="radio" name="amount" value="100000"/>
+                        100,000원
+                    </label>
+                    <label class="control control--radio" id="etc-money">
+                        <input type="radio" name="amount" value=""/>
+                        <input type="tel" name="amount"/>원
+                    </label>
 
-                        <button class="billing-more">금액 더 보기</button>
-                    </div>
+                    <button class="billing-more">금액 더 보기</button>
                 </div>
-                <div class="dashboard-charge-type">
-                    <div class="dashboard-billing-title">
-                        결제방식
-                    </div>
-                    <div class="dashboard-billing-radio">
-                        <label class="control control--radio">
-                            <input type="radio" name="type" value="card" checked="checked" />
-                            신용카드
-                        </label>
-                        <label class="control control--radio">
-                            <input type="radio" name="type" value="trans" />
-                            실시간 계좌이체
-                        </label>
-                        <label class="control control--radio">
-                            <input type="radio" name="type" value="phone" />
-                            휴대폰
-                        </label>
-                        <label class="control control--radio">
-                            <input type="radio" name="type" value="vbank" />
-                            가상계좌 입금
-                        </label>
-                    </div>
+            </div>
+            <div class="dashboard-charge-type">
+                <div class="dashboard-billing-title">
+                    결제방식
                 </div>
-                <div class="dashboard-charge-description">
-                    <p>- 카드결제시 계산서 발행이 되지 않으며, 신용카드전표로 회계처리증빙을 하세요.</p>
-                    <p>- 현금영수증을 발행하실 경우 세금계산서 발행이 불가합니다.</p>
+                <div class="dashboard-billing-radio">
+                    <label class="control control--radio">
+                        <input type="radio" name="type" value="card" checked="checked"/>
+                        신용카드
+                    </label>
+                    <label class="control control--radio">
+                        <input type="radio" name="type" value="trans"/>
+                        실시간 계좌이체
+                    </label>
+                    <label class="control control--radio">
+                        <input type="radio" name="type" value="phone"/>
+                        휴대폰
+                    </label>
+                    <label class="control control--radio">
+                        <input type="radio" name="type" value="vbank"/>
+                        가상계좌 입금
+                    </label>
                 </div>
-                <div class="dashboard-charge-info">
-                    <input type="hidden" id="merchant_id" name="merchant_id" value="">
-                    <label for="email">이메일</label>
-                    <input type="text" id="email" name="email" value="{{ user.email }}">
-                    <label for="name">결제자명</label>
-                    <input id="name" name="name">
-                    <label for="phone">휴대폰번호</label>
-                    <input id="phone" name="phone">
+            </div>
+            <div class="dashboard-charge-description">
+                <p>- 카드결제시 계산서 발행이 되지 않으며, 신용카드전표로 회계처리증빙을 하세요.</p>
+                <p>- 현금영수증을 발행하실 경우 세금계산서 발행이 불가합니다.</p>
+            </div>
+            <div class="dashboard-charge-info">
+                <input type="hidden" id="merchant_id" name="merchant_id" value="">
+                <div class="charge-form">
+                    <label for="email">
+                        <span>*</span>이메일
+                    </label>
+                    <input type="text" id="email" name="email" value="{{ user.email }}" disabled>
                 </div>
-                <div class="dashboard-charge-total">
-                    총 결제금액 <span id="total">11,000원</span> <span id="vat">(VAT포함)</span>
+                <div class="charge-form">
+                    <label for="name">
+                        <span>*</span>결제자명
+                    </label>
+                    <input id="name" name="name" value="{{ user.name }}">
                 </div>
-                <div class="dashboard-charge-click">
-                    <button class="dashboard-charge-button">충전하기</button>
+                <div class="charge-form">
+                    <label for="phone">
+                        <span>*</span>휴대폰번호
+                    </label>
+                    <input id="phone" name="phone" value="{{ user.phone }}">
                 </div>
-            {% else %}
-                관리자는 포인트를 충전할 수 없습니다.
-            {% endif %}
+            </div>
+            <div class="dashboard-charge-total">
+                총 결제금액 <span id="total">11,000원</span> <span id="vat">(VAT포함)</span>
+            </div>
+            <div class="dashboard-charge-click">
+                <button class="dashboard-charge-button">충전하기</button>
+            </div>
         </div>
     </div>
 {% endblock %}

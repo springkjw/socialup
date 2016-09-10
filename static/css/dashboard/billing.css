@@ -3,7 +3,7 @@
 }
 
 .dashboard-billing-radio #etc-money input[type=tel] {
-    border: 1px solid rgba(0, 0, 0, .3);
+    border: 1px solid rgba(0, 0, 0, .15);
     font-size: 12px;
     font-weight: 300;
     padding: 5px 5px 5px 15px;
@@ -14,17 +14,20 @@
 }
 
 .dashboard-charge-info {
-    margin: 0 auto;
-    width: 250px;
-    padding-top: 40px;
-    padding-left: 60px;
+    margin-top: 30px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-left: 120px;
+    padding-right: 130px;
+    border-top: 1px solid rgba(0, 0, 0, .15);
+    border-bottom: 1px solid rgba(0, 0, 0, .15);
 }
 
 .dashboard-charge-info label {
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 12px;
+    font-weight: 400;
     margin-right: 5px;
-    float: left;
+    line-height: 45px;
 }
 
 .dashboard-charge-info input {
@@ -34,4 +37,42 @@
     padding: 8px 5px 8px 13px;
     margin-top: 5px;
     margin-left: 15px;
+    float: right;
+}
+
+.dashboard-charge-info .charge-form span {
+    color: orangered;
+    margin-right: 3px;
+}
+
+.result {
+    text-align: center;
+}
+
+.result h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-top: 30px;
+    color: rgba(0, 0, 0, .65);
+}
+
+.result p {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, .7);
+    margin-top: 30px;
+    margin-bottom: 45px;
+}
+
+.result a {
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    width: 90px;
+    background: #648efc;
+    border-radius: 5px;
+    padding: 12px 25px 12px 25px;
+    font-size: 14px;
+    font-weight: 300;
+    color: white;
 }

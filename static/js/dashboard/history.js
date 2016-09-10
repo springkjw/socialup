@@ -1,19 +1,19 @@
-$(function() {
+$(function () {
     $('.history-current-point h2').digits();
     $('.dashboard-history-table .history-amount-c').digits();
 
-    $('.dashboard-history-title .history-large').on('click', function() {
+    $('.dashboard-history-title .history-large').on('click', function () {
         $(this).parent().find('.history-large').removeClass('active');
         $(this).addClass('active');
         $('.dashboard-history-table').removeClass('active');
 
-        var text = $(this).text().replace(/ /g,'').replace(/(\r\n|\n|\r)/gm,'')
+        var text = $(this).text().replace(/ /g, '').replace(/(\r\n|\n|\r)/gm, '')
 
-        if(text == '충전') {
+        if (text == '충전') {
             $('.charge-history').addClass('active');
-        }else if(text == '사용') {
+        } else if (text == '사용') {
             $('.use-history').addClass('active');
-        }else {
+        } else {
 
         }
 
@@ -25,28 +25,28 @@ $(function() {
     //set one month
     setOneMonth(d);
 
-    $('.dashboard-period-button-group .one_month').on('click', function() {
+    $('.dashboard-period-button-group .one_month').on('click', function () {
         var d = new Date();
         setOneMonth(d);
         $(this).parent().find('.dashboard-period-button').removeClass('active');
         $(this).addClass('active');
     });
 
-    $('.dashboard-period-button-group .three_month').on('click', function() {
+    $('.dashboard-period-button-group .three_month').on('click', function () {
         var d = new Date();
         setTreeMonth(d);
         $(this).parent().find('.dashboard-period-button').removeClass('active');
         $(this).addClass('active');
     });
 
-    $('.dashboard-period-button-group .six_month').on('click', function() {
+    $('.dashboard-period-button-group .six_month').on('click', function () {
         var d = new Date();
         setSixMonth(d);
         $(this).parent().find('.dashboard-period-button').removeClass('active');
         $(this).addClass('active');
     });
 
-    $('.dashboard-period-button-group .twelve_month').on('click', function() {
+    $('.dashboard-period-button-group .twelve_month').on('click', function () {
         var d = new Date();
         setTwelveMonth(d);
         $(this).parent().find('.dashboard-period-button').removeClass('active');

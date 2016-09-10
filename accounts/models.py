@@ -67,7 +67,10 @@ class MyUser(AbstractBaseUser):
         return self.email
 
     def get_short_name(self):
-        return self.email.split('@')[0]
+        if self.name:
+            return self.name
+        else:
+            return self.email.split('@')[0]
 
     @property
     def is_staff(self):

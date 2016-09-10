@@ -4,13 +4,13 @@ import json
 
 from django.shortcuts import render, Http404
 from django.views.generic import View
-from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .models import PointTransaction, PointHistory, Order
 from socialup.mixins import AjaxRequireMixin
 from carts.models import Cart
 from .iamport import validation_prepare
+from datetime import datetime, timedelta
 
 
 class PointCheckoutAjaxView(AjaxRequireMixin, View):
@@ -77,6 +77,24 @@ class PointImpAjaxView(AjaxRequireMixin, View):
 @login_required
 def charge_point(request):
     template = 'account/dashboard_charge.html'
+
+    if request.is_ajax():
+        name = request.GET.get('name')
+        phone = request.GET.get('phone')
+
+        try:
+            user = request.user
+        except:
+            raise Http404
+
+        if not user.name and name is not None:
+            user.name = name
+            user.save()
+
+        if not user.phone and phone is not None:
+            user.phone = phone
+            user.save()
+
     context = {
     }
     return render(request, template, context)
@@ -84,7 +102,12 @@ def charge_point(request):
 
 @login_required
 def history_point(request):
-    obj = PointHistory.objects.filter(user=request.user)
+    delta = request.GET.get('delta')
+    if delta is None:
+        delta = 30
+
+    last_month = datetime.today() - timedelta(days=int(delta))
+    obj = PointHistory.objects.filter(user=request.user, timestamp__gte=last_month)
 
     result = []
     result_charge = []
@@ -294,6 +317,26 @@ def purchase_list(request):
     template = 'account/dashboard_purchase_list.html'
     context = {
         "list": purchase_list
+    }
+
+    return render(request, template, context)
+
+
+@login_required
+def charge_success(request):
+    template = 'charge/charge_success.html'
+    context = {
+
+    }
+
+    return render(request, template, context)
+
+
+@login_required
+def charge_fail(request):
+    template = 'charge/charge_fail.html'
+    context = {
+
     }
 
     return render(request, template, context)

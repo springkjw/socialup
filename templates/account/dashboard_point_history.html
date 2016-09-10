@@ -8,6 +8,39 @@
 
 {% block dashboard_js %}
     <script type="text/javascript" src="{% static 'js/dashboard/history.js' %}"></script>
+    <script type="text/javascript">
+        $(function () {
+            var delta = getUrlVars()["delta"];
+            if(delta !== undefined) {
+                $('.dashboard-period-button').each(function(){
+                    $(this).removeClass('active');
+                    if($(this).attr('data-delta') == delta) {
+                        $(this).trigger('click');
+                    }
+                });
+            }else {
+                $('.dashboard-period-button.one_month').trigger('click');
+            }
+
+            $('.dashboard-period-btn').on('click', function () {
+                var delta = $('.dashboard-period-button.active').attr('data-delta');
+
+                var url = '{% url "point_history" %}' + '?delta=' + delta;
+                $(location).attr('href', url);
+            });
+        });
+
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+    </script>
 {% endblock %}
 
 {% block dashboard_content %}
@@ -21,9 +54,6 @@
                     <p>나의 포인트</p>
                     <h2>{{ user.point }}원</h2>
                 </div>
-{#                <div class="history-block history-large border-left">#}
-{#                    전체#}
-{#                </div>#}
                 <div class="history-block history-large border-all active">
                     충전
                 </div>
@@ -33,16 +63,16 @@
             </div>
             <div class="dashboard-history-period">
                 <div class="dashboard-period-button-group">
-                    <div class="dashboard-period-button one_month active">
+                    <div class="dashboard-period-button one_month" data-delta="30">
                         1개월
                     </div>
-                    <div class="dashboard-period-button three_month">
+                    <div class="dashboard-period-button three_month" data-delta="90">
                         3개월
                     </div>
-                    <div class="dashboard-period-button six_month">
+                    <div class="dashboard-period-button six_month" data-delta="180">
                         6개월
                     </div>
-                    <div class="dashboard-period-button twelve_month">
+                    <div class="dashboard-period-button twelve_month" data-delta="360">
                         12개월
                     </div>
                 </div>
@@ -56,54 +86,67 @@
                 <button type="submit" class="dashboard-period-btn">조회</button>
             </div>
             <div class="dashboard-history-table charge-history active">
-                <table >
+                <table>
                     <thead>
-                        <tr>
-                            <td>번호</td>
-                            <td>날짜</td>
-                            <td>결제수단</td>
-                            <td>충전금액</td>
-                            <td>상태</td>
-                            <td>전표출력</td>
-                        </tr>
+                    <tr>
+                        <td>번호</td>
+                        <td>날짜</td>
+                        <td>결제수단</td>
+                        <td>충전금액</td>
+                        <td>상태</td>
+                        <td>전표출력</td>
+                    </tr>
                     </thead>
                     <tbody>
-                        {% for item in history_charge reversed %}
-                            <tr>
-                                <td class="history-num-c">{{ forloop.revcounter }}</td>
-                                <td class="history-date-c">{{ item.timestamp|date:"m.d" }}</td>
-                                <td class="history-type-c">{{ item.type }}</td>
-                                <td class="history-amount-c">{{ item.amount }}원</td>
-                                <td class="history-status-c">{{ item.status }}</td>
-                                <td class="history-receipt-c"><a href="{{ item.receipt }}" target="_blank">[전표출력]</a></td>
-                            </tr>
-                        {% endfor %}
+                    {% for item in history_charge reversed %}
+                        <tr>
+                            <td class="history-num-c">{{ forloop.revcounter }}</td>
+                            <td class="history-date-c">{{ item.timestamp|date:"m.d" }}</td>
+                            <td class="history-type-c">{{ item.type }}</td>
+                            <td class="history-amount-c">{{ item.amount }}원</td>
+                            <td class="history-status-c">{{ item.status }}</td>
+                            <td class="history-receipt-c"><a href="{{ item.receipt }}" target="_blank">[전표출력]</a></td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
+                {% if not history_charge %}
+                    <div class="no-list">
+                        앗! 아직 포인트 충전한 내역이 없네요!
+                    </div>
+                {% endif %}
             </div>
             <div class="dashboard-history-table use-history">
-                <table >
+                <table>
                     <thead>
-                        <tr>
-                            <td>번호</td>
-                            <td>날짜</td>
-                            <td>내용</td>
-                            <td>사용금액</td>
-                            <td>상태</td>
-                        </tr>
+                    <tr>
+                        <td>번호</td>
+                        <td>날짜</td>
+                        <td>내용</td>
+                        <td>사용금액</td>
+                        <td>상태</td>
+                    </tr>
                     </thead>
                     <tbody>
-                        {% for item in history_usage reversed %}
-                            <tr>
-                                <td class="history-num-u">{{ forloop.revcounter }}</td>
-                                <td class="history-date-u">{{ item.timestamp|date:"m.d" }}</td>
-                                <td class="history-product-u"><a href="{{ item.product.get_absolute_url }}">{{ item.product.title|truncatechars:23 }}</a></td>
-                                <td class="history-amount-u">{{ item.amount|multi_minus }}원</td>
-                                <td class="history-status-u">{{ item.status }}</td>
-                            </tr>
-                        {% endfor %}
+
+                    {% for item in history_usage reversed %}
+                        <tr>
+                            <td class="history-num-u">{{ forloop.revcounter }}</td>
+                            <td class="history-date-u">{{ item.timestamp|date:"m.d" }}</td>
+                            <td class="history-product-u"><a
+                                    href="{{ item.product.get_absolute_url }}">{{ item.product.title|truncatechars:23 }}</a>
+                            </td>
+                            <td class="history-amount-u">{{ item.amount|multi_minus }}원</td>
+                            <td class="history-status-u">{{ item.status }}</td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
+                {% if not history_usage %}
+                    <div class="no-list">
+                        앗! 아직 포인트 사용한 내역이 없네요!
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

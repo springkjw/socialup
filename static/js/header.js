@@ -24,4 +24,12 @@ $(function () {
         $(this).addClass('active');
         $(this).find('span').find('i').removeClass('fa-caret-down').addClass('fa-caret-up');
     });
+
+    $('#header #money').digits();
 });
+
+$.fn.digits = function(){
+    return this.each(function(){
+        $(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") );
+    })
+};

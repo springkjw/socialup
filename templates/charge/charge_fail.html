@@ -1,0 +1,19 @@
+{% extends 'account/dashboard_base.html' %}
+{% load staticfiles %}
+
+{% block dashboard_css %}
+    <link rel="stylesheet" href="{% static 'css/dashboard/billing.css' %}">
+{% endblock %}
+
+{% block dashboard_content %}
+    <div class="dashboard-content">
+        <div class="dashboard-nav">
+            충전하기
+        </div>
+        <div class="dashboard-billing result">
+            <h1>충전에 실패했습니다.</h1>
+            <p>다른 결제 수단으로 시도해주세요.</p>
+            <a href="{% url 'point_charge' %}">결제 수단 변경</a>
+        </div>
+    </div>
+{% endblock %}
