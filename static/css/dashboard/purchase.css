@@ -4,8 +4,8 @@
 
 .dashboard-purchase {
     width: 700px;
-    height: 1000px;
     padding: 10px;
+    padding-bottom: 30px;
     margin: 0 auto;
     border: 2px solid #DADADA;
 }
@@ -20,7 +20,7 @@
 .dashboard-purchase .pay-info h2 {
     font-size: 16px;
     font-weight: 700;
-    color: #3D3D3D;
+    color: rgba(0, 0, 0, .7);
     margin-bottom: 20px;
 }
 
@@ -35,12 +35,14 @@
 
 .dashboard-purchase .point {
     position: relative;
+    margin-top: 20px;
 }
 
 .dashboard-purchase .mileage-input {
     width: 175px;
     height: 30px;
     position: relative;
+    margin-top: 4px;
     float: left;
     border-bottom: 1px solid rgba(0, 0, 0, .25);
 }
@@ -83,12 +85,15 @@
 
 .dashboard-purchase .mileage .button span {
     font-size: 10px;
+    display: block;
+    margin-top: 5px;
 }
 
 .dashboard-purchase .point-input {
     width: 175px;
     height: 30px;
     position: relative;
+    margin-top: 4px;
     float: left;
     border-bottom: 1px solid rgba(0, 0, 0, .25);
 }
@@ -131,6 +136,8 @@
 
 .dashboard-purchase .point .button span {
     font-size: 10px;
+    display: block;
+    margin-top: 5px;
 }
 
 input[type=number]::-webkit-inner-spin-button,
@@ -172,12 +179,14 @@ input[type=number]::-webkit-outer-spin-button {
     margin-top: 175px;
     margin-bottom: 10px;
     font-weight: 500;
-    font-size: 18px;
+    font-size: 16px;
+    color: rgba(0, 0, 0, .7);
 }
 
 .dashboard-purchase .total h1 {
     font-size: 25px;
     font-weight: 700;
+    color: rgba(0, 0, 0, .7);
     letter-spacing: -.02em;
 }
 
@@ -215,6 +224,7 @@ input[type=number]::-webkit-outer-spin-button {
     font-size: 16px;
     font-weight: 700;
     margin-bottom: 5px;
+    color: rgba(0, 0, 0, .7);
 }
 
 .dashboard-purchase .item .item-info .item-subtitle {
@@ -233,6 +243,7 @@ input[type=number]::-webkit-outer-spin-button {
     font-weight: 700;
     margin-top: 30px;
     margin-left: 50px;
+    color: rgba(0, 0, 0, .7);
 }
 
 .dashboard-purchase .buyer-info {
@@ -245,18 +256,20 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .dashboard-purchase .buyer-info label {
-    font-size: 16px;
-    font-weight: 700;
-    color: #3D3D3D;
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, .7);
     margin-bottom: 20px;
+    line-height: 30px;
 }
 
 .dashboard-purchase .buyer-info input {
-    border: 1px solid rgba(0, 0, 0, .2);
+    border: 1px solid rgba(0, 0, 0, .15);
     margin-left: 5px;
     margin-right: 15px;
     font-size: 12px;
     padding: 5px 10px 5px 10px;
+    float: right;
 }
 
 .dashboard-purchase .dashboard-purchase-bill {
@@ -267,7 +280,23 @@ input[type=number]::-webkit-outer-spin-button {
 .dashboard-purchase .dashboard-purchase-bill .dashboard-charge-button {
     background: #648efc;
     color: white;
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 700;
-    padding: 15px 45px 15px 45px;
+    border-radius: 5px;
+    padding: 10px 35px 10px 35px;
+}
+
+.buyer-form {
+    margin: 0 auto;
+    margin-top: 15px;
+    width: 240px;
+}
+
+.buyer-form:first-child {
+    margin-top: 0;
+}
+
+.buyer-form span {
+    color: orangered;
+    margin-right: 3px;
 }

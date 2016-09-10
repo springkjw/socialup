@@ -188,6 +188,7 @@ class Order(models.Model):
     order_id = models.CharField(max_length=120, unique=True)
     transaction_id = models.CharField(max_length=120, null=True, blank=True)
     type = models.CharField(max_length=120, null=True, blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False, null=True, blank=True)
 
     objects = OrderManager()
 

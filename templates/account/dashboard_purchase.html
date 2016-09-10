@@ -15,9 +15,16 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
     <script type="text/javascript">
         $(function () {
             $('.point .button button').on('click', function () {
-                $('.point-input input').autoNumeric('set', '{{ user.point }}');
+                if (parseInt('{{ user.point }}') > parseInt('{{ order.order_total }}')) {
+                    $('.point-input input').autoNumeric('set', '{{ order.order_total }}');
+                } else {
+                    $('.point-input input').autoNumeric('set', '{{ user.point }}');
+                }
 
                 var total = parseInt({{ order.order_total }}) - parseInt({{ user.point }});
+                if (total < 0) {
+                    total = 0;
+                }
                 var _total = total + '<span>원</span>';
 
                 $('.billing-info .total h1').html(_total).digits();
@@ -37,6 +44,14 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                     var buyer_name = $('.buyer-info input[name="name"]').val();
                     var buyer_phone = $('.buyer-info input[name="phone"]').val();
                     var buyer_type = $('.pay-info .pay-option input:checked').val();
+
+                    $.ajax({
+                        type: 'get',
+                        data: {
+                            name: buyer_name,
+                            phone: buyer_phone
+                        }
+                    });
 
                     if (buyer_name !== '' && buyer_phone !== '') {
                         var point_info = $('.pay-info .discount #point').autoNumeric('get');
@@ -203,7 +218,11 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                         </div>
                         <div class="button">
                             <button>전액사용</button>
-                            <span>(사용가능 포인트 {{ user.point }}원)</span>
+                            {% if user.point > order.order_total %}
+                                <span>(사용가능 포인트 {{ order.order_total }}원)</span>
+                            {% else %}
+                                <span>(사용가능 포인트 {{ user.point }}원)</span>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -235,10 +254,24 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
             </div>
         </div>
         <div class="buyer-info">
-            <label for="name">결제자명</label>
-            <input type="text" name="name">
-            <label for="phone">휴대폰 번호</label>
-            <input type="text" name="phone">
+            <div class="buyer-form">
+                <label for="email">
+                    <span>*</span>이메일
+                </label>
+                <input type="text" name="email" value="{{ user.email }}" disabled>
+            </div>
+            <div class="buyer-form">
+                <label for="name">
+                    <span>*</span>결제자명
+                </label>
+                <input type="text" name="name" value="{{ user.name }}">
+            </div>
+            <div class="buyer-form">
+                <label for="phone">
+                    <span>*</span>휴대폰 번호
+                </label>
+                <input type="text" name="phone" value="{{ user.phone }}">
+            </div>
         </div>
         <div class="dashboard-purchase-bill">
             <button class="dashboard-charge-button">결제하기</button>

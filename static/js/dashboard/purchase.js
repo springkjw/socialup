@@ -4,6 +4,8 @@ $(function () {
 
     $('.billing-info .total h1').digits();
     $('.item .item-price h2').digits();
+    $('.mileage .button span').digits();
+    $('.point .button span').digits();
 
     $('.pay-info .discount input').each(function () {
         $(this).autoNumeric('init', {

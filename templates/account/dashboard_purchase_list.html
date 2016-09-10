@@ -84,7 +84,7 @@
         <div class="dashboard-purchase-list">
             <div class="purchase-list-nav">
                 <ul>
-                    <li>전체(0)</li>
+                    <li class="active">전체({{ list|length }})</li>
                     <li>작업대기(0)</li>
                     <li>작업진행(0)</li>
                     <li>작업완료(0)</li>
@@ -93,63 +93,70 @@
                 </ul>
             </div>
             <div class="item-list">
-                {% for item in list %}
-                    <div class="item">
-                        <div class="image">
-                            {% for obj in item.cart.items.all %}
-                                {% if forloop.counter0 == 0 %}
-                                    <img src="{{ obj.product.get_image_url }}">
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                        <div class="title">
-                            {% for obj in item.cart.items.all %}
-                                {% if forloop.counter0 == 0 %}
-                                    <h3>{{ obj.product.title|truncatechars:27 }}</h3>
-                                    <div class="meta">
-                                        <p class="price">{{ item.order_total }}원</p>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-
-                        {% for obj in item.cart.items.all %}
-                            {% if forloop.counter0 == 0 %}
-                                <div class="seller">
-                                    <p>{{ obj.product.seller }}</p>
-                                    <button>문의하기</button>
-                                </div>
-                                <div class="more" data-seller-id="{{ obj.product.seller.user }}">
-                                    <i class="fa fa-angle-down" aria-hidden="true"></i>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                        <div class="item-info">
-                            <div class="purchase-info">
+                {% if list %}
+                    {% for item in list %}
+                        <div class="item">
+                            <div class="image">
                                 {% for obj in item.cart.items.all %}
                                     {% if forloop.counter0 == 0 %}
-                                        <p>주문번호 {{ item.order_id }}</p>
-                                        <p>판매자 {{ obj.product.seller }}</p>
-                                        <p>결제금액 {{ item.order_total }}</p>
-                                        <p>결제 수단
-                                            {% if item.type == 'card' %}
-                                                신용카드
-                                            {% elif item.type == 'phone' %}
-                                                휴대폰결제
-                                            {% endif %}
-                                        </p>
-                                        <p>결제 날짜 {{ item.created }}</p>
+                                        <img src="{{ obj.product.get_image_url }}">
                                     {% endif %}
                                 {% endfor %}
                             </div>
-                            <div class="message">
-                                <div class="chat-canvas">
+                            <div class="title">
+                                {% for obj in item.cart.items.all %}
+                                    {% if forloop.counter0 == 0 %}
+                                        <h3>{{ obj.product.title|truncatechars:27 }}</h3>
+                                        <div class="meta">
+                                            <p class="price">{{ item.order_total }}원</p>
+                                            <p class="date"></p>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
 
+                            {% for obj in item.cart.items.all %}
+                                {% if forloop.counter0 == 0 %}
+                                    <div class="seller">
+                                        <p>{{ obj.product.seller }}</p>
+                                        <button>문의하기</button>
+                                    </div>
+                                    <div class="more" data-seller-id="{{ obj.product.seller.user }}">
+                                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            <div class="item-info">
+                                <div class="purchase-info">
+                                    {% for obj in item.cart.items.all %}
+                                        {% if forloop.counter0 == 0 %}
+                                            <p>주문번호 {{ item.order_id }}</p>
+                                            <p>판매자 {{ obj.product.seller }}</p>
+                                            <p>결제금액 <span class="money">{{ item.order_total }}원</span></p>
+                                            <p>결제 수단
+                                                {% if item.type == 'card' %}
+                                                    신용카드
+                                                {% elif item.type == 'phone' %}
+                                                    휴대폰결제
+                                                {% endif %}
+                                            </p>
+                                            <p>결제 날짜 {{ item.created }}</p>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <div class="message">
+                                    <div class="chat-canvas">
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="no-list">
+                        아직 구매한 상품이 없습니다.
                     </div>
-                {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>

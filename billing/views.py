@@ -165,6 +165,23 @@ def switch_history_status(status):
 
 @login_required
 def purchase(request, cart_id):
+    if request.is_ajax():
+        name = request.GET.get('name')
+        phone = request.GET.get('phone')
+
+        try:
+            user = request.user
+        except:
+            raise Http404
+
+        if not user.name and name is not None:
+            user.name = name
+            user.save()
+
+        if not user.phone and phone is not None:
+            user.phone = phone
+            user.save()
+
     cart = Cart.objects.get(user=request.user, id=cart_id)
 
     if cart is not None:
