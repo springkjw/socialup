@@ -133,7 +133,7 @@
     opacity: 1;
 }
 
-.jumbotron .survey img.fa-angle-left{
+.jumbotron .survey img.fa-angle-left {
     font-size: 92px;
     font-weight: 100;
     margin-top: 160px;
@@ -143,7 +143,7 @@
     position: absolute;
 }
 
-.jumbotron .survey img.fa-angle-right{
+.jumbotron .survey img.fa-angle-right {
     font-size: 92px;
     font-weight: 100;
     margin-top: 160px;
@@ -158,10 +158,11 @@
 }
 
 .jumbotron .survey .survey-complete {
-    width: 160px;
-    height: 55px;
-    background: transparent;
-    border: 4px solid #648efc;
+    width: 100px;
+    height: 45px;
+    background: #648efc;
+    border-radius: 5px;
+    color: white;
     position: absolute;
     right: 45px;
     top: 265px;
@@ -266,12 +267,12 @@
     position: absolute;
 }
 
-.list-card .card-author .card-author-info-rating  i {
+.list-card .card-author .card-author-info-rating i {
     font-size: 14px;
     color: #b1c6fc;
 }
 
-.list-card .card-author .card-author-info-rating  i.active {
+.list-card .card-author .card-author-info-rating i.active {
     color: #648efc;
 }
 

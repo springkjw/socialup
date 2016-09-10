@@ -383,9 +383,11 @@ body {
 
 .dashboard-content .dashboard-change-form .change_button {
     width: 95px;
-    height: 45px;
+    height: 40px;
     color: white;
-    font-size: 16px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
     padding-left: 10px;
     padding-right: 10px;
     background: #648efc;
