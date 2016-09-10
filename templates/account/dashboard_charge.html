@@ -30,36 +30,40 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                 });
 
                 if (email !== '' && name !== '' && phone !== '' && amount !== '' && type !== '') {
-                    var merchant_id = AjaxStoreTransaction(e, amount, type);
-                    if (merchant_id !== '') {
-                        IMP.request_pay({
-                            pg: 'html5_inicis',
-                            escrow: false,
-                            digital: true,
-                            pay_method: type,
-                            merchant_uid: merchant_id,
-                            name: '[소셜업]포인트' + amount + '원 충전',
-                            amount: amount,
-                            buyer_email: email,
-                            buyer_name: name,
-                            buyer_tel: phone
-                        }, function (rsp) {
-                            if (rsp.success) {
-                                var msg = '결제가 완료되었습니다.';
-                                msg += '고유ID : ' + rsp.imp_uid;
-                                msg += '상점 거래ID : ' + rsp.merchant_uid;
-                                msg += '결제 금액 : ' + rsp.paid_amount;
-                                msg += '카드 승인번호 : ' + rsp.apply_num;
-                                ImpTransaction(e, rsp.merchant_uid, rsp.imp_uid, rsp.paid_amount);
+                    if (amount < 1000) {
+                        alert('1,000원 이상 충전해주세요.')
+                    } else {
+                        var merchant_id = AjaxStoreTransaction(e, amount, type);
+                        if (merchant_id !== '') {
+                            IMP.request_pay({
+                                pg: 'html5_inicis',
+                                escrow: false,
+                                digital: true,
+                                pay_method: type,
+                                merchant_uid: merchant_id,
+                                name: '[소셜업]포인트' + amount + '원 충전',
+                                amount: amount,
+                                buyer_email: email,
+                                buyer_name: name,
+                                buyer_tel: phone
+                            }, function (rsp) {
+                                if (rsp.success) {
+                                    var msg = '결제가 완료되었습니다.';
+                                    msg += '고유ID : ' + rsp.imp_uid;
+                                    msg += '상점 거래ID : ' + rsp.merchant_uid;
+                                    msg += '결제 금액 : ' + rsp.paid_amount;
+                                    msg += '카드 승인번호 : ' + rsp.apply_num;
+                                    ImpTransaction(e, rsp.merchant_uid, rsp.imp_uid, rsp.paid_amount);
 
-                            } else {
-                                var msg = '결제에 실패하였습니다.';
-                                msg += '에러내용 : ' + rsp.error_msg;
-                                console.log(msg);
-                                url = '{% url 'point_fail' %}';
-                                $(location).attr('href', url);
-                            }
-                        });
+                                } else {
+                                    var msg = '결제에 실패하였습니다.';
+                                    msg += '에러내용 : ' + rsp.error_msg;
+                                    console.log(msg);
+                                    url = '{% url 'point_fail' %}';
+                                    $(location).attr('href', url);
+                                }
+                            });
+                        }
                     }
                 } else {
                     alert('값을 입력해 주세요.');

@@ -4,7 +4,6 @@ import json
 
 from django.conf import settings
 
-
 def get_access_token():
     access_data = {
         'imp_key': settings.IAMPORT_KEY,
@@ -37,7 +36,6 @@ def validation_prepare(merchant_id, amount, *args, **kwargs):
         req.add_header('Content-Type', 'application/json')
 
         res = json.loads(urllib2.urlopen(req, json.dumps(access_data)).read())
-
         if res['code'] is not 0:
             raise ValueError("API 연결에 문제가 생겼습니다.")
     else:

@@ -245,7 +245,6 @@ class CheckoutAjaxView(AjaxRequireMixin, View):
 
         if trans is not None:
             pay_total = int(trans.order_total) - int(trans.point)
-
             if not pay_total < 0:
 
                 # 아임포트 결제 사전 검증 단계
@@ -257,6 +256,7 @@ class CheckoutAjaxView(AjaxRequireMixin, View):
                 }
                 return JsonResponse(data)
             else:
+                trans.delete()
                 return JsonResponse({}, status=401)
         else:
             return JsonResponse({}, status=401)

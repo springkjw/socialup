@@ -58,41 +58,53 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                         var order_info = "{{ order.order_id }}";
 
                         var total_info = AjaxGetTransaction(e, order_info, point_info, buyer_type);
+                        var purchase_name = '';
+                        if ($('.item').length == 1) {
+                            purchase_name = $.trim($('.item .item-title').text());
+                        } else {
+                            purchase_name = $.trim($('.item:first-child .item-title').text()) + ' 외 ' + $('.item').length - 1 + '개';
+                        }
 
                         if (total_info !== '') {
-                            IMP.request_pay({
-                                pg: 'html5_inicis',
-                                escrow: false,
-                                digital: true,
-                                pay_method: buyer_type,
-                                merchant_uid: order_info,
-                                name: '결제테스트',
-                                amount: total_info,
-                                buyer_email: "{{ user.email }}",
-                                buyer_name: buyer_name,
-                                buyer_tel: buyer_phone
-                            }, function (rsp) {
-                                if (rsp.success) {
-                                    var msg = '결제가 완료되었습니다.';
-                                    msg += '고유ID : ' + rsp.imp_uid;
-                                    msg += '상점 거래ID : ' + rsp.merchant_uid;
-                                    msg += '결제 금액 : ' + rsp.paid_amount;
-                                    msg += '카드 승인번호 : ' + rsp.apply_num;
-                                    console.log(msg);
-                                    ImpTransaction(e, rsp.merchant_uid, rsp.imp_uid, rsp.paid_amount);
+                            if (total_info > 0) {
+                                IMP.request_pay({
+                                    pg: 'html5_inicis',
+                                    escrow: false,
+                                    digital: true,
+                                    pay_method: buyer_type,
+                                    merchant_uid: order_info,
+                                    name: '[소셜업]' + purchase_name,
+                                    amount: total_info,
+                                    buyer_email: "{{ user.email }}",
+                                    buyer_name: buyer_name,
+                                    buyer_tel: buyer_phone
+                                }, function (rsp) {
+                                    if (rsp.success) {
+                                        var msg = '결제가 완료되었습니다.';
+                                        msg += '고유ID : ' + rsp.imp_uid;
+                                        msg += '상점 거래ID : ' + rsp.merchant_uid;
+                                        msg += '결제 금액 : ' + rsp.paid_amount;
+                                        msg += '카드 승인번호 : ' + rsp.apply_num;
+                                        console.log(msg);
+                                        ImpTransaction(e, rsp.merchant_uid, rsp.imp_uid, rsp.paid_amount);
+                                    } else {
+                                        var msg = '결제에 실패하였습니다.';
+                                        msg += '에러내용 : ' + rsp.error_msg;
+                                        console.log(msg);
+                                        location.reload();
+                                    }
+                                });
+                            } else {
 
-                                } else {
-                                    var msg = '결제에 실패하였습니다.';
-                                    msg += '에러내용 : ' + rsp.error_msg;
-                                    console.log(msg);
-                                }
-                            });
+                            }
                         }
                     } else {
                         alert('결제자 정보를 입력해주세요.');
                     }
                 } else {
-                    alert('결제정보를 선택해주세요.');
+{#                    if (true) {#}
+                        alert('결제정보를 선택해주세요.');
+{#                    }#}
                 }
             });
         });
