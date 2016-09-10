@@ -76,62 +76,66 @@
             </div>
         </div>
         <div class="dashboard-cart">
-            {% for product in object.item %}
-                <div class="dashboard-cart-item">
-                    <div class="dashboard-cart-item-image">
-                        <a href="{{ product.0.item.product.get_absolute_url }}">
-                            <img src="{{ product.0.item.product.get_image_url }}">
-                        </a>
-                    </div>
-                    <div class="dashboard-cart-item-title">
-                        <h3>
-                            <a href="{{ product.0.item.product.get_absolute_url }}">{{ product.0.item.product|truncatechars:33 }}</a>
-                        </h3>
-                        <div class="dashboard-cart-item-meta">
-                            {% for c in product %}
-                                <div class="cart-item" data-id="{{ c.item.id }}">
-                                    {{ c.item }} - <span class="item-money">{{ c.item.price }}</span>원
-                                    {% if c.item.title != '기본가' %}
-                                        <form method="GET" id="delete-form" action="{% url 'cart' %}">
-                                            <input type="hidden" name="item" value="{{ c.item.id }}"/>
-                                            <input type="hidden" name="delete" value="true"/>
-                                            <button type="submit"><i class="fa fa-times" aria-hidden="true"></i>
-                                            </button>
-                                        </form>
-                                    {% endif %}
-                                </div>
-                            {% endfor %}
+            {% if object.item %}
+                {% for product in object.item %}
+                    <div class="dashboard-cart-item">
+                        <div class="dashboard-cart-item-image">
+                            <a href="{{ product.0.item.product.get_absolute_url }}">
+                                <img src="{{ product.0.item.product.get_image_url }}">
+                            </a>
+                        </div>
+                        <div class="dashboard-cart-item-title">
+                            <h3>
+                                <a href="{{ product.0.item.product.get_absolute_url }}">{{ product.0.item.product|truncatechars:33 }}</a>
+                            </h3>
+                            <div class="dashboard-cart-item-meta">
+                                {% for c in product %}
+                                    <div class="cart-item" data-id="{{ c.item.id }}">
+                                        {{ c.item }} - <span class="item-money">{{ c.item.price }}</span>원
+                                        {% if c.item.title != '기본가' %}
+                                            <form method="GET" id="delete-form" action="{% url 'cart' %}">
+                                                <input type="hidden" name="item" value="{{ c.item.id }}"/>
+                                                <input type="hidden" name="delete" value="true"/>
+                                                <button type="submit"><i class="fa fa-times" aria-hidden="true"></i>
+                                                </button>
+                                            </form>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="dashboard-cart-item-seller">
+                            <p>{{ product.0.item.product.seller }}</p>
+                            <button>문의하기</button>
+                        </div>
+                        <div class="dashboard-cart-item-more">
+                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        </div>
+                        <div class="dashboard-cart-item-popup">
+                            <ul>
+                                <li id="popup-buy">
+                                    {% csrf_token %}
+                                    <input class="buy" id="cart-buy" value="바로구매"/>
+                                </li>
+                                <li id="popup-delete">
+                                    <form method="GET" id="delete-form" action="{% url 'cart' %}">
+                                        <input type="hidden" name="product_item"
+                                               value="{{ product.0.item.product.id }}"/>
+                                        <input type="hidden" name="delete" value="true"/>
+                                        <input id="cart_delete" type="submit" value="삭제하기"/>
+                                    </form>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="dashboard-cart-item-seller">
-                        <p>{{ product.0.item.product.seller }}</p>
-                        <button>문의하기</button>
-                    </div>
-                    <div class="dashboard-cart-item-more">
-                        <i class="fa fa-angle-down" aria-hidden="true"></i>
-                    </div>
-                    <div class="dashboard-cart-item-popup">
-                        <ul>
-                            <li id="popup-buy">
-                                {% csrf_token %}
-                                <input class="buy" id="cart-buy" value="바로구매"/>
-                            </li>
-                            <li id="popup-delete">
-                                <form method="GET" id="delete-form" action="{% url 'cart' %}">
-                                    <input type="hidden" name="product_item" value="{{ product.0.item.product.id }}"/>
-                                    <input type="hidden" name="delete" value="true"/>
-                                    <input id="cart_delete" type="submit" value="삭제하기"/>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-list">
+                    앗! 아직 장바구니에 상품이 없네요!
                 </div>
-            {% endfor %}
+            {% endif %}
         </div>
         <div class="dashboard-cart-total">
-            {#            <div class="dashboard-cart-bill">#}
-            {#                <p>결제정보</p>#}
-            {#            </div>#}
             <div class="dashboard-cart-subtotal">
                 <p>상품 금액</p>
                 <h1><span id="money">{{ object.cart.subtotal }}</span><span id="unit">원</span></h1>

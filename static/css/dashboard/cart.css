@@ -163,9 +163,10 @@
 .dashboard-cart-purchase #purchase {
     background: #648efc;
     color: white;
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 600;
-    padding: 17px 60px 17px 60px;
+    border-radius: 5px;
+    padding: 12px 40px 12px 40px;
 }
 
 .dashboard-cart-item-meta .cart-item {
@@ -182,4 +183,13 @@
 
 .dashboard-cart-item-meta .cart-item button i {
     color: #648efc;
+}
+
+.no-list {
+    text-align: center;
+    color: #648efc;
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 70px;
+    padding-bottom: 30px;
 }
