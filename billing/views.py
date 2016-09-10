@@ -5,6 +5,7 @@ import json
 from django.shortcuts import render, Http404
 from django.views.generic import View
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .models import PointTransaction, PointHistory, Order
 from socialup.mixins import AjaxRequireMixin
@@ -73,6 +74,7 @@ class PointImpAjaxView(AjaxRequireMixin, View):
             return JsonResponse({}, status=401)
 
 
+@login_required
 def charge_point(request):
     template = 'account/dashboard_charge.html'
     context = {
@@ -80,6 +82,7 @@ def charge_point(request):
     return render(request, template, context)
 
 
+@login_required
 def history_point(request):
     obj = PointHistory.objects.filter(user=request.user)
 
@@ -137,6 +140,7 @@ def switch_history_status(status):
     }.get(status, '알수없음')
 
 
+@login_required
 def purchase(request, cart_id):
     cart = Cart.objects.get(user=request.user, id=cart_id)
 
@@ -252,6 +256,7 @@ class ImpAjaxView(AjaxRequireMixin, View):
             return JsonResponse({}, status=401)
 
 
+@login_required
 def purchase_list(request):
     # if request.is_ajax():
     #     user_id = request.GET.get('user_id')
