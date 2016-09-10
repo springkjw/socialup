@@ -198,14 +198,11 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                 </div>
                 <div class="dashboard-charge-info">
                     <input type="hidden" id="merchant_id" name="merchant_id" value="">
-                    <input type="hidden" id="email" name="email" value="{{ user.email }}">
+                    <label for="email">이메일</label>
+                    <input type="text" id="email" name="email" value="{{ user.email }}">
                     <label for="name">결제자명</label>
-                    <br/>
                     <input id="name" name="name">
-                    <br/>
-                    <br/>
                     <label for="phone">휴대폰번호</label>
-                    <br/>
                     <input id="phone" name="phone">
                 </div>
                 <div class="dashboard-charge-total">

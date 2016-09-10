@@ -1,4 +1,8 @@
 $(function () {
+    var os = navigator.platform;
+
+    console.log(os);
+
     var IMP = window.IMP;
     IMP.init('imp68762150');
 

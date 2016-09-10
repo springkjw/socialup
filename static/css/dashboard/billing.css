@@ -28,10 +28,10 @@
 }
 
 .dashboard-charge-info input {
-    border: 1px solid rgba(0, 0, 0, .3);
+    border: 1px solid rgba(0, 0, 0, .15);
     font-size: 12px;
     font-weight: 300;
-    padding: 5px 5px 5px 10px;
+    padding: 8px 5px 8px 13px;
     margin-top: 5px;
     margin-left: 15px;
 }
