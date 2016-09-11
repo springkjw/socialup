@@ -103,7 +103,11 @@
                             <div class="seller-detail-info-bottom">
                                 전문가 소개
                                 <p>
-                                    {{ product.seller.description }}
+                                    {% if product.seller.description %}
+                                        {{ product.seller.description }}
+                                    {% else %}
+                                        판매자에 대한 소개가 없습니다.
+                                    {% endif %}
                                 </p>
                             </div>
                         </div>
@@ -286,23 +290,29 @@
                                 <i class="fa fa-star" aria-hidden="true"></i>
                                 <span>({{ reviews_count }})</span>
                             </div>
-                            {% for review in reviews %}
-                                <div class="tab-review">
-                                    <div class="seller-rating" data-rating="{{ review.rating }}">
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
+                            {% if reviews %}
+                                {% for review in reviews %}
+                                    <div class="tab-review">
+                                        <div class="seller-rating" data-rating="{{ review.rating }}">
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="review-content">
+                                            {{ review.review }}
+                                        </div>
+                                        <div class="review-timestamp">
+                                            {{ review.updated|date:'Y.m.d' }}
+                                        </div>
                                     </div>
-                                    <div class="review-content">
-                                        {{ review.review }}
-                                    </div>
-                                    <div class="review-timestamp">
-                                        {{ review.updated|date:'Y.m.d' }}
-                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="no-list">
+                                    상품 리뷰가 아직 없습니다.
                                 </div>
-                            {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
                     <div class="product-content product-detail-caution">

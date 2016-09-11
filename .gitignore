@@ -167,6 +167,7 @@ Temporary Items
 
 .idea/
 assets/
+media/
 socialup/.idea/
 socialup/settings/local.py
 

@@ -2,6 +2,7 @@
 from django.shortcuts import render, HttpResponse, Http404, HttpResponseRedirect
 from django.forms import inlineformset_factory
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.decorators import login_required
 from .models import Product, Variation, ProductTag, SnsType, ProductTarget, SnsUrl
 from .forms import ProductForm, VariationForm, TagForm, TypeForm, TargetForm
 from carts.models import WishList
@@ -12,6 +13,7 @@ from reviews.models import ProductReview
 import json
 
 
+@login_required
 def product_detail(request, product_id):
     # product_id로 상품 조회
     product = Product.objects.get(id=product_id)
@@ -102,6 +104,7 @@ def product_detail(request, product_id):
     return render(request, template, context)
 
 
+@login_required
 def product_upload(request, product_id=None):
     VariationInlineFormset = inlineformset_factory(Product, Variation, form=VariationForm, extra=1, )
 
@@ -127,12 +130,10 @@ def product_upload(request, product_id=None):
         type_form = TypeForm(request.POST)
         target_form = TargetForm(request.POST)
 
-        print "start"
         if form.is_valid():
             instance = form.save(commit=False)
             instance.seller = seller
             instance.save()
-            print "form is valid"
 
             # save sns url
             url_list = request.POST.getlist('url')
@@ -202,6 +203,7 @@ def product_upload(request, product_id=None):
     return render(request, template, context)
 
 
+@login_required
 def product_upload_complete(request):
     template = 'product/product_upload_complete.html'
     context = {
@@ -211,6 +213,7 @@ def product_upload_complete(request):
     return render(request, template, context)
 
 
+@login_required
 def product_manage(request):
     # 판매자가 아닐 경우
     seller = Seller.objects.get(user=request.user)

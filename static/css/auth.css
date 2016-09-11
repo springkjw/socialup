@@ -1,349 +1,350 @@
 .auth-logo {
-    margin: 0 auto;
-    width: 73px;
-    height: 56px;
-    margin-top: 70px;
-    margin-bottom: 40px;
+	margin: 0 auto;
+	width: 73px;
+	height: 56px;
+	margin-top: 70px;
+	margin-bottom: 40px;
 }
 
 .auth-logo img {
-    width: 100%;
-    height: 100%;
+	width: 100%;
 }
 
 .auth-area {
-    width: 432px;
-    border: 1px solid #EAEAEA;
-    background: white;
-    padding: 70px 65px;
-    margin: 0 auto;
-    margin-bottom: 80px;
-    box-shadow: 3px 6px 4px rgba(0, 0, 0, .15);
+	width: 432px;
+	border: 1px solid #EAEAEA;
+	background: white;
+	padding: 70px 65px;
+	margin: 0 auto;
+	margin-bottom: 80px;
+	box-shadow: 3px 6px 4px rgba(0, 0, 0, .15);
 }
 
 .login-or {
-    font-size: 14px;
-    font-weight: 300;
-    color: #777777;
-    text-align: center;
-    margin-top: 35px;
-    margin-bottom: 20px;
+	font-size: 14px;
+	font-weight: 300;
+	color: #777777;
+	text-align: center;
+	margin-top: 35px;
+	margin-bottom: 20px;
 }
 
 .socialaccount_ballot {
-    width: 432px;
-    position: relative;
+	width: 432px;
+	position: relative;
 }
 
 .socialaccount_ballot .socialaccount_providers #facebook_logo_signup {
-    position: absolute;
-    left: 80px;
-    top: -3px;
-    height: 35%;
+	position: absolute;
+	left: 80px;
+	top: -3px;
+	height: 35%;
 }
 
 .socialaccount_ballot .socialaccount_providers #facebook_logo_login {
-    position: absolute;
-    left: 115px;
-    top: -3px;
-    height: 130%;
+	position: absolute;
+	left: 115px;
+	top: -3px;
+	height: 130%;
 }
 
 .socialaccount_providers {
-    width: 100%;
+	width: 100%;
 }
 
 .socialaccount_provider.facebook {
-    background: rgba(60, 90, 150, 1);
-    color: white;
-    font-size: 16px;
-    font-weight: 300;
-    padding: 13px 110px 13px 110px;
+	background: rgba(60, 90, 150, 1);
+	color: white;
+	font-size: 16px;
+	font-weight: 300;
+	padding: 13px 110px 13px 110px;
 }
 
 .signup {
-    width: 515px;
+	width: 515px;
 }
 
 .signup label {
-    font-size: 14px;
-    font-weight: 700;
-    color: #555555;
+	font-size: 14px;
+	font-weight: 700;
+	color: #555555;
 }
 
 .signup input {
-    width: 400px;
-    height: 40px;
-    border: 3px solid #EAEAEA;
-    font-weight: 300;
-    padding-left: 20px;
-    margin-bottom: 15px;
-    margin-top: 10px;
+	width: 400px;
+	height: 40px;
+	border: 3px solid #EAEAEA;
+	font-weight: 300;
+	padding-left: 20px;
+	margin-bottom: 15px;
+	margin-top: 10px;
 }
 
 .errorlist {
-    margin-bottom: 15px;
-    font-size: 12px;
-    color: #DB2828;
-    margin-top: -5px;
-    margin-left: 5px;
+	margin-bottom: 15px;
+	font-size: 12px;
+	color: #DB2828;
+	margin-top: -5px;
+	margin-left: 5px;
 }
 
 .signup button {
-    background: rgba(60, 90, 150, 1);
-    color: white;
-    font-size: 16px;
-    font-weight: 700;
-    padding: 14px 132px 14px 132px;
+	background: rgba(60, 90, 150, 1);
+	color: white;
+	font-size: 16px;
+	font-weight: 700;
+	padding: 14px 132px 14px 132px;
 }
 
 .signup .auth-agreement {
-    width: 385px;
-    margin-top: 20px;
+	width: 385px;
+	margin-top: 20px;
 }
 
 .signup .auth-agreement .auth-agreement-title {
-    width: 100%;
-    height: 50px;
-    padding: 5px 20px 5px 20px;
-    background: #F2F2F2;
-    line-height: 50px;
-    font-size: 18px;
-    font-weight: 600;
-    color: #555555;
+	width: 100%;
+	height: 50px;
+	padding: 5px 20px 5px 20px;
+	background: #F2F2F2;
+	line-height: 50px;
+	font-size: 18px;
+	font-weight: 600;
+	color: #555555;
 }
 
 .signup .auth-agreement .auth-agreement-title span {
-    float: right;
-    color: #cccccc;
-    cursor: pointer;
+	float: right;
+	color: #cccccc;
+	cursor: pointer;
 }
 
 .signup .auth-agreement input[type=checkbox] {
-    display: none;
+	display: none;
 }
 
 .signup .auth-agreement label {
-    cursor: pointer;
+	cursor: pointer;
 }
 
 .signup .auth-agreement label:before {
-    content: "\2713";
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background-color: transparent;
-    line-height: 25px;
-    font-size: 14px;
-    color: transparent;
-    border: 1px solid rgba(0, 0, 0, .2);
-    margin-right: 10px;
-    cursor: pointer;
+	content: "\2713";
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background-color: transparent;
+	line-height: 25px;
+	font-size: 14px;
+	color: transparent;
+	border: 1px solid rgba(0, 0, 0, .2);
+	margin-right: 10px;
+	cursor: pointer;
 }
 
 .signup .auth-agreement input[type=checkbox]:checked + label:before {
-    content: "\2713";
-    font-size: 22px;
-    color: #333;
-    text-align: center;
-    line-height: 22px;
-    cursor: pointer;
+	content: "\2713";
+	font-size: 22px;
+	color: #333;
+	text-align: center;
+	line-height: 22px;
+	cursor: pointer;
 }
 
 .signup .auth-agreement .auth-agreement-content {
-    display: none;
-    border-right: 1px solid #DADADA;
-    border-left: 1px solid #DADADA;
-    border-bottom: 1px solid #DADADA;
-    height: 120px;
-    width: 362px;
-    padding: 20px 30px 20px 30px;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #555555;
-    overflow: scroll;
+	display: none;
+	border-right: 1px solid #DADADA;
+	border-left: 1px solid #DADADA;
+	border-bottom: 1px solid #DADADA;
+	height: 120px;
+	width: 362px;
+	padding: 20px 30px 20px 30px;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #555555;
+	overflow: scroll;
 }
 
 .signup button[type=submit] {
-    margin-top: 23px;
+	margin-top: 23px;
 }
 
 .auth-description {
-    margin-top: 45px;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 1.5;
+	margin-top: 45px;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 1.5;
 }
 
 .auth-other {
-    margin-top: 50px;
-    font-size: 14px;
-    color: #648efc;
-    font-weight: 500;
+	margin-top: 50px;
+	font-size: 14px;
+	color: #648efc;
+	font-weight: 500;
 }
 
 .auth-other-left {
-    float: left;
+	float: left;
 }
 
 .auth-other-right {
-    float: right
+	float: right
 }
 
 .login {
-    width: 515px;
+	width: 515px;
 }
 
 .login label {
-    font-size: 14px;
-    font-weight: 700;
-    color: #555555;
+	font-size: 14px;
+	font-weight: 700;
+	color: #555555;
 }
 
 .login input {
-    width: 400px;
-    height: 40px;
-    border: 3px solid #EAEAEA;
-    font-weight: 300;
-    padding-left: 20px;
-    margin-bottom: 15px;
-    margin-top: 10px;
+	width: 400px;
+	height: 40px;
+	border: 3px solid #EAEAEA;
+	font-weight: 300;
+	padding-left: 20px;
+	margin-bottom: 15px;
+	margin-top: 10px;
 }
 
 .login input[type=checkbox] {
-    display: none;
+	display: none;
 }
 
 .login label[for=id_remember] {
-    cursor: pointer;
-    color: #777777;
+	cursor: pointer;
+	color: #777777;
 }
 
 .login > label[for="id_remember"]:before {
-    content: "\2713";
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background-color: transparent;
-    line-height: 23px;
-    font-size: 16px;
-    color: transparent;
-    border: 1px solid rgba(0, 0, 0, .2);
-    margin-right: 10px;
-    cursor: pointer;
+	content: "\2713";
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background-color: transparent;
+	line-height: 23px;
+	font-size: 16px;
+	color: transparent;
+	border: 1px solid rgba(0, 0, 0, .2);
+	margin-right: 10px;
+	cursor: pointer;
 }
 
 .login input[type="checkbox"]:checked + label[for="id_remember"]:before {
-    content: "\2713";
-    font-size: 28px;
-    color: #333;
-    text-align: center;
-    line-height: 16px;
+	content: "\2713";
+	font-size: 28px;
+	color: #333;
+	text-align: center;
+	line-height: 16px;
 }
 
 .login button {
-    width: 435px;
-    background: transparent;
-    border: 1px solid rgba(60, 90, 150, 1);
-    color: rgba(60, 90, 150, 1);
-    font-size: 16px;
-    font-weight: 300;
-    margin-top: 16px;
-    padding: 14px 132px 14px 132px;
+	width: 435px;
+	background: transparent;
+	border: 1px solid rgba(60, 90, 150, 1);
+	color: rgba(60, 90, 150, 1);
+	font-size: 16px;
+	font-weight: 300;
+	margin-top: 16px;
+	padding: 14px 132px 14px 132px;
 }
 
 .facebook-login {
-    margin-top: 30px;
-    width: 435px;
+	margin-top: 30px;
+	width: 435px;
 }
 
 .facebook-login .socialaccount_providers {
-    width: 100%;
+	width: 100%;
 }
 
 .facebook-login .socialaccount_provider.facebook {
-    width: 435px;
-    background: rgba(60, 90, 150, 1);
-    color: white;
-    font-size: 16px;
-    font-weight: 300;
-    padding: 14px 149px 14px 149px;
+	width: 435px;
+	background: rgba(60, 90, 150, 1);
+	color: white;
+	font-size: 16px;
+	font-weight: 300;
+	padding: 14px 149px 14px 149px;
 }
 
 .verification-email {
-    text-align: center;
+	text-align: center;
 }
 
 .verification-email h2 {
-    font-size: 18px;
-    font-weight: 500;
+	font-size: 18px;
+	font-weight: 500;
 }
 
 .verification-email h3 {
-    font-size: 14px;
-    font-weight: 400;
-    margin-top: 15px;
-    margin-bottom: 40px;
+	font-size: 14px;
+	font-weight: 400;
+	margin-top: 15px;
+	margin-bottom: 40px;
 }
 
 .verification-email p {
-    font-size: 14px;
-    font-weight: 400;
-    margin-top: 5px;
+	font-size: 14px;
+	font-weight: 400;
+	margin-top: 5px;
 }
 
 .verification-email .button {
-    margin: 0 auto;
-    width: 70px;
-    background: white;
-    border: 3px solid #648efc;
-    padding: 12px 45px 12px 45px;
+	margin: 0 auto;
+	width: 70px;
+	background: #648efc;
+	border-radius: 5px;
+	color: white;
+	padding: 8px 30px 8px 30px;
 }
 
 .verification-email .button a {
-    font-size: 16px;
-    font-weight: 600;
+	font-size: 14px;
+	font-weight: 600;
 }
 
 .verification-email button {
-    margin-top: 30px;
-    background: white;
-    border: 3px solid #648efc;
-    padding: 12px 55px 12px 55px;
-    font-size: 16px;
-    font-weight: 600;
+	margin-top: 30px;
+	background: #648efc;
+	color: white;
+	border-radius: 5px;
+	padding: 12px 35px 12px 35px;
+	font-size: 14px;
+	font-weight: 600;
 }
 
 .reset-password h2 {
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 30px;
-    text-align: center;
-    color: #648efc;
+	font-size: 20px;
+	font-weight: 600;
+	margin-bottom: 30px;
+	text-align: center;
+	color: #648efc;
 }
 
 .reset-password label {
-    font-size: 14px;
-    font-weight: 700;
-    color: #555555;
+	font-size: 14px;
+	font-weight: 700;
+	color: #555555;
 }
 
 .reset-password input {
-    width: 400px;
-    height: 40px;
-    border: 3px solid #EAEAEA;
-    font-weight: 300;
-    padding-left: 20px;
-    margin-bottom: 15px;
-    margin-top: 10px;
+	width: 400px;
+	height: 40px;
+	border: 3px solid #EAEAEA;
+	font-weight: 300;
+	padding-left: 20px;
+	margin-bottom: 15px;
+	margin-top: 10px;
 }
 
 .reset-password button {
-    width: 435px;
-    background: rgba(60, 90, 150, 1);
-    color: white;
-    font-size: 16px;
-    font-weight: 300;
-    padding: 14px 139px 14px 139px;
+	width: 435px;
+	background: rgba(60, 90, 150, 1);
+	color: white;
+	font-size: 16px;
+	font-weight: 300;
+	padding: 14px 139px 14px 139px;
 }
