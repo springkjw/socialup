@@ -130,7 +130,7 @@
     padding-left: 20px;
     padding-top: 5px;
     padding-bottom: 5px;
-    font-size: 14px;
+    font-size: 12px;
     color: #777777;
     border-bottom: 1px solid #DEDEDE;
     cursor: pointer;
@@ -161,7 +161,7 @@
 }
 
 .header-dropdown .header-sub-menu a {
-    font-size: 12px;
+    font-size: 11px;
     border: none;
     padding-top: 0;
     padding-bottom: 0;

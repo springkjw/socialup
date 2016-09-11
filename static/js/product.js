@@ -26,7 +26,10 @@ $(function () {
         readImage(this);
     });
 
-    //checking variation first item is filled
+    //checking variation option item is filled
+    $('.price-option-area input').on('blur', function () {
+
+    });
     $('#id_variation_set-1-price').blur(function () {
         if ($(this).val() == '') {
             variation_total.val(1);
@@ -62,6 +65,7 @@ $(function () {
         $('#id_variation_set-TOTAL_FORMS').val(nxt_num);
 
         var price_html = '<div class="price-option-area">' +
+            '<input id="id_variation_set-' + nxt_num + '-is_default" name="variation_set-' + nxt_num + '-is_default" type="checkbox">' +
             '<div class="form-input">' +
             '<input class="variation_price" id="id_variation_set-' + nxt_num + '-price"' +
             'name="variation_set-' + nxt_num + '-price" placeholder="옵션의 추가 비용"> ' +
@@ -213,16 +217,16 @@ function checkstep1() {
     //        scrollTop: $('.filter').offset().top - 60
     //    }, 300);
     //} else {
-        $('.step1').hide().removeClass('active');
-        $('.step2').show().addClass('active');
-        $('.step3').hide().removeClass('active');
+    $('.step1').hide().removeClass('active');
+    $('.step2').show().addClass('active');
+    $('.step3').hide().removeClass('active');
 
-        $('.step_num#step1_').removeClass('active');
-        $('.step_num#step2_').addClass('active');
-        $('.step_num#step3_').removeClass('active');
+    $('.step_num#step1_').removeClass('active');
+    $('.step_num#step2_').addClass('active');
+    $('.step_num#step3_').removeClass('active');
 
-        $('.buttons .final').hide();
-        $('.buttons .start').show();
+    $('.buttons .final').hide();
+    $('.buttons .start').show();
     //}
 }
 
@@ -254,15 +258,17 @@ function checkstep2() {
     //    }, 300);
     //    $('#id_description').focus();
     //} else {
-        $('.step1').hide().removeClass('active');
-        $('.step2').hide().removeClass('active');
-        $('.step3').show().addClass('active');
+    $('.step1').hide().removeClass('active');
+    $('.step2').hide().removeClass('active');
+    $('.step3').show().addClass('active');
 
-        $('.step_num#step1_').removeClass('active');
-        $('.step_num#step2_').removeClass('active');
-        $('.step_num#step3_').addClass('active');
+    $('.step_num#step1_').removeClass('active');
+    $('.step_num#step2_').removeClass('active');
+    $('.step_num#step3_').addClass('active');
 
-        $('.buttons .final').show();
-        $('.buttons .start').hide();
+    $('.buttons .final').show();
+    $('.buttons .start').hide();
     //}
 }
+
+
