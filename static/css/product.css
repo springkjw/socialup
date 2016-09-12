@@ -643,3 +643,21 @@
     font-size: 14px;
     margin-top: 5px;
 }
+
+.step3_button {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 120px;
+}
+
+.step3_button button {
+    background: #648efc;
+    font-size: 14px;
+    font-weight: 400;
+    color: white;
+    text-align: center;
+    width: 250px;
+    height: 30px;
+    border-radius: 5px;
+}
