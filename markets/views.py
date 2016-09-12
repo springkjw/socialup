@@ -155,6 +155,8 @@ def product_upload(request, product_id=None):
             formset = VariationInlineFormset(request.POST, instance=instance)
             if formset.is_valid():
                 formset.save()
+            else:
+                print formset.errors
 
             if tag_form.is_valid():
                 tags = request.POST.getlist('tag')
@@ -165,6 +167,8 @@ def product_upload(request, product_id=None):
                         content_type=related_object_type,
                         object_id=instance.id
                     )
+            else:
+                print tag_form.errors
 
             if type_form.is_valid():
                 types = request.POST.getlist('type')
@@ -175,6 +179,8 @@ def product_upload(request, product_id=None):
                         content_type=related_object_type,
                         object_id=instance.id
                     )
+            else:
+                print type_form.errors
 
             if target_form.is_valid():
                 targets = request.POST.getlist('target')
@@ -185,6 +191,8 @@ def product_upload(request, product_id=None):
                         content_type=related_object_type,
                         object_id=instance.id
                     )
+            else:
+                print target_form.errors
 
             return HttpResponseRedirect('/dashboard/')
 
@@ -226,6 +234,18 @@ def product_manage(request):
     template = 'seller/product_manage.html'
     context = {
         "product_list": product_list
+    }
+
+    return render(request, template, context)
+
+
+@login_required
+def product_manage_change(request, product_id):
+
+
+    template = ''
+    context = {
+
     }
 
     return render(request, template, context)

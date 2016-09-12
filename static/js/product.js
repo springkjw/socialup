@@ -61,11 +61,10 @@ $(function () {
     var subject_all_html = '<label for="id_all"><input id="id_all" name="tag" type="checkbox" value="">전체</label>';
 
     price_.on('click', '.plus', function () {
-        var nxt_num = $('.price-option-area').length + 2;
+        var nxt_num = $('.price-option-area').length + 1;
         $('#id_variation_set-TOTAL_FORMS').val(nxt_num);
 
         var price_html = '<div class="price-option-area">' +
-            '<input id="id_variation_set-' + nxt_num + '-is_default" name="variation_set-' + nxt_num + '-is_default" type="checkbox">' +
             '<div class="form-input">' +
             '<input class="variation_price" id="id_variation_set-' + nxt_num + '-price"' +
             'name="variation_set-' + nxt_num + '-price" placeholder="옵션의 추가 비용"> ' +

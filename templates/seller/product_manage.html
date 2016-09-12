@@ -19,7 +19,12 @@
         <div class="dashboard-product-manage">
             {% for item in product_list %}
                 <div class="product-item">
-                    {{ item }}
+                    <div class="item-image">
+                        <img src="{{ item.get_image_url }}">
+                    </div>
+                    <div class="item-title">
+                        {{ item }}
+                    </div>
                 </div>
             {% endfor %}
         </div>

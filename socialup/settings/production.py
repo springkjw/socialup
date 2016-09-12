@@ -4,14 +4,13 @@ from .base import os, BASE_DIR
 DEBUG = False
 ALLOWED_HOSTS = ['*']
 
-#send email setting
+# send email setting
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'springkjw@gmail.com'
 EMAIL_HOST_PASSWORD = 'wodnjs2010Dbwls1804'
 EMAIL_PORT = 587
 EMAIL_SUBJECT_PREFIX = '[소셜업]'
-
 
 if 'RDS_DB_NAME' in os.environ:
     DATABASES = {
@@ -56,5 +55,31 @@ expires = date_two_months_later.strftime("%A, %d %B %Y 20:00:00 GMT")
 
 AWS_HEADERS = {
     'Expires': expires,
-    'Cache-Control': 'max-age=%d' % (int(two_months.total_seconds()), ),
+    'Cache-Control': 'max-age=%d' % (int(two_months.total_seconds()),),
+}
+
+
+def static_url(url):
+    return os.path.join(STATIC_URL, url)
+
+
+SUMMERNOTE_CONFIG = {
+    'iframe': True,
+    'width': '100%',
+    'height': '480px',
+    'lang': 'ko-KR',
+    'attachment_require_authentication': True,
+    'default_css': (
+        '/static/css/bootstrap.min.css',
+        static_url('django_summernote/summernote.css'),
+        static_url('django_summernote/django_summernote.css'),
+    ),
+    'default_js': (
+        '/static/js/jquery-2.2.4.min.js',
+        '/static/js/bootstrap.min.js',
+        static_url('django_summernote/jquery.ui.widget.js'),
+        static_url('django_summernote/jquery.iframe-transport.js'),
+        static_url('django_summernote/jquery.fileupload.js'),
+        static_url('django_summernote/summernote.min.js'),
+    ),
 }

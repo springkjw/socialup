@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     'django_summernote',
 ]
 
-#custom middleware
+# custom middleware
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -39,7 +39,7 @@ MIDDLEWARE_CLASSES = [
     # 'socialup.middleware.LoginRequireMiddleware',
 ]
 
-#except urls
+# except urls
 # LOGIN_EXECPT_URLS = (
 #     r'^$',
 #     r'^admin/',
@@ -75,7 +75,7 @@ DATABASES = {
     }
 }
 
-#all-auth setting
+# all-auth setting
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
@@ -84,35 +84,34 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_ADAPTER = 'accounts.views.AccountAdapter'
-ACCOUNT_FORMS= {
-    'signup' : 'accounts.forms.SignupForm',
-    'login' : 'accounts.forms.LoginForm',
-    'reset_password' : 'accounts.forms.ResetPasswordForm'
+ACCOUNT_FORMS = {
+    'signup': 'accounts.forms.SignupForm',
+    'login': 'accounts.forms.LoginForm',
+    'reset_password': 'accounts.forms.ResetPasswordForm'
 }
 SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_EMAIL_REQUIRED = True
 SOCIALACCOUNT_PROVIDERS = \
     {'facebook':
-       {'METHOD': 'oauth2',
-        'SCOPE': ['email', 'public_profile', 'user_friends'],
-        'AUTH_PARAMS': {'auth_type': 'https'},
-        'FIELDS': [
-            'id',
-            'email',
-            'name',
-            'first_name',
-            'last_name',
-            'verified',
-            'locale',
-            'timezone',
-            'link',
-            'gender',
-            'updated_time'],
-        'EXCHANGE_TOKEN': True,
-        'LOCALE_FUNC': 'path.to.callable',
-        'VERIFIED_EMAIL': True,
-        'VERSION': 'v2.4'}}
-
+         {'METHOD': 'oauth2',
+          'SCOPE': ['email', 'public_profile', 'user_friends'],
+          'AUTH_PARAMS': {'auth_type': 'https'},
+          'FIELDS': [
+              'id',
+              'email',
+              'name',
+              'first_name',
+              'last_name',
+              'verified',
+              'locale',
+              'timezone',
+              'link',
+              'gender',
+              'updated_time'],
+          'EXCHANGE_TOKEN': True,
+          'LOCALE_FUNC': 'path.to.callable',
+          'VERIFIED_EMAIL': True,
+          'VERSION': 'v2.4'}}
 
 AUTH_USER_MODEL = 'accounts.MyUser'
 
@@ -146,13 +145,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-SUMMERNOTE_CONFIG = {
-    'iframe' : True,
-    'width' : '100%',
-    'height' : '480px',
-    'lang' : 'ko-KR',
-    'attachment_require_authentication' : True
-}
 
 IAMPORT_KEY = '9174285101672135'
 IAMPORT_SECRET = '72tZp9MnizPwplFrwjbKszi9o0QF8pKgsegSo2fGC5c2rStXbFIEf0OD0Ei943qwhGpGJEmlKzobrS9D'
