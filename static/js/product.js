@@ -2,12 +2,12 @@ $(function () {
     var price_ = $('.price');
     var variation_total = $('#id_variation_set-TOTAL_FORMS');
 
-    $('.variation_price').autoNumeric('init', {
-        vMin: '0',
-        mDec: 0,
-        lZero: 'deny',
-        wEmpty: 'zero'
-    });
+    // $('.variation_price').autoNumeric('init', {
+    //     vMin: '0',
+    //     mDec: 0,
+    //     lZero: 'deny',
+    //     wEmpty: 'zero'
+    // });
 
     // set variation total num is 1
     variation_total.val(1);
