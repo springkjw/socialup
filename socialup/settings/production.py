@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from .base import os, BASE_DIR
 
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 # send email setting
