@@ -5,6 +5,19 @@
     <link rel="stylesheet" href="{% static 'css/dashboard/seller/manage.css' %}">
 {% endblock %}
 
+{% block dashboard_js %}
+    <script type="text/javascript">
+        $(function () {
+            {% if messages %}
+                {% for message in messages %}
+                    alert('{{ message }}');
+                    window.location.href = "{% url 'product_upload' %}";
+                {% endfor %}
+            {% endif %}
+        });
+    </script>
+{% endblock %}
+
 {% block dashboard_content %}
     <div class="dashboard-content">
         <div class="dashboard-nav">
@@ -14,7 +27,6 @@
             </div>
         </div>
         <div class="dashboard-nav advertise">
-
         </div>
         <div class="dashboard-product-manage">
             {% for item in product_list %}

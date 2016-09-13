@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render, HttpResponse, Http404, HttpResponseRedirect
+from django.shortcuts import render, HttpResponse, Http404, HttpResponseRedirect, redirect
+from django.contrib import messages
 from django.forms import inlineformset_factory
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import login_required
@@ -224,12 +225,16 @@ def product_upload_complete(request):
 @login_required
 def product_manage(request):
     # 판매자가 아닐 경우
-    seller = Seller.objects.get(user=request.user)
+    try:
+        seller = Seller.objects.get(user=request.user)
+    except:
+        seller = None
 
     if seller is None:
-        return HttpResponseRedirect('/product/upload/')
-
-    product_list = Product.objects.filter(seller=seller)
+        messages.warning(request, '판매자가 아닙니다. 상품 등록 시 자동으로 판매자 등록이 됩니다.')
+        product_list = None
+    else:
+        product_list = Product.objects.filter(seller=seller)
 
     template = 'seller/product_manage.html'
     context = {
