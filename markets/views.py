@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render, HttpResponse, Http404, HttpResponseRedirect, redirect
+from django.shortcuts import render, HttpResponse, Http404, HttpResponseRedirect, get_object_or_404
 from django.contrib import messages
 from django.forms import inlineformset_factory
 from django.contrib.contenttypes.models import ContentType
@@ -245,12 +245,50 @@ def product_manage(request):
 
 
 @login_required
-def product_manage_change(request, product_id):
+def product_change(request, product_id):
+    # retrieve product by id
+    product = get_object_or_404(Product, id=product_id)
+    related_object_type = ContentType.objects.get_for_model(product)
 
+    # checking product seller
+    if product.seller.user != request.user:
+        raise Http404
 
-    template = ''
+    # product tag
+    tags = ProductTag.objects.filter(content_type=related_object_type, object_id=product_id)
+    tag_list = []
+    for item in tags:
+        tag_list.append(item.tag)
+
+    # product type
+    types = SnsType.objects.filter(content_type=related_object_type, object_id=product_id)
+    type_list = []
+    for item in types:
+        type_list.append(item.type)
+
+    # product target
+    targets = ProductTarget.objects.filter(content_type=related_object_type, object_id=product_id)
+    target_list = []
+    for item in targets:
+        target_list.append(item.target)
+
+    form = ProductForm(instance=product)
+    tag_form = TagForm(initial={
+        "tag": tag_list
+    })
+    type_form = TypeForm(initial={
+        "type": type_list
+    })
+    target_form = TargetForm(initial={
+        "target": target_list
+    })
+
+    template = 'product/product_upload.html'
     context = {
-
+        "form": form,
+        "tag_form": tag_form,
+        "type_form": type_form,
+        "target_form": target_form
     }
 
     return render(request, template, context)

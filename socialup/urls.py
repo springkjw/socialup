@@ -5,7 +5,7 @@ from django.contrib import admin
 
 from .views import home
 from accounts.views import dashboard, change_info
-from markets.views import product_detail, product_upload, product_manage
+from markets.views import product_detail, product_upload, product_manage, product_change
 from billing.views import charge_point, history_point, PointCheckoutAjaxView, PointImpAjaxView, purchase, \
     CheckoutAjaxView, ImpAjaxView, purchase_list, charge_fail, charge_success
 from carts.views import CartView, WishListView
@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^dashboard/seller/manage/$', product_manage, name='product_manage'),
 
     url(r'^product/(?P<product_id>\d+)/$', product_detail, name='product_detail'),
+    url(r'^product/change/(?P<product_id>\d+)/$', product_change, name='product_change'),
     url(r'^product/upload/$', product_upload, name="product_upload"),
 
     url(r'^summernote/', include('django_summernote.urls')),
