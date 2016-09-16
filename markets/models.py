@@ -15,6 +15,19 @@ def upload_product_image(instance, filename):
     return "product/%s/%s" % (instance, filename)
 
 
+class ProductQueryset(models.query.QuerySet):
+    def active(self):
+        return self.filter(is_active=True)
+
+
+class ProductManager(models.Manager):
+    def get_queryset(self):
+        return ProductQueryset(self.model, using=self._db)
+
+    def active(self):
+        return self.get_queryset().active()
+
+
 class Product(models.Model):
     seller = models.ForeignKey(Seller, null=False, blank=False)
     title = models.CharField(max_length=120, blank=False)
@@ -29,8 +42,11 @@ class Product(models.Model):
     refund = models.TextField(null=True, blank=True)
     command = models.TextField(null=True, blank=True)
     rating = models.DecimalField(default=0.00, decimal_places=2, max_digits=3)
+    is_active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    objects = ProductManager()
 
     def __unicode__(self):
         return self.title

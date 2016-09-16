@@ -39,6 +39,12 @@
                         <div class="item-meta">
                             <p>{{ item.updated|date:"Y.m.d" }}</p>
                             <p><a href="{% url 'product_change' product_id=item.id %}">수정하기</a></p>
+                            <p>
+                            <form action="{% url 'product_delete' %}">
+                                <input type="hidden" name="delete_product" value="{{ item.id }}">
+                                <input type="submit" value="삭제하기">
+                            </form>
+                            </p>
                         </div>
                     </div>
                 </div>

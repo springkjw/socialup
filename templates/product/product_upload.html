@@ -10,6 +10,11 @@
 {% block js %}
     <script type="text/javascript" src="{% static 'js/autoNumeric-min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/product.js' %}"></script>
+    <script type="text/javascript">
+        $(function () {
+
+        });
+    </script>
     {% block dashboard_js %}
     {% endblock %}
 {% endblock %}
@@ -31,7 +36,7 @@
             </div>
         </div>
         <div class="upload-title">
-            <h1>상품 등록</h1>
+            <h1>상품 {{ type_ }}</h1>
             <p><span>*</span>은 필수 항목입니다</p>
         </div>
         <div class="step">
@@ -64,9 +69,14 @@
                         <div class="form-left">
                             <div class="post_image">
                                 <p><span>*</span>메인 이미지 등록</p>
-                                <img id="post_image" src="">
-                                <img id="default_image" src="{% static 'img/upload_image.png' %}">
-                                <h2>2MB 이내로 올려주세요!<br/>권장 사이즈: 430*320</h2>
+
+                                {% if form.image.value.url %}
+                                    <img id="post_image" src="{{ form.image.value.url }}">
+                                {% else %}
+                                    <img id="post_image" src="">
+                                    <img id="default_image" src="{% static 'img/upload_image.png' %}">
+                                    <h2>2MB 이내로 올려주세요!<br/>권장 사이즈: 430*320</h2>
+                                {% endif %}
                             </div>
                             {{ form.image }}
                         </div>

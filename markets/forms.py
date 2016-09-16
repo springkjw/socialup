@@ -25,6 +25,7 @@ class ProductForm(forms.ModelForm):
         widgets = {
             'foo': SummernoteWidget(),
             'bar': SummernoteInplaceWidget(),
+            'image': forms.FileInput(),
         }
 
 

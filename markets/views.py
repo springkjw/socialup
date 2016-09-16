@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render, HttpResponse, Http404, HttpResponseRedirect, get_object_or_404
+from django.shortcuts import render, HttpResponse, Http404, HttpResponseRedirect, get_object_or_404, redirect
 from django.contrib import messages
 from django.forms import inlineformset_factory
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 from .models import Product, Variation, ProductTag, SnsType, ProductTarget, SnsUrl
 from .forms import ProductForm, VariationForm, TagForm, TypeForm, TargetForm
 from carts.models import WishList
@@ -200,13 +201,16 @@ def product_upload(request, product_id=None):
         else:
             pass
 
+    type_ = "등록"
+
     template = 'product/product_upload.html'
     context = {
         "form": form,
         "formset": formset,
         "tag_form": tag_form,
         "type_form": type_form,
-        "target_form": target_form
+        "target_form": target_form,
+        "type_": type_
     }
 
     return render(request, template, context)
@@ -255,19 +259,31 @@ def product_change(request, product_id):
         raise Http404
 
     # product tag
-    tags = ProductTag.objects.filter(content_type=related_object_type, object_id=product_id)
+    try:
+        tags = ProductTag.objects.filter(content_type=related_object_type, object_id=product_id)
+    except tags.DoesNotExist:
+        raise Http404
+
     tag_list = []
     for item in tags:
         tag_list.append(item.tag)
 
     # product type
-    types = SnsType.objects.filter(content_type=related_object_type, object_id=product_id)
+    try:
+        types = SnsType.objects.filter(content_type=related_object_type, object_id=product_id)
+    except types.DoesNotExist:
+        raise Http404
+
     type_list = []
     for item in types:
         type_list.append(item.type)
 
     # product target
-    targets = ProductTarget.objects.filter(content_type=related_object_type, object_id=product_id)
+    try:
+        targets = ProductTarget.objects.filter(content_type=related_object_type, object_id=product_id)
+    except targets.DoesNotExist:
+        raise Http404
+
     target_list = []
     for item in targets:
         target_list.append(item.target)
@@ -283,12 +299,31 @@ def product_change(request, product_id):
         "target": target_list
     })
 
+    type_ = "수정"
+
     template = 'product/product_upload.html'
     context = {
         "form": form,
         "tag_form": tag_form,
         "type_form": type_form,
-        "target_form": target_form
+        "target_form": target_form,
+        "type_": type_
     }
 
     return render(request, template, context)
+
+
+@login_required
+def product_delete(request):
+    product_id = request.GET.get('delete_product')
+    # checking delete validation
+    product = get_object_or_404(Product, id=product_id)
+
+    if product.seller.user != request.user:
+        raise Http404
+
+    # disable the product
+    product.is_active = False
+    product.save()
+
+    return redirect(reverse('product_manage'))

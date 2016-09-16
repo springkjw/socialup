@@ -156,9 +156,9 @@ $(function () {
             $('.buttons .final').hide();
             $('.buttons .start').show();
         } else if (step == 'step2_') {
-            checkstep1();
+            check_step1();
         } else if (step == 'step3_') {
-            checkstep2();
+            check_step2();
         }
 
     });
@@ -179,7 +179,7 @@ function readImage(input) {
     }
 }
 
-function checkstep1() {
+function check_step1() {
     $('.step_num#step1_').addClass('active');
     if (!$('#id_title').val()) {
        alert('제목을 입력해주세요.');
@@ -233,7 +233,7 @@ function checkstep1() {
     }
 }
 
-function checkstep2() {
+function check_step2() {
     //$('.step_num#step2_').addClass('active');
     //
     //if (!$('#id_required').val()) {
