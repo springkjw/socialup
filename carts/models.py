@@ -35,7 +35,6 @@ def cart_item_post_save_receiver(sender, instance, *args, **kwargs):
 
 
 post_save.connect(cart_item_post_save_receiver, sender=CartItem)
-
 post_delete.connect(cart_item_post_save_receiver, sender=CartItem)
 
 

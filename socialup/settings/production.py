@@ -5,12 +5,12 @@ DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 # send email setting
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'springkjw@gmail.com'
-EMAIL_HOST_PASSWORD = 'wodnjs2010Dbwls1804'
+EMAIL_USER_TLS = True
+EMAIL_HOST = 'smtp.sendgrid.com'
+EMAIL_HOST_USER = 'social_up'
+EMAIL_MAIN = 'social_up@naver.com'
+EMAIL_HOST_PASSWORD = 'qwqw1212!!'
 EMAIL_PORT = 587
-EMAIL_SUBJECT_PREFIX = '[소셜업]'
 
 if 'RDS_DB_NAME' in os.environ:
     DATABASES = {

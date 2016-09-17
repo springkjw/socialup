@@ -1,9 +1,8 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
 from .models import MyUser, Seller
 
 
-class UserAdmin(UserAdmin):
+class UserAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'is_active', 'is_admin')
     list_filter = ('is_admin', 'is_active')
     fieldsets = (

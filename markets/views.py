@@ -20,7 +20,7 @@ import json
 def product_detail(request, product_id):
     # product_id로 상품 조회
     product = Product.objects.get(id=product_id)
-    # product의 판매자
+    # product 판매자
     seller = product.seller
     # product 판매자 평점 조회
     seller_rating = int(round(seller.rating * 20))
@@ -36,8 +36,6 @@ def product_detail(request, product_id):
     except:
         default = None
 
-    # sns_info = Sns.objects.get(product=product)
-
     reviews = ProductReview.objects.filter(product=product)
     reviews_count = reviews.count()
 
@@ -47,11 +45,10 @@ def product_detail(request, product_id):
         cart = request.GET.get('cart[]')
 
         if wish:
-            wishlist, created = WishList.objects.get_or_create(
+            wish_list, created = WishList.objects.get_or_create(
                 user=user,
                 item__id=wish
             )
-
             if created:
                 data = {
                     "status": "success"
