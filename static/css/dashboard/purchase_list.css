@@ -97,14 +97,15 @@
 }
 
 .dashboard-purchase-list .item-list .item .more i {
-    font-size: 24px;
-    color: rgba(0, 0, 0, .5);
-    border: 1px solid rgba(0, 0, 0, .5);
-    height: 22px;
-    width: 22px;
+    font-size: 20px;
+    color: white;
+    border-radius: 2px;
+    background: #648efc;
+    height: 20px;
+    width: 20px;
+    line-height: 23px;
     text-align: center;
-    vertical-align: center;
-    padding-bottom: 5px;
+    padding-bottom: 3px;
     padding-right: 2px;
     padding-left: 2px;
     cursor: pointer;
