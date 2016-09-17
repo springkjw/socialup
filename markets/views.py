@@ -40,15 +40,21 @@ def product_detail(request, product_id):
     reviews_count = reviews.count()
 
     if request.is_ajax():
-        user = MyUser.objects.get(id=request.user.id)
         wish = request.GET.get('wish')
         cart = request.GET.get('cart[]')
 
+        user = MyUser.objects.get(id=request.user.id)
+        # 위시리스트 추가 시
         if wish:
+            # product 조회 및 없을 시 404
+            product = get_object_or_404(Product, id=wish)
+
+            # wish 객체 검색 또는 생성
             wish_list, created = WishList.objects.get_or_create(
                 user=user,
-                item__id=wish
+                item=product
             )
+
             if created:
                 data = {
                     "status": "success"
