@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from .base import os, BASE_DIR
 
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 if 'RDS_DB_NAME' in os.environ:
