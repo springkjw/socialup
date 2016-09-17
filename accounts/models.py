@@ -55,7 +55,6 @@ class MyUser(AbstractBaseUser):
     description = models.TextField(null=True, blank=True)
     name = models.CharField(max_length=10, null=True, blank=True)
     phone = models.CharField(max_length=12, null=True, blank=True)
-    access_token = models.CharField(max_length=255, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
@@ -95,66 +94,6 @@ class MyUser(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
-
-
-def new_user_receiver(sender, instance, created, *args, **kwargs):
-    if not instance.access_token:
-        # UID = urllib.quote(instance.email, safe='')
-        UID = instance.email
-
-        url = 'https://api.sendbird.com/v3/users'
-        headers = {
-            "Api-Token": settings.SD_API_TOKEN
-        }
-        data = {
-            "user_id": UID,
-            "nickname": instance.get_short_name(),
-            "profile_url": instance.get_avatar,
-            "issue_access_token": True
-        }
-
-        req = requests.post(url, data=json.dumps(data), headers=headers)
-
-        res = json.loads(req.content)
-
-        print res
-
-        # 이미 sendbird에 user가 등록되어 있는 경우
-        if res['code'] and res['code'] == 400202:
-            url_r = 'https://api.sendbird.com/v3/users/%s' % (UID)
-
-            req_r = requests.get(url_r, headers=headers)
-
-            res_r = json.loads(req_r.content)
-
-            access_token_r = res_r['access_token']
-
-            # access_token이 있는 경우
-            if access_token_r:
-                instance.access_token = str(access_token_r)
-                instance.save()
-            # access_token이 없는 경우
-            else:
-                url_a = 'https://api.sendbird.com/v3/users/%s' % (UID)
-                data_a = {
-                    "issue_access_token": True
-                }
-                req_a = requests.put(url_a, data=json.dumps(data_a), headers=headers)
-                res_a = json.loads(req_a.content)
-                access_token_a = res_a['access_token']
-
-                instance.access_token = str(access_token_a)
-                instance.save()
-        # sendbird에 user를 처음 등록하는 경우
-        else:
-            access_token = res['access_token']
-
-            if access_token:
-                instance.access_token = str(access_token)
-                instance.save()
-
-
-post_save.connect(new_user_receiver, sender=MyUser)
 
 
 class Seller(models.Model):
