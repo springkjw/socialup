@@ -21,7 +21,7 @@ class SignupForm(SignupForm):
 
         self.fields['password1'].widget = forms.PasswordInput(
             attrs={
-                'placeholder': '비밀번호'
+                'placeholder': '비밀번호(6자리 이상)'
             }
         )
         self.fields['password1'].label = '비밀번호'
