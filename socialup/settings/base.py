@@ -6,6 +6,15 @@ SECRET_KEY = '_f^=by$nf^gjb2+o*e)nz+&%_^ykb&ro(rd$fh#o_8443z7!cv'
 
 SITE_ID = 1
 
+# send email setting
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.naver.com'
+DEFAULT_FROM_EMAIL = 'social_up@naver.com'
+EMAIL_HOST_USER = 'social_up@naver.com'
+EMAIL_MAIN = 'social_up@naver.com '
+EMAIL_HOST_PASSWORD = 'qwqw1212!!'
+EMAIL_PORT = 587
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -144,7 +153,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 IAMPORT_KEY = '9174285101672135'
 IAMPORT_SECRET = '72tZp9MnizPwplFrwjbKszi9o0QF8pKgsegSo2fGC5c2rStXbFIEf0OD0Ei943qwhGpGJEmlKzobrS9D'

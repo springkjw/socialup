@@ -4,14 +4,6 @@ from .base import os, BASE_DIR
 DEBUG = False
 ALLOWED_HOSTS = ['*']
 
-# send email setting
-EMAIL_USER_TLS = True
-EMAIL_HOST = 'smtp.sendgrid.com'
-EMAIL_HOST_USER = 'social_up'
-EMAIL_MAIN = 'social_up@naver.com'
-EMAIL_HOST_PASSWORD = 'qwqw1212!!'
-EMAIL_PORT = 587
-
 if 'RDS_DB_NAME' in os.environ:
     DATABASES = {
         'default': {
