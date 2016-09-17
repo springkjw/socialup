@@ -6,7 +6,7 @@ class UserAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'is_active', 'is_admin')
     list_filter = ('is_admin', 'is_active')
     fieldsets = (
-        (None, {'fields': ('password', 'media', 'access_token')}),
+        (None, {'fields': ('password', 'media',)}),
         ('Personal info', {'fields': ('email', 'name', 'phone', 'description',)}),
         ('Permissions', {'fields': ('is_admin', 'is_active')}),
     )
