@@ -78,4 +78,13 @@ class TargetForm(forms.Form):
     )
 
 
-
+class SnsForm(forms.Form):
+    url = forms.URLField(
+        required=True,
+        label='',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': '주소 공개시 광고주의 신뢰도가 높아집니다.'
+            }
+        )
+    )

@@ -114,6 +114,7 @@
     margin-top: 15px;
     background: white;
     cursor: pointer;
+    max-width: 100%;
 }
 
 .info #default_image {

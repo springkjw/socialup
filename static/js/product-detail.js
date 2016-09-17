@@ -76,6 +76,7 @@ $(function() {
     $('#product-option h3').digits();
     $('.product-select-item').digits();
     $('#product-total').digits();
+    $('.price-sub').digits();
 
     $(".product-bottom .top").click(function(){
         scroll(0,0);
@@ -84,7 +85,7 @@ $(function() {
     $(window).bind('scroll', function () {
         if ($(window).scrollTop() > 965) {
             $('.product-info-bottom').addClass('fixed');
-            $('.product-info-bottom.fixed').css('top', $(this).scrollTop() - 70);
+            $('.product-info-bottom.fixed').css('top', $(this).scrollTop() - 90);
             $('.content .product-menu').css('margin-top', '0');
             // $('.content .product-bottom .tab').css('padding-top', '90px');
         } else {

@@ -6,9 +6,10 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from .models import Product, Variation, ProductTag, SnsType, ProductTarget, SnsUrl
-from .forms import ProductForm, VariationForm, TagForm, TypeForm, TargetForm
+from .forms import ProductForm, VariationForm, TagForm, TypeForm, TargetForm, SnsForm
 from carts.models import WishList
 from carts.views import add_to_cart
+from billing.models import Order
 from accounts.models import MyUser, Seller
 from reviews.models import ProductReview
 
@@ -77,9 +78,11 @@ def product_detail(request, product_id):
             option = request.POST.getlist('cart[]')
 
             if option:
-                del request.session['cart_id']
-
-                cart = add_to_cart(request, default, option)
+                # 카트 세션이 남아 있는 경우 제거
+                try:
+                    del request.session['cart_id']
+                finally:
+                    cart = add_to_cart(request, default, option)
 
                 if cart is not None:
                     data = {
@@ -115,6 +118,7 @@ def product_upload(request, product_id=None):
     tag_form = TagForm()
     type_form = TypeForm()
     target_form = TargetForm()
+    url_form = SnsForm()
 
     # 저장하기 눌렀을 경우
     if request.method == 'POST':
@@ -131,6 +135,7 @@ def product_upload(request, product_id=None):
         tag_form = TagForm(request.POST)
         type_form = TypeForm(request.POST)
         target_form = TargetForm(request.POST)
+        url_form = SnsForm(request.POST)
 
         if form.is_valid():
             instance = form.save(commit=False)
@@ -157,8 +162,6 @@ def product_upload(request, product_id=None):
             formset = VariationInlineFormset(request.POST, instance=instance)
             if formset.is_valid():
                 formset.save()
-            else:
-                print formset.errors
 
             if tag_form.is_valid():
                 tags = request.POST.getlist('tag')
@@ -169,8 +172,6 @@ def product_upload(request, product_id=None):
                         content_type=related_object_type,
                         object_id=instance.id
                     )
-            else:
-                print tag_form.errors
 
             if type_form.is_valid():
                 types = request.POST.getlist('type')
@@ -181,8 +182,6 @@ def product_upload(request, product_id=None):
                         content_type=related_object_type,
                         object_id=instance.id
                     )
-            else:
-                print type_form.errors
 
             if target_form.is_valid():
                 targets = request.POST.getlist('target')
@@ -193,8 +192,6 @@ def product_upload(request, product_id=None):
                         content_type=related_object_type,
                         object_id=instance.id
                     )
-            else:
-                print target_form.errors
 
             return HttpResponseRedirect('/dashboard/')
 
@@ -210,6 +207,7 @@ def product_upload(request, product_id=None):
         "tag_form": tag_form,
         "type_form": type_form,
         "target_form": target_form,
+        "url_form": url_form,
         "type_": type_
     }
 
@@ -288,6 +286,11 @@ def product_change(request, product_id):
     for item in targets:
         target_list.append(item.target)
 
+    # try:
+    #     urls = SnsUrl.objects.filter(content_type=related_object_type, object_id=product_id)
+    # url_list = []
+    # for
+
     form = ProductForm(instance=product)
     tag_form = TagForm(initial={
         "tag": tag_list
@@ -298,6 +301,7 @@ def product_change(request, product_id):
     target_form = TargetForm(initial={
         "target": target_list
     })
+    url_form = SnsForm(request.POST)
 
     type_ = "수정"
 
@@ -307,6 +311,7 @@ def product_change(request, product_id):
         "tag_form": tag_form,
         "type_form": type_form,
         "target_form": target_form,
+        "url_form": url_form,
         "type_": type_
     }
 
@@ -327,3 +332,15 @@ def product_delete(request):
     product.save()
 
     return redirect(reverse('product_manage'))
+
+
+@login_required
+def product_order_manage(request):
+    test = Order.objects.all()
+
+    template = 'seller/order_manage.html'
+    context = {
+        "test": test
+    }
+
+    return render(request, template, context)

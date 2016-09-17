@@ -66,13 +66,14 @@
     margin-left: 20px;
     vertical-align: top;
     margin-top: 10px;
-    width: 200px;
+    width: 290px;
 }
 
 .dashboard-product-manage .product-item .item-title h3 {
     font-size: 14px;
     font-weight: 700;
     margin-bottom: 10px;
+    color: rgba(0, 0, 0, .7);
 }
 
 .dashboard-product-manage .product-item .item-title .item-meta p {
@@ -86,23 +87,23 @@
     margin-left: 12px;
 }
 
-.dashboard-product-manage .dashboard-wishlist-item .dashboard-wishlist-item-rating {
+.dashboard-product-manage .product-item .item-rating {
     display: inline-block;
     margin-left: 15px;
     margin-top: 20px;
     vertical-align: top;
 }
 
-.dashboard-product-manage .dashboard-wishlist-item .dashboard-wishlist-item-rating i {
+.dashboard-product-manage .product-item .item-rating i {
     font-size: 18px;
     color: #b1c6fc;
 }
 
-.dashboard-product-manage .dashboard-wishlist-item .dashboard-wishlist-item-rating i.active {
+.dashboard-product-manage .product-item .item-rating i.active {
     color: #648efc;
 }
 
-.dashboard-product-manage .dashboard-wishlist-item .dashboard-wishlist-item-seller {
+.dashboard-product-manage .product-item .dashboard-wishlist-item-seller {
     display: inline-block;
     margin-left: 15px;
     margin-top: 5px;
@@ -111,11 +112,7 @@
     color: rgba(0, 0, 0, .5);
 }
 
-.dashboard-product-manage .dashboard-wishlist-item .dashboard-wishlist-item-seller p {
-    font-size: 14px;
-}
-
-.dashboard-product-manage .dashboard-wishlist-item .dashboard-wishlist-item-seller button {
+.dashboard-product-manage .product-item .dashboard-item-seller button {
     padding: 3px 10px 3px 10px;
     margin-top: 5px;
     font-size: 12px;
@@ -124,18 +121,20 @@
     color: rgba(0, 0, 0, .5);
 }
 
-.dashboard-product-manage .dashboard-wishlist-item .dashboard-wishlist-item-more {
+.dashboard-product-manage .product-item .dashboard-item-more {
     position: absolute;
     right: 0;
     top: 40px;
 }
 
-.dashboard-product-manage .dashboard-wishlist-item .dashboard-wishlist-item-more i {
-    font-size: 24px;
-    color: rgba(0, 0, 0, .5);
-    border: 1px solid rgba(0, 0, 0, .5);
-    height: 22px;
-    width: 22px;
+.dashboard-product-manage .product-item .dashboard-item-more i {
+    font-size: 20px;
+    color: white;
+    border-radius: 2px;
+    background: #648efc;
+    height: 20px;
+    width: 20px;
+    line-height: 23px;
     text-align: center;
     vertical-align: center;
     padding-bottom: 3px;
@@ -144,34 +143,34 @@
     cursor: pointer;
 }
 
-.dashboard-product-manage .dashboard-wishlist-item .dashboard-wishlist-item-popup {
-    border: 1px solid rgba(0, 0, 0, .2);
+.dashboard-product-manage .product-item .dashboard-item-popup {
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 3px;
     text-align: right;
     padding: 15px;
     margin-top: 12px;
     display: none;
 }
 
-.dashboard-product-manage .dashboard-wishlist-item .dashboard-wishlist-item-popup li {
+.dashboard-product-manage .product-item .dashboard-item-popup li {
     display: inline-block;
-    padding-right: 30px;
-    padding-left: 30px;
-    font-size: 14px;
+    padding-right: 20px;
+    padding-left: 20px;
+    font-size: 12px;
     color: rgba(0, 0, 0, .5);
     cursor: pointer;
 }
 
-.dashboard-product-manage .dashboard-wishlist-item .dashboard-wishlist-item-popup li input {
+.dashboard-product-manage .product-item .dashboard-item-popup li input {
     display: inline-block;
     background: transparent;
-    font-size: 14px;
+    font-size: 12px;
     color: rgba(0, 0, 0, .5);
     cursor: pointer;
 }
 
-.dashboard-product-manage .dashboard-wishlist-item .dashboard-wishlist-item-popup #popup-buy {
+.dashboard-product-manage .product-item .dashboard-item-popup #popup-edit {
     border-right: 1px solid rgba(0, 0, 0, .2);
-    border-left: 1px solid rgba(0, 0, 0, .2);
 }
 
 .no-list {

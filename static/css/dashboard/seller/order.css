@@ -1,0 +1,18 @@
+.dashboard-nav {
+    position: relative;
+}
+
+.dashboard-nav .premium {
+    width: 88px;
+    height: 30px;
+    position: absolute;
+    right: 20px;
+    top: 35px;
+    font-size: 12px;
+    background: orangered;
+    padding: 0 10px 0 10px;
+    color: white;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+}

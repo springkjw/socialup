@@ -446,10 +446,10 @@ body {
 }
 
 .content .product-bottom .tab .tab-title {
-    font-size: 22px;
+    font-size: 14px;
     font-weight: bold;
     color: #3D3D3D;
-    margin-left: 15px;
+    margin-left: 5px;
 }
 
 .content .product-bottom .tab .tab-content {

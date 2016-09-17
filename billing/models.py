@@ -275,11 +275,19 @@ class ProductList(models.Model):
 class ProductManage(models.Model):
     seller = models.ForeignKey(Seller)
     customer = models.ForeignKey(MyUser)
+    product = models.ForeignKey(Product, null=True, blank=True)
     items = models.ManyToManyField(ProductList)
     status = models.CharField(max_length=120, choices=PRODUCT_STATUS_CHOICES, default='ready')
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
     created = models.DateTimeField(auto_now_add=False, auto_now=True)
 
-
     def __unicode__(self):
         return self.id
+
+
+def product_receiver(instance, sender, created, *args, **kwargs):
+    if instance.status == 'finish':
+        pass
+
+
+post_save.connect(product_receiver, sender=ProductManage)

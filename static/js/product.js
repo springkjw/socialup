@@ -84,9 +84,9 @@ $(function () {
             '</div>' +
             '</div>';
 
-        if(nxt_num == 1) {
+        if (nxt_num == 1) {
             $(price_html).insertAfter($('.price .step3_button'));
-        }else {
+        } else {
             $(price_html).insertAfter($('.price .form-area .price-option-area').last());
         }
     });
@@ -119,9 +119,9 @@ $(function () {
         $('.step_num').removeClass('active');
 
         if (step == 'STEP1') {
-            checkstep1();
+            check_step1();
         } else if (step == 'STEP2') {
-            checkstep2();
+            check_step2();
         }
     });
 
@@ -173,7 +173,8 @@ function readImage(input) {
             $('#post_image').attr('src', e.target.result);
         };
 
-        image.readAsDataURL(input.files[0])
+        image.readAsDataURL(input.files[0]);
+
         $('#default_image').hide();
         $('.post_image h2').hide();
     }
@@ -182,54 +183,54 @@ function readImage(input) {
 function check_step1() {
     $('.step_num#step1_').addClass('active');
     if (!$('#id_title').val()) {
-       alert('제목을 입력해주세요.');
-       $('html, body').animate({
-           scrollTop: $('#id_title').offset().top - 60
-       }, 300);
-       $('#id_title').focus();
+        alert('제목을 입력해주세요.');
+        $('html, body').animate({
+            scrollTop: $('#id_title').offset().top - 60
+        }, 300);
+        $('#id_title').focus();
     } else if (!$('#id_url').val()) {
-       alert('SNS 주소를 입력해주세요.');
-       $('html, body').animate({
-           scrollTop: $('#id_url').offset().top - 60
-       }, 300);
-       $('#id_url').focus();
+        alert('SNS 주소를 입력해주세요.');
+        $('html, body').animate({
+            scrollTop: $('#id_url').offset().top - 60
+        }, 300);
+        $('#id_url').focus();
     } else if (!$('#id_influence').val()) {
-       alert('SNS 영향력을 입력해주세요.');
-       $('html, body').animate({
-           scrollTop: $('#id_influence').offset().top - 60
-       }, 300);
-       $('#id_influence').focus();
+        alert('SNS 영향력을 입력해주세요.');
+        $('html, body').animate({
+            scrollTop: $('#id_influence').offset().top - 60
+        }, 300);
+        $('#id_influence').focus();
     } else if (!$('#id_image').val()) {
-       alert('메인 이미지를 등록해주세요.');
-       $('html, body').animate({
-           scrollTop: $('#post_image').offset().top - 60
-       }, 300);
+        alert('메인 이미지를 등록해주세요.');
+        $('html, body').animate({
+            scrollTop: $('#post_image').offset().top - 60
+        }, 300);
     } else if (!$('input[name="type"]').is(":checked")) {
-       alert('광고 가능한 SNS 종류를 선택해주세요.');
-       $('html, body').animate({
-           scrollTop: $('.filter').offset().top - 60
-       }, 300);
+        alert('광고 가능한 SNS 종류를 선택해주세요.');
+        $('html, body').animate({
+            scrollTop: $('.filter').offset().top - 60
+        }, 300);
     } else if (!$('input[name="tag"]').is(":checked")) {
-       alert('주로 다루는 주제를 선택해주세요.');
-       $('html, body').animate({
-           scrollTop: $('.filter').offset().top - 60
-       }, 300);
+        alert('주로 다루는 주제를 선택해주세요.');
+        $('html, body').animate({
+            scrollTop: $('.filter').offset().top - 60
+        }, 300);
     } else if (!$('input[name="target"]').is(":checked")) {
-       alert('주로 참여하는 타겟층을 선택해주세요.');
-       $('html, body').animate({
-           scrollTop: $('.filter').offset().top - 60
-       }, 300);
+        alert('주로 참여하는 타겟층을 선택해주세요.');
+        $('html, body').animate({
+            scrollTop: $('.filter').offset().top - 60
+        }, 300);
     } else {
-    $('.step1').hide().removeClass('active');
-    $('.step2').show().addClass('active');
-    $('.step3').hide().removeClass('active');
+        $('.step1').hide().removeClass('active');
+        $('.step2').show().addClass('active');
+        $('.step3').hide().removeClass('active');
 
-    $('.step_num#step1_').removeClass('active');
-    $('.step_num#step2_').addClass('active');
-    $('.step_num#step3_').removeClass('active');
+        $('.step_num#step1_').removeClass('active');
+        $('.step_num#step2_').addClass('active');
+        $('.step_num#step3_').removeClass('active');
 
-    $('.buttons .final').hide();
-    $('.buttons .start').show();
+        $('.buttons .final').hide();
+        $('.buttons .start').show();
     }
 }
 
@@ -273,5 +274,3 @@ function check_step2() {
     $('.buttons .start').hide();
     //}
 }
-
-

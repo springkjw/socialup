@@ -120,7 +120,12 @@
                         </div>
                         <div class="product-price">
                             <h2 id="product-price"
-                                data-price="{{ default_price.price }}">{{ default_price.price }}원~</h2>
+                                data-price="{{ default_price.price }}">
+                                {{ default_price.price }}원
+                                {% if variation|length > 1 %}
+                                    ~
+                                {% endif %}
+                            </h2>
                         </div>
                     </div>
                     <div class="product-sub-info">
@@ -128,7 +133,7 @@
                             기본가격
                         </div>
                         <div class="sub-content">
-                            <span class="orange">{{ default_price.price }}원</span>
+                            <span class="orange price-sub">{{ default_price.price }}원</span>
                         </div>
                     </div>
                     <div class="product-sub-info">
@@ -195,22 +200,25 @@
                     </div>
                     <div class="product-option">
                         <div class="product-dropdown">
-                            <input id="product-option" value="옵션" name="product-option" placeholder="" readonly>
-                            <div class="product-dropdown-icon">
-                                <i class="fa fa-caret-down" aria-hidden="true"></i>
-                            </div>
-                            <ul class="product-list" style="display: none;">
-                                {% for item in variation %}
-                                    {% if item.title != '기본가' %}
-                                        <li id="product-option" data-id="{{ item.id }}" data-price="{{ item.price }}"
-                                            data-item="{{ item }}">
-                                            <input type="checkbox" id="product-item-{{ forloop.counter }}"><label
-                                                for="product-item-{{ forloop.counter }}">{{ item }}</label>
-                                            <h3>+ {{ item.price }}원</h3>
-                                        </li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
+                            {% if variation|length > 1 %}
+                                <input id="product-option" value="옵션" name="product-option" placeholder="" readonly>
+                                <div class="product-dropdown-icon">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                                <ul class="product-list" style="display: none;">
+                                    {% for item in variation %}
+                                        {% if forloop.counter0 != 0 %}
+                                            <li id="product-option" data-id="{{ item.id }}"
+                                                data-price="{{ item.price }}"
+                                                data-item="{{ item }}">
+                                                <input type="checkbox" id="product-item-{{ forloop.counter }}"><label
+                                                    for="product-item-{{ forloop.counter }}">{{ item }}</label>
+                                                <h3>+ {{ item.price }}원</h3>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
                         </div>
                         <div class="product-select-list">
                             <div class="product-select-item">
