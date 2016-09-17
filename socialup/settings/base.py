@@ -85,6 +85,7 @@ DATABASES = {
 }
 
 # all-auth setting
+SITE_ID = 2
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
@@ -98,12 +99,11 @@ ACCOUNT_FORMS = {
     'login': 'accounts.forms.LoginForm',
     'reset_password': 'accounts.forms.ResetPasswordForm'
 }
-SOCIALACCOUNT_AUTO_SIGNUP = True
-SOCIALACCOUNT_EMAIL_REQUIRED = True
+# all-auth social account setting
 SOCIALACCOUNT_PROVIDERS = \
     {'facebook':
          {'METHOD': 'oauth2',
-          'SCOPE': ['email', 'public_profile', 'user_friends'],
+          'SCOPE': ['email', 'public_profile', ],
           'AUTH_PARAMS': {'auth_type': 'https'},
           'FIELDS': [
               'id',
@@ -120,7 +120,9 @@ SOCIALACCOUNT_PROVIDERS = \
           'EXCHANGE_TOKEN': True,
           'LOCALE_FUNC': 'path.to.callable',
           'VERIFIED_EMAIL': True,
-          'VERSION': 'v2.4'}}
+          'VERSION': 'v2.4'
+          }
+     }
 
 AUTH_USER_MODEL = 'accounts.MyUser'
 
@@ -144,18 +146,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# language & time setting
 LANGUAGE_CODE = 'ko-kr'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
+# iamport setting
 IAMPORT_KEY = '9174285101672135'
 IAMPORT_SECRET = '72tZp9MnizPwplFrwjbKszi9o0QF8pKgsegSo2fGC5c2rStXbFIEf0OD0Ei943qwhGpGJEmlKzobrS9D'
 
+# sendbird setting
 SD_API_ID = '68C1D6E3-BFC1-4B8E-B11C-6B1FBE0D3AAA'
 SD_API_TOKEN = 'ce9c13eb2b734ab9749711d122f67e478b618552'

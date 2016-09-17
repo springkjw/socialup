@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render, HttpResponseRedirect
 from allauth.account.adapter import DefaultAccountAdapter
 from .models import MyUser, Seller
 from .forms import ChangeForm
+
 
 def dashboard(request):
     user = MyUser.objects.get(id=request.user.id)
@@ -13,7 +15,7 @@ def dashboard(request):
 
     template = 'account/account_home.html'
     context = {
-        "is_seller" : is_seller
+        "is_seller": is_seller
     }
 
     return render(request, template, context)
@@ -22,10 +24,10 @@ def dashboard(request):
 def change_info(request):
     user = MyUser.objects.get(id=request.user.id)
     form = ChangeForm(initial={
-        'email' : user.email,
-        'name' : user.name,
-        'phone' : user.phone,
-        'description' : user.description
+        'email': user.email,
+        'name': user.name,
+        'phone': user.phone,
+        'description': user.description
     })
 
     if request.method == "POST":
@@ -41,12 +43,13 @@ def change_info(request):
 
     template = 'account/account_change.html'
     context = {
-        "form" : form
+        "form": form
     }
 
     return render(request, template, context)
 
 
 class AccountAdapter(DefaultAccountAdapter):
+    # login 후 redirect 페이지
     def get_login_redirect_url(self, request):
         return '/'
