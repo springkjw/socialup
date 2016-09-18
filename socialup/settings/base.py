@@ -4,7 +4,7 @@ BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../')
 
 SECRET_KEY = '_f^=by$nf^gjb2+o*e)nz+&%_^ykb&ro(rd$fh#o_8443z7!cv'
 
-SITE_ID = 1
+DEFAULT_SITE_ID = 1
 
 # send email setting
 EMAIL_USE_TLS = True
@@ -45,6 +45,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'socialup.middleware.SiteMiddleware',
     # 'socialup.middleware.LoginRequireMiddleware',
 ]
 
@@ -61,8 +62,7 @@ ROOT_URLCONF = 'socialup.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -85,7 +85,6 @@ DATABASES = {
 }
 
 # all-auth setting
-SITE_ID = 2
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
@@ -102,28 +101,28 @@ ACCOUNT_FORMS = {
 
 # all-auth social account setting
 SOCIALACCOUNT_PROVIDERS = \
-    {'facebook':
-         {'METHOD': 'oauth2',
-          'SCOPE': ['email', 'public_profile', ],
-          'AUTH_PARAMS': {'auth_type': 'https'},
-          'FIELDS': [
-              'id',
-              'email',
-              'name',
-              'first_name',
-              'last_name',
-              'verified',
-              'locale',
-              'timezone',
-              'link',
-              'gender',
-              'updated_time'],
-          'EXCHANGE_TOKEN': True,
-          'LOCALE_FUNC': 'path.to.callable',
-          'VERIFIED_EMAIL': True,
-          'VERSION': 'v2.4'
-          }
-     }
+    {'facebook': {
+        'METHOD': 'oauth2',
+        'SCOPE': ['email', 'public_profile', ],
+        'AUTH_PARAMS': {'auth_type': 'https'},
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+            'first_name',
+            'last_name',
+            'verified',
+            'locale',
+            'timezone',
+            'link',
+            'gender',
+            'updated_time'],
+        'EXCHANGE_TOKEN': True,
+        'LOCALE_FUNC': 'path.to.callable',
+        'VERIFIED_EMAIL': True,
+        'VERSION': 'v2.4'
+    }
+    }
 
 AUTH_USER_MODEL = 'accounts.MyUser'
 
