@@ -93,12 +93,13 @@ ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_LOGOUT_ON_GET = True
-ACCOUNT_ADAPTER = 'accounts.views.AccountAdapter'
+ACCOUNT_ADAPTER = 'accounts.adapter.AccountAdapter'
 ACCOUNT_FORMS = {
     'signup': 'accounts.forms.SignupForm',
     'login': 'accounts.forms.LoginForm',
     'reset_password': 'accounts.forms.ResetPasswordForm'
 }
+
 # all-auth social account setting
 SOCIALACCOUNT_PROVIDERS = \
     {'facebook':

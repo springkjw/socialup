@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, HttpResponseRedirect
-from allauth.account.adapter import DefaultAccountAdapter
 from .models import MyUser, Seller
 from .forms import ChangeForm
 
@@ -47,9 +46,3 @@ def change_info(request):
     }
 
     return render(request, template, context)
-
-
-class AccountAdapter(DefaultAccountAdapter):
-    # login 후 redirect 페이지
-    def get_login_redirect_url(self, request):
-        return '/'
