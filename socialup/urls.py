@@ -26,8 +26,10 @@ from carts.views import CartView, WishListView
 
 urlpatterns = [
     url(r'^$', home, name='home'),
+    # admin app urls
     url(r'^admin/', admin.site.urls),
-    url(r'^accounts/', include('allauth.urls')),
+    # accounts app urls
+    url(r'^accounts/', include('accounts.urls')),
 
     url(r'^dashboard/$', dashboard, name='dashboard'),
     url(r'^dashboard/change/$', change_info, name='change_info'),

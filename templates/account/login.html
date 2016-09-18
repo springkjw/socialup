@@ -29,20 +29,22 @@
 {% endblock %}
 
 {% block js %}
-<script type="text/javascript">
-    $(document).ready(function() {
-        {% if messages %}
-            $('.messages').slideDown().delay(3000).slideUp();
-        {% endif %}
-    });
-</script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            {% if messages %}
+                $('.messages').slideDown().delay(3000).slideUp();
+            {% endif %}
+        });
+    </script>
 {% endblock %}
 
 {% block content %}
     {% if messages %}
         <div class="messages">
             {% for message in messages %}
-                {{ message }}
+                {% if forloop.last %}
+                    {{ message }}
+                {% endif %}
             {% endfor %}
         </div>
     {% endif %}
