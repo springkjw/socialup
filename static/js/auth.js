@@ -9,13 +9,23 @@ $(function () {
         $(this).removeClass('fa-caret-up').addClass('fa-caret-down');
     });
 
-    $('.auth-area .signup button').on('click', function () {
+    // $('.auth-area .signup button').on('click', function () {
+    //     var email = $('#id_email').val();
+    //     var pwd1 = $('#id_password1').val();
+    //     var pwd2 = $('#id_password2').val();
+    //
+    //     if (!$('#agreenment1').is(":checked") || !$('#agreenment2').is(":checked")) {
+    //         alert('약관에 동의해주세요.');
+    //     }
+    // });
+    $('#signup_form').submit(function () {
         var email = $('#id_email').val();
         var pwd1 = $('#id_password1').val();
         var pwd2 = $('#id_password2').val();
 
         if (!$('#agreenment1').is(":checked") || !$('#agreenment2').is(":checked")) {
             alert('약관에 동의해주세요.');
+            return false;
         }
     });
 });
