@@ -100,6 +100,7 @@ ACCOUNT_FORMS = {
 }
 
 # all-auth social account setting
+SOCIALACCOUNT_ADAPTER = 'accounts.adapter.SocialAccountAdapter'
 SOCIALACCOUNT_PROVIDERS = \
     {'facebook': {
         'METHOD': 'oauth2',
