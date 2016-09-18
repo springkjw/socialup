@@ -18,3 +18,6 @@ class AccountAdapter(DefaultAccountAdapter):
                 error_message = "비밀번호는 %s자리 이상이여야합니다." % (min_length)
                 raise forms.ValidationError(error_message)
             return password
+
+    def clean_password2(self, password):
+        print password

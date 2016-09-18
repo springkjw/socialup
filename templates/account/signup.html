@@ -51,7 +51,13 @@
 
             <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">{% csrf_token %}
                 {% for field in form %}
-                    {% if field.id_for_label != 'id_confirmation_key' %}
+                    {% if field.id_for_label == 'id_password2' %}
+                        {{ field.label_tag }}<br/>
+                        {{ field }}
+                        {{ form.non_field_errors }}
+                        {{ field.errors }}
+                        <br/>
+                    {% elif field.id_for_label != 'id_confirmation_key' %}
                         {{ field.label_tag }}<br/>
                         {{ field }}
                         {{ field.errors }}<br/>
