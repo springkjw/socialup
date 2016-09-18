@@ -1,9 +1,22 @@
-from django.conf.urls import url, include
+from django.conf.urls import (
+    url,
+    include,
+    handler400,
+    handler403,
+    handler404,
+    handler500,
+)
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
 
-from .views import home
+from .views import (
+    home,
+    bad_request,
+    permission_denied,
+    page_not_found,
+    server_error,
+)
 from accounts.views import dashboard, change_info
 from markets.views import product_detail, product_upload, product_manage, product_change, product_delete, \
     product_order_manage
@@ -43,6 +56,11 @@ urlpatterns = [
 
     url(r'^summernote/', include('django_summernote.urls')),
 ]
+
+handler400 = bad_request
+handler403 = permission_denied
+handler404 = page_not_found
+handler500 = server_error
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
