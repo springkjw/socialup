@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, HttpResponseRedirect
+from django.contrib import messages
+from django.core.urlresolvers import reverse
 from .models import MyUser, Seller
 from .forms import ChangeForm
 
@@ -46,3 +48,8 @@ def change_info(request):
     }
 
     return render(request, template, context)
+
+
+def login_cancelled(request):
+    messages.error(request, "페이스북 연결이 취소 되었습니다. 다시 시도해주세요.")
+    return HttpResponseRedirect(reverse('account_signup'))

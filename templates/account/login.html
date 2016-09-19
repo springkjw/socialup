@@ -28,7 +28,26 @@
     </style>
 {% endblock %}
 
+{% block js %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            {% if messages %}
+                $('.messages').slideDown().delay(3000).slideUp();
+            {% endif %}
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                {% if forloop.last %}
+                    {{ message }}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
     <div class="bg_container">
         <div class="auth-logo">
             <img src="{% static 'img/logo2.png' %}">
