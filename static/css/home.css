@@ -183,7 +183,7 @@
     width: 225px;
     height: 265px;
     background: white;
-    margin-right: 20px;
+    margin-right: 18px;
     padding-bottom: 10px;
     cursor: pointer;
     position: relative;
@@ -221,7 +221,7 @@
 .list-card .card-price-back {
     float: right;
     position: absolute;
-    top: 28px;
+    top: 31px;
     right: -5px;
     z-index: 1;
     width: 5px;

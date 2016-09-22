@@ -96,7 +96,8 @@ ACCOUNT_ADAPTER = 'accounts.adapter.AccountAdapter'
 ACCOUNT_FORMS = {
     'signup': 'accounts.forms.SignupForm',
     'login': 'accounts.forms.LoginForm',
-    'reset_password': 'accounts.forms.ResetPasswordForm'
+    'reset_password': 'accounts.forms.ResetPasswordForm',
+    'reset_password_from_key' : 'accounts.forms.ResetPasswordKeyForm',
 }
 
 # all-auth social account setting
