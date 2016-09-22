@@ -1,4 +1,6 @@
 # -*-coding: utf-8 -*-
+
+from __future__ import unicode_literals
 from django import forms
 from accounts.models import MyUser
 from allauth.account.forms import (
@@ -6,12 +8,24 @@ from allauth.account.forms import (
     BaseSignupForm,
     LoginForm,
     ResetPasswordForm,
-    SetPasswordField,
+    ResetPasswordKeyForm,
+    # SetPasswordField,
     PasswordField,
 )
 from allauth.account.adapter import get_adapter
 from allauth.account.utils import filter_users_by_email
 from allauth.socialaccount.models import SocialAccount
+
+
+class SetPasswordField(PasswordField):
+    def __init__(self, *args, **kwargs):
+        super(SetPasswordField, self).__init__(*args, **kwargs)
+        self.user = None
+
+    def clean(self, value):
+        value = super(SetPasswordField, self).clean(value)
+        value = get_adapter().clean_password(value)
+        return value
 
 
 class SignupForm(BaseSignupForm):
@@ -128,3 +142,25 @@ class ResetPasswordForm(ResetPasswordForm):
         if not self.users:
             raise forms.ValidationError("가입된 이메일이 없습니다.")
         return self.cleaned_data["email"]
+
+
+class ResetPasswordKeyForm(ResetPasswordKeyForm):
+    password1 = SetPasswordField(label="새 비밀번호")
+    password2 = PasswordField(label="새 비밀번호 확인")
+
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('label_suffix', '')
+        self.user = kwargs['user']
+        self.temp_key = kwargs.pop("temp_key", None)
+        super(ResetPasswordKeyForm, self).__init__(*args, **kwargs)
+
+    def clean_password2(self):
+        if ("password1" in self.cleaned_data
+            and "password2" in self.cleaned_data):
+            if (self.cleaned_data["password1"]
+                    != self.cleaned_data["password2"]):
+                raise forms.ValidationError("비밀번호가 서로 다릅니다. 다시 확인해주세요.")
+        return self.cleaned_data["password2"]
+
+    def save(self):
+        get_adapter().set_password(self.user, self.cleaned_data["password1"])

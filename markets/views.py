@@ -114,7 +114,7 @@ def product_detail(request, product_id):
 
 @login_required
 def product_upload(request, product_id=None):
-    VariationInlineFormset = inlineformset_factory(Product, Variation, form=VariationForm, extra=1, )
+    VariationInlineFormset = inlineformset_factory(Product, Variation, form=VariationForm, extra=1,)
 
     form = ProductForm()
     formset = VariationInlineFormset()
@@ -165,6 +165,8 @@ def product_upload(request, product_id=None):
             formset = VariationInlineFormset(request.POST, instance=instance)
             if formset.is_valid():
                 formset.save()
+            else:
+                print formset.errors
 
             if tag_form.is_valid():
                 tags = request.POST.getlist('tag')

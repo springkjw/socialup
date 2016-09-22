@@ -20,8 +20,8 @@ class AccountAdapter(DefaultAccountAdapter):
         return '/'
 
     def clean_password(self, password):
-        min_length = app_settings.PASSWORD_MIN_LENGTH
-        if len(password) < min_length:
+        if password is not None:
+            min_length = app_settings.PASSWORD_MIN_LENGTH
             if len(password) < min_length:
                 error_message = "비밀번호는 %s자리 이상이여야합니다." % (min_length)
                 raise forms.ValidationError(error_message)
@@ -29,6 +29,10 @@ class AccountAdapter(DefaultAccountAdapter):
 
     def clean_password2(self, password):
         print password
+
+    def set_password(self, user, password):
+        user.set_password(password)
+        user.save()
 
 
 class SocialAccountAdapter(DefaultSocialAccountAdapter):
