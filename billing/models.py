@@ -253,6 +253,7 @@ def new_order_receiver(sender, instance, created, *args, **kwargs):
                     raise ValueError('거래에 문제가 발생했습니다.')
 
 
+
 post_save.connect(new_order_receiver, sender=Order)
 
 PRODUCT_STATUS_CHOICES = (

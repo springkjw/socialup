@@ -65,9 +65,9 @@ def product_detail(request, product_id):
                 }
 
             return HttpResponse(json.dumps(data), content_type='application/json')
+        # 카트 추가시
         elif cart:
             cart = add_to_cart(request, default, cart)
-
             if cart is not None:
                 data = {
                     "status": "success"

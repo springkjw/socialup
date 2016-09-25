@@ -156,6 +156,7 @@ class WishListView(SingleObjectMixin, View):
 
 
 def add_to_cart(request, default, list):
+    # request 세션 100분 설정
     request.session.set_expiry(6000)
     cart_id = request.session.get('cart_id')
 
