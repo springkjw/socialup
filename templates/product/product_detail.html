@@ -31,15 +31,19 @@
                 var item = get_item();
 
                 $.ajax({
-                    method: 'GET',
+                    method: 'POST',
                     url: '/product/' + '{{ product.id }}' + '/',
                     data: {
-                        cart: item
+                        csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+                        cart: item,
+                        action: 'cart'
                     },
                     success: function (data) {
                         if (data['status'] == 'success') {
                             alert('장바구니에 성공적으로 담겼습니다.');
                         }
+                    },
+                    error: function(data) {
                     }
                 });
             });
@@ -52,7 +56,8 @@
                     url: '/product/' + '{{ product.id }}' + '/',
                     data: {
                         csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
-                        cart: item
+                        cart: item,
+                        action: 'purchase'
                     },
                     success: function (data) {
                         if (data['status'] == 'success') {
@@ -71,6 +76,8 @@
                 var option_id = $(this).parent().attr('data-id');
                 item.push(option_id);
             });
+
+            console.log(item)
 
             return item;
         }

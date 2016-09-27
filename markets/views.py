@@ -41,7 +41,6 @@ def product_detail(request, product_id):
 
     if request.is_ajax():
         wish = request.GET.get('wish')
-        cart = request.GET.get('cart[]')
 
         user = MyUser.objects.get(id=request.user.id)
         # 위시리스트 추가 시
@@ -65,37 +64,42 @@ def product_detail(request, product_id):
                 }
 
             return HttpResponse(json.dumps(data), content_type='application/json')
-        # 카트 추가시
-        elif cart:
-            cart = add_to_cart(request, default, cart)
-            if cart is not None:
-                data = {
-                    "status": "success"
-                }
-
-                return HttpResponse(json.dumps(data), content_type='application/json')
-            else:
-                raise Http404
 
         if request.method == 'POST':
-            option = request.POST.getlist('cart[]')
+            if request.POST['action'] == 'cart':
+                cart = request.POST.getlist('cart[]')
 
-            if option:
-                # 카트 세션이 남아 있는 경우 제거
-                try:
-                    del request.session['cart_id']
-                finally:
-                    cart = add_to_cart(request, default, option)
+                if cart:
+                    cart = add_to_cart(request, default, cart)
 
-                if cart is not None:
-                    data = {
-                        "status": "success",
-                        "cart_id": cart.id
-                    }
+                    if cart is not None:
+                        data = {
+                            "status": "success",
+                        }
 
-                    return HttpResponse(json.dumps(data), content_type='application/json')
-                else:
-                    raise Http404
+                        return HttpResponse(json.dumps(data), content_type='application/json')
+                    else:
+                        raise Http404
+
+            elif request.POST['action'] == 'purchase':
+                option = request.POST.getlist('cart[]')
+
+                if option:
+                    # 카트 세션이 남아 있는 경우 제거
+                    try:
+                        del request.session['cart_id']
+                    finally:
+                        cart = add_to_cart(request, default, option)
+
+                    if cart is not None:
+                        data = {
+                            "status": "success",
+                            "cart_id": cart.id
+                        }
+
+                        return HttpResponse(json.dumps(data), content_type='application/json')
+                    else:
+                        raise Http404
 
     template = 'product/product_detail.html'
     context = {
@@ -104,7 +108,6 @@ def product_detail(request, product_id):
         'variation': variation,
         'default_price': default,
         'rating': seller_rating,
-        # 'sns': sns_info,
         'reviews': reviews,
         'reviews_count': reviews_count
     }
@@ -114,7 +117,7 @@ def product_detail(request, product_id):
 
 @login_required
 def product_upload(request, product_id=None):
-    VariationInlineFormset = inlineformset_factory(Product, Variation, form=VariationForm, extra=1,)
+    VariationInlineFormset = inlineformset_factory(Product, Variation, form=VariationForm, extra=1, )
 
     form = ProductForm()
     formset = VariationInlineFormset()
