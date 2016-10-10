@@ -33,7 +33,8 @@ import json
 @login_required
 def product_detail(request, product_id):
     # product_id로 상품 조회
-    product = Product.objects.get(id=product_id)
+    product_instance = Product.objects.active()
+    product = get_object_or_404(product_instance, id=product_id)
     # product 판매자
     seller = product.seller
     # product 판매자 평점 조회
@@ -258,7 +259,7 @@ def product_manage(request):
         messages.warning(request, '판매자가 아닙니다. 상품 등록 시 자동으로 판매자 등록이 됩니다.')
         product_list = None
     else:
-        product_list = Product.objects.filter(seller=seller)
+        product_list = Product.objects.filter(seller=seller).active()
 
     template = 'seller/product_manage.html'
     context = {
@@ -353,6 +354,7 @@ def product_delete(request):
     product_id = request.GET.get('delete_product')
     # checking delete validation
     product = get_object_or_404(Product, id=product_id)
+
 
     if product.seller.user != request.user:
         raise Http404
