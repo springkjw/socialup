@@ -1,11 +1,25 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render, HttpResponse, Http404, HttpResponseRedirect, get_object_or_404, redirect
+from django.shortcuts import (
+    render,
+    HttpResponse,
+    Http404,
+    HttpResponseRedirect,
+    get_object_or_404,
+    redirect,
+)
 from django.contrib import messages
 from django.forms import inlineformset_factory
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from .models import Product, Variation, ProductTag, SnsType, ProductTarget, SnsUrl
+from .models import (
+    Product,
+    Variation,
+    ProductTag,
+    SnsType,
+    ProductTarget,
+    SnsUrl,
+)
 from .forms import ProductForm, VariationForm, TagForm, TypeForm, TargetForm, SnsForm
 from carts.models import WishList
 from carts.views import add_to_cart
@@ -258,48 +272,53 @@ def product_manage(request):
 def product_change(request, product_id):
     # retrieve product by id
     product = get_object_or_404(Product, id=product_id)
+    # retrieve variation
+    variation = Variation.objects.filter(product=product)
     related_object_type = ContentType.objects.get_for_model(product)
 
     # checking product seller
     if product.seller.user != request.user:
         raise Http404
 
-    # product tag
     try:
+        # product tag
         tags = ProductTag.objects.filter(content_type=related_object_type, object_id=product_id)
-    except tags.DoesNotExist:
+        # product type
+        types = SnsType.objects.filter(content_type=related_object_type, object_id=product_id)
+        # product target
+        targets = ProductTarget.objects.filter(content_type=related_object_type, object_id=product_id)
+        # product sns url
+        urls = SnsUrl.objects.filter(content_type=related_object_type, object_id=product_id)
+    except ProductTag.DoesNotExist:
+        raise Http404
+    except SnsType.DoesNotExist:
+        raise Http404
+    except ProductTarget.DoesNotExist:
+        raise Http404
+    except SnsUrl.DoesNotExist:
         raise Http404
 
     tag_list = []
     for item in tags:
         tag_list.append(item.tag)
 
-    # product type
-    try:
-        types = SnsType.objects.filter(content_type=related_object_type, object_id=product_id)
-    except types.DoesNotExist:
-        raise Http404
-
     type_list = []
     for item in types:
         type_list.append(item.type)
-
-    # product target
-    try:
-        targets = ProductTarget.objects.filter(content_type=related_object_type, object_id=product_id)
-    except targets.DoesNotExist:
-        raise Http404
 
     target_list = []
     for item in targets:
         target_list.append(item.target)
 
-    # try:
-    #     urls = SnsUrl.objects.filter(content_type=related_object_type, object_id=product_id)
-    # url_list = []
-    # for
+    url_list = []
+    for item in urls:
+        url_list.append(item.url)
 
     form = ProductForm(instance=product)
+
+    VariationInlineFormset = inlineformset_factory(Product, Variation, form=VariationForm, extra=1, )
+    formset = VariationInlineFormset()
+
     tag_form = TagForm(initial={
         "tag": tag_list
     })
@@ -309,13 +328,16 @@ def product_change(request, product_id):
     target_form = TargetForm(initial={
         "target": target_list
     })
-    url_form = SnsForm(request.POST)
+    url_form = SnsForm(initial={
+        "url": url_list
+    })
 
     type_ = "수정"
 
     template = 'product/product_upload.html'
     context = {
         "form": form,
+        "formset": formset,
         "tag_form": tag_form,
         "type_form": type_form,
         "target_form": target_form,
