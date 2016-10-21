@@ -1,15 +1,30 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render, HttpResponse, Http404, HttpResponseRedirect, get_object_or_404, redirect
+from django.shortcuts import (
+    render,
+    HttpResponse,
+    Http404,
+    HttpResponseRedirect,
+    get_object_or_404,
+    redirect,
+)
 from django.contrib import messages
 from django.forms import inlineformset_factory
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.forms import generic_inlineformset_factory
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from .models import Product, Variation, ProductTag, SnsType, ProductTarget, SnsUrl
+from .models import (
+    Product,
+    Variation,
+    ProductTag,
+    SnsType,
+    ProductTarget,
+    SnsUrl,
+)
 from .forms import ProductForm, VariationForm, TagForm, TypeForm, TargetForm, SnsForm
 from carts.models import WishList
 from carts.views import add_to_cart
-from billing.models import Order
+from billing.models import Order, ProductManage
 from accounts.models import MyUser, Seller
 from reviews.models import ProductReview
 
@@ -19,7 +34,8 @@ import json
 @login_required
 def product_detail(request, product_id):
     # product_id로 상품 조회
-    product = Product.objects.get(id=product_id)
+    product_instance = Product.objects.active()
+    product = get_object_or_404(product_instance, id=product_id)
     # product 판매자
     seller = product.seller
     # product 판매자 평점 조회
@@ -244,7 +260,7 @@ def product_manage(request):
         messages.warning(request, '판매자가 아닙니다. 상품 등록 시 자동으로 판매자 등록이 됩니다.')
         product_list = None
     else:
-        product_list = Product.objects.filter(seller=seller)
+        product_list = Product.objects.filter(seller=seller).active()
 
     template = 'seller/product_manage.html'
     context = {
@@ -256,50 +272,60 @@ def product_manage(request):
 
 @login_required
 def product_change(request, product_id):
-    # retrieve product by id
+    # ID로 상품 조회
     product = get_object_or_404(Product, id=product_id)
+    # 상품 아이템 조회
+    variation = Variation.objects.filter(product=product)
     related_object_type = ContentType.objects.get_for_model(product)
 
-    # checking product seller
+    # 유저가 판매자인지 체크
     if product.seller.user != request.user:
+        # 판매자가 아니면 404 에러 호출
         raise Http404
 
-    # product tag
     try:
+        # product tag
         tags = ProductTag.objects.filter(content_type=related_object_type, object_id=product_id)
-    except tags.DoesNotExist:
+        # product type
+        types = SnsType.objects.filter(content_type=related_object_type, object_id=product_id)
+        # product target
+        targets = ProductTarget.objects.filter(content_type=related_object_type, object_id=product_id)
+        # product sns url
+        urls = SnsUrl.objects.filter(content_type=related_object_type, object_id=product_id)
+    except ProductTag.DoesNotExist:
+        raise Http404
+    except SnsType.DoesNotExist:
+        raise Http404
+    except ProductTarget.DoesNotExist:
+        raise Http404
+    except SnsUrl.DoesNotExist:
         raise Http404
 
     tag_list = []
     for item in tags:
         tag_list.append(item.tag)
 
-    # product type
-    try:
-        types = SnsType.objects.filter(content_type=related_object_type, object_id=product_id)
-    except types.DoesNotExist:
-        raise Http404
-
     type_list = []
     for item in types:
         type_list.append(item.type)
-
-    # product target
-    try:
-        targets = ProductTarget.objects.filter(content_type=related_object_type, object_id=product_id)
-    except targets.DoesNotExist:
-        raise Http404
 
     target_list = []
     for item in targets:
         target_list.append(item.target)
 
-    # try:
-    #     urls = SnsUrl.objects.filter(content_type=related_object_type, object_id=product_id)
-    # url_list = []
-    # for
+    url_list = []
+    for item in urls:
+        url_list.append(item.url)
 
     form = ProductForm(instance=product)
+
+    VariationInlineFormset = inlineformset_factory(Product, Variation, form=VariationForm, extra=0)
+    formset = VariationInlineFormset(instance=product)
+
+    UrlInlineFormset = generic_inlineformset_factory(SnsUrl, extra=0)
+    url_formset = UrlInlineFormset(instance=product)
+    print url_formset
+
     tag_form = TagForm(initial={
         "tag": tag_list
     })
@@ -309,17 +335,26 @@ def product_change(request, product_id):
     target_form = TargetForm(initial={
         "target": target_list
     })
-    url_form = SnsForm(request.POST)
+    url_form = SnsForm(initial={
+        "url": url_list[0]
+    })
 
     type_ = "수정"
 
+    if request.method == 'POST':
+        form = ProductForm(request.POST or None, request.FILES or None)
+
     template = 'product/product_upload.html'
+
     context = {
         "form": form,
+        "formset": formset,
         "tag_form": tag_form,
         "type_form": type_form,
         "target_form": target_form,
         "url_form": url_form,
+        "url_list": url_list,
+        "url_formset": url_formset,
         "type_": type_
     }
 
@@ -344,11 +379,11 @@ def product_delete(request):
 
 @login_required
 def product_order_manage(request):
-    test = Order.objects.all()
+    order = ProductManage.objects.all()
 
     template = 'seller/order_manage.html'
     context = {
-        "test": test
+        "order": order
     }
 
     return render(request, template, context)

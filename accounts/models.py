@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import requests
-import json
-import urllib
-
+# django import
 from django.conf import settings
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
+
+# allauth import
 from allauth.socialaccount.models import SocialAccount
 
 
@@ -24,6 +23,7 @@ class MyUserManager(BaseUserManager):
         )
         user.set_password(password)
         user.save(using=self._db)
+
         return user
 
     def create_superuser(self, email, password):
@@ -31,12 +31,15 @@ class MyUserManager(BaseUserManager):
             email,
             password=password
         )
+        # permission true to superuser
         user.is_active = True
         user.is_admin = True
         user.save(using=self._db)
+
         return user
 
 
+# user profile image save path
 def download_profile_location(instance, filename):
     return "avatar/%s/%s" % (instance, filename)
 
@@ -77,12 +80,16 @@ class MyUser(AbstractBaseUser):
 
     @property
     def get_avatar(self):
+        # checking whether profile image is exists.
         if self.media:
+            # local setting
             if settings.DEBUG:
                 return '/media/%s' % (self.media)
+            # production setting
             else:
                 return '%s%s' % (settings.MEDIA_ROOT, self.media)
         else:
+            # if social account
             if SocialAccount.objects.filter(user_id=self.id):
                 social_user = SocialAccount.objects.filter(user_id=self.id)
                 if len(social_user):
@@ -108,3 +115,13 @@ class Seller(models.Model):
     def __unicode__(self):
         user = self.user
         return str(user).split("@")[0]
+
+
+# new seller created
+# def new_seller_receiver(sender, instance, created, *args, **kwargs):
+#     if created:
+#
+#
+#
+#
+# post_save.connect(new_seller_receiver, sender=Seller)

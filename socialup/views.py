@@ -7,7 +7,7 @@ from markets.models import Product
 
 
 def home(request):
-    products = Product.objects.all()
+    products = Product.objects.all().active()
 
     template = 'home.html'
     context = {

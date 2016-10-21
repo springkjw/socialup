@@ -10,10 +10,12 @@
     <script type="text/javascript">
         $(function () {
             {% if messages %}
-                {% for message in messages %}
-                    alert('{{ message }}');
-                    window.location.href = "{% url 'product_upload' %}";
-                {% endfor %}
+                {% if 'warning' in message.tags %}
+                    {% for message in messages %}
+                        alert('{{ message }}');
+                        window.location.href = "{% url 'product_upload' %}";
+                    {% endfor %}
+                {% endif %}
             {% endif %}
         });
     </script>

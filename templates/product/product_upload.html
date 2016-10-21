@@ -12,6 +12,15 @@
     <script type="text/javascript" src="{% static 'js/product.js' %}"></script>
     <script type="text/javascript">
         $(function () {
+            {#            {% if url_list %}#}
+            {#                {% for url in url_list %}#}
+            {#                    {% if not forloop.first %}#}
+            {#                        $('.add_url').trigger('click');#}
+            {#                        var index = $('.form-url-input input').index();#}
+            {#                        console.log(index);#}
+            {#                    {% endif %}#}
+            {#                {% endfor %}#}
+            {#            {% endif %}#}
 
         });
     </script>
@@ -87,12 +96,19 @@
                             </div>
                             <div class="form-input">
                                 <label><span>*</span>SNS 주소</label>
-                                <div class="form-url-input">
-                                    {{ url_form }}
-                                    <div class="button add_url">+</div>
-                                    <input type="checkbox" id="is_active" name="url_is_active" checked><label
-                                        for="is_active">비공개</label>
-                                </div>
+                                {{ url_formset.management_form }}
+                                {% for field in url_formset %}
+                                    <div class="form-url-input">
+                                        {{ field.url }}
+                                        {% if forloop.first %}
+                                            <div class="button add_url">+</div>
+                                        {% else %}
+                                            <div class="button minus">-</div>
+                                        {% endif %}
+{#                                        <input type="checkbox" id="is_active" name="url_is_active" checked><label#}
+{#                                            for="is_active">비공개</label>#}
+                                    </div>
+                                {% endfor %}
                             </div>
                             <div class="form-input" style="position:relative;">
                                 <label>연락처</label>

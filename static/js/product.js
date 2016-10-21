@@ -200,7 +200,7 @@ function check_step1() {
             scrollTop: $('#id_influence').offset().top - 60
         }, 300);
         $('#id_influence').focus();
-    } else if (!$('#id_image').val()) {
+    } else if (!$('#id_image').val() && !$('#post_image').attr('src')) {
         alert('메인 이미지를 등록해주세요.');
         $('html, body').animate({
             scrollTop: $('#post_image').offset().top - 60
