@@ -166,9 +166,11 @@ Temporary Items
 .apdisk
 
 .idea/
-assets/
-media/
+assets/*
+media/*
 socialup/.idea/
 socialup/settings/local.py
 
 db.sqlite3
+.elasticbeanstalk/
+.ebextensions/*
