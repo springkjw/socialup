@@ -249,6 +249,9 @@ def new_order_receiver(sender, instance, created, *args, **kwargs):
                         status=v_trans['status']
                     )
                     h.save()
+
+                    for item in instance.cart.cartitem_set:
+                        print item
                 except:
                     raise ValueError('거래에 문제가 발생했습니다.')
 

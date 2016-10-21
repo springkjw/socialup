@@ -27,6 +27,17 @@
                 프리미엄 신청
             </div>
         </div>
+        <div class="dashboard-order">
+            {% if order %}
+                <div class="">
+
+                </div>
+            {% else %}
+                <div class="no-list">
+                    아직 주문이 없습니다!
+                </div>
+            {% endif %}
+        </div>
         {#        <div class="dashboard-info">#}
         {#            <div class="dashboard-info-summary info-order-wish">#}
         {#                <div class="dashboard-info-summary-title">#}
