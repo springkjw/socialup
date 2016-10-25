@@ -1,7 +1,19 @@
 # -*-coding: utf-8 -*-
+# django import
 from django import forms
-from .models import Product, Variation, product_type, sns_type, product_target, SnsUrl
-from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
+
+# app import
+from .models import (
+    Product,
+    Variation,
+    product_type,
+    sns_type,
+    product_target,
+)
+from django_summernote.widgets import (
+    SummernoteWidget,
+    SummernoteInplaceWidget,
+)
 
 
 class ProductForm(forms.ModelForm):
@@ -74,6 +86,15 @@ class TargetForm(forms.Form):
         required=True,
         widget=forms.CheckboxSelectMultiple,
         choices=product_target,
+        label='',
+    )
+
+
+class SnsTypeForm(forms.Form):
+    sns = forms.MultipleChoiceField(
+        required=True,
+        widget=forms.CheckboxSelectMultiple,
+        choices=sns_type,
         label='',
     )
 

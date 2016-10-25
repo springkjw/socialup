@@ -129,7 +129,7 @@ sns_type = (
     ("twitter", "트위터"),
     ("cafe", "카페"),
     ("afreecatv", "아프리카TV"),
-    ("pola", "폴라"),
+    ("pholar", "폴라"),
     ("etc", "기타"),
 )
 
