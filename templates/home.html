@@ -15,6 +15,29 @@
 
 {% block js %}
     <script type="text/javascript" src="{% static 'js/home.js' %}"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.sort').on('click', function () {
+                $('.sort').removeClass('active');
+                $(this).addClass('active');
+
+                var sort_type = $(this).attr('data-type');
+
+                console.log(sort_type);
+
+                $.ajax({
+                    method: 'GET',
+                    url: '/',
+                    data: {
+                        type: sort_type
+                    },
+                    success: function (data) {
+                        console.log(data)
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}
 
 {% block jumbotron %}
@@ -114,9 +137,8 @@
                 </div>
                 <div class="special-sort">
                     <ul>
-                        <li class="active">추천순</li>
-                        <li>평점순</li>
-                        <li>최신순</li>
+                        <li class="sort active" data-type="sort_1">평점순</li>
+                        <li class="sort" data-type="sort_2">최신순</li>
                     </ul>
                 </div>
             </div>

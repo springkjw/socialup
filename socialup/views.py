@@ -4,6 +4,7 @@ from django.shortcuts import (
     render,
     render_to_response,
 )
+from django.http import HttpResponse
 from django.template import RequestContext
 
 # app import
@@ -13,6 +14,7 @@ from markets.forms import (
     TargetForm,
     SnsTypeForm,
 )
+
 
 
 def home(request):
@@ -36,7 +38,21 @@ def home(request):
 
             products = Product.objects.filter(tags__tag__in=tag, target__target__in=target, type__type__in=sns)
 
-            print(products)
+    if request.is_ajax():
+        sort_type = request.GET.get('type')
+
+        if sort_type == 'sort_1':
+            pass
+        elif sort_type == 'sort_2':
+            products = products.order_by('-rating')
+        elif sort_type == 'sort_3':
+            products = products.order_by('-created')
+
+        sort_item = {
+            'products': list(products)
+        }
+
+        return JsonResponse(sort_item)
 
 
     template = 'home.html'
