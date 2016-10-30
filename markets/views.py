@@ -324,7 +324,6 @@ def product_change(request, product_id):
 
     UrlInlineFormset = generic_inlineformset_factory(SnsUrl, extra=0)
     url_formset = UrlInlineFormset(instance=product)
-    print url_formset
 
     tag_form = TagForm(initial={
         "tag": tag_list

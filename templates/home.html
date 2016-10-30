@@ -15,6 +15,29 @@
 
 {% block js %}
     <script type="text/javascript" src="{% static 'js/home.js' %}"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.sort').on('click', function () {
+                $('.sort').removeClass('active');
+                $(this).addClass('active');
+
+                var sort_type = $(this).attr('data-type');
+
+                console.log(sort_type);
+
+                $.ajax({
+                    method: 'GET',
+                    url: '/',
+                    data: {
+                        type: sort_type
+                    },
+                    success: function (data) {
+                        console.log(data)
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}
 
 {% block jumbotron %}
@@ -34,194 +57,70 @@
                     03 선호하는 매체를 선택해주세요. (중복선택 가능합니다.)
                 </div>
             </div>
-            <div class="checkbox">
-                <div class="steps step1">
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-all"><label for="survey-all">전체</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-it"><label for="survey-it">IT/인터넷</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-fasion"><label
-                                    for="survey-fasion">패션/뷰티</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-travel"><label
-                                    for="survey-travel">여행/숙박</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-game"><label
-                                    for="survey-game">게임</label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-car"><label for="survey-car">자동차</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-fin"><label for="survey-fin">재테크/금융</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-study"><label
-                                    for="survey-study">취업/학업</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-child"><label
-                                    for="survey-child">육아</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-pet"><label for="survey-pet">반려동물</label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-media"><label
-                                    for="survey-media">미디어/영화</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-interior"><label
-                                    for="survey-interior">인테리어</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-food"><label
-                                    for="survey-food">맛집/식품</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-music"><label
-                                    for="survey-music">음악</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-diet"><label
-                                    for="survey-diet">다이어트</label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-health"><label
-                                    for="survey-health">리빙/건강</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-living"><label
-                                    for="survey-living">일상/생활</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-picture"><label
-                                    for="survey-picture">사진</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-love"><label
-                                    for="survey-love">결혼/연애</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-sports"><label
-                                    for="survey-sports">스포츠/레저</label>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+            <form method="POST" action="">{% csrf_token %}
+                <div class="checkbox">
+                    <div class="steps step1">
+                        <table>
+                            <tbody>
+                            <tr>
+                                {% for choice in tag_form.tag %}
+                                    {% cycle '<tr>' '' '' '' '' %}
+                                    <td>
+                                        {{ choice.tag }}
+                                        <label for="id_tag_{{ forloop.counter0 }}">
+                                            {{ choice.choice_label }}
+                                        </label>
+                                    </td>
+                                    {% cycle '' '' '' '' '</tr>' %}
+                                {% endfor %}
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="steps step2" style="display: none;">
+                        <table>
+                            <tbody>
+                            <tr>
+                                {% for choice in target_form.target %}
+                                    {% cycle '<tr>' '' '' '' '' %}
+                                    <td>
+                                        {{ choice.tag }}
+                                        <label for="id_target_{{ forloop.counter0 }}">
+                                            {{ choice.choice_label }}
+                                        </label>
+                                    </td>
+                                    {% cycle '' '' '' '' '</tr>' %}
+                                {% endfor %}
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="steps step3" style="display: none;">
+                        <table>
+                            <tbody>
+                            <tr>
+                                {% for choice in sns_form.sns %}
+                                    {% cycle '<tr>' '' '' '' '' %}
+                                    <td>
+                                        {{ choice.tag }}
+                                        <label for="id_sns_{{ forloop.counter0 }}">
+                                            {{ choice.choice_label }}
+                                        </label>
+                                    </td>
+                                    {% cycle '' '' '' '' '</tr>' %}
+                                {% endfor %}
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="survey-pagination">
+                        <i class="fa fa-circle p-step1 active" aria-hidden="true"></i>
+                        <i class="fa fa-circle p-step2" aria-hidden="true"></i>
+                        <i class="fa fa-circle p-step3" aria-hidden="true"></i>
+                    </div>
+                    <button type="submit" class="survey-complete" style="display: none;">완료</button>
                 </div>
-                <div class="steps step2" style="display: none;">
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-all-age"><label
-                                    for="survey-all-age">전 연령</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-10"><label
-                                    for="survey-10">10대</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-20"><label
-                                    for="survey-20">20대</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-30"><label
-                                    for="survey-30">30대</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-40"><label for="survey-40">40대
-                                이상</label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-sex"><label for="survey-sex">남여
-                                모두</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-male"><label
-                                    for="survey-male">남성</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-female"><label
-                                    for="survey-female">여성</label>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="steps step3" style="display: none;">
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-all-type"><label
-                                    for="survey-all-type">전체</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-blog"><label
-                                    for="survey-blog">블로그</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-facebook"><label
-                                    for="survey-facebook">페이스북</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-instagram"><label
-                                    for="survey-instagram">인스타그램</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-kakao"><label
-                                    for="survey-kakao">카카오스토리</label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-cafe"><label
-                                    for="survey-cafe">카페</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-twitter"><label
-                                    for="survey-twitter">트위터</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-pola"><label
-                                    for="survey-pola">폴라</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-afreeca"><label
-                                    for="survey-afreeca">아프리카TV</label>
-                            </td>
-                            <td>
-                                <input type="checkbox" class="survey-checkbox" id="survey-etc"><label for="survey-etc">기타</label>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="survey-pagination">
-                    <i class="fa fa-circle p-step1 active" aria-hidden="true"></i>
-                    <i class="fa fa-circle p-step2" aria-hidden="true"></i>
-                    <i class="fa fa-circle p-step3" aria-hidden="true"></i>
-                </div>
-                <button class="survey-complete" type="button" style="display: none;">완료</button>
-            </div>
+            </form>
         </div>
     </div>
 {% endblock %}
@@ -238,9 +137,8 @@
                 </div>
                 <div class="special-sort">
                     <ul>
-                        <li class="active">추천순</li>
-                        <li>평점순</li>
-                        <li>최신순</li>
+                        <li class="sort active" data-type="sort_1">평점순</li>
+                        <li class="sort" data-type="sort_2">최신순</li>
                     </ul>
                 </div>
             </div>
@@ -287,7 +185,7 @@
                         {% cycle '' '' '' '</div>' %}
                     {% endif %}
                 {% endfor %}
-            </div>
         </div>
+    </div>
     </div>
 {% endblock %}
