@@ -39,15 +39,14 @@
     {% endblock %}
 </head>
 <body>
+    {% include 'header.html' %}
 
+    {% block jumbotron %}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% include 'footer.html' %}
 </body>
-{% include 'header.html' %}
-
-{% block jumbotron %}
-{% endblock %}
-
-{% block content %}
-{% endblock %}
-
-{% include 'footer.html' %}
 </html>
