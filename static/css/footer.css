@@ -18,3 +18,12 @@ footer p {
 footer .container {
     margin-top: 0;
 }
+
+footer .left {
+    float: left;
+}
+
+footer .right {
+    margin-top: 25px;
+    float: right;
+}
