@@ -21,20 +21,14 @@
                 $('.sort').removeClass('active');
                 $(this).addClass('active');
 
-                var sort_type = $(this).attr('data-type');
-
-                console.log(sort_type);
-
-                $.ajax({
-                    method: 'GET',
-                    url: '/',
-                    data: {
-                        type: sort_type
-                    },
-                    success: function (data) {
-                        console.log(data)
-                    }
-                });
+                var type = $(this).text();
+                if (type == '평점순') {
+                    $('.product-rating').show();
+                    $('.product-created').hide();
+                } else if (type == '최신순') {
+                    $('.product-rating').hide();
+                    $('.product-created').show();
+                }
             });
         });
     </script>
@@ -143,7 +137,58 @@
                 </div>
             </div>
             <div class="special-list">
-                {% for product in products %}
+                {% if message %}
+                    <div class="no-product-message">
+                        {{ message }}
+                    </div>
+                {% endif %}
+                <div class="product-rating" style="display:block;">
+                    {% for product in products_rating %}
+                        {% cycle '<div class="row">' '' '' '' %}
+                        <a href="{{ product.get_absolute_url }}"
+                           class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}">
+                            <div class="card-image">
+                                <div class="card-price">
+                                    {{ product.variation_set.first.price }}&#8361;~
+                                </div>
+                                <div class="card-price-back"></div>
+                                <img src="{{ product.get_image_url }}">
+                            </div>
+                            <div class="card-info">
+                                <div class="card-title">
+                                    {{ product.title }}
+                                </div>
+                                <div class="card-subtitle">
+                                    {% for sns in product.sns_set.all %}
+                                        {% for item in sns.analytics.all %}
+                                            {{ item }} {{ item.outcome|round_count }}
+                                        {% endfor %}
+                                    {% endfor %}
+                                </div>
+                                <div class="card-author">
+                                    <div class="card-author-info">
+                                        {{ product.seller }}
+                                    </div>
+                                    <div class="card-author-info-rating" data-rating="{{ product.rating }}">
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        {% if products|length == forloop.counter %}
+                            </div>
+                        {% else %}
+                            {% cycle '' '' '' '</div>' %}
+                        {% endif %}
+                    {% endfor %}
+            </div>
+        </div>
+            <div class="product-created" style="display:none;">
+                {% for product in products_created %}
                     {% cycle '<div class="row">' '' '' '' %}
                     <a href="{{ product.get_absolute_url }}"
                        class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}">
@@ -186,6 +231,7 @@
                     {% endif %}
                 {% endfor %}
         </div>
+    </div>
     </div>
     </div>
 {% endblock %}

@@ -16,10 +16,14 @@ from markets.forms import (
 )
 
 
-
 def home(request):
-    # initial product
-    products = Product.objects.all().active()
+    template = 'home.html'
+
+    # 처음 상품
+    # 평점순
+    products_by_rating = Product.objects.all().active().order_by('-rating')[:20]
+    # 최신순
+    products_by_created = Product.objects.all().active().order_by('-created')[:20]
 
     tag_form = TagForm()
     target_form = TargetForm()
@@ -37,27 +41,26 @@ def home(request):
             sns = sns_form.cleaned_data.get('sns')
 
             products = Product.objects.filter(tags__tag__in=tag, target__target__in=target, type__type__in=sns)
+            print(products)
+            if products is None:
+                print('a')
+                # 필터링 결과가 아무 것도 없을 경우 랜덤으로 10개 반환
+                products = Product.objects.all().order_by('?')[:10]
+                message = "검색 결과가 아무 것도 없네요. 다른 상품들을 보시겠어요?"
 
-    if request.is_ajax():
-        sort_type = request.GET.get('type')
+                context = {
+                    "products": products,
+                    "tag_form": tag_form,
+                    "target_form": target_form,
+                    "sns_form": sns_form,
+                    "message": message,
+                }
+                print(context)
+                return render(request, template, context)
 
-        if sort_type == 'sort_1':
-            pass
-        elif sort_type == 'sort_2':
-            products = products.order_by('-rating')
-        elif sort_type == 'sort_3':
-            products = products.order_by('-created')
-
-        sort_item = {
-            'products': list(products)
-        }
-
-        return JsonResponse(sort_item)
-
-
-    template = 'home.html'
     context = {
-        "products": products,
+        "products_rating": products_by_rating,
+        "products_created": products_by_created,
         "tag_form": tag_form,
         "target_form": target_form,
         "sns_form": sns_form,
