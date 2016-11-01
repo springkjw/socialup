@@ -40,12 +40,11 @@ def home(request):
             target = target_form.cleaned_data.get('target')
             sns = sns_form.cleaned_data.get('sns')
 
-            products = Product.objects.filter(tags__tag__in=tag, target__target__in=target, type__type__in=sns)
-            print(products)
-            if products is None:
-                print('a')
+            products = Product.objects.filter(tags__tag__in=tag, target__target__in=target, type__type__in=sns).active()
+
+            if not products:
                 # 필터링 결과가 아무 것도 없을 경우 랜덤으로 10개 반환
-                products = Product.objects.all().order_by('?')[:10]
+                products = Product.objects.all().active().order_by('?')[:8]
                 message = "검색 결과가 아무 것도 없네요. 다른 상품들을 보시겠어요?"
 
                 context = {
