@@ -141,4 +141,49 @@
         
         
     
+- Local settings
+    socialup/settings 폴더 안에 생성
     
+```python
+# -*- coding: utf-8 -*-
+from .base import os, BASE_DIR
+
+DEBUG = True
+ALLOWED_HOSTS = []
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+def static_url(url):
+    return os.path.join(STATIC_URL, url)
+
+
+SUMMERNOTE_CONFIG = {
+    'iframe': True,
+    'width': '100%',
+    'height': '480px',
+    'lang': 'ko-KR',
+    'attachment_require_authentication': True,
+    'default_css': (
+        '/static/css/bootstrap.min.css',
+        static_url('django_summernote/summernote.css'),
+        static_url('django_summernote/django_summernote.css'),
+    ),
+    'default_js': (
+        '/static/js/jquery-2.2.4.min.js',
+        '/static/js/bootstrap.min.js',
+        static_url('django_summernote/jquery.ui.widget.js'),
+        static_url('django_summernote/jquery.iframe-transport.js'),
+        static_url('django_summernote/jquery.fileupload.js'),
+        static_url('django_summernote/summernote.min.js'),
+    ),
+}
+
+```
