@@ -39,15 +39,22 @@
     {% endblock %}
 </head>
 <body>
+    {% include 'header.html' %}
 
+    {% block jumbotron %}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% include 'footer.html' %}
+
+    {% if user.is_authenticated %}
+        <script type="text/javascript" src="{% static 'js/SendBird.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/message-common.js' %}"></script>
+        <script type="text/javascript">
+            getUnreadMessageCount('{{ user.id }}', '{{ user.get_short_name }}', '{{ user.get_avatar }}');
+        </script>
+    {% endif %}
 </body>
-{% include 'header.html' %}
-
-{% block jumbotron %}
-{% endblock %}
-
-{% block content %}
-{% endblock %}
-
-{% include 'footer.html' %}
 </html>

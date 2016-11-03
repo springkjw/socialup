@@ -23,6 +23,7 @@ from markets.views import product_detail, product_upload, product_manage, produc
 from billing.views import charge_point, history_point, PointCheckoutAjaxView, PointImpAjaxView, purchase, \
     CheckoutAjaxView, ImpAjaxView, purchase_list, charge_fail, charge_success
 from carts.views import CartView, WishListView
+from messages.views import message_lounge, message_room
 
 urlpatterns = [
     url(r'^$', home, name='home'),
@@ -57,6 +58,9 @@ urlpatterns = [
     url(r'^product/upload/$', product_upload, name="product_upload"),
 
     url(r'^summernote/', include('django_summernote.urls')),
+
+    url(r'^messages/$', message_lounge, name="message_lounge"),
+    url(r'^messages/room/$', message_room, name="message_room"),
 ]
 
 handler400 = bad_request

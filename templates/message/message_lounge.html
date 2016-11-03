@@ -1,0 +1,28 @@
+{% extends 'account/dashboard_base.html' %}
+{% load staticfiles %}
+
+{% block dashboard_css %}
+    <link rel="stylesheet" href="{% static 'css/message.css' %}">
+{% endblock %}
+
+{% block dashboard_content %}
+    <div class="dashboard-content">
+        <div class="dashboard-nav">
+            메시지
+        </div>
+        <table class="channels">
+            <tbody id="channel_list"></tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block dashboard_js %}
+    <script type="text/javascript" src="{% static 'js/message-lounge.js' %}"></script>
+    <script type="text/javascript">
+        $(function () {
+            //notifyMe();
+            init('{{ user.id }}');
+            //init("1111");
+        });
+    </script>
+{% endblock %}
