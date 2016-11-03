@@ -3,6 +3,7 @@
 
 {% block dashboard_css %}
     <link rel="stylesheet" href="{% static 'css/message.css' %}">
+    <link href='https://fonts.googleapis.com/css?family=Exo+2:400,900italic,900,800italic,800,700italic,700,600italic,600,500italic,500,400italic,300italic,200italic,200,100italic,100,300' rel='stylesheet' type='text/css'>
 {% endblock %}
 
 {% block dashboard_content %}
@@ -16,7 +17,10 @@
                 </div>
             </div>
             <div id="sendmessage">
-                <input type="text" id="chat-input-text__field" placeholder="메시지 입력..."/>
+                <label class="chat-input-file" for="chat_file_input">
+                    <input type="file" name="file" id="chat_file_input" style="display: none;">
+                </label>
+                <input type="text" id="chat-input-text" placeholder="메시지 입력..."/>
                 <button id="send"></button>
             </div>
         </div>

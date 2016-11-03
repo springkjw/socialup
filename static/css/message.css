@@ -18,7 +18,7 @@ table.channels tr td {
     color: #597a96;
 }
 .channel-lastmessage {
-    width:300px;
+    width:295px;
 }
 .channel-lastmessagetime {
     font-size: 14px;
@@ -163,13 +163,19 @@ div.message.right .corner{
 	  right: 0;
 	  bottom: -22px;
 }
+.filename{
+    font-family: 'Exo 2';
+    font-weight: 400;
+    font-size: 12px;
+    color: #2a78c2;
+}
 #sendmessage{
     margin-top: 4px;
 	border-top:1px solid #e7ebee;
 	bottom:0;
 	right:0;
 	height:60px;
-	width:500px;
+	width:550px;
 	background:#fff;
 	padding-bottom:30px;
 }
@@ -201,9 +207,35 @@ div.message.right .corner{
 	background-position: 0 0 ;
 }
 #sendmessage button:focus{
-	 outline: 0;
+    outline: 0;
 }
 
+.chat-input-file {
+    width: 40px;
+    height: 40px;
+    float: right;
+    /*padding: 10px;*/
+    /*margin-bottom: 3px;*/
+    border: 1px solid #abb8c4;
+    -webkit-border-top-left-radius: 2px;
+    border-top-left-radius: 2px;
+    -webkit-border-bottom-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    background: url("../img/btn-upload.svg") no-repeat center center;
+    cursor: pointer;
+
+    margin-top:15px;
+}
+.chat-input-file:hover {
+    background: url("../img/btn-upload.svg") no-repeat center center #f7f8fc;
+}
+.file-upload {
+    background: url("../img/loading-rectagular.gif") no-repeat center center #f7f8fc;
+}
+
+label.chat-input-file.file-upload {
+    background: url("../img/loading-rectagular.gif") no-repeat center center #f7f8fc;
+}
 #close{
 	position:absolute;
 	top: 8px;

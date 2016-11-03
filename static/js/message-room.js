@@ -24,6 +24,17 @@ function addMessage(message) {
         messageClass += ' right';
     }
 
+    var messageBody;
+    if (message.isFileMessage()) {
+        $('.chat-input-file').removeClass('file-upload');
+        $('#chat_file_input').val('');
+
+        messageBody = '<a href="{}" class="filename" target="_blank">{}</a>'.format(message.url, message.name);
+    }
+    else {
+        messageBody = message.message;
+    }
+
     var messageString =
         ('<div class="{}">' +
             '<img src="{}">' +
@@ -31,7 +42,7 @@ function addMessage(message) {
         '</div>').format(
             messageClass,
             message.sender.profileUrl,
-            message.message,
+            messageBody,
             getTimeString(message.createdAt)
         );
     $('#chat-messages').append(messageString);
@@ -39,7 +50,7 @@ function addMessage(message) {
     scrollPositionBottom();
 }
 
-$('#chat-input-text__field').keydown(function(event) {
+$('#chat-input-text').keydown(function(event) {
     if (event.keyCode == 13 && !event.shiftKey) {
         event.preventDefault();
         if (!$.trim(this.value).isEmpty()) {
@@ -63,7 +74,7 @@ $('#chat-input-text__field').keydown(function(event) {
 });
 
 $('#send').click(function() {
-    currentChannel.sendUserMessage($.trim($('#chat-input-text__field').val()), '', SendMessageHandler);
+    currentChannel.sendUserMessage($.trim($('#chat-input-text').val()), '', SendMessageHandler);
 });
 
 $('#chat_file_input').change(function () {
@@ -219,21 +230,17 @@ function startSendBird(userId, channelUrl) {
         //   updateGroupChannelLastMessage(message);
         // }
 
-        if (message.isUserMessage()) {
-            addMessage(message);
-        }
+        if (message.isFileMessage()) {
+            $('.chat-input-file').removeClass('file-upload');
+            $('#chat_file_input').val('');
 
-        // TODO
-        // if (message.isFileMessage()) {
-        //   $('.chat-input-file').removeClass('file-upload');
-        //   $('#chat_file_input').val('');
-        //
-        //   if (message.type.match(/^image\/.+$/)) {
-        //     setImageMessage(message);
-        //   } else {
-        //     setFileMessage(message);
-        //   }
-        // }
+            // if (message.type.match(/^image\/.+$/)) {
+            //     setImageMessage(message);
+            // } else {
+            //     setFileMessage(message);
+            // }
+        }
+        addMessage(message);
     };
 
     ChannelHandler.onReadReceiptUpdated = function (channel) {
