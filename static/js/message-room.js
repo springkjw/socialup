@@ -39,7 +39,7 @@ function addMessage(message) {
     scrollPositionBottom();
 }
 
-$('#chat-input-text__field').keydown(function (event) {
+$('#chat-input-text__field').keydown(function(event) {
     if (event.keyCode == 13 && !event.shiftKey) {
         event.preventDefault();
         if (!$.trim(this.value).isEmpty()) {
@@ -60,6 +60,10 @@ $('#chat-input-text__field').keydown(function (event) {
             }
         }
     }
+});
+
+$('#send').click(function() {
+    currentChannel.sendUserMessage($.trim($('#chat-input-text__field').val()), '', SendMessageHandler);
 });
 
 $('#chat_file_input').change(function () {

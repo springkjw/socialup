@@ -192,7 +192,9 @@ function checkOrCreateUser(userId, nickname, profileUrl) {
                 console.log(response, error);
             });
         }
-        sb.disconnect();
+        setTimeout(function() {
+            sb.disconnect();
+        }, 2 * 1000);
     });
 }
 
