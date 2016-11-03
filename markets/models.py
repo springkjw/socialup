@@ -1,12 +1,21 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+# python import
+import os
+import shutil
+from PIL import Image
+import random
 
-from django.db import models
+# django import
 from django.conf import settings
-from django.core.urlresolvers import reverse
-from django.db.models.signals import post_save
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
+from django.core.files import File
+from django.core.urlresolvers import reverse
+from django.db import models
+from django.db.models.signals import post_save
+
+# app import
 from django_summernote import fields as summer_fields
 from accounts.models import Seller
 
@@ -49,7 +58,7 @@ class Product(models.Model):
     objects = ProductManager()
 
     def __unicode__(self):
-        return self.title
+        return u'%s' % (self.title)
 
     @property
     def get_absolute_url(self):
@@ -64,6 +73,89 @@ class Product(models.Model):
                 return '%s%s' % (settings.MEDIA_ROOT, self.image)
         else:
             return None
+
+
+def thumbnail_location(instance, filename):
+    return 'product/%s/thumbnail/%s' % (instance.product.title, filename)
+
+
+THUMB_TYPE = (
+    ("hd", "HD"),
+    ("sd", "SD"),
+    ("micro", "Micro"),
+)
+
+
+class ProductThumbnail(models.Model):
+    product = models.ForeignKey(Product)
+    thumb_type = models.CharField(max_length=20, choices=THUMB_TYPE, default="hd")
+    height = models.CharField(max_length=20, null=True, blank=True)
+    width = models.CharField(max_length=20, null=True, blank=True)
+    media = models.ImageField(
+        width_field="width",
+        height_field="height",
+        blank=True,
+        null=True,
+        upload_to=thumbnail_location
+    )
+
+    def __unicode__(self):
+        # return str(self.media).split('.')[0]
+        return self.media.path
+
+
+def create_new_thumb(media_path, instance, max_length, max_width):
+    filename = os.path.basename(media_path)
+    thumb = Image.open(media_path)
+    size = (max_length, max_width)
+    thumb.thumbnail(size, Image.ANTIALIAS)
+    temp_loc = "%s/%s/tmp" % (settings.MEDIA_ROOT, instance)
+
+    # 디렉토리가 없을 경우
+    if not os.path.exists(temp_loc):
+        os.makedirs(temp_loc)
+
+    temp_file_path = os.path.join(temp_loc, filename)
+    if os.path.exists(temp_file_path):
+        temp_path = os.path.join(temp_loc, "%s" % (random.random()))
+        os.makedirs(temp_path)
+        temp_file_path = os.path.join(temp_path, filename)
+
+    temp_image = open(temp_file_path, "w")
+    thumb.save(temp_image)
+    thumb_data = open(temp_file_path, "r")
+
+    thumb_file = File(thumb_data)
+
+    instance.media.save(filename, thumb_file)
+    shutil.rmtree(temp_loc, ignore_errors=True)
+
+    return True
+
+
+def product_post_save_receiver(sender, instance, created, *args, **kwargs):
+    if instance.image:
+        hd, hd_created = ProductThumbnail.objects.get_or_create(product=instance, thumb_type="hd")
+        sd, sd_created = ProductThumbnail.objects.get_or_create(product=instance, thumb_type="sd")
+        micro, micro_created = ProductThumbnail.objects.get_or_create(product=instance, thumb_type="micro")
+
+        hd_max = (500, 500)
+        sd_max = (350, 350)
+        micro_max = (150, 150)
+
+        image_path = instance.image.path
+
+        if hd_created:
+            create_new_thumb(image_path, hd, hd_max[0], hd_max[1])
+
+        if sd_created:
+            create_new_thumb(image_path, sd, sd_max[0], sd_max[1])
+
+        if micro_created:
+            create_new_thumb(image_path, micro, micro_max[0], micro_max[1])
+
+
+post_save.connect(product_post_save_receiver, sender=Product)
 
 
 class Variation(models.Model):
