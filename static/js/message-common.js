@@ -174,3 +174,58 @@ function getUnreadMessageCount(userId, nickname, profileUrl) {
         }, 3 * 1000);
     };
 }
+
+/** 해당 유저가 SendBird에 등록되어 있지 않다면 등록..
+ * (SendBird API로 특정 유저 업데이트가 안 되서 우회적으로.ㅠㅠ)
+ */
+function checkOrCreateUser(userId, nickname, profileUrl) {
+    var sb = new SendBird({ appId: appId });
+    sb.connect(userId, function(user, error) {
+        if (error) {
+            console.error(error);
+            return;
+        }
+        if (user.nickname != nickname) {
+            console.log('Registering seller.. {},{},{}'.format(userId, nickname, profileUrl));
+            sb.updateCurrentUserInfo(nickname, profileUrl, function(response, error) {
+                console.log(response, error);
+            });
+        }
+        sb.disconnect();
+    });
+}
+
+/**
+ * targetId와의 대화 채널 생성
+ */
+function openChannel(sb, userId, targetId, cb) {
+    var userIds = [userId, targetId];
+    sb.GroupChannel.createChannelWithUserIds(userIds, true, function(channel, error) {
+        if (error) {
+            console.error(error);
+            return;
+        }
+        console.log(channel); // TEST
+        cb(channel.url);
+    });
+}
+
+function startMessage(userId, targetId, targetNickname, targetProfileUrl) {
+    // 판매자가 SB에 등록되어 있는지 확인 -> 없으면 등록
+    checkOrCreateUser(targetId, targetNickname, targetProfileUrl);
+
+    var channelUrl = '';
+    var sb = new SendBird({ appId: appId });
+    sb.connect(userId, function(user, error) {
+        if (error) {
+            console.error(error);
+            return;
+        }
+        channelUrl = openChannel(sb, userId, targetId, function(channelUrl) {
+            // message room으로 redirect
+            if (!channelUrl.isEmpty())
+                window.location.href = '/messages/room/?channel=' + channelUrl;
+        });
+        sb.disconnect();
+    });
+}

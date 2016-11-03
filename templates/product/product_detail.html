@@ -66,6 +66,12 @@
                     }
                 });
             });
+
+
+            $('.ask-seller').on('click', function() {
+                startMessage('{{ user.id }}',
+                        '{{ product.seller.id }}', '{{ product.seller.user.get_short_name }}', '{{ product.seller.user.get_avatar }}');
+            });
         });
 
         function get_item() {
@@ -194,17 +200,19 @@
                             {{ product.seller.user.last_login|time_since }}
                         </div>
                     </div>
-                    <div class="product-sub-info">
-                        <div class="title">
-                            판매자문의
-                        </div>
-                        <div class="sub-content">
-                            <div class="ask-seller">
-                                문의하기
+                    {% if product.seller.user.id != user.id %}
+                        <div class="product-sub-info">
+                            <div class="title">
+                                판매자문의
                             </div>
-                            <span>(문의 평균 응답시간)</span>
+                            <div class="sub-content">
+                                <div class="ask-seller">
+                                    문의하기
+                                </div>
+                                <span>(문의 평균 응답시간)</span>
+                            </div>
                         </div>
-                    </div>
+                    {% endif %}
                     <div class="product-option">
                         <div class="product-dropdown">
                             {% if variation|length > 1 %}
