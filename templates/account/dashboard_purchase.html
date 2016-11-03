@@ -32,6 +32,7 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
 
             $('.pay-info .discount #point').on('keyup', function () {
                 var point = $(this).autoNumeric('get');
+
                 var total = parseInt({{ order.order_total }}) - parseInt(point);
                 var _total = total + '<span>원</span>';
 

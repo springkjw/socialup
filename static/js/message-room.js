@@ -3,7 +3,6 @@ var userId = null;
 
 var currentUser;
 
-//
 var currentChannel = null;
 var messageList = [];
 var lastUpdated = new Date(0);
@@ -83,12 +82,11 @@ var SendMessageHandler;
 var isInit = false;
 
 function startSendBird(userId, channelUrl) {
-    sb = new SendBird({
-        appId: appId
-    });
+    sb = new SendBird({ appId: appId });
 
     sb.connect(userId, function(user, error) {
         if (error) {
+            console.error(error);
             return;
         }
 
@@ -234,10 +232,6 @@ function startSendBird(userId, channelUrl) {
         // }
     };
 
-  // ChannelHandler.onMessageDeleted = function (channel, messageId) {
-  //   console.log('ChannelHandler.onMessageDeleted: ', channel, messageId);
-  // };
-
     ChannelHandler.onReadReceiptUpdated = function (channel) {
         console.log('ChannelHandler.onReadReceiptUpdated: ', channel);
         // updateChannelMessageCacheAll(channel);
@@ -251,10 +245,6 @@ function startSendBird(userId, channelUrl) {
         // }
     };
 
-  // ChannelHandler.onUserJoined = function (channel, user) {
-  //   console.log('ChannelHandler.onUserJoined: ', channel, user);
-  // };
-  //
   // ChannelHandler.onUserLeft = function (channel, user) {
   //   console.log('ChannelHandler.onUserLeft: ', channel, user);
   //   setSysMessage({'message': '"' + user.nickname + '" user is left.'});
@@ -264,44 +254,8 @@ function startSendBird(userId, channelUrl) {
   //   }
   // };
   //
-  // ChannelHandler.onUserEntered = function (channel, user) {
-  //   console.log('ChannelHandler.onUserEntered: ', channel, user);
-  // };
-  //
   // ChannelHandler.onUserExited = function (channel, user) {
   //   console.log('ChannelHandler.onUserExited: ', channel, user);
-  // };
-  //
-  // ChannelHandler.onUserMuted = function (channel, user) {
-  //   console.log('ChannelHandler.onUserMuted: ', channel, user);
-  // };
-  //
-  // ChannelHandler.onUserUnmuted = function (channel, user) {
-  //   console.log('ChannelHandler.onUserUnmuted: ', channel, user);
-  // };
-  //
-  // ChannelHandler.onUserBanned = function (channel, user) {
-  //   console.log('ChannelHandler.onUserBanned: ', channel, user);
-  //   if (isCurrentUser(user.userId)) {
-  //     alert('Oops...You got banned out from this channel.');
-  //     navInit();
-  //     popupInit();
-  //   } else {
-  //     setSysMessage({'message': '"' + user.nickname + '" user is banned.'});
-  //   }
-  // };
-  //
-  // ChannelHandler.onUserUnbanned = function (channel, user) {
-  //   console.log('ChannelHandler.onUserUnbanned: ', channel, user);
-  //   setSysMessage({'message': '"' + user.nickname + '" user is unbanned.'});
-  // };
-  //
-  // ChannelHandler.onChannelFrozen = function (channel) {
-  //   console.log('ChannelHandler.onChannelFrozen: ', channel);
-  // };
-  //
-  // ChannelHandler.onChannelUnfrozen = function (channel) {
-  //   console.log('ChannelHandler.onChannelUnfrozen: ', channel);
   // };
   //
   // ChannelHandler.onChannelChanged = function (channel) {
@@ -309,11 +263,6 @@ function startSendBird(userId, channelUrl) {
   //   if (channel.isGroupChannel()){
   //     groupChannelListMembersAndProfileImageUpdate(channel);
   //   }
-  // };
-  //
-  // ChannelHandler.onChannelDeleted = function (channel) {
-  //   console.log('ChannelHandler.onChannelDeleted: ', channel);
-  //   deleteChannel(channel);
   // };
 
   sb.addChannelHandler('channel', ChannelHandler);
@@ -331,19 +280,3 @@ var scrollPositionBottom = function() {
   $('#chat-messages')[0].scrollTop = scrollHeight;
   // currScrollHeight = scrollHeight;
 };
-
-////////////////////////////////////////////////////////////////////////
-// TEST
-function setup() {
-    openChannel(sb, userId, '1002');
-}
-
-function sendMessage(message) {
-    channel.sendUserMessage(message, '', function(message, error) {
-        if (error) {
-            console.error(error);
-            return;
-        }
-        console.log(message);
-    });
-}

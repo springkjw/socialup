@@ -53,14 +53,11 @@ function addGroupChannel(receiver, targetChannel) {
 function getGroupChannelList() {
     channelListQuery.next(function(channels, error) {
         if (error) {
+            console.error(error);
             return;
         }
 
         channels.forEach(function(channel) {
-            console.log(channel);
-            console.log('channel.members'); // TEST
-            console.log(channel.members); // TEST
-
             var receiver = null;
             if (channel.memberCount > 1) {
                 receiver = channel.members.find(function(member) {
@@ -93,22 +90,17 @@ function getGroupChannelList() {
  *            SendBird Settings
  **********************************************/
 var sb;
-
 var channelListQuery;
 
 var isInit = false;
-
-var channelMessageList = {};
 var groupChannelLastMessageList = {};
 
-
 function startSendBird(userId) {
-    sb = new SendBird({
-        appId: appId
-    });
+    sb = new SendBird({ appId: appId });
 
     sb.connect(userId, function(user, error) {
         if (error) {
+            console.error(error);
             return;
         }
         initPage(user);
@@ -124,7 +116,6 @@ function startSendBird(userId) {
         channelListQuery.limit = 100;
         channelListQuery.includeEmpty = true;
         channelListQuery.order = 'latest_last_message';
-
 
         getGroupChannelList();
 
@@ -219,27 +210,6 @@ function startSendBird(userId) {
   //   }
   // };
 
-  // ChannelHandler.onMessageDeleted = function (channel, messageId) {
-  //   console.log('ChannelHandler.onMessageDeleted: ', channel, messageId);
-  // };
-  //
-  // ChannelHandler.onReadReceiptUpdated = function (channel) {
-  //   console.log('ChannelHandler.onReadReceiptUpdated: ', channel);
-  //   updateChannelMessageCacheAll(channel);
-  // };
-  //
-  // ChannelHandler.onTypingStatusUpdated = function (channel) {
-  //   console.log('ChannelHandler.onTypingStatusUpdated: ', channel);
-  //
-  //   if (channel == currChannelInfo) {
-  //     showTypingUser(channel);
-  //   }
-  // };
-  //
-  // ChannelHandler.onUserJoined = function (channel, user) {
-  //   console.log('ChannelHandler.onUserJoined: ', channel, user);
-  // };
-  //
   // ChannelHandler.onUserLeft = function (channel, user) {
   //   console.log('ChannelHandler.onUserLeft: ', channel, user);
   //   setSysMessage({'message': '"' + user.nickname + '" user is left.'});
@@ -249,44 +219,8 @@ function startSendBird(userId) {
   //   }
   // };
   //
-  // ChannelHandler.onUserEntered = function (channel, user) {
-  //   console.log('ChannelHandler.onUserEntered: ', channel, user);
-  // };
-  //
   // ChannelHandler.onUserExited = function (channel, user) {
   //   console.log('ChannelHandler.onUserExited: ', channel, user);
-  // };
-  //
-  // ChannelHandler.onUserMuted = function (channel, user) {
-  //   console.log('ChannelHandler.onUserMuted: ', channel, user);
-  // };
-  //
-  // ChannelHandler.onUserUnmuted = function (channel, user) {
-  //   console.log('ChannelHandler.onUserUnmuted: ', channel, user);
-  // };
-  //
-  // ChannelHandler.onUserBanned = function (channel, user) {
-  //   console.log('ChannelHandler.onUserBanned: ', channel, user);
-  //   if (isCurrentUser(user.userId)) {
-  //     alert('Oops...You got banned out from this channel.');
-  //     navInit();
-  //     popupInit();
-  //   } else {
-  //     setSysMessage({'message': '"' + user.nickname + '" user is banned.'});
-  //   }
-  // };
-  //
-  // ChannelHandler.onUserUnbanned = function (channel, user) {
-  //   console.log('ChannelHandler.onUserUnbanned: ', channel, user);
-  //   setSysMessage({'message': '"' + user.nickname + '" user is unbanned.'});
-  // };
-  //
-  // ChannelHandler.onChannelFrozen = function (channel) {
-  //   console.log('ChannelHandler.onChannelFrozen: ', channel);
-  // };
-  //
-  // ChannelHandler.onChannelUnfrozen = function (channel) {
-  //   console.log('ChannelHandler.onChannelUnfrozen: ', channel);
   // };
   //
   // ChannelHandler.onChannelChanged = function (channel) {
@@ -295,12 +229,6 @@ function startSendBird(userId) {
   //     groupChannelListMembersAndProfileImageUpdate(channel);
   //   }
   // };
-  //
-  // ChannelHandler.onChannelDeleted = function (channel) {
-  //   console.log('ChannelHandler.onChannelDeleted: ', channel);
-  //   deleteChannel(channel);
-  // };
-
   // sb.addChannelHandler('channel', ChannelHandler);
 }
 
@@ -309,35 +237,3 @@ function init(userId) {
     startSendBird(userId);
 }
 
-function openChannel(receiverId) {
-    var groupChannel = null;
-    var userIds = [userId, receiverId];
-
-    sb.GroupChannel.createChannelWithUserIds(userIds, true, function(channel, error) {
-        if (error) {
-            console.error(error);
-            return;
-        }
-
-        groupChannel = channel;
-        console.log(channel);
-    });
-
-    return groupChannel;
-}
-
-////////////////////////////////////////////////////////////////////////
-// TEST
-function setup() {
-    openChannel('1002');
-}
-
-function sendMessage(channel, message) {
-    channel.sendUserMessage(message, '', function(message, error) {
-        if (error) {
-            console.error(error);
-            return;
-        }
-        console.log(message);
-    });
-}
