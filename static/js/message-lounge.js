@@ -60,8 +60,10 @@ function getGroupChannelList() {
         channels.forEach(function(channel) {
             var receiver = null;
             if (channel.memberCount > 1) {
-                receiver = channel.members.find(function(member) {
-                    return member.userId != currentUser.userId;
+                channel.members.forEach(function(member) {
+                    if (member.userId != currentUser.userId) {
+                        receiver = member;
+                    }
                 });
             }
             addGroupChannel(receiver, channel);
