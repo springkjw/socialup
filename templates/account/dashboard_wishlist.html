@@ -44,6 +44,10 @@
                     }
                 });
             });
+
+            $('#ask-seller').on('click', function () {
+                startMessage('{{ user.id }}', $(this).data('id'), $(this).data('name'), $(this).data('profile'));
+            });
         });
     </script>
 {% endblock %}
@@ -100,7 +104,9 @@
                         </div>
                         <div class="dashboard-wishlist-item-seller">
                             <p>{{ list.item.seller }}</p>
-                            <button>문의하기</button>
+                            <button id="ask-seller" data-id="{{ list.item.seller.user.id }}" data-name="{{ list.item.seller }}" data-profile="{{ list.item.seller.user.get_avatar }}">
+                                문의하기
+                            </button>
                         </div>
                         <div class="dashboard-wishlist-item-more">
                             <i class="fa fa-angle-down" aria-hidden="true"></i>

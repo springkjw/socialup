@@ -27,6 +27,9 @@
                     }
                 });
             });
+            $('#ask-seller').on('click', function() {
+                startMessage('{{ user.id }}', $(this).data('id'), $(this).data('name'), $(this).data('profile'));
+            });
         });
 
         function get_item(ele) {
@@ -106,7 +109,9 @@
                         </div>
                         <div class="dashboard-cart-item-seller">
                             <p>{{ product.0.item.product.seller }}</p>
-                            <button>문의하기</button>
+                            <button id="ask-seller" data-id="{{ product.0.item.product.seller.user.id }}" data-name="{{ product.0.item.product.seller }}" data-profile="{{ product.0.item.product.seller.user.get_avatar }}">
+                                문의하기
+                            </button>
                         </div>
                         <div class="dashboard-cart-item-more">
                             <i class="fa fa-angle-down" aria-hidden="true"></i>

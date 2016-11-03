@@ -7,41 +7,11 @@
 {% endblock %}
 
 {% block dashboard_js %}
-    <script type="text/javascript" src="{% static 'js/SendBird-SDK-JavaScript-master/SendBird.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/dashboard/list.js' %}"></script>
     <script type="text/javascript">
         $(function () {
-            var sb = new SendBird({
-                appId: '68C1D6E3-BFC1-4B8E-B11C-6B1FBE0D3AAA'
-            });
-
-            sb.connect('{{ user.email }}', '{{ user.access_token }}', function (user, error) {
-                if (error) {
-                    //ToDO : 에러 구문 처리
-                    console.log(error);
-                } else {
-                    $('.item-list').on('click', '.more', function () {
-                        $(this).parent().find('.item-info').show();
-
-                        var seller = $(this).attr('data-seller-id');
-                        var userIds = ['{{ user.email }}', seller];
-
-                        sb.GroupChannel.createChannelWithUserIds(userIds, true, function (channel, error) {
-                            if (error) {
-                                console.error(error);
-                            }
-
-                            var messageListQuery = channel.createPreviousMessageListQuery();
-
-                            messageListQuery.load(20, true, function (messageList, error) {
-                                if (error) {
-                                    console.error(error);
-                                }
-                                console.log(messageList);
-                            });
-                        });
-                    });
-                }
+            $('#ask-seller').on('click', function() {
+                startMessage('{{ user.id }}', $(this).data('id'), $(this).data('name'), $(this).data('profile'));
             });
         });
     </script>
@@ -119,7 +89,9 @@
                                 {% if forloop.counter0 == 0 %}
                                     <div class="seller">
                                         <p>{{ obj.product.seller }}</p>
-                                        <button>문의하기</button>
+                                        <button id="ask-seller" data-id="{{ obj.product.seller.user.id }}" data-name="{{ obj.product.seller }}" data-profile="{{ obj.product.seller.user.get_avatar }}">
+                                            문의하기
+                                        </button>
                                     </div>
                                     <div class="more" data-seller-id="{{ obj.product.seller.user }}">
                                         <i class="fa fa-angle-down" aria-hidden="true"></i>
