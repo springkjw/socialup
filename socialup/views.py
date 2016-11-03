@@ -4,8 +4,8 @@ from django.shortcuts import (
     render,
     render_to_response,
 )
-from django.http import HttpResponse
 from django.template import RequestContext
+from django.conf import settings
 
 # app import
 from markets.models import Product
@@ -57,12 +57,14 @@ def home(request):
                 print(context)
                 return render(request, template, context)
 
+    test = settings.DATABASES
     context = {
         "products_rating": products_by_rating,
         "products_created": products_by_created,
         "tag_form": tag_form,
         "target_form": target_form,
         "sns_form": sns_form,
+        "test": test
     }
 
     return render(request, template, context)

@@ -4,6 +4,17 @@ from .base import os, BASE_DIR
 DEBUG = False
 ALLOWED_HOSTS = ['*']
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'ebdb',
+#         'USER': 'ebroot',
+#         'PASSWORD': 'wodnjs2010',
+#         'HOST': 'aa82r04ezpe9o4.chhv3epwywiz.ap-northeast-2.rds.amazonaws.com',
+#         'PORT': 3306,
+#     }
+# }
+
 if 'RDS_DB_NAME' in os.environ:
     DATABASES = {
         'default': {
