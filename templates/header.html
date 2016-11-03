@@ -19,8 +19,8 @@
                 <a id="point" href="{% url 'point_history' %}">
                     POINT <span id="money">{{ user.point }}</span>
                 </a>
-                <a id="message" href="#">
-                    MESSAGE
+                <a id="message" href="{% url 'message_lounge' %}">
+                    MESSAGE <span class="unread-message-counter"></span>
                     <i class="fa fa-circle" aria-hidden="true"></i>
                 </a>
                 <a id="doing" href="#">

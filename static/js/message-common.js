@@ -128,3 +128,49 @@ function getUserId() {
 function isCurrentUser(userId) {
     return (getUserId()==userId) ? true : false;
 }
+
+/**
+ * header에 읽지 않은 메시지 수를 표시 (+ SendBird에 사용자가 등록되어 있지 않다면 정보 등록)
+ */
+function getUnreadMessageCount(userId, nickname, profileUrl) {
+    var sb = new SendBird({ appId: appId });
+    sb.connect(userId, function(user, error) {
+        if (error) {
+            console.error(error);
+            return;
+        }
+        checkUnreadMessage(user);
+    });
+
+    var checkUnreadMessage = function(user) {
+        // SendBird에 이름과 사진 등록..
+        if (user.nickname != nickname) {
+            sb.updateCurrentUserInfo(nickname, profileUrl, function(response, error) {
+                console.log(response, error);
+            });
+        }
+
+        var unreadCount = 0;
+        var channelListQuery = sb.GroupChannel.createMyGroupChannelListQuery();
+        channelListQuery.limit = 100;
+        channelListQuery.includeEmpty = false;
+        if (channelListQuery.hasNext) {
+            channelListQuery.next(function(channelList, error) {
+                if (error) {
+                    console.error(error);
+                    return;
+                }
+                channelList.forEach(function(channel) {
+                    unreadCount += channel.unreadMessageCount;
+                });
+                $('.unread-message-counter').html('<strong>(' + unreadCount + ')</strong>');
+                if ($('.unread-message'))
+                    $('.unread-message').html('' + unreadCount);
+            });
+        }
+
+        setTimeout(function() {
+            sb.disconnect();
+        }, 3 * 1000);
+    };
+}

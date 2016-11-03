@@ -14,7 +14,9 @@
             </div>
             <div class="user-info-bottom">
                 <div class="user-message">
-                    메세지 <span>(0)</span>
+                    <a href="{% url 'message_lounge' %}">
+                        메시지 <span class="unread-message-counter"></span>
+                    </a>
                 </div>
             </div>
         </div>
