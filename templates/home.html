@@ -155,7 +155,11 @@
                                     {{ product.variation_set.first.price }}&#8361;~
                                 </div>
                                 <div class="card-price-back"></div>
-                                <img src="{{ product.get_image_url }}">
+                                {% if product.get_thumb_sd_url %}
+                                    <img src="{{ product.get_thumb_sd_url }}">
+                                {% else %}
+                                    <img src="{{ product.get_image_url }}">
+                                {% endif %}
                             </div>
                             <div class="card-info">
                                 <div class="card-title">
@@ -201,7 +205,11 @@
                                         {{ product.variation_set.first.price }}&#8361;~
                                     </div>
                                     <div class="card-price-back"></div>
-                                    <img src="{{ product.get_image_url }}">
+                                    {% if product.get_thumb_sd_url %}
+                                        <img src="{{ product.get_thumb_sd_url }}">
+                                    {% else %}
+                                        <img src="{{ product.get_image_url }}">
+                                    {% endif %}
                                 </div>
                                 <div class="card-info">
                                     <div class="card-title">
@@ -247,7 +255,11 @@
                                         {{ product.variation_set.first.price }}&#8361;~
                                     </div>
                                     <div class="card-price-back"></div>
-                                    <img src="{{ product.get_image_url }}">
+                                    {% if product.get_thumb_sd_url %}
+                                        <img src="{{ product.get_thumb_sd_url }}">
+                                    {% else %}
+                                        <img src="{{ product.get_image_url }}">
+                                    {% endif %}
                                 </div>
                                 <div class="card-info">
                                     <div class="card-title">

@@ -74,6 +74,18 @@ class Product(models.Model):
         else:
             return None
 
+    @property
+    def get_thumb_hd_url(self):
+        return self.productthumbnail_set.get(thumb_type='hd')
+
+    @property
+    def get_thumb_sd_url(self):
+        return self.productthumbnail_set.get(thumb_type='sd')
+
+    @property
+    def get_thumb_micro_url(self):
+        return self.productthumbnail_set.get(thumb_type='micro')
+
 
 def thumbnail_location(instance, filename):
     return 'product/%s/thumbnail/%s' % (instance.product.title, filename)
@@ -100,8 +112,10 @@ class ProductThumbnail(models.Model):
     )
 
     def __unicode__(self):
-        # return str(self.media).split('.')[0]
-        return self.media.path
+        if settings.DEBUG:
+            return '/media/%s' % (self.media)
+        else:
+            return '%s%s' % (settings.MEDIA_ROOT, self.media)
 
 
 def create_new_thumb(media_path, instance, max_length, max_width):
