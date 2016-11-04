@@ -25,6 +25,9 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block dashboard_js %}
     <script type="text/javascript" src="{% static 'js/message-room.js' %}"></script>
     <script type="text/javascript">
         $(function () {
@@ -33,7 +36,4 @@
             $('#chatview').fadeIn();
         });
     </script>
-{% endblock %}
-
-{% block dashboard_js %}
 {% endblock %}
