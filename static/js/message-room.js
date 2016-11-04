@@ -37,8 +37,7 @@ function addMessage(message) {
 
     var messageString =
         ('<div class="{}">' +
-            '<img src="{}">' +
-            '<div class="bubble">{}<div class="corner"></div><span>{}</span></div>' +
+            '<img src="{}"><div class="bubble">{}<div class="corner"></div><span>{}</span></div>' +
         '</div>').format(
             messageClass,
             message.sender.profileUrl,
@@ -104,7 +103,6 @@ function startSendBird(userId, channelUrl) {
             console.error(error);
             return;
         }
-
         initPage(user);
     });
 
@@ -120,8 +118,6 @@ function startSendBird(userId, channelUrl) {
                 return;
             }
             currentChannel = channel;
-            console.log(channel); // TEST
-
             loadPrevMessages(channel);
         });
     };
@@ -166,51 +162,14 @@ function startSendBird(userId, channelUrl) {
 
     var ChannelHandler = new sb.ChannelHandler();
     ChannelHandler.onMessageReceived = function(channel, message) {
-        // var isCurrentChannel = false;
-        //
-        // if (currentChannel == channel) {
-        //     isCurrentChannel = true;
-        // }
+        channel.refresh(function() {});
+        channel.markAsRead();
 
-        channel.refresh(function () {
-        });
-
-        // update last message
-        // if (channel.isGroupChannel()) {
-        //   groupChannelLastMessageList[channel.url] = message;
-        //   updateGroupChannelLastMessage(message);
-        //   moveToTopGroupChat(channel.url);
-        // }
-
-        //   if (isCurrentChannel && channel.isGroupChannel()) {
-            channel.markAsRead();
-        //   } else {
-        //     unreadCountUpdate(channel);
-        //   }
-        //
         //   if (!document.hasFocus()) {
         //     notifyMessage(channel, message.message);
         //   }
-        //
-        //   if (message.isUserMessage() && isCurrentChannel) {
-        //     setChatMessage(message);
-        //   }
+
         addMessage(message);
-        //
-        //   if (message.isFileMessage() && isCurrentChannel) {
-        //     $('.chat-input-file').removeClass('file-upload');
-        //     $('#chat_file_input').val('');
-        //
-        //     if (message.type.match(/^image\/.+$/)) {
-        //       setImageMessage(message);
-        //     } else {
-        //       setFileMessage(message);
-        //     }
-        //   }
-        //
-        //   if (message.isAdminMessage() && isCurrentChannel) {
-        //     setBroadcastMessage(message);
-        //   }
     };
 
     SendMessageHandler = function (message, error) {
@@ -224,21 +183,9 @@ function startSendBird(userId, channelUrl) {
             }
         }
 
-        // // update last message
-        // if (groupChannelLastMessageList.hasOwnProperty(message.channelUrl)) {
-        //   groupChannelLastMessageList[message.channelUrl] = message;
-        //   updateGroupChannelLastMessage(message);
-        // }
-
         if (message.isFileMessage()) {
             $('.chat-input-file').removeClass('file-upload');
             $('#chat_file_input').val('');
-
-            // if (message.type.match(/^image\/.+$/)) {
-            //     setImageMessage(message);
-            // } else {
-            //     setFileMessage(message);
-            // }
         }
         addMessage(message);
     };
