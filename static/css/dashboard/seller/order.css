@@ -26,3 +26,60 @@ text-align: center;
     padding-bottom: 100px;
     border-bottom: 1px solid #DEDEDE;
 }
+
+.order-list-nav {
+    margin-top: 25px;
+    margin-left: 25px;
+}
+
+.order-list-nav ul li {
+    display: inline-block;
+    font-size: 12px;
+    color: rgba(0, 0, 0, .6);
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    margin-right: 30px;
+}
+
+.order-list-nav ul li:first-child {
+    margin-left: 10px;
+}
+
+.order-list-nav ul li:last-child {
+    margin-right: 0;
+}
+
+.order-list-nav .active {
+    color: #648efc;
+}
+
+.order-list-table {
+    margin-top: 25px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 98%;
+    font-size: 14px;
+}
+
+.order-list-table th {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #648efc;
+    color: white;
+}
+
+.order-list-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.order-list-table td {
+    border: 1px solid #ddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.order-list-table input[type="checkbox"] {
+    display: block;
+    margin: auto;
+}

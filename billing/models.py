@@ -288,6 +288,14 @@ class ProductManage(models.Model):
     def __unicode__(self):
         return self.id
 
+    def status_in_korean(self):
+        statuses = {'ready': '작업대기',
+                   'progress': '작업진행',
+                   'complete': '작업완료',
+                   'finish': '거래완료',
+                   'cancel': '취소'}
+        return statuses[self.status]
+
 
 def product_receiver(instance, sender, created, *args, **kwargs):
     if instance.status == 'finish':

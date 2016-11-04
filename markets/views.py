@@ -378,11 +378,11 @@ def product_delete(request):
 
 @login_required
 def product_order_manage(request):
-    order = ProductManage.objects.all()
+    orders = ProductManage.objects.all()
 
     template = 'seller/order_manage.html'
     context = {
-        "order": order
+        "orders": orders
     }
 
     return render(request, template, context)
