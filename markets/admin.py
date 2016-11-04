@@ -1,9 +1,9 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from django.contrib import admin
 from django.forms import ValidationError
 from django.forms.models import BaseInlineFormSet
 from django.contrib.contenttypes.admin import GenericTabularInline
-from .models import Product, ProductTag, Variation, SnsType, ProductTarget, SnsUrl
+from .models import Product, ProductTag, Variation, SnsType, ProductTarget, SnsUrl, ProductThumbnail
 
 
 class TaggedItemInline(GenericTabularInline):
@@ -34,7 +34,6 @@ class VariationInlineFormSet(BaseInlineFormSet):
         ]
         super(VariationInlineFormSet, self).__init__(*args, **kwargs)
 
-
     def clean(self):
         count = 0
         for form in self.forms:
@@ -59,10 +58,16 @@ class VariationInline(admin.StackedInline):
         return self.extra
 
 
+class ThumbnailInline(admin.TabularInline):
+    extra = 1
+    model = ProductThumbnail
+
+
 class ProductAdmin(admin.ModelAdmin):
-    inlines = [VariationInline, TaggedItemInline, TargetItemInline, SnsItemInline, UrlItemInline,]
+    inlines = [ThumbnailInline, VariationInline, TaggedItemInline, TargetItemInline, SnsItemInline, UrlItemInline, ]
 
     class Meta:
         model = Product
+
 
 admin.site.register(Product, ProductAdmin)
