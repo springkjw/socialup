@@ -1,8 +1,6 @@
 var nickname = null;
 var userId = null;
-
 var currentUser;
-
 var currentChannel = null;
 var messageList = [];
 var lastUpdated = new Date(0);
@@ -146,13 +144,6 @@ function startSendBird(userId, channelUrl) {
         // if (!isInit) {
         //     initPage();
         // }
-
-  //   setTimeout(function(){
-  //     updateGroupChannelListAll();
-  //     setInterval(function(){
-  //       updateGroupChannelListAll();
-  //     }, 1000);
-  //   }, 500);
       };
 
   // ConnectionHandler.onReconnectFailed = function(id) {
@@ -236,5 +227,4 @@ function init(userId) {
 var scrollPositionBottom = function() {
   var scrollHeight = $('#chat-messages')[0].scrollHeight;
   $('#chat-messages')[0].scrollTop = scrollHeight;
-  // currScrollHeight = scrollHeight;
 };
