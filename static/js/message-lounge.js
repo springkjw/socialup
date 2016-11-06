@@ -9,7 +9,7 @@ var currentUser = null;
 function updateChannelLastMessage(message) {
     if (message) {
         var lastMessage = (message.isFileMessage()) ? message.name : message.message;
-        var lastMessageDateString = '{}<br>{}'.format(getDateString(message.createdAt), getTimeString(message.createdAt));
+        var lastMessageDateString = getDatetimeString(message.createdAt, '<br>');
 
         $('.channel-group[data-channel-url=' + message.channelUrl + '] .channel-lastmessage').html(lastMessage);
         $('.channel-group[data-channel-url=' + message.channelUrl + '] .channel-lastmessagetime').html(lastMessageDateString);
