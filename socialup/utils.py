@@ -4,13 +4,12 @@ from django.conf import settings
 from storages.backends.s3boto import S3BotoStorage
 
 StaticRootS3BotoStorage = lambda: S3BotoStorage(location='static')
-MediaRootS3BotoStorage  = lambda: S3BotoStorage(location='media')
+MediaRootS3BotoStorage = lambda: S3BotoStorage(location='media')
 
 os.environ['S3_USE_SIGV4'] = 'True'
 
 
 class S3Storage(S3BotoStorage):
-
     @property
     def connection(self):
         if self._connection is None:
