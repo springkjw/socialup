@@ -10,6 +10,12 @@
         <div class="dashboard-nav">
             메시지
         </div>
+        <div class="channel-list-options">
+            <ul>
+                <li class="active" data-option="all">전체</li>
+                <li data-option="unread">읽지 않은 메시지<span class="unread-message-counter"></span></li>
+            </ul>
+        </div>
         <table class="channels">
             <tbody id="channel_list"></tbody>
         </table>
@@ -22,6 +28,14 @@
         $(function () {
             //notifyMe();
             init('{{ user.id }}');
+
+            $('.channel-list-options ul li').click(function() {
+                $('.channel-list-options ul li').removeClass('active');
+                $(this).addClass('active');
+
+                var unreadOnly = ($(this).data('option') == 'unread') ? true : false;
+                loadGroupChannelList(unreadOnly);
+            });
         });
     </script>
 {% endblock %}

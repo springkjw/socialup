@@ -53,6 +53,12 @@ function getTimeString(time) {
     return '{}:{}'.format(twoDigitString(date.getHours()), twoDigitString(date.getMinutes()));
 }
 
+function getDatetimeString(time, separator) {
+    if (separator == null)
+        separator = ' ';
+    return getDateString(time) + separator + getTimeString(time);
+}
+
 /**
  * ms 단위의 integer 시간들 사이의 날짜 차이를 리턴
  * @param time1 ms 단위의 시간

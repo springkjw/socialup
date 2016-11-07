@@ -1,8 +1,6 @@
 var nickname = null;
 var userId = null;
-
 var currentUser;
-
 var currentChannel = null;
 var messageList = [];
 var lastUpdated = new Date(0);
@@ -37,8 +35,7 @@ function addMessage(message) {
 
     var messageString =
         ('<div class="{}">' +
-            '<img src="{}">' +
-            '<div class="bubble">{}<div class="corner"></div><span>{}</span></div>' +
+            '<img src="{}"><div class="bubble">{}<div class="corner"></div><span>{}</span></div>' +
         '</div>').format(
             messageClass,
             message.sender.profileUrl,
@@ -104,7 +101,6 @@ function startSendBird(userId, channelUrl) {
             console.error(error);
             return;
         }
-
         initPage(user);
     });
 
@@ -120,8 +116,6 @@ function startSendBird(userId, channelUrl) {
                 return;
             }
             currentChannel = channel;
-            console.log(channel); // TEST
-
             loadPrevMessages(channel);
         });
     };
@@ -150,13 +144,6 @@ function startSendBird(userId, channelUrl) {
         // if (!isInit) {
         //     initPage();
         // }
-
-  //   setTimeout(function(){
-  //     updateGroupChannelListAll();
-  //     setInterval(function(){
-  //       updateGroupChannelListAll();
-  //     }, 1000);
-  //   }, 500);
       };
 
   // ConnectionHandler.onReconnectFailed = function(id) {
@@ -166,51 +153,14 @@ function startSendBird(userId, channelUrl) {
 
     var ChannelHandler = new sb.ChannelHandler();
     ChannelHandler.onMessageReceived = function(channel, message) {
-        // var isCurrentChannel = false;
-        //
-        // if (currentChannel == channel) {
-        //     isCurrentChannel = true;
-        // }
+        channel.refresh(function() {});
+        channel.markAsRead();
 
-        channel.refresh(function () {
-        });
-
-        // update last message
-        // if (channel.isGroupChannel()) {
-        //   groupChannelLastMessageList[channel.url] = message;
-        //   updateGroupChannelLastMessage(message);
-        //   moveToTopGroupChat(channel.url);
-        // }
-
-        //   if (isCurrentChannel && channel.isGroupChannel()) {
-            channel.markAsRead();
-        //   } else {
-        //     unreadCountUpdate(channel);
-        //   }
-        //
         //   if (!document.hasFocus()) {
         //     notifyMessage(channel, message.message);
         //   }
-        //
-        //   if (message.isUserMessage() && isCurrentChannel) {
-        //     setChatMessage(message);
-        //   }
+
         addMessage(message);
-        //
-        //   if (message.isFileMessage() && isCurrentChannel) {
-        //     $('.chat-input-file').removeClass('file-upload');
-        //     $('#chat_file_input').val('');
-        //
-        //     if (message.type.match(/^image\/.+$/)) {
-        //       setImageMessage(message);
-        //     } else {
-        //       setFileMessage(message);
-        //     }
-        //   }
-        //
-        //   if (message.isAdminMessage() && isCurrentChannel) {
-        //     setBroadcastMessage(message);
-        //   }
     };
 
     SendMessageHandler = function (message, error) {
@@ -224,21 +174,9 @@ function startSendBird(userId, channelUrl) {
             }
         }
 
-        // // update last message
-        // if (groupChannelLastMessageList.hasOwnProperty(message.channelUrl)) {
-        //   groupChannelLastMessageList[message.channelUrl] = message;
-        //   updateGroupChannelLastMessage(message);
-        // }
-
         if (message.isFileMessage()) {
             $('.chat-input-file').removeClass('file-upload');
             $('#chat_file_input').val('');
-
-            // if (message.type.match(/^image\/.+$/)) {
-            //     setImageMessage(message);
-            // } else {
-            //     setFileMessage(message);
-            // }
         }
         addMessage(message);
     };
@@ -289,5 +227,4 @@ function init(userId) {
 var scrollPositionBottom = function() {
   var scrollHeight = $('#chat-messages')[0].scrollHeight;
   $('#chat-messages')[0].scrollTop = scrollHeight;
-  // currScrollHeight = scrollHeight;
 };

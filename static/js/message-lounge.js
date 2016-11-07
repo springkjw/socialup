@@ -2,37 +2,31 @@ var nickname = null;
 var userId = null;
 var currentUser = null;
 
-
 /***********************************************
  *                MESSAGING
  **********************************************/
 
-function updateGroupChannelLastMessage(message) {
-    var lastMessage = '';
+function updateChannelLastMessage(message) {
     if (message) {
-        lastMessage = message.message;
-
-        lastMessageDateString = '{}<br>{}'.format(getDateString(message.createdAt),
-            getTimeString(message.createdAt));
-
-        // TODO: last message가 file인 경우의 처리..
+        var lastMessage = (message.isFileMessage()) ? message.name : message.message;
+        var lastMessageDateString = getDatetimeString(message.createdAt, '<br>');
 
         $('.channel-group[data-channel-url=' + message.channelUrl + '] .channel-lastmessage').html(lastMessage);
         $('.channel-group[data-channel-url=' + message.channelUrl + '] .channel-lastmessagetime').html(lastMessageDateString);
     }
 }
 
-function updateGroupChannelListAll(){
+function updateChannelListAll(){
   for (var i in groupChannelLastMessageList) {
     var message = groupChannelLastMessageList[i];
-    updateGroupChannelLastMessage(message);
+    updateChannelLastMessage(message);
   }
 }
 
-function addGroupChannel(receiver, targetChannel) {
+function renderChannel(targetChannel) {
     groupChannelLastMessageList[targetChannel.url] = targetChannel.lastMessage;
 
-    var lastMessage = targetChannel.lastMessage;
+    var receiver = getReceiverFrom(targetChannel);
     var receiverProfile = (receiver == null) ? '/static/img/no_profile.png' : receiver.profileUrl;
     var receiverName = (receiver == null) ? '(상대가 퇴장하였습니다)' : receiver.nickname;
 
@@ -50,7 +44,41 @@ function addGroupChannel(receiver, targetChannel) {
     );
 }
 
-function getGroupChannelList() {
+function getReceiverFrom(channel) {
+    var receiver = null;
+    if (channel.memberCount > 1) {
+        channel.members.forEach(function (member) {
+            if (member.userId != currentUser.userId)
+                receiver = member;
+        });
+    }
+    return receiver;
+}
+
+function loadGroupChannelList(unreadOnly) {
+    $('#channel_list').html('');
+
+    // 이미 한 번 읽은 경우..
+    if (allChannels.length > 0) {
+        if (unreadOnly) {
+            unreadChannels.forEach(function(channel) {
+                renderChannel(channel);
+            });
+        }
+        else {
+            allChannels.forEach(function(channel) {
+                renderChannel(channel);
+            });
+        }
+
+        $('#channel_list').on('click', 'tr.channel-group', function () {
+            window.location.href = '/messages/room?channel=' + $(this).data('channel-url');
+        });
+
+        updateChannelListAll();
+        return;
+    }
+
     channelListQuery.next(function(channels, error) {
         if (error) {
             console.error(error);
@@ -58,15 +86,12 @@ function getGroupChannelList() {
         }
 
         channels.forEach(function(channel) {
-            var receiver = null;
-            if (channel.memberCount > 1) {
-                channel.members.forEach(function(member) {
-                    if (member.userId != currentUser.userId) {
-                        receiver = member;
-                    }
-                });
-            }
-            addGroupChannel(receiver, channel);
+            allChannels.push(channel);
+            if (channel.unreadMessageCount > 0)
+                unreadChannels.push(channel);
+
+            if ( !(unreadOnly && channel.unreadMessageCount != 0) )
+                renderChannel(channel);
 
             // var targetUrl = channel.url;
             // var unread = channel.unreadMessageCount > 9 ? '9+' : channel.unreadMessageCount;
@@ -78,10 +103,10 @@ function getGroupChannelList() {
             //     });
             // }
         });
+    });
 
-        $('#channel_list').on('click', 'tr.channel-group', function () {
-            window.location.href = '/messages/room?channel=' + $(this).data('channel-url');
-        });
+    $('#channel_list').on('click', 'tr.channel-group', function () {
+        window.location.href = '/messages/room?channel=' + $(this).data('channel-url');
     });
 }
 /***********************************************
@@ -96,6 +121,8 @@ var channelListQuery;
 
 var isInit = false;
 var groupChannelLastMessageList = {};
+var allChannels = [];
+var unreadChannels = [];
 
 function startSendBird(userId) {
     sb = new SendBird({ appId: appId });
@@ -119,12 +146,12 @@ function startSendBird(userId) {
         channelListQuery.includeEmpty = true;
         channelListQuery.order = 'latest_last_message';
 
-        getGroupChannelList();
+        loadGroupChannelList(false);
 
         setTimeout(function () {
-            updateGroupChannelListAll();
+            updateChannelListAll();
             setInterval(function () {
-                updateGroupChannelListAll();
+                updateChannelListAll();
             }, 30 * 1000);
         }, 1000);
     };
@@ -149,12 +176,12 @@ function startSendBird(userId) {
     // GroupChannel list reset
     // channelListQuery = sb.GroupChannel.createMyGroupChannelListQuery();
     // $('#messaging_channel_list').html('');
-    // getGroupChannelList();
+    // loadGroupChannelList();
 
   //   setTimeout(function(){
-  //     updateGroupChannelListAll();
+  //     updateChannelListAll();
   //     setInterval(function(){
-  //       updateGroupChannelListAll();
+  //       updateChannelListAll();
   //     }, 1000);
   //   }, 500);
   // };
@@ -178,7 +205,7 @@ function startSendBird(userId) {
   //   // update last message
   //   if (channel.isGroupChannel()) {
   //     groupChannelLastMessageList[channel.url] = message;
-  //     updateGroupChannelLastMessage(message);
+  //     updateChannelLastMessage(message);
   //     moveToTopGroupChat(channel.url);
   //   }
   //

@@ -8,7 +8,7 @@
 {% block dashboard_js %}
     <script type="text/javascript" src="{% static 'js/seller/order.js' %}"></script>
     <script type="text/javascript">
-        $(function () {
+        $(function() {
             {% if messages %}
                 {% for message in messages %}
                     alert('{{ message }}');
@@ -27,16 +27,53 @@
                 프리미엄 신청
             </div>
         </div>
-        <div class="dashboard-order">
-            {% if order %}
-                <div class="">
-
-                </div>
-            {% else %}
-                <div class="no-list">
-                    아직 주문이 없습니다!
-                </div>
-            {% endif %}
+        <div class="dashboard-order-list">
+            <div class="order-list-nav">
+                <ul>
+                    <li class="active">전체({{ orders|length }})</li>
+                    <li data-status="ready">작업대기(<span class="status-count"></span>)</li>
+                    <li data-status="progress">작업진행(<span class="status-count"></span>)</li>
+                    <li data-status="complete">작업완료(<span class="status-count"></span>)</li>
+                    <li data-status="finish">거래완료(<span class="status-count"></span>)</li>
+                    <li data-status="cancel">취소(<span class="status-count"></span>)</li>
+                </ul>
+            </div>
+            <div class="dashboard-order">
+                {% if orders %}
+                    <table class="order-list-table">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox"></th>
+                            <th>상품번호</th>
+                            <th>상품명</th>
+                            <th>구매자 ID</th>
+                            <th>구매날짜</th>
+                            <th>작업상태</th>
+                            <th>결제금액</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                                <tr data-status="{{ order.status }}">
+                                    <td><input type="checkbox"></td>
+                                    <td>{{ order.product.id }}</td>
+                                    <td>{{ order.product }}</td>
+                                    <td>{{ order.customer.get_short_name }}</td>
+                                    <td>{# order.created #}</td>
+                                    <td>{{ order.status_in_korean }}</td>
+                                    <td>{#  #}</td>
+                                    <td></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="no-list">
+                        아직 주문이 없습니다!
+                    </div>
+                {% endif %}
+            </div>
         </div>
         {#        <div class="dashboard-info">#}
         {#            <div class="dashboard-info-summary info-order-wish">#}

@@ -19,36 +19,25 @@
     <style>
         @font-face {
             font-family: NotoSans;
-            src: url('{% static 'fonts/NotoSans-Regular.eot' %}');
-            src: local(※), url('{% static 'fonts/NotoSans-Regular.eot' %}') format(‘woff’);
-        }
-
+            src:url('{% static 'fonts/NotoSans-Regular.eot' %}');
+            src:local(※),url('{% static 'fonts/NotoSans-Regular.eot' %}') format('woff'); }
         body {
-            font-family: 'NotoSans', sans-serif;
-            font-weight: 300;
-        }
+            font-family:'NotoSans',sans-serif;
+            font-weight:300; }
     </style>
-    {% block css %}
-    {% endblock %}
-
-    <script type="text/javascript" src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
-    <script type="text/javascript" src='{% static "js/django.csrf.js" %}'></script>
-    <script type="text/javascript" src="{% static 'js/header.js' %}"></script>
-
-    {% block js %}
-    {% endblock %}
+    {% block css %}{% endblock %}
 </head>
 <body>
     {% include 'header.html' %}
 
-    {% block jumbotron %}
-    {% endblock %}
-
-    {% block content %}
-    {% endblock %}
+    {% block jumbotron %}{% endblock %}
+    {% block content %}{% endblock %}
 
     {% include 'footer.html' %}
 
+    <script type="text/javascript" src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
+    <script type="text/javascript" src='{% static "js/django.csrf.js" %}'></script>
+    <script type="text/javascript" src="{% static 'js/header.js' %}"></script>
     {% if user.is_authenticated %}
         <script type="text/javascript" src="{% static 'js/SendBird.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/message-common.js' %}"></script>
@@ -56,5 +45,6 @@
             getUnreadMessageCount('{{ user.id }}', '{{ user.get_short_name }}', '{{ user.get_avatar }}');
         </script>
     {% endif %}
+    {% block js %}{% endblock %}
 </body>
 </html>
