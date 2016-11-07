@@ -146,40 +146,43 @@ function getUnreadMessageCount(userId, nickname, profileUrl) {
             console.error(error);
             return;
         }
-        checkUnreadMessage(user);
+        checkUserInfo(user);
+        checkUnreadMessage(sb);
+
+        setTimeout(function() {
+            sb.disconnect();
+        }, 3 * 1000);
     });
 
-    var checkUnreadMessage = function(user) {
-        // SendBird에 이름과 사진 등록..
+    var checkUserInfo = function(user) {
+        // SendBird의 이름과 사진을 최신 정보로 갱신..
         if (user.nickname != nickname) {
             sb.updateCurrentUserInfo(nickname, profileUrl, function(response, error) {
                 console.log(response, error);
             });
         }
-
-        var unreadCount = 0;
-        var channelListQuery = sb.GroupChannel.createMyGroupChannelListQuery();
-        channelListQuery.limit = 100;
-        channelListQuery.includeEmpty = false;
-        if (channelListQuery.hasNext) {
-            channelListQuery.next(function(channelList, error) {
-                if (error) {
-                    console.error(error);
-                    return;
-                }
-                channelList.forEach(function(channel) {
-                    unreadCount += channel.unreadMessageCount;
-                });
-                $('.unread-message-counter').html('<strong>(' + unreadCount + ')</strong>');
-                if ($('.unread-message'))
-                    $('.unread-message').html('' + unreadCount);
-            });
-        }
-
-        setTimeout(function() {
-            sb.disconnect();
-        }, 3 * 1000);
     };
+}
+
+function checkUnreadMessage(sb) {
+    var unreadCount = 0;
+    var channelListQuery = sb.GroupChannel.createMyGroupChannelListQuery();
+    channelListQuery.limit = 100;
+    channelListQuery.includeEmpty = false;
+    if (channelListQuery.hasNext) {
+        channelListQuery.next(function(channelList, error) {
+            if (error) {
+                console.error(error);
+                return;
+            }
+            channelList.forEach(function(channel) {
+                unreadCount += channel.unreadMessageCount;
+            });
+            $('.unread-message-counter').html('<strong>(' + unreadCount + ')</strong>');
+            if ($('.unread-message'))
+                $('.unread-message').html('' + unreadCount);
+        });
+    }
 }
 
 /** 해당 유저가 SendBird에 등록되어 있지 않다면 등록..

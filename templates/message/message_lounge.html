@@ -28,11 +28,9 @@
         $(function () {
             //notifyMe();
             init('{{ user.id }}');
-
             $('.channel-list-options ul li').click(function() {
                 $('.channel-list-options ul li').removeClass('active');
                 $(this).addClass('active');
-
                 var unreadOnly = ($(this).data('option') == 'unread') ? true : false;
                 loadGroupChannelList(unreadOnly);
             });

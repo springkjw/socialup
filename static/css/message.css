@@ -127,7 +127,7 @@ table.channels tr td {
 	font-size:12px;
 	text-align:center;
 	margin:15px 0;
-	width:290px;
+	width:500px;
 	display:block;
 }
 #chat-messages div.message{
@@ -221,7 +221,7 @@ div.message.right .corner{
 	width:30px;
 	height:30px;
 	position:relative;
-	right: 15px;
+	right: 5px;
 	top: 20px;
 	border:none;
 }

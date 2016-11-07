@@ -55,23 +55,24 @@ $('#chat-input-text').keydown(function(event) {
             this.value = $.trim(this.value);
 
             currentChannel.sendUserMessage($.trim(this.value), '', SendMessageHandler);
-
             scrollPositionBottom();
         }
         this.value = "";
     } else {
-        console.log(this.value);
-
-        if (!$.trim('' + this.value).isEmpty()) {
-            if (!currentChannel.isOpenChannel()) {
-                currentChannel.startTyping();
-            }
-        }
+        // if (!$.trim('' + this.value).isEmpty()) {
+            // if (!currentChannel.isOpenChannel()) {
+            //     currentChannel.startTyping();
+            // }
+        // }
     }
 });
 
 $('#send').click(function() {
-    currentChannel.sendUserMessage($.trim($('#chat-input-text').val()), '', SendMessageHandler);
+    var text = $.trim($('#chat-input-text').val());
+    if (!text.isEmpty()) {
+        currentChannel.sendUserMessage(text, '', SendMessageHandler);
+        $('#chat-input-text').val('');
+    }
 });
 
 $('#chat_file_input').change(function () {
@@ -117,10 +118,11 @@ function startSendBird(userId, channelUrl) {
             }
             currentChannel = channel;
             loadPrevMessages(channel);
+            channel.markAsRead();
         });
     };
 
-    var loadPrevMessages = function(channel) {
+    var loadPrevMessages = function() {
         var messageListQuery = currentChannel.createPreviousMessageListQuery();
         messageListQuery.load(200, false, function(list, error) {
             if (error) {
@@ -149,21 +151,23 @@ function startSendBird(userId, channelUrl) {
   // ConnectionHandler.onReconnectFailed = function(id) {
   //   console.log('onReconnectFailed');
   // };
-  // sb.addConnectionHandler('uniqueID', ConnectionHandler);
+    sb.addConnectionHandler('uniqueID', ConnectionHandler);
 
     var ChannelHandler = new sb.ChannelHandler();
     ChannelHandler.onMessageReceived = function(channel, message) {
         channel.refresh(function() {});
-        channel.markAsRead();
 
-        //   if (!document.hasFocus()) {
-        //     notifyMessage(channel, message.message);
-        //   }
+        if (currentChannel.channelUrl == channel.channelUrl) {
+            channel.markAsRead();
+            addMessage(message);
+            //   if (!document.hasFocus())
+            //     notifyMessage(channel, message.message);
+        }
 
-        addMessage(message);
+        checkUnreadMessage(sb, currentUser);
     };
 
-    SendMessageHandler = function (message, error) {
+    SendMessageHandler = function(message, error) {
         if (error) {
             if (error.code == 900050) {
                 // setSysMessage({'message': 'This channel is freeze.'});
@@ -181,18 +185,18 @@ function startSendBird(userId, channelUrl) {
         addMessage(message);
     };
 
-    ChannelHandler.onReadReceiptUpdated = function (channel) {
-        console.log('ChannelHandler.onReadReceiptUpdated: ', channel);
+    // ChannelHandler.onReadReceiptUpdated = function(channel) {
+    //     console.log('ChannelHandler.onReadReceiptUpdated: ', channel);
         // updateChannelMessageCacheAll(channel);
-    };
+    // };
 
-    ChannelHandler.onTypingStatusUpdated = function (channel) {
-        console.log('ChannelHandler.onTypingStatusUpdated: ', channel);
+    // ChannelHandler.onTypingStatusUpdated = function(channel) {
+    //     console.log('ChannelHandler.onTypingStatusUpdated: ', channel);
 
         // if (channel == currChannelInfo) {
         //     showTypingUser(channel);
         // }
-    };
+    // };
 
   // ChannelHandler.onUserLeft = function (channel, user) {
   //   console.log('ChannelHandler.onUserLeft: ', channel, user);
@@ -227,4 +231,9 @@ function init(userId) {
 var scrollPositionBottom = function() {
   var scrollHeight = $('#chat-messages')[0].scrollHeight;
   $('#chat-messages')[0].scrollTop = scrollHeight;
+};
+
+window.onfocus = function() {
+  if (currentChannel)
+    currentChannel.markAsRead();
 };

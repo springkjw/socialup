@@ -156,109 +156,13 @@ function startSendBird(userId) {
         }, 1000);
     };
 
-  // var ConnectionHandler = new sb.ConnectionHandler();
-  // ConnectionHandler.onReconnectStarted = function(id) {
-  //   console.log('onReconnectStarted');
-  // };
-
-  // ConnectionHandler.onReconnectSucceeded = function(id) {
-  //   console.log('onReconnectSucceeded');
-  //   if (!isInit) {
-  //     initPage();
-  //   }
-  //
-  //   // OpenChannel list reset
-  //   if ($('.right-section__modal-bg').is(':visible')) {
-  //     var withoutCache = true;
-  //     getChannelList(withoutCache);
-  //   }
-  //
-    // GroupChannel list reset
-    // channelListQuery = sb.GroupChannel.createMyGroupChannelListQuery();
-    // $('#messaging_channel_list').html('');
-    // loadGroupChannelList();
-
-  //   setTimeout(function(){
-  //     updateChannelListAll();
-  //     setInterval(function(){
-  //       updateChannelListAll();
-  //     }, 1000);
-  //   }, 500);
-  // };
-
-  // ConnectionHandler.onReconnectFailed = function(id) {
-  //   console.log('onReconnectFailed');
-  // };
-  // sb.addConnectionHandler('uniqueID', ConnectionHandler);
-
-  // var ChannelHandler = new sb.ChannelHandler();
-  // ChannelHandler.onMessageReceived = function(channel, message){
-  //   var isCurrentChannel = false;
-  //
-  //   if (currChannelInfo == channel) {
-  //     isCurrentChannel = true;
-  //   }
-  //
-  //   channel.refresh(function(){
-  //   });
-  //
-  //   // update last message
-  //   if (channel.isGroupChannel()) {
-  //     groupChannelLastMessageList[channel.url] = message;
-  //     updateChannelLastMessage(message);
-  //     moveToTopGroupChat(channel.url);
-  //   }
-  //
-  //   if (isCurrentChannel && channel.isGroupChannel()) {
-  //     channel.markAsRead();
-  //   } else {
-  //     unreadCountUpdate(channel);
-  //   }
-  //
-  //   if (!document.hasFocus()) {
-  //     notifyMessage(channel, message.message);
-  //   }
-  //
-  //   if (message.isUserMessage() && isCurrentChannel) {
-  //     setChatMessage(message);
-  //   }
-  //
-  //   if (message.isFileMessage() && isCurrentChannel) {
-  //     $('.chat-input-file').removeClass('file-upload');
-  //     $('#chat_file_input').val('');
-  //
-  //     if (message.type.match(/^image\/.+$/)) {
-  //       setImageMessage(message);
-  //     } else {
-  //       setFileMessage(message);
-  //     }
-  //   }
-  //
-  //   if (message.isAdminMessage() && isCurrentChannel) {
-  //     setBroadcastMessage(message);
-  //   }
-  // };
-
-  // ChannelHandler.onUserLeft = function (channel, user) {
-  //   console.log('ChannelHandler.onUserLeft: ', channel, user);
-  //   setSysMessage({'message': '"' + user.nickname + '" user is left.'});
-  //
-  //   if (channel.isGroupChannel()){
-  //     groupChannelListMembersAndProfileImageUpdate(channel);
-  //   }
-  // };
-  //
-  // ChannelHandler.onUserExited = function (channel, user) {
-  //   console.log('ChannelHandler.onUserExited: ', channel, user);
-  // };
-  //
-  // ChannelHandler.onChannelChanged = function (channel) {
-  //   console.log('ChannelHandler.onChannelChanged: ', channel);
-  //   if (channel.isGroupChannel()){
-  //     groupChannelListMembersAndProfileImageUpdate(channel);
-  //   }
-  // };
-  // sb.addChannelHandler('channel', ChannelHandler);
+    var channelHandler = new sb.ChannelHandler();
+    channelHandler.onMessageReceived = function(channel) {
+        channel.refresh(function() {});
+        initPage(currentUser);
+        checkUnreadMessage(sb);
+    };
+    sb.addChannelHandler('channel', channelHandler);
 }
 
 function init(userId) {
