@@ -5,12 +5,17 @@ import os
 import shutil
 from PIL import Image
 import random
+import mimetypes
+import re
+import cStringIO
+import boto
 
 # django import
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.core.files import File
+from django.core.files.storage import default_storage as storage
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.signals import post_save
@@ -88,7 +93,7 @@ class Product(models.Model):
 
 
 def thumbnail_location(instance, filename):
-    return 'product/%s/thumbnail/%s' % (instance.product.title, filename)
+    return 'product/%s/thumb/%s' % (instance.product.title, filename)
 
 
 THUMB_TYPE = (
@@ -118,31 +123,59 @@ class ProductThumbnail(models.Model):
             return '%s%s' % (settings.MEDIA_ROOT, self.media)
 
 
-def create_new_thumb(media_path, instance, max_length, max_width):
-    filename = os.path.basename(media_path)
-    thumb = Image.open(media_path)
+def create_new_thumb(image_path, instance, max_length, max_width):
+    # 원본 이미지 파일 이름
+    filename = os.path.basename(image_path)
+
+    # 원본 이미지 열기
+    f = storage.open(image_path, 'r')
+    thumb = Image.open(f)
+
+    # Thumbnail 사이즈 & 리사이즈
     size = (max_length, max_width)
     thumb.thumbnail(size, Image.ANTIALIAS)
-    temp_loc = "%s/%s/tmp" % (settings.MEDIA_ROOT, instance)
 
-    # 디렉토리가 없을 경우
+    # 썸네일 저장할 디렉토리 위치
+    temp_loc = "%sthumb/" % (image_path.split(filename)[0])
+
     if not os.path.exists(temp_loc):
         os.makedirs(temp_loc)
 
-    temp_file_path = os.path.join(temp_loc, filename)
-    if os.path.exists(temp_file_path):
-        temp_path = os.path.join(temp_loc, "%s" % (random.random()))
-        os.makedirs(temp_path)
-        temp_file_path = os.path.join(temp_path, filename)
+    temp_file_loc = os.path.join(temp_loc, '%s_%s' % (filename, instance.thumb_type))
+    file_name = os.path.splitext(filename)
 
-    temp_image = open(temp_file_path, "w")
-    thumb.save(temp_image)
-    thumb_data = open(temp_file_path, "r")
+    new_thumbnail_name = "%s_%s.%s" % (os.path.splitext(filename), instance.thumb_type)
 
-    thumb_file = File(thumb_data)
+    # 썸네일 저장
+    if not settings.DEBUG:
+        temp_image = storage.open(temp_file_loc, "wb")
+        thumb.save(temp_image, "JPEG", optimize=True, progressive=True)
+    else:
+        memory_file = cStringIO.StringIO()
 
-    instance.media.save(filename, thumb_file)
-    shutil.rmtree(temp_loc, ignore_errors=True)
+        mime = mimetypes.guess_type(new_thumbnail_name)[0]
+        plain_ext = mime.split('/')[1]
+        thumb.save(memory_file, plain_ext, optimize=True, progressive=True)
+
+        # S3에 리사이즈한 이미지 업로드
+        conn = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY, host=settings.AWS_S3_HOST)
+        bucket = conn.get_bucket(settings.AWS_STORAGE_BUCKET_NAME, validate=False)
+        k = bucket.new_key('media/' + temp_file_loc)
+        k.set_metadata('Content-Type', mime)
+        k.set_contents_from_string(memory_file.getvalue())
+        k.set_acl("public-read")
+        memory_file.close()
+
+
+    # 썸네일 열어서 이미지 필드에 넣기
+    try:
+        thumb_data = storage.open(temp_file_loc, "r")
+        thumb_file = File(thumb_data)
+
+        instance.media.save(new_thumbnail_name, thumb_file)
+        shutil.rmtree(temp_loc, ignore_errors=True)
+    except:
+        pass
 
     return True
 
@@ -153,11 +186,13 @@ def product_post_save_receiver(sender, instance, created, *args, **kwargs):
         sd, sd_created = ProductThumbnail.objects.get_or_create(product=instance, thumb_type="sd")
         micro, micro_created = ProductThumbnail.objects.get_or_create(product=instance, thumb_type="micro")
 
+        # 썸네일 크기 3가지로 분류 및 저장
         hd_max = (500, 500)
         sd_max = (350, 350)
         micro_max = (150, 150)
 
-        image_path = instance.image.path
+        # 상품 이미지가 저장되어 있는 위치
+        image_path = instance.image.name
 
         if hd_created:
             create_new_thumb(image_path, hd, hd_max[0], hd_max[1])
