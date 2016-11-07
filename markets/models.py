@@ -5,12 +5,17 @@ import os
 import shutil
 from PIL import Image
 import random
+import mimetypes
+import re
+import cStringIO
+from boto.s3.connection import S3Connection
 
 # django import
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.core.files import File
+from django.core.files.storage import default_storage as storage
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.signals import post_save
@@ -118,27 +123,59 @@ class ProductThumbnail(models.Model):
             return '%s%s' % (settings.MEDIA_ROOT, self.media)
 
 
+def _get_s3_path(self, filename):
+    static_root_parent = self.app.config.get('THUMBNAIL_S3_STATIC_ROOT_PARENT', None)
+    if not static_root_parent:
+        raise ValueError('S3Save requires static_root_parent to be set.')
+
+    return re.sub('^\/', '', filename.replace(static_root_parent, ''))
+
+
 def create_new_thumb(media_path, instance, max_length, max_width):
     filename = os.path.basename(media_path)
-    thumb = Image.open(media_path)
+
+    # 원본 이미지 열기
+    f = storage.open(media_path, 'r')
+    thumb = Image.open(f)
+
+    # Thumbnail 사이즈
     size = (max_length, max_width)
+    # Image resize
     thumb.thumbnail(size, Image.ANTIALIAS)
-    temp_loc = "%s/%s/tmp" % (settings.MEDIA_ROOT, instance)
+
+    # 썸네일 저장 디렉토리 위치 (기존 이미지 위치)
+    temp_loc = "%sthumb/" % (media_path.split(filename)[0])
 
     # 디렉토리가 없을 경우
     if not os.path.exists(temp_loc):
         os.makedirs(temp_loc)
 
-    temp_file_path = os.path.join(temp_loc, filename)
-    if os.path.exists(temp_file_path):
-        temp_path = os.path.join(temp_loc, "%s" % (random.random()))
+    # temp_path =
+    if os.path.exists(temp_loc):
+        temp_path = os.path.join(temp_loc, "%s.jpg" % (random.random()))
         os.makedirs(temp_path)
-        temp_file_path = os.path.join(temp_path, filename)
 
-    temp_image = open(temp_file_path, "w")
-    thumb.save(temp_image)
-    thumb_data = open(temp_file_path, "r")
+    # 썸네일 저장
+    filename_, ext = os.path.splitext(media_path)
+    memory_file = cStringIO.StringIO()
+    mime = mimetypes.guess_type(ext)[0]
+    plain_ext = mime.split('/')[1]
+    thumb.save(memory_file, plain_ext)
 
+    # temp_image = storage.open(temp_path, "wb")
+    # thumb.save(temp_image, "JPEG", optimize=True, progressive=True)
+    # temp_image.close()
+    conn = S3Connection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
+    bucket = conn.get_bucket(settings.AWS_STORAGE_BUCKET_NAME)
+
+    k = bucket.new_key('media/' + filename)
+    k.set_metadata('Content-Type', mime)
+    k.set_contents_from_string(memory_file.getvalue())
+    k.set_acl("public-read")
+    memory_file.close()
+
+    # 썸네일 열어서 이미지 필드에 넣기
+    thumb_data = storage.open(temp_path, "r")
     thumb_file = File(thumb_data)
 
     instance.media.save(filename, thumb_file)
@@ -157,7 +194,7 @@ def product_post_save_receiver(sender, instance, created, *args, **kwargs):
         sd_max = (350, 350)
         micro_max = (150, 150)
 
-        image_path = instance.image.path
+        image_path = instance.image.name
 
         if hd_created:
             create_new_thumb(image_path, hd, hd_max[0], hd_max[1])
