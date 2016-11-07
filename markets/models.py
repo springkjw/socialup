@@ -8,7 +8,7 @@ import random
 import mimetypes
 import re
 import cStringIO
-from boto.s3.connection import S3Connection
+import boto
 
 # django import
 from django.conf import settings
@@ -93,7 +93,7 @@ class Product(models.Model):
 
 
 def thumbnail_location(instance, filename):
-    return 'product/%s/thumbnail/%s' % (instance.product.title, filename)
+    return 'product/%s/thumb/%s' % (instance.product.title, filename)
 
 
 THUMB_TYPE = (
@@ -123,63 +123,59 @@ class ProductThumbnail(models.Model):
             return '%s%s' % (settings.MEDIA_ROOT, self.media)
 
 
-def _get_s3_path(self, filename):
-    static_root_parent = self.app.config.get('THUMBNAIL_S3_STATIC_ROOT_PARENT', None)
-    if not static_root_parent:
-        raise ValueError('S3Save requires static_root_parent to be set.')
-
-    return re.sub('^\/', '', filename.replace(static_root_parent, ''))
-
-
-def create_new_thumb(media_path, instance, max_length, max_width):
-    filename = os.path.basename(media_path)
+def create_new_thumb(image_path, instance, max_length, max_width):
+    # 원본 이미지 파일 이름
+    filename = os.path.basename(image_path)
 
     # 원본 이미지 열기
-    f = storage.open(media_path, 'r')
+    f = storage.open(image_path, 'r')
     thumb = Image.open(f)
 
-    # Thumbnail 사이즈
+    # Thumbnail 사이즈 & 리사이즈
     size = (max_length, max_width)
-    # Image resize
     thumb.thumbnail(size, Image.ANTIALIAS)
 
-    # 썸네일 저장 디렉토리 위치 (기존 이미지 위치)
-    temp_loc = "%sthumb/" % (media_path.split(filename)[0])
+    # 썸네일 저장할 디렉토리 위치
+    temp_loc = "%sthumb/" % (image_path.split(filename)[0])
 
-    # 디렉토리가 없을 경우
     if not os.path.exists(temp_loc):
         os.makedirs(temp_loc)
 
-    # temp_path =
-    if os.path.exists(temp_loc):
-        temp_path = os.path.join(temp_loc, "%s.jpg" % (random.random()))
-        os.makedirs(temp_path)
+    temp_file_loc = os.path.join(temp_loc, '%s_%s' % (filename, instance.thumb_type))
+    file_name = os.path.splitext(filename)
+
+    new_thumbnail_name = "%s_%s.%s" % (os.path.splitext(filename), instance.thumb_type)
 
     # 썸네일 저장
-    filename_, ext = os.path.splitext(media_path)
-    memory_file = cStringIO.StringIO()
-    mime = mimetypes.guess_type(ext)[0]
-    plain_ext = mime.split('/')[1]
-    thumb.save(memory_file, plain_ext)
+    if not settings.DEBUG:
+        temp_image = storage.open(temp_file_loc, "wb")
+        thumb.save(temp_image, "JPEG", optimize=True, progressive=True)
+    else:
+        memory_file = cStringIO.StringIO()
 
-    # temp_image = storage.open(temp_path, "wb")
-    # thumb.save(temp_image, "JPEG", optimize=True, progressive=True)
-    # temp_image.close()
-    conn = S3Connection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
-    bucket = conn.get_bucket(settings.AWS_STORAGE_BUCKET_NAME)
+        mime = mimetypes.guess_type(new_thumbnail_name)[0]
+        plain_ext = mime.split('/')[1]
+        thumb.save(memory_file, plain_ext, optimize=True, progressive=True)
 
-    k = bucket.new_key('media/' + filename)
-    k.set_metadata('Content-Type', mime)
-    k.set_contents_from_string(memory_file.getvalue())
-    k.set_acl("public-read")
-    memory_file.close()
+        # S3에 리사이즈한 이미지 업로드
+        conn = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY, host=settings.AWS_S3_HOST)
+        bucket = conn.get_bucket(settings.AWS_STORAGE_BUCKET_NAME, validate=False)
+        k = bucket.new_key('media/' + temp_file_loc)
+        k.set_metadata('Content-Type', mime)
+        k.set_contents_from_string(memory_file.getvalue())
+        k.set_acl("public-read")
+        memory_file.close()
+
 
     # 썸네일 열어서 이미지 필드에 넣기
-    thumb_data = storage.open(temp_path, "r")
-    thumb_file = File(thumb_data)
+    try:
+        thumb_data = storage.open(temp_file_loc, "r")
+        thumb_file = File(thumb_data)
 
-    instance.media.save(filename, thumb_file)
-    shutil.rmtree(temp_loc, ignore_errors=True)
+        instance.media.save(new_thumbnail_name, thumb_file)
+        shutil.rmtree(temp_loc, ignore_errors=True)
+    except:
+        pass
 
     return True
 
@@ -190,10 +186,12 @@ def product_post_save_receiver(sender, instance, created, *args, **kwargs):
         sd, sd_created = ProductThumbnail.objects.get_or_create(product=instance, thumb_type="sd")
         micro, micro_created = ProductThumbnail.objects.get_or_create(product=instance, thumb_type="micro")
 
+        # 썸네일 크기 3가지로 분류 및 저장
         hd_max = (500, 500)
         sd_max = (350, 350)
         micro_max = (150, 150)
 
+        # 상품 이미지가 저장되어 있는 위치
         image_path = instance.image.name
 
         if hd_created:
