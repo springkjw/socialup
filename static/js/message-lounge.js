@@ -119,7 +119,7 @@ function loadGroupChannelList(unreadOnly) {
 var sb;
 var channelListQuery;
 
-var isInit = false;
+// var isInit = false;
 var groupChannelLastMessageList = {};
 var allChannels = [];
 var unreadChannels = [];
@@ -135,35 +135,39 @@ function startSendBird(userId) {
         initPage(user);
     });
 
-    var initPage = function(user) {
-        isInit = true;
-        // $('.init-check').hide();
-
-        currentUser = user;
-
-        channelListQuery = sb.GroupChannel.createMyGroupChannelListQuery();
-        channelListQuery.limit = 100;
-        channelListQuery.includeEmpty = true;
-        channelListQuery.order = 'latest_last_message';
-
-        loadGroupChannelList(false);
-
-        setTimeout(function () {
-            updateChannelListAll();
-            setInterval(function () {
-                updateChannelListAll();
-            }, 30 * 1000);
-        }, 1000);
-    };
-
     var channelHandler = new sb.ChannelHandler();
     channelHandler.onMessageReceived = function(channel) {
         channel.refresh(function() {});
         initPage(currentUser);
         checkUnreadMessage(sb);
+        updateChannelListAll();
     };
     sb.addChannelHandler('channel', channelHandler);
 }
+
+var initPage = function(user) {
+    // isInit = true;
+    // $('.init-check').hide();
+
+    currentUser = user;
+
+    channelListQuery = sb.GroupChannel.createMyGroupChannelListQuery();
+    channelListQuery.limit = 100;
+    channelListQuery.includeEmpty = true;
+    channelListQuery.order = 'latest_last_message';
+
+    allChannels = [];
+    unreadChannels = [];
+    loadGroupChannelList(false);
+
+    setTimeout(function () {
+        updateChannelListAll();
+        setInterval(function () {
+            updateChannelListAll();
+        }, 30 * 1000);
+    }, 1000);
+};
+
 
 function init(userId) {
     // $('.init-check').show();

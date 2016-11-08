@@ -119,6 +119,8 @@ function startSendBird(userId, channelUrl) {
             currentChannel = channel;
             loadPrevMessages(channel);
             channel.markAsRead();
+
+            checkUnreadMessage(sb); // 상단의 메시지 숫자를 0으로 갱신..
         });
     };
 
@@ -234,6 +236,8 @@ var scrollPositionBottom = function() {
 };
 
 window.onfocus = function() {
-  if (currentChannel)
-    currentChannel.markAsRead();
+  if (currentChannel) {
+      currentChannel.markAsRead();
+      checkUnreadMessage(sb); // 상단의 메시지 숫자를 0으로 갱신..
+  }
 };
