@@ -93,7 +93,10 @@ class Product(models.Model):
 
 
 def thumbnail_location(instance, filename):
-    return 'product/%s/thumb/%s' % (instance.product.title, filename)
+    if settings.DEBUG:
+        return 'product/%s/%s' % (instance.product.title, filename)
+    else:
+        return 'product/%s/thumb/%s' % (instance.product.title, filename)
 
 
 THUMB_TYPE = (
@@ -131,24 +134,29 @@ def create_new_thumb(image_path, instance, max_length, max_width):
     f = storage.open(image_path, 'r')
     thumb = Image.open(f)
 
-    # Thumbnail 사이즈 & 리사이즈
+    # 썸네일 사이즈 & 리사이즈
     size = (max_length, max_width)
     thumb.thumbnail(size, Image.ANTIALIAS)
 
     # 썸네일 저장할 디렉토리 위치
     temp_loc = "%sthumb/" % (image_path.split(filename)[0])
 
+    if settings.DEBUG:
+        temp_loc = os.path.join(settings.MEDIA_ROOT, temp_loc)
+
+
+    # 썸네일 폴더 생성
     if not os.path.exists(temp_loc):
         os.makedirs(temp_loc)
 
-    temp_file_loc = os.path.join(temp_loc, '%s_%s' % (filename, instance.thumb_type))
-    file_name, exten_ = os.path.splitext(filename)
 
-    new_thumbnail_name = "%s_%s%s" % (file_name, instance.thumb_type, exten_)
+    file_name, extends = os.path.splitext(filename)
+    temp_file_loc = os.path.join(temp_loc, '%s_%s%s' % (filename, instance.thumb_type, extends))
+    new_thumbnail_name = "%s_%s%s" % (file_name, instance.thumb_type, extends)
 
     # 썸네일 저장
-    if not settings.DEBUG:
-        temp_image = storage.open(temp_file_loc, "wb")
+    if settings.DEBUG:
+        temp_image = storage.open(temp_file_loc, "w")
         thumb.save(temp_image, "JPEG", optimize=True, progressive=True)
     else:
         try:
@@ -159,7 +167,8 @@ def create_new_thumb(image_path, instance, max_length, max_width):
             thumb.save(memory_file, plain_ext, optimize=True, progressive=True)
 
             # S3에 리사이즈한 이미지 업로드
-            conn = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY, host=settings.AWS_S3_HOST)
+            conn = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY,
+                                   host=settings.AWS_S3_HOST)
             bucket = conn.get_bucket(settings.AWS_STORAGE_BUCKET_NAME, validate=False)
             k = bucket.new_key('media/' + temp_file_loc)
             k.set_metadata('Content-Type', mime)
@@ -168,7 +177,6 @@ def create_new_thumb(image_path, instance, max_length, max_width):
             memory_file.close()
         except:
             pass
-
 
     # 썸네일 열어서 이미지 필드에 넣기
     try:
