@@ -142,29 +142,32 @@ def create_new_thumb(image_path, instance, max_length, max_width):
         os.makedirs(temp_loc)
 
     temp_file_loc = os.path.join(temp_loc, '%s_%s' % (filename, instance.thumb_type))
-    file_name = os.path.splitext(filename)
+    file_name, exten_ = os.path.splitext(filename)
 
-    new_thumbnail_name = "%s_%s.%s" % (os.path.splitext(filename), instance.thumb_type)
+    new_thumbnail_name = "%s_%s%s" % (file_name, instance.thumb_type, exten_)
 
     # 썸네일 저장
     if not settings.DEBUG:
         temp_image = storage.open(temp_file_loc, "wb")
         thumb.save(temp_image, "JPEG", optimize=True, progressive=True)
     else:
-        memory_file = cStringIO.StringIO()
+        try:
+            memory_file = cStringIO.StringIO()
 
-        mime = mimetypes.guess_type(new_thumbnail_name)[0]
-        plain_ext = mime.split('/')[1]
-        thumb.save(memory_file, plain_ext, optimize=True, progressive=True)
+            mime = mimetypes.guess_type(new_thumbnail_name)[0]
+            plain_ext = mime.split('/')[1]
+            thumb.save(memory_file, plain_ext, optimize=True, progressive=True)
 
-        # S3에 리사이즈한 이미지 업로드
-        conn = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY, host=settings.AWS_S3_HOST)
-        bucket = conn.get_bucket(settings.AWS_STORAGE_BUCKET_NAME, validate=False)
-        k = bucket.new_key('media/' + temp_file_loc)
-        k.set_metadata('Content-Type', mime)
-        k.set_contents_from_string(memory_file.getvalue())
-        k.set_acl("public-read")
-        memory_file.close()
+            # S3에 리사이즈한 이미지 업로드
+            conn = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY, host=settings.AWS_S3_HOST)
+            bucket = conn.get_bucket(settings.AWS_STORAGE_BUCKET_NAME, validate=False)
+            k = bucket.new_key('media/' + temp_file_loc)
+            k.set_metadata('Content-Type', mime)
+            k.set_contents_from_string(memory_file.getvalue())
+            k.set_acl("public-read")
+            memory_file.close()
+        except:
+            pass
 
 
     # 썸네일 열어서 이미지 필드에 넣기
