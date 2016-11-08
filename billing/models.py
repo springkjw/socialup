@@ -165,6 +165,8 @@ ORDER_STATUS_CHOICES = (
     ('created', 'Created'),
     ('paid', 'Paid'),
     ('refunded', 'Refunded'),
+    ('processing', 'Processing'),
+    ('finished', 'Finished'),
 )
 
 
@@ -210,7 +212,7 @@ def new_order_receiver(sender, instance, created, *args, **kwargs):
         instance.order_id = new_order_id
         instance.save()
     else:
-        if instance.transaction_id:
+        if instance.transaction_id and instance.status == 'created':
             # 거래 후 아임포트에서 넘긴 결과
             v_trans = Order.objects.validation_trans(
                 merchant_id=instance.order_id
