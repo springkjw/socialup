@@ -43,7 +43,7 @@
                             alert('장바구니에 성공적으로 담겼습니다.');
                         }
                     },
-                    error: function(data) {
+                    error: function (data) {
                     }
                 });
             });
@@ -67,7 +67,7 @@
                 });
             });
 
-            $('.ask-seller').on('click', function() {
+            $('.ask-seller').on('click', function () {
                 startMessage('{{ user.id }}',
                         '{{ product.seller.user.id }}', '{{ product.seller.user.get_short_name }}', '{{ product.seller.user.get_avatar }}');
             });
@@ -94,7 +94,11 @@
         <div class="content">
             <div class="product-top">
                 <div class="info-left">
-                    <img class="product-image" src="{{ product.get_image_url }}">
+                    {% if product.get_thumb_hd_url %}
+                        <img class="product-image" src="{{ product.get_thumb_hd_url }}">
+                    {% else %}
+                        <img class="product-image" src="{{ product.get_image_url }}">
+                    {% endif %}
                     <div class="product-seller">
                         <div class="seller-id">
                             <h2 class="header">{{ product.seller }}</h2>
