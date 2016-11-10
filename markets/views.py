@@ -378,11 +378,19 @@ def product_delete(request):
 
 @login_required
 def product_order_manage(request):
-    orders = ProductManage.objects.all()
+    purchase_list = Order.objects.filter(user=request.user)
+    status_0 = purchase_list.filter(status='paid').count()
+    status_1 = purchase_list.filter(status='processing').count()
+    status_2 = purchase_list.filter(status='finished').count()
+    status_3 = purchase_list.filter(status='refunded').count()
 
     template = 'seller/order_manage.html'
     context = {
-        "orders": orders
+        "orders": purchase_list,
+        "status_0": status_0,
+        "status_1": status_1,
+        "status_2": status_2,
+        "status_3": status_3,
     }
 
     return render(request, template, context)
