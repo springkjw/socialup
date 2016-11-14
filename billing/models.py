@@ -189,6 +189,7 @@ class Order(models.Model):
     status = models.CharField(max_length=120, choices=ORDER_STATUS_CHOICES, default='created')
     cart = models.ForeignKey(Cart, null=True)
     user = models.ForeignKey(MyUser, null=True)
+    seller = models.ForeignKey(Seller, null=True)
     order_total = models.PositiveIntegerField(default=0)
     point = models.PositiveIntegerField(default=0)
     order_id = models.CharField(max_length=120, unique=True)
@@ -200,6 +201,15 @@ class Order(models.Model):
 
     def __unicode__(self):
         return self.order_id
+
+    def get_total_day(self):
+        variation = self.cart.items.all()
+        total_days = 0
+
+        for item in variation:
+            total_days += item.day
+
+        return total_days
 
     class Meta:
         ordering = ['-id']

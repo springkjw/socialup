@@ -8,13 +8,23 @@
 {% block dashboard_js %}
     <script type="text/javascript" src="{% static 'js/seller/order.js' %}"></script>
     <script type="text/javascript">
-        $(function() {
-            {% if messages %}
-                {% for message in messages %}
-                    alert('{{ message }}');
-                    window.location.href = "{% url 'product_upload' %}";
-                {% endfor %}
-            {% endif %}
+        $(function () {
+            $('.dashboard-item-more').on('click', '.fa-angle-down', function () {
+                $(this).parent().parent().find('.dashboard-item-popup').show();
+                $(this).removeClass('fa-angle-down').addClass('fa-angle-up');
+            });
+
+            $('.dashboard-item-more').on('click', '.fa-angle-up', function () {
+                $(this).parent().parent().find('.dashboard-item-popup').hide();
+                $(this).removeClass('fa-angle-up').addClass('fa-angle-down');
+            });
+
+            {#            {% if messages %}#}
+            {#                {% for message in messages %}#}
+            {#                    alert('{{ message }}');#}
+            {#                    window.location.href = "{% url 'product_upload' %}";#}
+            {#                {% endfor %}#}
+            {#            {% endif %}#}
         });
     </script>
 {% endblock %}
@@ -31,43 +41,72 @@
             <div class="order-list-nav">
                 <ul>
                     <li class="active">전체({{ orders|length }})</li>
-                    <li data-status="ready">작업대기(<span class="status-count"></span>)</li>
-                    <li data-status="progress">작업진행(<span class="status-count"></span>)</li>
-                    <li data-status="complete">작업완료(<span class="status-count"></span>)</li>
-                    <li data-status="finish">거래완료(<span class="status-count"></span>)</li>
-                    <li data-status="cancel">취소(<span class="status-count"></span>)</li>
+                    <li data-status="ready">작업대기({{ status_0 }})</li>
+                    <li data-status="progress">작업진행({{ status_1 }})</li>
+                    <li data-status="complete">작업완료({{ status_2 }})</li>
+                    <li data-status="cancel">취소({{ status_3 }})</li>
                 </ul>
             </div>
-            <div class="dashboard-order">
+            <div class="dashboard-order status_0">
                 {% if orders %}
-                    <table class="order-list-table">
-                        <thead>
-                        <tr>
-                            <th><input type="checkbox"></th>
-                            <th>주문번호</th>
-                            <th>상품명</th>
-                            <th>구매자 ID</th>
-                            <th>구매날짜</th>
-                            <th>작업상태</th>
-                            <th>결제금액</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            {% for order in orders %}
-                                <tr data-status="{{ order.status }}">
-                                    <td><input type="checkbox"></td>
-                                    <td>{{ order }}</td>
-                                    <td>{{ order.cart.items }}</td>
-                                    <td>{{ order.user.name }}</td>
-                                    <td>{{ order.timestamp }}</td>
-                                    <td>{{ order.status }}</td>
-                                    <td>{{ order.order_total }}</td>
-                                    <td></td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                    {% for item in orders %}
+                        <div class="product-item">
+                            <div class="item-image">
+                                <img src="{{ item.cart.items.all.0.product.get_thumb_micro_url }}">
+                            </div>
+                            <div class="item-title">
+                                <h3>{{ item.cart.items.all.0.product }}</h3>
+                                <div class="item-meta">
+                                    <p>주문번호 : {{ item }}</p>
+                                    <p>구매자 : {{ item.user.get_short_name }}</p>
+                                    <br/>
+                                    <p>결제 금액 : {{ item.order_total }}원</p>
+                                    <p>결제 일자 : {{ item.timestamp|date:"Y.m.d" }}</p>
+                                </div>
+                            </div>
+                            <div class="dashboard-item-status">
+                                {% if item.status == 'paid' %}
+                                    작업대기
+                                {% elif item.status == 'processing' %}
+                                    작업진행
+                                {% elif item.status == 'finished' %}
+                                    작업완료
+                                {% elif item.status == 'refunded' %}
+                                    취소
+                                {% endif %}
+                            </div>
+                            <div class="dashboard-item-more">
+                                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="dashboard-item-popup">
+                                <table class="order-list-table">
+                                    <thead>
+                                    <tr>
+                                        <th>내용</th>
+                                        <th>작업일</th>
+                                        <th>금액</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for variation in item.cart.items.all %}
+                                        <tr>
+                                            <td>{{ variation.title }}</td>
+                                            <td>{{ variation.day }}일</td>
+                                            <td>{{ variation.price }}원</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <td></td>
+                                        <td>{{ item.get_total_day }}일</td>
+                                        <td>{{ item.order_total }}원</td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    {% endfor %}
                 {% else %}
                     <div class="no-list">
                         아직 주문이 없습니다!
@@ -75,38 +114,38 @@
                 {% endif %}
             </div>
         </div>
-        {#        <div class="dashboard-info">#}
-        {#            <div class="dashboard-info-summary info-order-wish">#}
-        {#                <div class="dashboard-info-summary-title">#}
-        {#                    출금가능#}
+        {#                <div class="dashboard-info">#}
+        {#                    <div class="dashboard-info-summary info-order-wish">#}
+        {#                        <div class="dashboard-info-summary-title">#}
+        {#                            출금가능#}
+        {#                        </div>#}
+        {#                        <div class="dashboard-info-summary-count">#}
+        {#                            <a href="{% url 'wish_list' %}" class="dashboard-info-img">#}
+        {#                                <img src="{% static 'img/influe_01.png' %}" style="margin-left: -5px;">#}
+        {#                            </a>#}
+        {#                        </div>#}
+        {#                    </div>#}
+        {#                    <div class="dashboard-info-summary info-order-cart">#}
+        {#                        <div class="dashboard-info-summary-title">#}
+        {#                            예상수익금#}
+        {#                        </div>#}
+        {#                        <div class="dashboard-info-summary-count">#}
+        {#                            <a href="{% url 'cart' %}" class="dashboard-info-img active">#}
+        {#                                <img src="{% static 'img/influe_02.png' %}" style="margin-left: -8px;">#}
+        {#                            </a>#}
+        {#                        </div>#}
+        {#                    </div>#}
+        {#                    <div class="dashboard-info-summary info-order-process">#}
+        {#                        <div class="dashboard-info-summary-title">#}
+        {#                            구매관리#}
+        {#                        </div>#}
+        {#                        <div class="dashboard-info-summary-count">#}
+        {#                            <a href="{% url 'purchase_list' %}" class="dashboard-info-img">#}
+        {#                                <img src="{% static 'img/influe_03.png' %}">#}
+        {#                            </a>#}
+        {#                        </div>#}
+        {#                    </div>#}
         {#                </div>#}
-        {#                <div class="dashboard-info-summary-count">#}
-        {#                    <a href="{% url 'wish_list' %}" class="dashboard-info-img">#}
-        {#                        <img src="{% static 'img/influe_01.png' %}" style="margin-left: -5px;">#}
-        {#                    </a>#}
-        {#                </div>#}
-        {#            </div>#}
-        {#            <div class="dashboard-info-summary info-order-cart">#}
-        {#                <div class="dashboard-info-summary-title">#}
-        {#                    예상수익금#}
-        {#                </div>#}
-        {#                <div class="dashboard-info-summary-count">#}
-        {#                    <a href="{% url 'cart' %}" class="dashboard-info-img active">#}
-        {#                        <img src="{% static 'img/influe_02.png' %}" style="margin-left: -8px;">#}
-        {#                    </a>#}
-        {#                </div>#}
-        {#            </div>#}
-        {#            <div class="dashboard-info-summary info-order-process">#}
-        {#                <div class="dashboard-info-summary-title">#}
-        {#                    구매관리#}
-        {#                </div>#}
-        {#                <div class="dashboard-info-summary-count">#}
-        {#                    <a href="{% url 'purchase_list' %}" class="dashboard-info-img">#}
-        {#                        <img src="{% static 'img/influe_03.png' %}">#}
-        {#                    </a>#}
-        {#                </div>#}
-        {#            </div>#}
-        {#        </div>#}
 
     </div>
 {% endblock %}

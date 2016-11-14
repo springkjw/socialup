@@ -9,6 +9,7 @@ from django.http import JsonResponse
 from .models import PointTransaction, PointHistory, Order
 from socialup.mixins import AjaxRequireMixin
 from carts.models import Cart
+from markets.models import Variation
 from .iamport import validation_prepare
 from datetime import datetime, timedelta
 
@@ -165,6 +166,7 @@ def switch_history_status(status):
 
 @login_required
 def purchase(request, cart_id):
+    # 판매자 정보 확인 및 저장
     if request.is_ajax():
         name = request.GET.get('name')
         phone = request.GET.get('phone')
@@ -206,9 +208,12 @@ def purchase(request, cart_id):
             }
             cart_list.append(c_data)
 
+    seller = cart.items.all()[0].product.seller
+
     order, created = Order.objects.get_or_create(
         user=request.user,
         cart=cart,
+        seller=seller,
         order_total=cart.subtotal
     )
 

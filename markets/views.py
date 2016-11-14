@@ -380,19 +380,28 @@ def product_delete(request):
 
 @login_required
 def product_order_manage(request):
-    purchase_list = Order.objects.filter(user=request.user)
-    status_0 = purchase_list.filter(status='paid').count()
-    status_1 = purchase_list.filter(status='processing').count()
-    status_2 = purchase_list.filter(status='finished').count()
-    status_3 = purchase_list.filter(status='refunded').count()
+    try:
+        seller = Seller.objects.get(user=request.user)
+    except:
+        seller = None
 
-    template = 'seller/order_manage.html'
-    context = {
-        "orders": purchase_list,
-        "status_0": status_0,
-        "status_1": status_1,
-        "status_2": status_2,
-        "status_3": status_3,
-    }
+    if seller:
+        purchase_list = Order.objects.filter(seller=seller)
+        status_0 = purchase_list.filter(status='paid').count()
+        status_1 = purchase_list.filter(status='processing').count()
+        status_2 = purchase_list.filter(status='finished').count()
+        status_3 = purchase_list.filter(status='refunded').count()
 
-    return render(request, template, context)
+        template = 'seller/order_manage.html'
+        context = {
+            "orders": purchase_list,
+            "status_0": status_0,
+            "status_1": status_1,
+            "status_2": status_2,
+            "status_3": status_3,
+        }
+
+        print context
+        return render(request, template, context)
+    else:
+        return HttpResponseRedirect('/dashboard/')
