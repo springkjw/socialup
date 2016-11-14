@@ -44,7 +44,7 @@
                         <thead>
                         <tr>
                             <th><input type="checkbox"></th>
-                            <th>상품번호</th>
+                            <th>주문번호</th>
                             <th>상품명</th>
                             <th>구매자 ID</th>
                             <th>구매날짜</th>
@@ -57,12 +57,12 @@
                             {% for order in orders %}
                                 <tr data-status="{{ order.status }}">
                                     <td><input type="checkbox"></td>
-                                    <td>{{ order.product.id }}</td>
-                                    <td>{{ order.product }}</td>
-                                    <td>{{ order.customer.get_short_name }}</td>
-                                    <td>{# order.created #}</td>
-                                    <td>{{ order.status_in_korean }}</td>
-                                    <td>{#  #}</td>
+                                    <td>{{ order }}</td>
+                                    <td>{{ order.cart.items }}</td>
+                                    <td>{{ order.user.name }}</td>
+                                    <td>{{ order.timestamp }}</td>
+                                    <td>{{ order.status }}</td>
+                                    <td>{{ order.order_total }}</td>
                                     <td></td>
                                 </tr>
                             {% endfor %}
