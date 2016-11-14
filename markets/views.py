@@ -104,6 +104,8 @@ def product_detail(request, product_id):
                     # 카트 세션이 남아 있는 경우 제거
                     try:
                         del request.session['cart_id']
+                    except KeyError:
+                        pass
                     finally:
                         cart = add_to_cart(request, default, option)
 
