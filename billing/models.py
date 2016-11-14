@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+# python import
 import time
 import random
 import hashlib
 
+# django import
 from django.db import models
 from django.db.models.signals import post_save
+
+# app import
 from accounts.models import MyUser, Seller
 from markets.models import Product, Variation
 from carts.models import Cart
@@ -243,19 +247,20 @@ def new_order_receiver(sender, instance, created, *args, **kwargs):
                 except:
                     raise ValueError('거래에 문제가 발생했습니다.')
 
-                try:
-                    # 포인트 history 추가
-                    h = PointHistory(
-                        user=instance.user,
-                        amount=-int(instance.point),
-                        status=v_trans['status']
-                    )
-                    h.save()
+                if instance.point > 0:
+                    try:
+                        # 포인트 history 추가
+                        h = PointHistory(
+                            user=instance.user,
+                            amount=-int(instance.point),
+                            status=v_trans['status']
+                        )
+                        h.save()
+                    except:
+                        raise ValueError('거래에 문제가 발생했습니다.')
 
-                    for item in instance.cart.cartitem_set:
-                        print item
-                except:
-                    raise ValueError('거래에 문제가 발생했습니다.')
+                instance.status = 'paid'
+                instance.save()
 
 
 

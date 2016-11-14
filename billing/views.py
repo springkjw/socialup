@@ -298,7 +298,7 @@ class ImpAjaxView(AjaxRequireMixin, View):
 
 @login_required
 def purchase_list(request):
-    purchase_list = Order.objects.filter(user=request.user)
+    purchase_list = Order.objects.filter(user=request.user).exclude(status='created')
     status_0 = purchase_list.filter(status='paid').count()
     status_1 = purchase_list.filter(status='processing').count()
     status_2 = purchase_list.filter(status='finished').count()
