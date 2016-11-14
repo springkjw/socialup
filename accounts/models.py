@@ -94,7 +94,7 @@ class MyUser(AbstractBaseUser):
                 social_user = SocialAccount.objects.filter(user_id=self.id)
                 if len(social_user):
                     return "http://graph.facebook.com/{}/picture?width=100&height=100".format(social_user[0].uid)
-            return '/static/img/no_profile.png'
+            return '/static/img/no_profile_hd.png'
 
     def has_perm(self, perm, obj=None):
         return True
