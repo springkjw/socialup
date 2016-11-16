@@ -401,7 +401,24 @@ def product_order_manage(request):
             "status_3": status_3,
         }
 
-        print context
+        return render(request, template, context)
+    else:
+        return HttpResponseRedirect('/dashboard/')
+
+
+@login_required
+def product_profit_manage(request):
+    try:
+        seller = Seller.objects.get(user=request.user)
+    except:
+        seller = None
+
+    if seller:
+        template = 'seller/profit_manage.html'
+        context = {
+
+        }
+
         return render(request, template, context)
     else:
         return HttpResponseRedirect('/dashboard/')
