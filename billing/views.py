@@ -9,6 +9,7 @@ from django.http import JsonResponse
 from .models import PointTransaction, PointHistory, Order
 from socialup.mixins import AjaxRequireMixin
 from carts.models import Cart
+from markets.models import Variation
 from .iamport import validation_prepare
 from datetime import datetime, timedelta
 
@@ -165,6 +166,7 @@ def switch_history_status(status):
 
 @login_required
 def purchase(request, cart_id):
+    # 판매자 정보 확인 및 저장
     if request.is_ajax():
         name = request.GET.get('name')
         phone = request.GET.get('phone')
@@ -206,9 +208,12 @@ def purchase(request, cart_id):
             }
             cart_list.append(c_data)
 
+    seller = cart.items.all()[0].product.seller
+
     order, created = Order.objects.get_or_create(
         user=request.user,
         cart=cart,
+        seller=seller,
         order_total=cart.subtotal
     )
 
@@ -298,42 +303,19 @@ class ImpAjaxView(AjaxRequireMixin, View):
 
 @login_required
 def purchase_list(request):
-    # if request.is_ajax():
-    #     user_id = request.GET.get('user_id')
-    #
-    #     url = 'https://api.sendbird.com/v3/group_channels'
-    #     headers = {
-    #         "Api-Token": settings.SD_API_TOKEN
-    #     }
-    #     data = {
-    #         # "name": string,
-    #         # "cover_url": string,
-    #         # "data": string,
-    #         "user_ids": [user_id],
-    #         "is_distinct": True
-    #     }
-    #
-    #     req = requests.post(url, data=json.dumps(data), headers=headers)
-    #
-    #     res = json.loads(req.content)
-    #
-    #     channel_url = res['channel_url']
-    #
-    #     if channel_url:
-    #         # url_m = 'https://api.sendbird.com/v3/group_channels/%s/messages' % (channel_url)
-    #         # data_m = {
-    #         #     "message_ts": "10"
-    #         # }
-    #         # req_m = requests.get(url_m, params=data_m, headers=headers)
-    #         # res_m = json.loads(req_m.content)
-    #
-    #         return JsonResponse(res_m)
-
-    purchase_list = Order.objects.filter(user=request.user)
+    purchase_list = Order.objects.filter(user=request.user).exclude(status='created')
+    status_0 = purchase_list.filter(status='paid').count()
+    status_1 = purchase_list.filter(status='processing').count()
+    status_2 = purchase_list.filter(status='finished').count()
+    status_3 = purchase_list.filter(status='refunded').count()
 
     template = 'account/dashboard_purchase_list.html'
     context = {
-        "list": purchase_list
+        "list": purchase_list,
+        "status_0": status_0,
+        "status_1": status_1,
+        "status_2": status_2,
+        "status_3": status_3,
     }
 
     return render(request, template, context)

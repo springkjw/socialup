@@ -1,0 +1,44 @@
+.dashboard-nav {
+    position: relative;
+}
+
+.dashboard-nav .premium {
+    width: 88px;
+    height: 30px;
+    position: absolute;
+    right: 20px;
+    top: 35px;
+    font-size: 12px;
+    background: orangered;
+    padding: 0 10px 0 10px;
+    color: white;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.dashboard-info-profit {
+    margin-top: 15px;
+    border: 2px solid #DADADA;
+    width: 561px;
+    height: 245px;
+    text-align: center;
+}
+
+.dashboard-info-profit .dashboard-info-summary {
+    border: None;
+    width: 22%;
+}
+
+.dashboard-info-profit .dashboard-info-summary .dashboard-info-summary-count {
+    width: 100px;
+    height: 100px;
+    background: #DADADA;
+    border-radius: 50%;
+    margin-left: 13px;
+}
+
+.dashboard-info-profit .dashboard-info-summary img {
+    height: 50px;
+    margin-top: 23px;
+}

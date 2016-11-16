@@ -161,12 +161,10 @@ def add_to_cart(request, default, list):
     # card_id를 세션에서 가져오기
     cart_id = request.session.get('cart_id')
 
-    # 세션에서 card_id가 없는 경우 생성
-    if cart_id is None:
-        cart = Cart()
-        cart.save()
-        cart_id = cart.id
-        request.session["cart_id"] = cart_id
+    cart = Cart()
+    cart.save()
+    cart_id = cart.id
+    request.session["cart_id"] = cart_id
 
     # 세션 카트 id 바탕으로 카트 오브젝트 조회
     try:

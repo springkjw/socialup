@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+# python import
 import time
 import random
 import hashlib
 
+# django import
 from django.db import models
 from django.db.models.signals import post_save
+
+# app import
 from accounts.models import MyUser, Seller
 from markets.models import Product, Variation
 from carts.models import Cart
@@ -165,6 +169,8 @@ ORDER_STATUS_CHOICES = (
     ('created', 'Created'),
     ('paid', 'Paid'),
     ('refunded', 'Refunded'),
+    ('processing', 'Processing'),
+    ('finished', 'Finished'),
 )
 
 
@@ -183,6 +189,7 @@ class Order(models.Model):
     status = models.CharField(max_length=120, choices=ORDER_STATUS_CHOICES, default='created')
     cart = models.ForeignKey(Cart, null=True)
     user = models.ForeignKey(MyUser, null=True)
+    seller = models.ForeignKey(Seller, null=True)
     order_total = models.PositiveIntegerField(default=0)
     point = models.PositiveIntegerField(default=0)
     order_id = models.CharField(max_length=120, unique=True)
@@ -194,6 +201,15 @@ class Order(models.Model):
 
     def __unicode__(self):
         return self.order_id
+
+    def get_total_day(self):
+        variation = self.cart.items.all()
+        total_days = 0
+
+        for item in variation:
+            total_days += item.day
+
+        return total_days
 
     class Meta:
         ordering = ['-id']
@@ -210,7 +226,7 @@ def new_order_receiver(sender, instance, created, *args, **kwargs):
         instance.order_id = new_order_id
         instance.save()
     else:
-        if instance.transaction_id:
+        if instance.transaction_id and instance.status == 'created':
             # 거래 후 아임포트에서 넘긴 결과
             v_trans = Order.objects.validation_trans(
                 merchant_id=instance.order_id
@@ -241,19 +257,20 @@ def new_order_receiver(sender, instance, created, *args, **kwargs):
                 except:
                     raise ValueError('거래에 문제가 발생했습니다.')
 
-                try:
-                    # 포인트 history 추가
-                    h = PointHistory(
-                        user=instance.user,
-                        amount=-int(instance.point),
-                        status=v_trans['status']
-                    )
-                    h.save()
+                if instance.point > 0:
+                    try:
+                        # 포인트 history 추가
+                        h = PointHistory(
+                            user=instance.user,
+                            amount=-int(instance.point),
+                            status=v_trans['status']
+                        )
+                        h.save()
+                    except:
+                        raise ValueError('거래에 문제가 발생했습니다.')
 
-                    for item in instance.cart.cartitem_set:
-                        print item
-                except:
-                    raise ValueError('거래에 문제가 발생했습니다.')
+                instance.status = 'paid'
+                instance.save()
 
 
 
