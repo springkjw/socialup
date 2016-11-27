@@ -7,6 +7,7 @@ from django.shortcuts import (
     get_object_or_404,
     redirect,
 )
+from django.db.models import Sum
 from django.contrib import messages
 from django.forms import inlineformset_factory
 from django.contrib.contenttypes.models import ContentType
@@ -21,11 +22,11 @@ from .models import (
     ProductTarget,
     SnsUrl,
 )
-from .forms import ProductForm, VariationForm, TagForm, TypeForm, TargetForm, SnsForm
+from .forms import ProductForm, VariationForm, TagForm, TypeForm, TargetForm, SnsForm, SellerAccountForm
 from carts.models import WishList
 from carts.views import add_to_cart
 from billing.models import Order, ProductManage
-from accounts.models import MyUser, Seller
+from accounts.models import MyUser, Seller, Profit, SellerAccount
 from reviews.models import ProductReview
 
 import json
@@ -414,9 +415,36 @@ def product_profit_manage(request):
         seller = None
 
     if seller:
+        expected_profit = Profit.objects.filter(seller=seller, is_expect_profit=True).aggregate(Sum('money'))['money__sum']
+        possible_profit = Profit.objects.filter(seller=seller, is_possible_profit=True).aggregate(Sum('money'))['money__sum']
+
+        if expected_profit is None:
+            expected_profit = 0
+
+        if possible_profit is None:
+            possible_profit = 0
+        
+        instance, instance_created = SellerAccount.objects.get_or_create(seller=seller)
+
+        if request.method == 'POST':
+            form = SellerAccountForm(request.POST, instance=instance)
+            if form.is_valid():
+                form_instance = form.save(commit=False)
+                try:
+                    form_instance.seller = seller
+                except IntegrityError:
+                    pass
+                form_instance.save()
+
+                return HttpResponseRedirect('/product/profit/')
+        else:
+            form = SellerAccountForm(instance=instance) 
+
         template = 'seller/profit_manage.html'
         context = {
-
+            "forms" : form,
+            "expected_profit": expected_profit,
+            "possible_profit": possible_profit,
         }
 
         return render(request, template, context)

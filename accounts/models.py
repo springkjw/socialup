@@ -125,3 +125,60 @@ class Seller(models.Model):
 #
 #
 # post_save.connect(new_seller_receiver, sender=Seller)
+
+BANK_TYPE = (
+    ('기업은행', '기업은행'),
+    ('국민은행', '국민은행'),
+    ('외환은행', '외환은행'),
+    ('수협중앙회', '수협중앙회'),
+    ('농협중앙회', '농협중앙회'),
+    ('우리은행', '우리은행'),
+    ('SC제일은행', 'SC제일은행'),
+    ('대구은행', '대구은행'),
+    ('부산은행', '부산은행'),
+    ('광주은행', '광주은행'),
+    ('전북은행', '전북은행'),
+    ('경남은행', '경남은행'),
+    ('한국씨티은행', '한국씨티은행'),
+    ('우체국', '우체국'),
+    ('하나은행', '하나은행'),
+    ('통합신한은행(신한,조흥은행)', '통합신한은행(신한,조흥은행)'),
+    ('유안타증권(구 동양증권)', '유안타증권(구 동양증권)'),
+    ('현대증권', '현대증권'),
+    ('미래에셋증권', '미래에셋증권'),
+    ('한국투자증권', '한국투자증권'),
+    ('우리투자증권', '우리투자증권'),
+    ('하이투자증권', '하이투자증권'),
+    ('HMC투자증권', 'HMC투자증권'),
+    ('SK증권', 'SK증권'),
+    ('대신증권', '대신증권'),
+    ('하나대투증권', '하나대투증권'),
+    ('굿모닝신한증권', '굿모닝신한증권'),
+    ('동부증권', '동부증권'),
+    ('유진투자증권', '유진투자증권'),
+    ('메리츠증권', '메리츠증권'),
+    ('신영증권', '신영증권'),
+    ('한국씨티은행(한미은행)', '한국씨티은행 (한미은행)'),
+)
+
+class SellerAccount(models.Model):
+    seller = models.OneToOneField(Seller)
+    account_number = models.CharField(max_length=120, null=True, blank=True)
+    account_name = models.CharField(max_length=50, null=True, blank=True)
+    bank = models.CharField(max_length=120, null=True, blank=True, choices=BANK_TYPE)
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+
+    def __unicode__(self):
+        return self.account_number
+
+
+class Profit(models.Model):
+    seller = models.ForeignKey(Seller)
+    money = models.PositiveIntegerField(default=0)
+    is_possible_profit = models.BooleanField(default=False)
+    is_expect_profit = models.BooleanField(default=False)
+    is_complete = models.BooleanField(default=False)
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+
+    def __unicode__(self):
+        return self.money

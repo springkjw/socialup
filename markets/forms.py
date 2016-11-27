@@ -10,6 +10,8 @@ from .models import (
     sns_type,
     product_target,
 )
+from accounts.models import SellerAccount
+
 from django_summernote.widgets import (
     SummernoteWidget,
     SummernoteInplaceWidget,
@@ -109,3 +111,24 @@ class SnsForm(forms.Form):
             }
         )
     )
+
+
+class SellerAccountForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('label_suffix', '')
+        super(SellerAccountForm, self).__init__(*args, **kwargs)
+
+        self.fields['account_name'].label = '예금주'
+        self.fields['bank'].label = '은행'
+        self.fields['account_number'].label = '계좌번호'
+    
+    class Meta:
+        model=SellerAccount
+        fields = ('account_name', 'bank', 'account_number',)
+        widgets = {
+            'account_number': forms.TextInput(
+                attrs={
+                        'placeholder': 'ex) 000-000-000'
+                    }
+                ),
+        }

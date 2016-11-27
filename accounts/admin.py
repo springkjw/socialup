@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import MyUser, Seller
+from .models import MyUser, Seller, SellerAccount, Profit
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -15,3 +15,5 @@ class UserAdmin(admin.ModelAdmin):
 
 admin.site.register(MyUser, UserAdmin)
 admin.site.register(Seller)
+admin.site.register(SellerAccount)
+admin.site.register(Profit)
