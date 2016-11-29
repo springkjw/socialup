@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'reviews',
     'billing',
     'carts',
+    'contact',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

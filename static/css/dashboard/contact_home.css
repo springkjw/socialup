@@ -1,0 +1,147 @@
+.no-list {
+    text-align: center;
+    color: #648efc;
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 100px;
+    padding-bottom: 100px;
+    border-bottom: 1px solid #DEDEDE;
+}
+
+.contact-nav {
+    margin-top: 25px;
+    margin-left: 25px;
+}
+
+.contact-nav ul li {
+    display: inline-block;
+    font-size: 12px;
+    color: rgba(0, 0, 0, .6);
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    margin-right: 30px;
+}
+
+.contact-nav ul li:first-child {
+    margin-left: 10px;
+}
+
+.contact-nav ul li:last-child {
+    margin-right: 0;
+}
+
+.contact-nav .active {
+    color: #648efc;
+}
+
+.dashboard-contact {
+    border: 2px solid #DADADA;
+    width: 480px;
+    margin-top: 20px;
+    padding: 30px 40px 40px 40px;
+    /*text-align: right;*/
+}
+
+.dashboard-contact .meta {
+    font-size: 12px;
+    font-weight: 400;
+    color: #777;
+}
+
+.dashboard-contact .contact-form {
+    margin-top: 30px;
+}
+
+.dashboard-contact label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #777;
+    text-align: left;
+    margin-right: 5px;
+    margin-top: 7px;
+    position: absolute;
+}
+
+.dashboard-contact ul {
+    height: 40px;
+}
+
+.dashboard-contact ul li {
+    width: 100px;
+    height: 35px;
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.dashboard-contact ul li input {
+    position: relative;
+    width: 15px;
+}
+
+.dashboard-contact input {
+    width: 390px;
+    border: solid 1px #DADADA;
+    padding: 8px 15px 8px 15px;
+    margin-bottom: 15px;
+    margin-left: 60px;
+    font-size: 12px;
+}
+
+.dashboard-contact input[name='user_email'] {
+    background: #DADADA;
+}
+
+.dashboard-contact textarea {
+    width: 390px;
+    border: solid 1px #DADADA;
+    padding: 8px 15px 8px 15px;
+    margin-bottom: 15px;
+    margin-left: 60px;
+    font-size: 12px;
+    resize: none;
+}
+
+.dashboard-contact button[type='submit'] {
+    background: #648efc;
+    color: white;
+    padding: 10px 35px 10px 35px;
+    font-weight: 500;
+    margin-top: 30px;
+    margin-left: 200px;
+    font-size: 12px;
+}
+
+.dashboard-contact input[name='order'] {
+    width: 150px;
+    display: inline-block;
+}
+
+.dashboard-contact .contact-order {
+    font-size: 12px;
+    color: #777;
+    background: #DADADA;
+    width: 75px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    padding: 8px 10px 8px 10px;
+}
+
+.dashboard-contact .order-meta {
+    text-align: center;
+    padding: 5px 0 10px 0;
+}
+
+.dashboard-contact .order-meta .order-meta-button {
+    font-size: 10px;
+    color: #777;
+    background: #DADADA;
+    width: 125px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    padding: 8px 10px 8px 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

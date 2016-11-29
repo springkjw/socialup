@@ -1,0 +1,112 @@
+{% extends 'account/dashboard_base.html' %}
+{% load staticfiles %}
+
+{% block dashboard_css %}
+    <link rel="stylesheet" href="{% static 'css/dashboard/contact_home.css' %}">
+{% endblock %}
+
+{% block dashboard_js %}
+    <script type="text/javascript" src="{% static 'js/seller/order.js' %}"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.dashboard-item-more').on('click', '.fa-angle-down', function () {
+                $(this).parent().parent().find('.dashboard-item-popup').show();
+                $(this).removeClass('fa-angle-down').addClass('fa-angle-up');
+            });
+
+            $('.dashboard-item-more').on('click', '.fa-angle-up', function () {
+                $(this).parent().parent().find('.dashboard-item-popup').hide();
+                $(this).removeClass('fa-angle-up').addClass('fa-angle-down');
+            });
+
+            {#            {% if messages %}#}
+            {#                {% for message in messages %}#}
+            {#                    alert('{{ message }}');#}
+            {#                    window.location.href = "{% url 'product_upload' %}";#}
+            {#                {% endfor %}#}
+            {#            {% endif %}#}
+        });
+    </script>
+{% endblock %}
+
+{% block dashboard_content %}
+    <div class="dashboard-content">
+        <div class="dashboard-nav">
+            1:1 문의
+        </div>
+        <div class="contact-nav">
+            <ul>
+                <li><a href="{% url 'contact' %}">1:1 문의</a></li>
+                <li class="active"><a href="{% url 'contact_history' %}">1:1 문의내역</a></li>
+            </ul>
+        </div>
+        <div class="dashboard-order-list">
+            <div class="dashboard-order status_0">
+                {% if orders %}
+                    {% for item in orders %}
+                        <div class="product-item">
+                            <div class="item-image">
+                                <img src="{{ item.cart.items.all.0.product.get_thumb_micro_url }}">
+                            </div>
+                            <div class="item-title">
+                                <h3>{{ item.cart.items.all.0.product }}</h3>
+                                <div class="item-meta">
+                                    <p>주문번호 : {{ item }}</p>
+                                    <p>구매자 : {{ item.user.get_short_name }}</p>
+                                    <br/>
+                                    <p>결제 금액 : {{ item.order_total }}원</p>
+                                    <p>결제 일자 : {{ item.timestamp|date:"Y.m.d" }}</p>
+                                </div>
+                            </div>
+                            <div class="dashboard-item-status">
+                                {% if item.status == 'paid' %}
+                                    작업대기
+                                {% elif item.status == 'processing' %}
+                                    작업진행
+                                {% elif item.status == 'finished' %}
+                                    작업완료
+                                {% elif item.status == 'refunded' %}
+                                    취소
+                                {% endif %}
+                            </div>
+                            <div class="dashboard-item-more">
+                                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                            </div>
+                            <div class="dashboard-item-popup">
+                                <table class="order-list-table">
+                                    <thead>
+                                    <tr>
+                                        <th>내용</th>
+                                        <th>작업일</th>
+                                        <th>금액</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for variation in item.cart.items.all %}
+                                        <tr>
+                                            <td>{{ variation.title }}</td>
+                                            <td>{{ variation.day }}일</td>
+                                            <td>{{ variation.price }}원</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <td></td>
+                                        <td>{{ item.get_total_day }}일</td>
+                                        <td>{{ item.order_total }}원</td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="no-list">
+                        아직 문의 내역이 없습니다!
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

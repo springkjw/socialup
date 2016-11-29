@@ -24,6 +24,7 @@ from billing.views import charge_point, history_point, PointCheckoutAjaxView, Po
     CheckoutAjaxView, ImpAjaxView, purchase_list, charge_fail, charge_success
 from carts.views import CartView, WishListView
 from messages.views import message_lounge, message_room
+from contact.views import contact, contact_history
 
 urlpatterns = [
     url(r'^$', home, name='home'),
@@ -62,6 +63,9 @@ urlpatterns = [
 
     url(r'^messages/$', message_lounge, name="message_lounge"),
     url(r'^messages/room/$', message_room, name="message_room"),
+
+    url(r'^contact/$', contact, name="contact"),
+    url(r'^contact/history/$', contact_history, name="contact_history"),
 ]
 
 handler400 = bad_request

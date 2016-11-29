@@ -25,8 +25,8 @@
         <h2>포인트</h2>
         <h3>{{ user.point }}원</h3>
         <div class="user-money-button">
-{#            <a href="{% url 'point_charge' %}" class="money-charge">충전하기</a>#}
-{#            <a href="{% url 'point_history' %}" class="money-history">충전내역</a>#}
+            <a href="{% url 'point_charge' %}" class="money-charge">충전하기</a>
+            <a href="{% url 'point_history' %}" class="money-history">충전내역</a>
         </div>
     </div>
     <div class="user-order">
@@ -60,7 +60,7 @@
         </div>
         <div class="side-menu-content">
             <ul>
-                <li><a href="#">- 문의내역</a></li>
+                <li><a href="{% url 'contact_history' %}">- 문의내역</a></li>
             </ul>
         </div>
     </div>

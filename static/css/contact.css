@@ -1,0 +1,43 @@
+.contact {
+    position: absolute;
+    right: 30px;
+}
+
+.contact .contact-button {
+    background: #648efc;
+    color: white;
+    width: 57px;
+    right: 0;
+    padding: 10px 55px 10px 55px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.contact .contact-drop-down {
+    position: absolute;
+    z-index: 999;
+    width: 166px;
+    bottom: 45px;
+    background: white;
+    border: 1px solid #DEDEDE;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, .15);
+    transition: visibility 0s, opacity 0.5s linear;
+}
+
+.contact .contact-drop-down a, .contact-drop-down .contact-menu {
+    display: block;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 15px;
+    color: #777777;
+    border-bottom: 1px solid #DEDEDE;
+    cursor: pointer;
+}
+
+.contact .contact-drop-down a:hover {
+    color: white;
+    background: #648efc;
+    cursor: pointer;
+}

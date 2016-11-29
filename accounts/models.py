@@ -96,6 +96,11 @@ class MyUser(AbstractBaseUser):
                     return "http://graph.facebook.com/{}/picture?width=100&height=100".format(social_user[0].uid)
             return '/static/img/no_profile_hd.png'
 
+    @property
+    def is_seller(self):
+        seller_exist = Seller.objects.filter(user=self).exists()
+        return seller_exist
+
     def has_perm(self, perm, obj=None):
         return True
 
@@ -160,6 +165,7 @@ BANK_TYPE = (
     ('신영증권', '신영증권'),
     ('한국씨티은행(한미은행)', '한국씨티은행 (한미은행)'),
 )
+
 
 class SellerAccount(models.Model):
     seller = models.OneToOneField(Seller)

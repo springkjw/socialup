@@ -1,0 +1,90 @@
+{% extends 'account/dashboard_base.html' %}
+{% load staticfiles %}
+
+{% block dashboard_css %}
+    <link rel="stylesheet" href="{% static 'css/dashboard/contact_home.css' %}">
+{% endblock %}
+
+{% block dashboard_js %}
+    <script type="text/javascript" src="{% static 'js/contact.js' %}"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.order-meta-button').on('click', function () {
+                $(this).parent().hide();
+                $('.confirm-order').show();
+            });
+
+
+            $('.contact-order').on('click', function () {
+                var order_input = $('input[name="order"]')
+                var order_number = order_input.val();
+
+                if (order_number != '') {
+                    $.ajax({
+                        method: 'POST',
+                        url: '{% url "contact" %}',
+                        data: {
+                            order: order_number
+                        },
+                        success: function (data) {
+                            if (data['status'] == 'success') {
+                            } else {
+                                order_input.val('');
+                            }
+                            alert(data['message']);
+                        }
+                    });
+                } else {
+                    alert('주문번호를 입력해주세요.');
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block dashboard_content %}
+    <div class="dashboard-content">
+        <div class="dashboard-nav">
+            1:1 문의
+        </div>
+        <div class="contact-nav">
+            <ul>
+                <li class="active"><a href="{% url 'contact' %}">1:1 문의</a></li>
+                <li><a href="{% url 'contact_history' %}">1:1 문의내역</a></li>
+            </ul>
+        </div>
+        <div class="dashboard-contact">
+            <div class="meta">
+                <p>원하는 답변을 찾을 수 없으세요?</p>
+                <p>아래 양식을 작성하시면 신속하게 답변 드리겠습니다.</p>
+            </div>
+            <div class="contact-form">
+                <form method="POST">{% csrf_token %}
+                    {% for form in forms %}
+                        {% if form.name == 'order' %}
+                            <div class="meta order-meta">
+                                <p>주문 상품에 대한 문의인가요?</p>
+                                <div class="order-meta-button">
+                                    주문상품 조회하기
+                                </div>
+                            </div>
+                            <div class="contact-input confirm-order" style="display: none;">
+                                <label for="{{ form.name }}">{{ form.label }}</label>
+                                {{ form }}
+                                <div class="contact-order">
+                                    주문상품 확인
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="contact-input">
+                                <label for="{{ form.name }}">{{ form.label }}</label>
+                                {{ form }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <button type="submit">문의하기</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
