@@ -65,6 +65,33 @@
     z-index: 2;
 }
 
+.jumbotron .owl-carousel .owl-slide {
+    height: 400px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+.jumbotron-allow {
+    position: relative;
+}
+
+.jumbotron-allow .allow {
+    position: absolute;
+    z-index: 3;
+    top: 190px;
+    cursor: pointer;
+}
+
+.jumbotron .allow-left {
+    left: 50px;
+}
+
+.jumbotron .allow-right {
+    right: 50px;
+}
+
 .special-service {
     margin-top: 60px;
     margin-bottom: 50px;

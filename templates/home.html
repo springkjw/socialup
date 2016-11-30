@@ -35,21 +35,23 @@
                 }
             });
 
-            $("#owl").owlCarousel({
+            var owl = $("#owl");
+
+            owl.owlCarousel({
                 slideSpeed: 300,
                 paginationSpeed: 400,
                 singleItem: true,
                 autoPlay: true,
                 stopOnHover: true,
+                loop: true
+            });
 
 
-                // "singleItem:true" is a shortcut for:
-                // items : 1,
-                // itemsDesktop : false,
-                // itemsDesktopSmall : false,
-                // itemsTablet: false,
-                // itemsMobile : false
-
+            $('.allow-left').on('click', function () {
+                owl.trigger('owl.prev');
+            });
+            $('.allow-right').on('click', function () {
+                owl.trigger('owl.next');
             });
         });
     </script>
@@ -76,11 +78,23 @@
                     <li>카카오스토리</li>
                 </ul>
             </div>
-            <div id="owl" class="owl-carousel owl-theme">
-                <div class="item"><img src="{% static 'img/banner-01.png' %}" alt="banner-01"></div>
-                <div class="item"><img src="{% static 'img/banner-02.png' %}" alt="banner-02"></div>
-                <div class="item"><img src="{% static 'img/banner-03.png' %}" alt="banner-03"></div>
-                <div class="item"><img src="{% static 'img/banner-04.png' %}" alt="banner-04"></div>
+            <div class="jumbotron-allow">
+                <div class="allow allow-left">
+                    <img src="{% static 'img/arrow.png' %}">
+                </div>
+                <div class="allow allow-right">
+                    <img src="{% static 'img/arrow_02.png' %}">
+                </div>
+            </div>
+            <div id="owl" class="owl-carousel">
+                <div class="owl-slide banner-1"
+                     style='background-image: url("{% static 'img/banner-01.png' %}");'></div>
+                <div class="owl-slide banner-2"
+                     style='background-image: url("{% static 'img/banner-02.png' %}");'></div>
+                <div class="owl-slide banner-3"
+                     style='background-image: url("{% static 'img/banner-03.png' %}");'></div>
+                <div class="owl-slide banner-4"
+                     style='background-image: url("{% static 'img/banner-04.png' %}");'></div>
             </div>
         </div>
     {% endif %}
