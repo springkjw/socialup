@@ -4,9 +4,11 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.transitions.css' %}">
     <style type="text/css">
         .jumbotron {
-            background-image: url("{% static 'img/container_bg.png' %}");
             background-repeat: no-repeat;
             background-size: cover;
         }
@@ -15,6 +17,7 @@
 
 {% block js %}
     <script type="text/javascript" src="{% static 'js/home.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
     <script type="text/javascript">
         $(function () {
             $('.sort').on('click', function () {
@@ -30,93 +33,56 @@
                     $('.product-created').show();
                 }
             });
+
+            $("#owl").owlCarousel({
+                slideSpeed: 300,
+                paginationSpeed: 400,
+                singleItem: true,
+                autoPlay: true,
+                stopOnHover: true,
+
+
+                // "singleItem:true" is a shortcut for:
+                // items : 1,
+                // itemsDesktop : false,
+                // itemsDesktopSmall : false,
+                // itemsTablet: false,
+                // itemsMobile : false
+
+            });
         });
     </script>
 {% endblock %}
 
 {% block jumbotron %}
-    <div class="jumbotron">
-        <div class="survey">
-            <img class="fa-angle-left" style="display:none;" src="{% static 'img/arrow-left.png' %}">
-            <img class="fa-angle-right" src="{% static 'img/arrow-right.png' %}">
-            <div class="survey-title">
-                <span id="italic">SNS </span>를 찾아보세요!
-                <div class="survey-subtitle sub-title-step1">
-                    01 테마를 선택해 주세요.
-                </div>
-                <div class="survey-subtitle sub-title-step2" style="display: none;">
-                    02 타겟을 선택해 주세요. (중복선택 가능합니다.)
-                </div>
-                <div class="survey-subtitle sub-title-step3" style="display: none;">
-                    03 선호하는 매체를 선택해주세요. (중복선택 가능합니다.)
-                </div>
+    {% if not user.is_authenticated %}
+        <div class="jumbotron" style='background-image: url("{% static 'img/pre_login-04.png' %}");'>
+            <div class="jumbotron-info">
+                <h1>여러분의 제품을 홍보할수 있는 SNS를 추천해드립니다</h1>
+                <p>인플루언서와 직거래로 비싼 수수료는 <span>그만!</span></p>
+                <p>인플루언서의 영향력을 한 눈에 <span>비교!</span></p>
+
+                <a href="{% url 'account_signup' %}">시작하기</a>
             </div>
-            <form method="POST" action="">{% csrf_token %}
-                <div class="checkbox">
-                    <div class="steps step1">
-                        <table>
-                            <tbody>
-                            <tr>
-                                {% for choice in tag_form.tag %}
-                                    {% cycle '<tr>' '' '' '' '' %}
-                                    <td>
-                                        {{ choice.tag }}
-                                        <label for="id_tag_{{ forloop.counter0 }}">
-                                            {{ choice.choice_label }}
-                                        </label>
-                                    </td>
-                                    {% cycle '' '' '' '' '</tr>' %}
-                                {% endfor %}
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="steps step2" style="display: none;">
-                        <table>
-                            <tbody>
-                            <tr>
-                                {% for choice in target_form.target %}
-                                    {% cycle '<tr>' '' '' '' '' %}
-                                    <td>
-                                        {{ choice.tag }}
-                                        <label for="id_target_{{ forloop.counter0 }}">
-                                            {{ choice.choice_label }}
-                                        </label>
-                                    </td>
-                                    {% cycle '' '' '' '' '</tr>' %}
-                                {% endfor %}
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="steps step3" style="display: none;">
-                        <table>
-                            <tbody>
-                            <tr>
-                                {% for choice in sns_form.sns %}
-                                    {% cycle '<tr>' '' '' '' '' %}
-                                    <td>
-                                        {{ choice.tag }}
-                                        <label for="id_sns_{{ forloop.counter0 }}">
-                                            {{ choice.choice_label }}
-                                        </label>
-                                    </td>
-                                    {% cycle '' '' '' '' '</tr>' %}
-                                {% endfor %}
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="survey-pagination">
-                        <i class="fa fa-circle p-step1 active" aria-hidden="true"></i>
-                        <i class="fa fa-circle p-step2" aria-hidden="true"></i>
-                        <i class="fa fa-circle p-step3" aria-hidden="true"></i>
-                    </div>
-                    <button type="submit" class="survey-complete" style="display: none;">완료</button>
-                </div>
-            </form>
         </div>
-    </div>
+    {% else %}
+        <div class="jumbotron" style='background: white;'>
+            <div class="jumbotron-header">
+                <ul>
+                    <li>블로그</li>
+                    <li>페이스북</li>
+                    <li>인스타그램</li>
+                    <li>카카오스토리</li>
+                </ul>
+            </div>
+            <div id="owl" class="owl-carousel owl-theme">
+                <div class="item"><img src="{% static 'img/banner-01.png' %}" alt="banner-01"></div>
+                <div class="item"><img src="{% static 'img/banner-02.png' %}" alt="banner-02"></div>
+                <div class="item"><img src="{% static 'img/banner-03.png' %}" alt="banner-03"></div>
+                <div class="item"><img src="{% static 'img/banner-04.png' %}" alt="banner-04"></div>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -131,9 +97,9 @@
                     </div>
                 {% else %}
                     <div class="special-title">
-                        스페셜 서비스
+                        인기 SNS 포스팅
                         <div class="special-subtitle">
-                            전문가가 제공하는 최상의 서비스를 소개합니다.
+                            * 소셜업 게이지란? 소셜업만의 알고리즘을 통해 SNS의 다양한 요소를 분석해 수치화 시킨 광고비 대비 효과 지수입니다.
                         </div>
                     </div>
                     <div class="special-sort">
