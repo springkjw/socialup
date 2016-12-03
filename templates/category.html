@@ -4,21 +4,10 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
-    <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
-    <link rel="stylesheet" href="{% static 'css/owl.theme.css' %}">
-    <link rel="stylesheet" href="{% static 'css/owl.transitions.css' %}">
-    <style type="text/css">
-        .jumbotron {
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center center;
-        }
-    </style>
 {% endblock %}
 
 {% block js %}
     <script type="text/javascript" src="{% static 'js/home.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
     <script type="text/javascript">
         $(function () {
             $('.sort').on('click', function () {
@@ -34,41 +23,11 @@
                     $('.product-created').show();
                 }
             });
-
-            var owl = $("#owl");
-
-            owl.owlCarousel({
-                slideSpeed: 300,
-                paginationSpeed: 400,
-                singleItem: true,
-                autoPlay: true,
-                stopOnHover: true,
-                loop: true
-            });
-
-
-            $('.allow-left').on('click', function () {
-                owl.trigger('owl.prev');
-            });
-            $('.allow-right').on('click', function () {
-                owl.trigger('owl.next');
-            });
         });
     </script>
 {% endblock %}
 
 {% block jumbotron %}
-    {% if not user.is_authenticated %}
-        <div class="jumbotron" style='background-image: url("{% static 'img/pre_login.png' %}");'>
-            <div class="jumbotron-info">
-                <h1>여러분의 제품을 홍보할수 있는 SNS를 추천해드립니다</h1>
-                <p>인플루언서와 직거래로 비싼 수수료는 <span>그만!</span></p>
-                <p>인플루언서의 영향력을 한 눈에 <span>비교!</span></p>
-
-                <a href="{% url 'account_signup' %}">시작하기</a>
-            </div>
-        </div>
-    {% else %}
         <div class="jumbotron" style='background: white;'>
             <div class="jumbotron-header">
                 <ul>
@@ -78,26 +37,7 @@
                     <li><a href="{% url 'category' category='kakaostroy' %}">카카오스토리</a></li>
                 </ul>
             </div>
-            <div class="jumbotron-allow">
-                <div class="allow allow-left">
-                    <img src="{% static 'img/arrow.png' %}">
-                </div>
-                <div class="allow allow-right">
-                    <img src="{% static 'img/arrow_02.png' %}">
-                </div>
-            </div>
-            <div id="owl" class="owl-carousel">
-                <div class="owl-slide banner-1"
-                     style='background-image: url("{% static 'img/banner-01.png' %}");'></div>
-                <div class="owl-slide banner-2"
-                     style='background-image: url("{% static 'img/banner-02.png' %}");'></div>
-                <div class="owl-slide banner-3"
-                     style='background-image: url("{% static 'img/banner-03.png' %}");'></div>
-                <div class="owl-slide banner-4"
-                     style='background-image: url("{% static 'img/banner-04.png' %}");'></div>
-            </div>
         </div>
-    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -112,7 +52,7 @@
                     </div>
                 {% else %}
                     <div class="special-title">
-                        인기 SNS 포스팅
+                        인기 {{ category }} 포스팅
                         <div class="special-subtitle">
                             * 소셜업 게이지란? 소셜업만의 알고리즘을 통해 SNS의 다양한 요소를 분석해 수치화 시킨 광고비 대비 효과 지수입니다.
                         </div>

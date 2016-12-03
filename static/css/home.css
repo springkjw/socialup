@@ -53,6 +53,16 @@
     margin-right: 15px;
 }
 
+.jumbotron-header ul li:hover {
+    color: #648efc;
+    border: solid 1px #648efc;
+}
+
+.jumbotron-header ul li.active {
+    color: #648efc;
+    border: solid 1px #648efc;
+}
+
 .jumbotron #owl .item img {
     display: block;
     /*width: 100%;*/

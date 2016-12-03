@@ -5,9 +5,11 @@ from django.shortcuts import (
     render_to_response,
 )
 from django.template import RequestContext
+from django.contrib.contenttypes.models import ContentType
+
 
 # app import
-from markets.models import Product
+from markets.models import Product, sns_type, SnsType
 from markets.forms import (
     TagForm,
     TargetForm,
@@ -62,6 +64,27 @@ def home(request):
         "tag_form": tag_form,
         "target_form": target_form,
         "sns_form": sns_form,
+    }
+
+    return render(request, template, context)
+
+
+def product_category(request, category):
+    products = Product.objects.filter(type__type=category)
+
+    category_name = [type_[1] for type_ in sns_type if type_[0] == category][0]
+
+    # 처음 상품
+    # 평점순
+    products_by_rating = products.order_by('-rating')
+    # 최신순
+    products_by_created = products.order_by('-created')
+
+    template = 'category.html'
+    context = {
+        "category": category_name,
+        "products_rating": products_by_rating,
+        "products_created": products_by_created,
     }
 
     return render(request, template, context)

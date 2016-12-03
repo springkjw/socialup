@@ -12,6 +12,7 @@ from django.contrib import admin
 
 from .views import (
     home,
+    product_category,
     bad_request,
     permission_denied,
     page_not_found,
@@ -28,6 +29,7 @@ from contact.views import contact, contact_history
 
 urlpatterns = [
     url(r'^$', home, name='home'),
+    url(r'category/(?P<category>\w+)/$', product_category, name='category'),
     # admin app urls
     url(r'^admin/', admin.site.urls),
     # accounts app urls
