@@ -112,11 +112,10 @@
     font-size: 24px;
     font-weight: bold;
     color: #333333;
-
 }
 
 .special-service .special-title .special-subtitle {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     color: #888;
     margin-top: 5px;
@@ -204,14 +203,14 @@
 
 .list-card {
     float: left;
-    width: 225px;
+    width: 306px;
     height: 265px;
     background: white;
     margin-right: 18px;
     padding-bottom: 10px;
     cursor: pointer;
     position: relative;
-    box-shadow: 3px 6px 4px rgba(0, 0, 0, .05);
+    border: 1px solid #DADADA;
 }
 
 .list-card.last {
@@ -264,21 +263,82 @@
     height: 172px;
 }
 
+.list-card .card-main-info .card-type {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.list-card .card-main-info {
+    height: 180px;
+    /*width: 266px;*/
+    padding: 35px 25px 0 25px;
+    text-align: center;
+}
+
+.list-card .card-main-info .card-title {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    color: #333;
+    z-index: 10;
+}
+
+.list-card .card-main-info .socialup-gauge {
+    position: absolute;
+    top: 85;
+    left: 30px;
+    z-index: 9;
+}
+
+.list-card .card-main-info .product-price {
+    border: 1px solid #DADADA;
+    border-radius: 5px;
+    background: white;
+    margin-top: 75px;
+    overflow: hidden;
+    position: relative;
+    min-width: 80px;
+    display: inline-block;
+    text-align: center;
+    padding: 5px 15px 5px 15px;
+    z-index: 11;
+    color: #555;
+    font-size: 14px;
+    font-weight: 500;
+}
+
 .list-card .card-info {
-    padding: 15px;
+    height: 46px;
+    padding: 10px 15px 0px 15px;
     margin-top: 3px;
     font-size: 12px;
     font-weight: 600;
+    border-top: 1px solid #DADADA;
     color: #333;
+    background: #F2F2F2;
 }
 
 .list-card .card-author {
     font-size: 13px;
     color: #777777;
     font-weight: 400;
-    position: absolute;
-    bottom: 10px;
+    /*position: absolute;*/
+    /*bottom: 10px;*/
     width: 100%;
+    background: #D2D2D2;
+}
+
+.list-card .card-author img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.list-card .card-author span {
+    margin-top: 8px;
+    margin-left: 10px;
+    float: right;
 }
 
 .list-card .card-author .card-author-info {
@@ -287,17 +347,18 @@
 
 .list-card .card-author .card-author-info-rating {
     float: right;
-    right: 30px;
-    position: absolute;
+    margin-top: 8px;
+    /*right: 30px;*/
+    /*position: absolute;*/
 }
 
 .list-card .card-author .card-author-info-rating i {
     font-size: 14px;
-    color: #b1c6fc;
+    color: #999;
 }
 
 .list-card .card-author .card-author-info-rating i.active {
-    color: #648efc;
+    color: #FEDD43;
 }
 
 .row {

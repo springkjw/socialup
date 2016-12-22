@@ -42,20 +42,40 @@ class ProductManager(models.Manager):
         return self.get_queryset().active()
 
 
+PRODUCT_TYPE = (
+    ('blog', '블로그'),
+    ('facebook', '페이스북'),
+    ('instagram', '인스타그램'),
+    ('kakaostory', '카카오스토리'),
+)
+
+
 class Product(models.Model):
     seller = models.ForeignKey(Seller, null=False, blank=False)
     title = models.CharField(max_length=120, blank=False)
-    image = models.ImageField(upload_to=upload_product_image, null=True, blank=True)
+    price = models.PositiveIntegerField(default=0)
+
+    image = models.ImageField(
+        upload_to=upload_product_image, null=True, blank=True)
+
+    # 상품 내용
+    url = models.URLField(null=True, blank=True)
+    is_url_active = models.BooleanField(default=False)
     tags = GenericRelation("ProductTag", null=True, blank=True)
-    url = GenericRelation("SnsUrl", null=True, blank=True)
-    type = GenericRelation("SnsType", null=True, blank=True)
-    target = GenericRelation("ProductTarget", null=True, blank=True)
-    influence = models.CharField(max_length=255, null=True, blank=True)
-    required = models.TextField(null=True, blank=True)
+    product_type = models.CharField(
+        max_length=50, choices=PRODUCT_TYPE, null=True, blank=True)
     description = summer_fields.SummernoteTextField(null=True, blank=True)
-    refund = models.TextField(null=True, blank=True)
     command = models.TextField(null=True, blank=True)
+
+    # 상품 평가 관련
     rating = models.DecimalField(default=0.00, decimal_places=2, max_digits=3)
+    influence = models.CharField(max_length=255, null=True, blank=True)
+
+    # 부가 서비스
+    is_additional_service = models.BooleanField(default=False)
+    additional_service = models.CharField(max_length=255, null=True, blank=True)
+    additional_price = models.PositiveIntegerField(default=0)
+
     is_active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
@@ -64,6 +84,36 @@ class Product(models.Model):
 
     def __unicode__(self):
         return u'%s' % (self.title)
+
+    @property
+    def product_type_image_url(self):
+        image_url = None
+
+        if self.product_type == 'blog':
+            image_url = '/static/img/naver.png'
+        elif self.product_type == 'facebook':
+            image_url = '/static/img/facebook.png'
+        elif self.product_type == 'instagram':
+            image_url = '/static/img/insta.png'
+        elif self.product_type == 'kakaostory':
+            image_url = '/static/img/kakao.png'
+
+        return image_url
+
+    @property
+    def product_type_color(self):
+        color = None
+
+        if self.product_type == 'blog':
+            color = '#20CA24'
+        elif self.product_type == 'facebook':
+            color = '#3B579D'
+        elif self.product_type == 'instagram':
+            color = '#CFAE89'
+        elif self.product_type == 'kakaostory':
+            color = '#FEDD43'
+
+        return color
 
     @property
     def get_absolute_url(self):
@@ -108,7 +158,8 @@ THUMB_TYPE = (
 
 class ProductThumbnail(models.Model):
     product = models.ForeignKey(Product)
-    thumb_type = models.CharField(max_length=20, choices=THUMB_TYPE, default="hd")
+    thumb_type = models.CharField(
+        max_length=20, choices=THUMB_TYPE, default="hd")
     height = models.CharField(max_length=20, null=True, blank=True)
     width = models.CharField(max_length=20, null=True, blank=True)
     media = models.ImageField(
@@ -144,14 +195,13 @@ def create_new_thumb(image_path, instance, max_length, max_width):
     if settings.DEBUG:
         temp_loc = os.path.join(settings.MEDIA_ROOT, temp_loc)
 
-
     # 썸네일 폴더 생성
     if not os.path.exists(temp_loc):
         os.makedirs(temp_loc)
 
-
     file_name, extends = os.path.splitext(filename)
-    temp_file_loc = os.path.join(temp_loc, '%s_%s%s' % (filename, instance.thumb_type, extends))
+    temp_file_loc = os.path.join(temp_loc, '%s_%s%s' % (
+        filename, instance.thumb_type, extends))
     new_thumbnail_name = "%s_%s%s" % (file_name, instance.thumb_type, extends)
 
     # 썸네일 저장
@@ -169,7 +219,8 @@ def create_new_thumb(image_path, instance, max_length, max_width):
             # S3에 리사이즈한 이미지 업로드
             conn = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY,
                                    host=settings.AWS_S3_HOST)
-            bucket = conn.get_bucket(settings.AWS_STORAGE_BUCKET_NAME, validate=False)
+            bucket = conn.get_bucket(
+                settings.AWS_STORAGE_BUCKET_NAME, validate=False)
             k = bucket.new_key('media/' + temp_file_loc)
             k.set_metadata('Content-Type', mime)
             k.set_contents_from_string(memory_file.getvalue())
@@ -193,9 +244,12 @@ def create_new_thumb(image_path, instance, max_length, max_width):
 
 def product_post_save_receiver(sender, instance, created, *args, **kwargs):
     if instance.image:
-        hd, hd_created = ProductThumbnail.objects.get_or_create(product=instance, thumb_type="hd")
-        sd, sd_created = ProductThumbnail.objects.get_or_create(product=instance, thumb_type="sd")
-        micro, micro_created = ProductThumbnail.objects.get_or_create(product=instance, thumb_type="micro")
+        hd, hd_created = ProductThumbnail.objects.get_or_create(
+            product=instance, thumb_type="hd")
+        sd, sd_created = ProductThumbnail.objects.get_or_create(
+            product=instance, thumb_type="sd")
+        micro, micro_created = ProductThumbnail.objects.get_or_create(
+            product=instance, thumb_type="micro")
 
         # 썸네일 크기 3가지로 분류 및 저장
         hd_max = (500, 500)
@@ -309,7 +363,8 @@ product_target = (
 
 
 class ProductTarget(models.Model):
-    target = models.CharField(choices=product_target, max_length=15, null=False)
+    target = models.CharField(choices=product_target,
+                              max_length=15, null=False)
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey()
@@ -327,7 +382,6 @@ class SnsUrl(models.Model):
 
     def __unicode__(self):
         return self.url
-
 
         # def new_rating_receiver(sender, instance, created, *args, **kwargs):
         #     seller = Seller.objects.get(id=instance.seller.id)
