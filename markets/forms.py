@@ -35,7 +35,7 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = (
-            'title', 'image', 'description', 'required', 'refund', 'influence', 'command',)
+            'title', 'image', 'description', 'influence', 'command',)
         widgets = {
             'foo': SummernoteWidget(),
             'bar': SummernoteInplaceWidget(),
