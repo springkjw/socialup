@@ -1,7 +1,10 @@
 .contact {
-    position: absolute;
+    /*position: absolute;
     right: 30px;
+		position:relative;
+		left:88%;
     z-index: 15;
+		*/
 }
 
 .contact .contact-button {
