@@ -46,11 +46,11 @@
     </div>
 
     {% include 'footer.html' %}
-
     <script type="text/javascript" src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
     <script type="text/javascript" src='{% static "js/django.csrf.js" %}'></script>
     <script type="text/javascript" src="{% static 'js/header.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery-scrolltofixed-min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/contact.js' %}"></script>
     {% if user.is_authenticated %}
         <script type="text/javascript" src="{% static 'js/contact.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/SendBird.js' %}"></script>
@@ -60,5 +60,6 @@
         </script>
     {% endif %}
     {% block js %}{% endblock %}
+
 </body>
 </html>

@@ -1,4 +1,7 @@
 .contact {
+	position:fixed;
+	left:87%;
+	margin-bottom:1%;
     /*position: absolute;
     right: 30px;
 		position:relative;

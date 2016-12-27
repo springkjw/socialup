@@ -7,7 +7,6 @@ from django.shortcuts import (
 from django.template import RequestContext
 from django.contrib.contenttypes.models import ContentType
 
-
 # app import
 from markets.models import Product, sns_type, SnsType
 from markets.forms import (
@@ -15,7 +14,6 @@ from markets.forms import (
     TargetForm,
     SnsTypeForm,
 )
-
 
 def home(request):
     template = 'home.html'
