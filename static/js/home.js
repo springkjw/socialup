@@ -99,6 +99,70 @@ $(function() {
     });
 });
 
+$(document).ready(function(){
+    /* gauge part */
+    var count = 0;
+    $('.card-main-info').each(function(){
+        //count++;
+        var color = $(this).attr('data-color');
+        $(this).find('.circle-wrapper .circle-list').eq(0).find('.circle-text').css({'background-color': color, 'color': 'white'});
+        var num = 1;
+        if(num == 1){
+            $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'-10px', 'top':'60px', 'transform': 'rotate(18deg)'});
+        }
+        else if (num == 3){
+            $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'26%', 'top':'-7px', 'transform': 'rotate(90deg)'});
+
+        }
+    });
+    /* range part */
+    $( function() {
+        $( "#slider-range" ).slider({
+            range: true,
+            min: 0,
+            max: 30,
+            values: [ 0, 30 ],
+            slide: function( event, ui ) {
+                $( "#amount" ).val(ui.values[ 0 ] + "만원" + " - " + ui.values[ 1 ] +"만원");
+                var first_span  = parseInt($(this).find('span').eq(0).css("left"))-10;
+                var second_span  = parseInt($(this).find('span').eq(1).css("left"))-50-first_span;
+                first_span = first_span+"px";
+                second_span = second_span+"px";
+                $("#first_span_val").text(ui.values[0]+"만원").css("margin-left", first_span);
+                $("#second_span_val").text(ui.values[1]+"만원").css("margin-left", second_span);
+                console.log('start from outside');
+                filter_ajax(ui.values[0],ui.values[1]);
+            }
+        });
+        $("#first_span_val").text(0+"만원").css("margin-left", -10);
+        $("#second_span_val").text(30+"만원").css("margin-left", 100);
+    });
+
+});
+
+function filter_ajax(min, max){
+    var real_min = min*10000;
+    var real_max = max*10000;
+    $('#loading').css("display", "block");
+    setTimeout(function() {
+        $.ajax({url: "/", success: function(result){
+            $(".row .list-card").each(function (){
+                var temp_text = $(this).find('.cash span').text();
+                temp_text = parseInt(temp_text);
+                if(real_min <= temp_text && temp_text <= real_max) {
+                    $(this).css("display", "block");
+                }else{
+                    $(this).css("display", "none");
+                }
+            });
+            $('#loading').css("display","none");
+        }});
+    },2000);
+
+    /*
+    */
+}
+
 $.fn.digits = function() {
     return this.each(function() {
         $(this).text($(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));

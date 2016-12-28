@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{% static 'css/header.css' %}">
     <link rel="stylesheet" href="{% static 'css/contact.css' %}">
     <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
     <link rel="stylesheet" href="{% static 'font-awesome-4.6.3/css/font-awesome.min.css' %}">
     <style>
         @font-face {
@@ -50,6 +51,7 @@
     <script type="text/javascript" src='{% static "js/django.csrf.js" %}'></script>
     <script type="text/javascript" src="{% static 'js/header.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/jquery-scrolltofixed-min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-ui.js' %}"></script>
     {% if user.is_authenticated %}
         <script type="text/javascript" src="{% static 'js/contact.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/SendBird.js' %}"></script>

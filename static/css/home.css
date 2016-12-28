@@ -103,6 +103,7 @@
 }
 
 .special-service {
+    height:80px;
     margin-top: 60px;
     margin-bottom: 50px;
     overflow: hidden;
@@ -271,15 +272,16 @@
 .list-card .card-main-info {
     height: 180px;
     /*width: 266px;*/
-    padding: 18px 25px 17px 25px;
-    text-align: center;
+    padding: 15px 25px 20px 25px;
+    /*text-align: center;*/
 }
 
 .list-card .card-main-info .card-title {
     font-size: 16px;
     font-weight: 600;
-		height:3em;
-    line-height: 24px;
+    height:3em;
+    text-align:center;
+    line-height: 20px;
     color: #333;
     z-index: 10;
 }
@@ -394,6 +396,7 @@
 .circle-wrapper{
 	width:300px;
 	height:150px;
+    margin-top:5px;
 	/*background-color:grey;*/
 }
 /* arrow for 1 */
@@ -433,11 +436,21 @@
 }
 */
 /* arrow for 5 */
+/*
 .circle-arrow{
 	position:relative;
 	left:10%;
 	top:3.5em;
 	transform: rotate(160deg);
+}
+*/
+/* default arrow */
+
+.circle-arrow{
+	position:relative;
+	left:0;
+	top:0;
+	/*transform: rotate(160deg);*/
 }
 /*
 */
@@ -494,27 +507,27 @@
 li:first-child .circle-text {
 	padding-top:7%;
 	color:black;
-  background: #cecece;
+    background: #cecece;
 }
 li:nth-child(2) .circle-text {
 	padding-top:7%;
 	color:black;
-  background: #cecece;
+    background: #cecece;
 }
 li:nth-child(3) .circle-text {
 	padding-top:7%;
 	color:black;
-  background: #cecece;
+    background: #cecece;
 }
 li:nth-child(4) .circle-text {
 	padding-top:7%;
 	color:black;
-  background: #cecece;
+    background: #cecece;
 }
 li:nth-child(5) .circle-text {
 	padding-top:7%;
-	color:white;
-  background: #3d4ca1;
+	color:black;
+    background: #cecece;
 }
 .circle-mask2{
 	position:absolute;
@@ -542,4 +555,43 @@ li:nth-child(5) .circle-text {
   border:1px solid grey;
   border-radius:15px;
   text-align:center;
+}
+
+/* range part */
+#range-wrapper{
+    position:relative;
+    left:84%;
+    top:5px;
+    margin-top:7px;
+    width:100%;
+}
+
+#range-wrapper > span{
+    font-size:11px;
+    margin-top:3px;
+}
+
+#range-wrapper > #amount{
+    margin-top:10px;
+}
+
+#slider-range{
+    width:14%;
+    margin-right:10px;
+    /*float:right;*/
+    height:10px;
+    border-radius:10px;
+    background-color:#d7d7d7;
+}
+
+#slider-range > .ui-slider-range{
+    background-color: #6882ff;
+}
+
+#slider-range > span{
+    background-color: white;
+    border-radius: 50%;
+    border: 4px solid #6882ff;
+    width:10px;
+    height:10px;
 }
