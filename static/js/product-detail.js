@@ -125,3 +125,38 @@ $.fn.digits = function(){
         $(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") );
     })
 };
+
+$(document).ready(function() {
+    /* gauge part */
+    var count = 0;
+    var color  = $('.product-gauge').attr('data-color');
+    $('.circle-wrapper .circle-list').eq(0).find('.circle-text').css({
+            'background-color': color,
+            'color': 'white'
+        });
+    var num = 1;
+    if (num == 1) {
+        $('.circle-wrapper .circle-arrow').css({
+            'position': 'relative',
+            'left': '-10px',
+            'top': '78px',
+            'transform': 'rotate(18deg)'
+        });
+    }
+    else if (num == 3) {
+        $('.circle-wrapper .circle-arrow').css({
+            'position': 'relative',
+            'left': '33%',
+            'top': '-7px',
+            'transform': 'rotate(90deg)'
+        });
+    }
+    /* Adding comma */
+    var cash  = parseInt($('.cash span').text());
+    cash = AddComma(cash);
+    $('.cash span').text(cash + '원~');
+});
+
+function AddComma(data_value) {
+    return Number(data_value).toLocaleString('en');
+}

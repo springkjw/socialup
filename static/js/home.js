@@ -101,20 +101,23 @@ $(function() {
 
 $(document).ready(function(){
     /* gauge part */
-    var count = 0;
     $('.card-main-info').each(function(){
-        //count++;
         var color = $(this).attr('data-color');
         $(this).find('.circle-wrapper .circle-list').eq(0).find('.circle-text').css({'background-color': color, 'color': 'white'});
+
+        var cash  = parseInt($(this).find('.cash span').text());
+        cash = AddComma(cash);
+        $(this).find('.cash span').text(cash + '원~');
+
         var num = 1;
         if(num == 1){
             $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'-10px', 'top':'60px', 'transform': 'rotate(18deg)'});
         }
         else if (num == 3){
             $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'26%', 'top':'-7px', 'transform': 'rotate(90deg)'});
-
         }
     });
+
     /* range part */
     $( function() {
         $( "#slider-range" ).slider({
@@ -137,8 +140,12 @@ $(document).ready(function(){
         $("#first_span_val").text(0+"만원").css("margin-left", -10);
         $("#second_span_val").text(30+"만원").css("margin-left", 100);
     });
-
 });
+
+
+function AddComma(data_value) {
+    return Number(data_value).toLocaleString('en');
+}
 
 function filter_ajax(min, max){
     var real_min = min*10000;
