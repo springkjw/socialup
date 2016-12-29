@@ -9,17 +9,18 @@ import mimetypes
 import re
 import cStringIO
 import boto
+import filecmp
 
 # django import
 from django.conf import settings
 from django.db import models
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 from django.core.files.storage import default_storage as storage
 from django.core.files import File
-
+from model_utils import FieldTracker
 
 # allauth import
 from allauth.socialaccount.models import SocialAccount
@@ -76,6 +77,8 @@ class MyUser(AbstractBaseUser):
     objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
+
+    tracker = FieldTracker()
 
     def __unicode__(self):
         return self.email
@@ -167,6 +170,7 @@ class MyUserThumbnail(models.Model):
         else:
             return '%s%s' % (settings.MEDIA_ROOT, self.media)
 
+
 def create_new_thumb(image_path, instance, max_length, max_width):
     # 원본 이미지 파일 이름
     filename = os.path.basename(image_path)
@@ -249,7 +253,6 @@ def create_new_thumb(image_path, instance, max_length, max_width):
 
 
 def myuser_post_save_receiver(sender, instance, created, *args, **kwargs):
-
     if instance.media:
         hd, hd_created = MyUserThumbnail.objects.get_or_create(
             myuser=instance, thumb_type="hd")
@@ -266,21 +269,17 @@ def myuser_post_save_receiver(sender, instance, created, *args, **kwargs):
         # 상품 이미지가 저장되어 있는 위치
         image_path = instance.media.name
 
-        if hd_created:
+        if hd_created or instance.tracker.has_changed('media'):
             create_new_thumb(image_path, hd, hd_max[0], hd_max[1])
 
-        if sd_created:
+        if sd_created or instance.tracker.has_changed('media'):
             create_new_thumb(image_path, sd, sd_max[0], sd_max[1])
 
-        if micro_created:
+        if micro_created or instance.tracker.has_changed('media'):
             create_new_thumb(image_path, micro, micro_max[0], micro_max[1])
 
 
 post_save.connect(myuser_post_save_receiver, sender=MyUser)
-
-
-
-
 
 
 class Seller(models.Model):
