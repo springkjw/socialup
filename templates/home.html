@@ -129,6 +129,14 @@
                     </div>
                 {% endif %}
             </div>
+            <span id="range-wrapper">
+                <div id="slider-range"></div>
+                <span id="first_span_val"></span>
+                <span id="second_span_val"></span>
+            </div>
+            <div id="loading" style="display: none; position:absolute; left:50%; top:50%; z-index: 10;">
+                <img src="{% static 'img/ajax-loader_mid.gif' %}">
+            </div>
             <div class="special-list">
                 {% if message %}
                     {% for product in products %}
@@ -171,7 +179,6 @@
                                 </div>
                             </div>
                         </a>
-
                         {% if products|length == forloop.counter %}
                             </div>
                         {% else %}
@@ -182,53 +189,52 @@
                     <div class="product-rating" style="display:block;">
                         {% for product in products_rating %}
                             {% cycle '<div class="row">' '' '' '' %}
-
                             <a href="{{ product.get_absolute_url }}"
                                class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}">
-                                <div class="card-main-info" data-type="{{ product.product_type }}">
+                                <div class="card-main-info" data-type="{{ product.product_type }}" data-color="{{ product.product_type_color }}">
                                   <div class="card-type">
-                                    <img src="{{ product.product_type_image_url }}" alt="{{ product_product_type }}" />
+                                    <img src="{{ product.product_type_image_url }}" alt="{{ product.product_type }}" />
                                   </div>
                                   <div class="card-title">
-																		{{product.title}}
-																	</div>
-																	<div class="circle-wrapper">
-																		<img class="circle-arrow" src="/static/img/arrow_gauge.png" >
-																		<ul class="circle">
-																			<li class="circle-list">
-																				<div class="circle-text">1</div>
-																			</li>
-																			<li class="circle-list">
-																				<div class="circle-text">2</div>
-																			</li>
-																			<li class="circle-list">
-																				<div class="circle-text">3</div>
-																			</li>
-																			<li class="circle-list">
-																				<div class="circle-text">4</div>
-																			</li>
-																			<li class="circle-list">
-																				<div class="circle-text">5</div>
-																			</li>
-																			<div class="circle-mask2">
-																				<div class="circle-mask2-text">
-																					<span style="font-size:2em;">50</span>
-																					<span style="font-size:1em;">원</span>
-																				</div>
-																			</div>
-																		</ul>
-																		<div class="cash">
-																			<span style="font-size:1.2em; color:grey;">{{ product.variation_set.first.price }}원~</span>
-																		</div>
-																	</div>
-																	<!--
-									 <div class="socialup-gauge" style="width: 256px; height: 120px;" data-color="{{ product.product_type_color }}"></div>
-																	<div class="product-price">{{ product.variation_set.first.price }}원~</div>
-																	-->
-																</div>
-																<div class="card-info">
-																	<div class="card-subtitle">
-																		{% for sns in product.sns_set.all %}
+                                        {{product.title}}
+                                    </div>
+                                    <div class="circle-wrapper">
+                                        <img class="circle-arrow" src="/static/img/arrow_gauge.png" >
+                                        <ul class="circle">
+                                            <li class="circle-list">
+                                                <div class="circle-text">1</div>
+                                            </li>
+                                            <li class="circle-list">
+                                                <div class="circle-text">2</div>
+                                            </li>
+                                            <li class="circle-list">
+                                                <div class="circle-text">3</div>
+                                            </li>
+                                            <li class="circle-list">
+                                                <div class="circle-text">4</div>
+                                            </li>
+                                            <li class="circle-list">
+                                                <div class="circle-text">5</div>
+                                            </li>
+                                            <div class="circle-mask2">
+                                                <div class="circle-mask2-text">
+                                                    <span style="font-size:2em;">50</span>
+                                                    <span style="font-size:1em;">원</span>
+                                                </div>
+                                            </div>
+                                        </ul>
+                                        <div class="cash">
+                                            <span style="font-size:1.2em; color:grey;">{{ product.variation_set.first.price }}원~</span>
+                                        </div>
+                                    </div>
+                                    <!--
+     <div class="socialup-gauge" style="width: 256px; height: 120px;" data-color="{{ product.product_type_color }}"></div>
+                                    <div class="product-price">{{ product.variation_set.first.price }}원~</div>
+                                    -->
+                                </div>
+                                <div class="card-info">
+                                    <div class="card-subtitle">
+                                        {% for sns in product.sns_set.all %}
                                             {% for item in sns.analytics.all %}
                                                 {{ item }} {{ item.outcome|round_count }}
                                             {% endfor %}
