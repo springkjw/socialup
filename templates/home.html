@@ -262,54 +262,85 @@
                                 {% cycle '' '' '' '</div>' %}
                             {% endif %}
                         {% endfor %}
-                    </div>
+                       </div>
                     </div>
                     <div class="product-created" style="display:none;">
-                        {% for product in products_created %}
-                        {% cycle '<div class="row">' '' '' '' %}
-
-                        <a href="{{ product.get_absolute_url }}"
-                           class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}">
-                            <div class="card-main-info" data-type="{{ product.product_type }}">
-                              <div class="card-type">
-                                <img src="{{ product.product_type_image_url }}" alt="{{ product_product_type }}" />
-                              </div>
-                              <div class="card-title">
-                                {{product.title}}
-                              </div>
-                              <div class="socialup-gauge" style="width: 256px; height: 120px;" data-color="{{ product.product_type_color }}"></div>
-                              <div class="product-price">{{ product.variation_set.first.price }}원~</div>
-                            </div>
-                            <div class="card-info">
-                                <div class="card-subtitle">
-                                    {% for sns in product.sns_set.all %}
-                                        {% for item in sns.analytics.all %}
-                                            {{ item }} {{ item.outcome|round_count }}
+                    {% for product in products_created %}
+                            {% cycle '<div class="row">' '' '' '' %}
+                            <a href="{{ product.get_absolute_url }}"
+                               class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}">
+                                <div class="card-main-info" data-type="{{ product.product_type }}" data-color="{{ product.product_type_color }}">
+                                  <div class="card-type">
+                                    <img class="product-type-image" src="{{ product.product_type_image_url }}" alt="{{ product.product_type }}" />
+                                  </div>
+                                  <div class="card-title">
+                                        {{product.title}}
+                                    </div>
+                                    <div class="circle-wrapper">
+                                        <img class="circle-arrow" src="/static/img/arrow_gauge.png" >
+                                        <ul class="circle">
+                                            <li class="circle-list">
+                                                <div class="circle-text">1</div>
+                                            </li>
+                                            <li class="circle-list">
+                                                <div class="circle-text">2</div>
+                                            </li>
+                                            <li class="circle-list">
+                                                <div class="circle-text">3</div>
+                                            </li>
+                                            <li class="circle-list">
+                                                <div class="circle-text">4</div>
+                                            </li>
+                                            <li class="circle-list">
+                                                <div class="circle-text">5</div>
+                                            </li>
+                                            <div class="circle-mask2">
+                                                <div class="circle-mask2-text">
+                                                    <span style="font-size:2em;">50</span>
+                                                    <span style="font-size:1em;">원</span>
+                                                </div>
+                                            </div>
+                                        </ul>
+                                        <div class="cash">
+                                            <span style="font-size:1.2em; color:grey;" data-price="{{ product.variation_set.first.price }}">{{ product.variation_set.first.price }}원~</span>
+                                        </div>
+                                    </div>
+                                    <!--
+     <div class="socialup-gauge" style="width: 256px; height: 120px;" data-color="{{ product.product_type_color }}"></div>
+                                    <div class="product-price">{{ product.variation_set.first.price }}원~</div>
+                                    -->
+                                </div>
+                                <div class="card-info">
+                                    <div class="card-subtitle">
+                                        {% for sns in product.sns_set.all %}
+                                            {% for item in sns.analytics.all %}
+                                                {{ item }} {{ item.outcome|round_count }}
+                                            {% endfor %}
                                         {% endfor %}
-                                    {% endfor %}
-                                </div>
-                                <div class="card-author">
-                                    <div class="card-author-info">
-                                        <img src="{{ product.seller.user.get_avatar }}" >
-                                        <span>{{ product.seller }}</span>
                                     </div>
-                                    <div class="card-author-info-rating" data-rating="{{ product.rating }}">
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    <div class="card-author">
+                                        <div class="card-author-info">
+                                            <img src="{{ product.seller.user.get_avatar }}" >
+                                            <span>{{ product.seller }}</span>
+                                        </div>
+                                        <div class="card-author-info-rating" data-rating="{{ product.rating }}">
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
 
-                        {% if products|length == forloop.counter %}
-                            </div>
-                        {% else %}
-                            {% cycle '' '' '' '</div>' %}
-                        {% endif %}
+                            {% if products|length == forloop.counter %}
+                                </div>
+                            {% else %}
+                                {% cycle '' '' '' '</div>' %}
+                            {% endif %}
                         {% endfor %}
+                       </div>
                     </div>
                 {% endif %}
     </div>
