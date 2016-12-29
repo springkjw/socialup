@@ -4,12 +4,9 @@ from __future__ import unicode_literals
 import os
 import shutil
 from PIL import Image
-import random
 import mimetypes
-import re
 import cStringIO
 import boto
-import filecmp
 
 # django import
 from django.conf import settings
