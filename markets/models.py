@@ -318,9 +318,9 @@ product_type = (
 
 class ProductTag(models.Model):
     tag = models.CharField(choices=product_type, max_length=15, null=False)
-    content_type = models.ForeignKey(ContentType)
+    content_type = models.ForeignKey(ContentType, related_name='ptags')
     object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey()
+    content_object = GenericForeignKey('content_type', 'object_id')
 
     def __unicode__(self):
         return self.tag

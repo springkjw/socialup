@@ -101,20 +101,21 @@ $(function() {
 
 $(document).ready(function(){
     /* gauge part */
-    var count = 0;
     $('.card-main-info').each(function(){
-        //count++;
         var color = $(this).attr('data-color');
         $(this).find('.circle-wrapper .circle-list').eq(0).find('.circle-text').css({'background-color': color, 'color': 'white'});
+        var cash  = parseInt($(this).find('.cash span').text());
+        cash = AddComma(cash);
+        $(this).find('.cash span').text(cash + '원~');
         var num = 1;
         if(num == 1){
             $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'-10px', 'top':'60px', 'transform': 'rotate(18deg)'});
         }
         else if (num == 3){
             $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'26%', 'top':'-7px', 'transform': 'rotate(90deg)'});
-
         }
     });
+
     /* range part */
     $( function() {
         $( "#slider-range" ).slider({
@@ -130,15 +131,20 @@ $(document).ready(function(){
                 second_span = second_span+"px";
                 $("#first_span_val").text(ui.values[0]+"만원").css("margin-left", first_span);
                 $("#second_span_val").text(ui.values[1]+"만원").css("margin-left", second_span);
-                console.log('start from outside');
+                console.log('ui.values[0] : ', ui.values[0]);
+                console.log('ui.values[1] : ', ui.values[1]);
                 filter_ajax(ui.values[0],ui.values[1]);
             }
         });
         $("#first_span_val").text(0+"만원").css("margin-left", -10);
         $("#second_span_val").text(30+"만원").css("margin-left", 100);
     });
-
 });
+
+
+function AddComma(data_value) {
+    return Number(data_value).toLocaleString('en');
+}
 
 function filter_ajax(min, max){
     var real_min = min*10000;
@@ -147,7 +153,7 @@ function filter_ajax(min, max){
     setTimeout(function() {
         $.ajax({url: "/", success: function(result){
             $(".row .list-card").each(function (){
-                var temp_text = $(this).find('.cash span').text();
+                var temp_text = $(this).find('.cash span').attr("data-price");
                 temp_text = parseInt(temp_text);
                 if(real_min <= temp_text && temp_text <= real_max) {
                     $(this).css("display", "block");
