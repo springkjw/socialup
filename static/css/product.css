@@ -662,3 +662,199 @@
     height: 30px;
     border-radius: 5px;
 }
+
+
+/* product-upload part */
+
+/* type select part */
+.product-upload-info {
+    /*border-bottom: 1px solid #DFDFDF;*/
+    height: 45px;
+    position: relative;
+    padding-left: 20px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+    color: #a3a3a3;
+}
+
+.product-upload-info .product-upload-title {
+    width: 120px;
+    line-height: 45px;
+    float: left;
+    font-size: 13px;
+    font-weight: 500;
+    color: #a3a3a3;
+}
+
+.product-upload-info.type .product-upload-type-list {
+    float: left;
+    line-height: 45px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #a3a3a3;
+    width:80%;
+}
+
+.product-upload-info.type .product-upload-type-list .type-detail{
+    height:35px;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    color: #a3a3a3;
+    border: solid 1px #a3a3a3;
+    cursor: pointer;
+    margin-right: 15px;
+    text-align: center;
+}
+
+.product-upload-info.type ul .type-detail:hover {
+    color: #a3a3a3;
+    border: solid 1px #648efc;
+}
+
+.product-upload-info.type ul .type-detail.active {
+    color: #a3a3a3;
+    border: solid 1px #648efc;
+}
+
+.product-upload-info.type .product-upload-type-list .type-detail.blog {
+    width:80px;
+}
+
+.product-upload-info.type .product-upload-type-list .type-detail.facebook {
+    width:80px;
+}
+
+.product-upload-info.type .product-upload-type-list .type-detail.instagram {
+    width:80px;
+}
+
+.product-upload-info.type .product-upload-type-list .type-detail.kakaostory {
+    width:80px;
+}
+
+/* sns addr part */
+.product-upload-info.snsaddr .product-upload-snsaddr input[type="text"]{
+    border:1px solid #a3a3a3;
+    width:50%;
+    height:1.7em;
+    margin-top:1%;
+    margin-right:3%;
+}
+
+/* sns addr part */
+.product-upload-info.follower .product-upload-follower input[type="text"]{
+    border:1px solid #a3a3a3;
+    width:15%;
+    height:1.7em;
+    text-align: center;
+    margin-top:1%;
+    margin-right:3%;
+}
+.product-upload-info.follower .product-upload-follower input::-webkit-input-placeholder {
+    font-size: 13px;
+}
+
+/* category part */
+.product-upload-info.category {
+    height: 80px;
+    color: #a3a3a3;
+}
+.product-upload-info.category .product-upload-category{
+    height: 80px;
+}
+
+.product-upload-info.category .product-upload-category img{
+    vertical-align: middle;
+    margin-right:3px;
+}
+
+.product-upload-info.category .product-upload-category span{
+    margin-right:30px;
+    font-size:13px;
+}
+
+/* note part */
+.product-upload-info.note{
+    height: 80px;
+}
+
+/* oneline part */
+
+.product-upload-info.oneline .product-upload-oneline input{
+    width:80%;
+    padding:15px;
+    height:10px;
+    border: 1px solid #a3a3a3
+}
+
+.product-upload-info.oneline .product-upload-oneline input::-webkit-input-placeholder {
+    font-size: 13px;
+}
+
+/* description part */
+
+.product-upload-info.description{
+    height:375px;
+}
+
+.product-upload-info.description .desc-intro{
+    font-size:13px;
+    padding-top:14px;
+}
+
+/*
+.product-upload-info.notice textarea::-webkit-input-placeholder{
+    color:black;
+}*/
+
+/* upload-price part */
+.product-upload-info.upload-price{
+    height:100px;
+}
+
+.product-upload-info.upload-price .product-upload-title{
+    height:70px;
+}
+
+.product-upload-info.upload-price .product-upload-sub.pricing{
+    font-size:13px;
+    margin-right:1%;
+}
+
+.product-upload-info.upload-price .product-upload-sub.pricing input[type="text"]{
+    border:1px solid #a3a3a3;
+    width:15%;
+    height:1.5em;
+    margin-top:1%;
+}
+
+.product-upload-info.upload-price .product-upload-sub.pricing input[type="checkbox"]{
+    margin-right:1%;
+}
+
+/* period part */
+.product-upload-info.period .product-upload-sub{
+    font-size:13px;
+}
+.product-upload-info.period .product-upload-sub.period input[type="text"]{
+    border:1px solid #a3a3a3;
+    width:15%;
+    height:1.5em;
+    margin-top:1.5%;
+}
+
+/* delivery part */
+
+.product-upload-info.delivery{
+    height:70px;
+}
+
+.product-upload-info .product-upload-sub{
+    font-size:13px;
+}
+
+.product-upload-info .product-upload-sub.delivery{
+    font-size:13px;
+    padding-top:14px;
+}
