@@ -19,6 +19,7 @@ from django.core.files.storage import default_storage as storage
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.signals import post_save
+from model_utils import FieldTracker
 
 # app import
 from django_summernote import fields as summer_fields
@@ -81,6 +82,9 @@ class Product(models.Model):
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
     objects = ProductManager()
+
+    # 필드 업데이트 감지를 위한 트래커
+    tracker = FieldTracker()
 
     def __unicode__(self):
         return u'%s' % (self.title)
@@ -259,13 +263,13 @@ def product_post_save_receiver(sender, instance, created, *args, **kwargs):
         # 상품 이미지가 저장되어 있는 위치
         image_path = instance.image.name
 
-        if hd_created:
+        if hd_created or instance.tracker.has_changed('image'):
             create_new_thumb(image_path, hd, hd_max[0], hd_max[1])
 
-        if sd_created:
+        if sd_created or instance.tracker.has_changed('image'):
             create_new_thumb(image_path, sd, sd_max[0], sd_max[1])
 
-        if micro_created:
+        if micro_created or instance.tracker.has_changed('image'):
             create_new_thumb(image_path, micro, micro_max[0], micro_max[1])
 
 

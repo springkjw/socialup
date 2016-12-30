@@ -73,9 +73,10 @@ class MyUser(AbstractBaseUser):
 
     objects = MyUserManager()
 
-    USERNAME_FIELD = 'email'
-
+    # 필드 업데이트 감지를 위한 트래커
     tracker = FieldTracker()
+
+    USERNAME_FIELD = 'email'
 
     def __unicode__(self):
         return self.email
