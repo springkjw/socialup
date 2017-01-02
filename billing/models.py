@@ -12,7 +12,7 @@ from django.db.models.signals import post_save
 
 # app import
 from accounts.models import MyUser, Seller
-from markets.models import Product, Variation
+from markets.models import Product
 from carts.models import Cart
 from .iamport import validation_prepare, get_transaction
 
@@ -203,13 +203,14 @@ class Order(models.Model):
         return self.order_id
 
     def get_total_day(self):
-        variation = self.cart.items.all()
+        products = self.cart.items.all()
         total_days = 0
 
-        for item in variation:
-            total_days += item.day
+        for item in products:
+            total_days += item.working_period
 
         return total_days
+
 
     class Meta:
         ordering = ['-id']
@@ -287,7 +288,7 @@ PRODUCT_STATUS_CHOICES = (
 
 class ProductList(models.Model):
     product = models.ForeignKey('ProductManage')
-    item = models.ForeignKey(Variation)
+    item = models.ForeignKey(Product)
 
     def __unicode__(self):
         return self.item.title

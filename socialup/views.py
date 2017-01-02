@@ -8,12 +8,7 @@ from django.template import RequestContext
 from django.contrib.contenttypes.models import ContentType
 
 # app import
-from markets.models import Product, sns_type, SnsType
-from markets.forms import (
-    TagForm,
-    TargetForm,
-    SnsTypeForm,
-)
+from markets.models import Product, sns_type_list
 
 def home(request):
     template = 'home.html'
@@ -24,44 +19,9 @@ def home(request):
     # 최신순
     products_by_created = Product.objects.all().active().order_by('-created')[:20]
 
-    tag_form = TagForm()
-    target_form = TargetForm()
-    sns_form = SnsTypeForm()
-
-    # 검색 필터링
-    if request.method == 'POST':
-        tag_form = TagForm(request.POST)
-        target_form = TargetForm(request.POST)
-        sns_form = SnsTypeForm(request.POST)
-
-        if tag_form.is_valid() and target_form.is_valid() and sns_form.is_valid():
-            tag = tag_form.cleaned_data.get('tag')
-            target = target_form.cleaned_data.get('target')
-            sns = sns_form.cleaned_data.get('sns')
-
-            products = Product.objects.filter(tags__tag__in=tag, target__target__in=target, type__type__in=sns).active()
-
-            if not products:
-                # 필터링 결과가 아무 것도 없을 경우 랜덤으로 10개 반환
-                products = Product.objects.all().active().order_by('?')[:8]
-                message = "검색 결과가 아무 것도 없네요. 다른 상품들을 보시겠어요?"
-
-                context = {
-                    "products": products,
-                    "tag_form": tag_form,
-                    "target_form": target_form,
-                    "sns_form": sns_form,
-                    "message": message,
-                }
-                print(context)
-                return render(request, template, context)
-
     context = {
         "products_rating": products_by_rating,
         "products_created": products_by_created,
-        "tag_form": tag_form,
-        "target_form": target_form,
-        "sns_form": sns_form,
     }
 
     return render(request, template, context)
@@ -70,7 +30,7 @@ def home(request):
 def product_category(request, category):
     products = Product.objects.filter(type__type=category)
 
-    category_name = [type_[1] for type_ in sns_type if type_[0] == category][0]
+    category_name = [type_[1] for type_ in sns_type_list if type_[0] == category][0]
 
     # 처음 상품
     # 평점순

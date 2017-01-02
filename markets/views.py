@@ -16,13 +16,9 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from .models import (
     Product,
-    Variation,
     ProductTag,
-    SnsType,
-    ProductTarget,
-    SnsUrl,
 )
-from .forms import ProductForm, VariationForm, TagForm, TypeForm, TargetForm, SnsForm, SellerAccountForm
+from .forms import ProductForm, TagForm, SellerAccountForm
 from carts.models import WishList
 from carts.views import add_to_cart
 from billing.models import Order, ProductManage
@@ -43,15 +39,8 @@ def product_detail(request, product_id):
     seller_rating = int(round(seller.rating * 20))
     seller_count = Product.objects.filter(seller=seller).count()
 
-    variation = Variation.objects.filter(
-        product=product
-    )
-
     # Product 중 기본가에 해당하는 아이템
-    try:
-        default = variation.get(is_default=True)
-    except:
-        default = None
+    default = product
 
     reviews = ProductReview.objects.filter(product=product)
     reviews_count = reviews.count()
@@ -124,7 +113,6 @@ def product_detail(request, product_id):
     context = {
         'product': product,
         'count': seller_count,
-        'variation': variation,
         'default_price': default,
         'rating': seller_rating,
         'reviews': reviews,
@@ -136,14 +124,9 @@ def product_detail(request, product_id):
 
 @login_required
 def product_upload(request, product_id=None):
-    VariationInlineFormset = inlineformset_factory(Product, Variation, form=VariationForm, extra=1, )
 
     form = ProductForm()
-    formset = VariationInlineFormset()
     tag_form = TagForm()
-    type_form = TypeForm()
-    target_form = TargetForm()
-    url_form = SnsForm()
 
     # 저장하기 눌렀을 경우
     if request.method == 'POST':
@@ -158,37 +141,11 @@ def product_upload(request, product_id=None):
 
         form = ProductForm(request.POST or None, request.FILES or None)
         tag_form = TagForm(request.POST)
-        type_form = TypeForm(request.POST)
-        target_form = TargetForm(request.POST)
-        url_form = SnsForm(request.POST)
 
         if form.is_valid():
             instance = form.save(commit=False)
             instance.seller = seller
             instance.save()
-
-            # save sns url
-            url_list = request.POST.getlist('url')
-            url_active_list = request.POST.get('url_is_active')
-            if url_active_list:
-                is_active = False
-            else:
-                is_active = True
-            for url in url_list:
-                related_object_type = ContentType.objects.get_for_model(instance)
-                SnsUrl.objects.create(
-                    url=url,
-                    is_active=is_active,
-                    content_type=related_object_type,
-                    object_id=instance.id
-                )
-
-            # Variations Checking
-            formset = VariationInlineFormset(request.POST, instance=instance)
-            if formset.is_valid():
-                formset.save()
-            else:
-                print formset.errors
 
             if tag_form.is_valid():
                 tags = request.POST.getlist('tag')
@@ -196,26 +153,6 @@ def product_upload(request, product_id=None):
                     related_object_type = ContentType.objects.get_for_model(instance)
                     ProductTag.objects.create(
                         tag=tag,
-                        content_type=related_object_type,
-                        object_id=instance.id
-                    )
-
-            if type_form.is_valid():
-                types = request.POST.getlist('type')
-                for type in types:
-                    related_object_type = ContentType.objects.get_for_model(instance)
-                    SnsType.objects.create(
-                        type=type,
-                        content_type=related_object_type,
-                        object_id=instance.id
-                    )
-
-            if target_form.is_valid():
-                targets = request.POST.getlist('target')
-                for target in targets:
-                    related_object_type = ContentType.objects.get_for_model(instance)
-                    ProductTarget.objects.create(
-                        target=target,
                         content_type=related_object_type,
                         object_id=instance.id
                     )
@@ -230,12 +167,8 @@ def product_upload(request, product_id=None):
     template = 'product/product_upload.html'
     context = {
         "form": form,
-        "formset": formset,
         "tag_form": tag_form,
-        "type_form": type_form,
-        "target_form": target_form,
-        "url_form": url_form,
-        "type_": type_
+        "type_": type_,
     }
 
     return render(request, template, context)
@@ -278,7 +211,6 @@ def product_change(request, product_id):
     # ID로 상품 조회
     product = get_object_or_404(Product, id=product_id)
     # 상품 아이템 조회
-    variation = Variation.objects.filter(product=product)
     related_object_type = ContentType.objects.get_for_model(product)
 
     # 유저가 판매자인지 체크
@@ -289,56 +221,18 @@ def product_change(request, product_id):
     try:
         # product tag
         tags = ProductTag.objects.filter(content_type=related_object_type, object_id=product_id)
-        # product type
-        types = SnsType.objects.filter(content_type=related_object_type, object_id=product_id)
-        # product target
-        targets = ProductTarget.objects.filter(content_type=related_object_type, object_id=product_id)
-        # product sns url
-        urls = SnsUrl.objects.filter(content_type=related_object_type, object_id=product_id)
     except ProductTag.DoesNotExist:
-        raise Http404
-    except SnsType.DoesNotExist:
-        raise Http404
-    except ProductTarget.DoesNotExist:
-        raise Http404
-    except SnsUrl.DoesNotExist:
         raise Http404
 
     tag_list = []
     for item in tags:
         tag_list.append(item.tag)
 
-    type_list = []
-    for item in types:
-        type_list.append(item.type)
-
-    target_list = []
-    for item in targets:
-        target_list.append(item.target)
-
-    url_list = []
-    for item in urls:
-        url_list.append(item.url)
 
     form = ProductForm(instance=product)
 
-    VariationInlineFormset = inlineformset_factory(Product, Variation, form=VariationForm, extra=0)
-    formset = VariationInlineFormset(instance=product)
-
-    UrlInlineFormset = generic_inlineformset_factory(SnsUrl, extra=0)
-    url_formset = UrlInlineFormset(instance=product)
-
     tag_form = TagForm(initial={
         "tag": tag_list
-    })
-    type_form = TypeForm(initial={
-        "type": type_list
-    })
-    target_form = TargetForm(initial={
-        "target": target_list
-    })
-    url_form = SnsForm(initial={
-        "url": url_list[0]
     })
 
     type_ = "수정"
@@ -350,13 +244,7 @@ def product_change(request, product_id):
 
     context = {
         "form": form,
-        "formset": formset,
         "tag_form": tag_form,
-        "type_form": type_form,
-        "target_form": target_form,
-        "url_form": url_form,
-        "url_list": url_list,
-        "url_formset": url_formset,
         "type_": type_
     }
 
@@ -432,7 +320,7 @@ def product_profit_manage(request):
                 form_instance = form.save(commit=False)
                 try:
                     form_instance.seller = seller
-                except IntegrityError:
+                except:
                     pass
                 form_instance.save()
 

@@ -4,7 +4,7 @@ from django.views.generic.base import View
 from django.views.generic.detail import SingleObjectMixin
 from django.core.urlresolvers import reverse
 from .models import Cart, CartItem, WishList
-from markets.models import Product, Variation
+from markets.models import Product
 
 import json
 
@@ -66,7 +66,7 @@ class CartView(SingleObjectMixin, View):
         delete_item = request.GET.get("delete")
 
         if item_id:
-            item_instance = get_object_or_404(Variation, id=item_id)
+            item_instance = get_object_or_404(Product, id=item_id)
             cart_item = CartItem.objects.get_or_create(cart=cart, item=item_instance)[0]
             if delete_item:
                 if not item_instance.is_default:
@@ -76,7 +76,7 @@ class CartView(SingleObjectMixin, View):
 
         if buy_id:
             # product 기본가 variation 추가
-            buy_instance = get_object_or_404(Variation, id=buy_id)
+            buy_instance = get_object_or_404(Product, id=buy_id)
 
             # cart session 초기화
             del request.session['cart_id']
@@ -103,7 +103,7 @@ class CartView(SingleObjectMixin, View):
     # 카트에서 바로 구매 클릭 시
     def post(self, request, *args, **kwargs):
         option = request.POST.getlist('cart[]')
-        default = Variation.objects.get(id=option[0])
+        default = Product.objects.get(id=option[0])
 
         if option:
             del request.session['cart_id']
@@ -182,8 +182,8 @@ def add_to_cart(request, default, list):
         # ajax로 넘어온 variation item 조회
         for item in list:
             # variation item이 존재할 때
-            if Variation.objects.filter(id=item).exists():
-                option_instance = Variation.objects.get(id=item)
+            if Product.objects.filter(id=item).exists():
+                option_instance = Product.objects.get(id=item)
                 cart_item, created = CartItem.objects.get_or_create(cart=cart_instance, item=option_instance)
                 cart_item.save()
             # 없으면 카트 인스턴스 초기화
