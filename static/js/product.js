@@ -104,7 +104,6 @@ $(function () {
                     var new_id = ele_id[0] + '-' + (index + 1).toString() + '-' + ele_id[2];
                     $(this).attr('id', new_id);
                 }
-
                 var ele_name = $(this).attr('name').split('-');
                 if (ele_name.length == 3) {
                     var new_name = ele_id[0] + '-' + (index + 1).toString() + '-' + ele_id[2];

@@ -31,9 +31,11 @@
 {% block content %}
     <div class="dashboard_container">
         <div class="dashboard-header">
+            <!--
             <div class="dashboard-title">
                 <a href="{% url 'dashboard' %}">포스팅 게시</a>
             </div>
+            -->
             <div class="dashboard-sub">
                 <ul>
                     <li id="header-wish"><a href="{% url 'wish_list' %}">위시리스트
@@ -44,10 +46,15 @@
                 </ul>
             </div>
         </div>
-        <div class="upload-title">
-            <h1>상품 {{ type_ }}</h1>
-            <p><span>*</span>은 필수 항목입니다</p>
+        <div class="previous_record">
+            <select>
+              <option value="volvo">Volvo</option>
+              <option value="saab">Saab</option>
+              <option value="mercedes">Mercedes</option>
+              <option value="audi">Audi</option>
+            </select>
         </div>
+        <!--
         <div class="step">
             <div class="step_num border first active" id="step1_">
                 <div class="title" id="step1">
@@ -68,60 +75,165 @@
                 <p>가격 및 옵션</p>
             </div>
         </div>
+        -->
         <form method="POST" enctype="multipart/form-data">{% csrf_token %}
             <div class="steps_ step1 active">
-                <div class="area-title">
-                    기본정보
+                <div class="product-upload-info type">
+                    <div class="product-upload-title">
+                        1. SNS 선택
+                    </div>
+                    <div class="product-upload-type-list">
+                        <ul>
+                            <li class="type-detail blog"><a href="#">블로그</a></li>
+                            <li class="type-detail facebook"><a href="#">페이스북</a></li>
+                            <li class="type-detail instagram"><a href="#">인스타그램</a></li>
+                            <li class="type-detail kakaostory"><a href="#">카카오스토리</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="area info">
-                    <div class="form-area" style="margin-top: 30px;">
-                        <div class="form-left">
-                            <div class="post_image">
-                                <p><span>*</span>메인 이미지 등록</p>
-
-                                {% if form.image.value.url %}
-                                    <img id="post_image" src="{{ form.image.value.url }}">
-                                {% else %}
-                                    <img id="post_image" src="">
-                                    <img id="default_image" src="{% static 'img/upload_image.png' %}">
-                                    <h2>2MB 이내로 올려주세요!<br/>권장 사이즈: 430*320</h2>
-                                {% endif %}
-                            </div>
-                            {{ form.image }}
+                <div class="product-upload-info snsaddr">
+                    <div class="product-upload-title">
+                        2. SNS 주소
+                    </div>
+                    <div class="product-upload-snsaddr">
+                        <input id="snsaddr-input" name="sns_addr" type="text"/>
+                        <input type="checkbox" name="sns_addr_check"/>
+                        <span style="font-size:13px;">판매후 주소 공개</span>
+                    </div>
+                </div>
+                <div class="product-upload-info follower">
+                    <div class="product-upload-title">
+                        3. 팔로워수
+                    </div>
+                    <div class="product-upload-follower">
+                        <input id="visitor-input" name="visitor-num" type="text" placeholder="일평균방문자수"/>
+                        <input id="follower-input" name="follower-num" type="text" placeholder="팔로워"/>
+                    </div>
+                </div>
+                <div class="product-upload-info category">
+                    <div class="product-upload-title">
+                        4. 포스팅가능 분야
+                    </div>
+                    <div class="product-upload-category">
+                        <img src="{% static 'img/category_entire.png'%}"> <span>전체</span>
+                        <img src="{% static 'img/category_it.png'%}"> <span>IT,기기</span>
+                        <img src="{% static 'img/category_food.png'%}"> <span>식품,맛집</span>
+                        <img src="{% static 'img/fasion.png'%}"> <span>패션/뷰티</span>
+                        <img src="{% static 'img/category_animal.png'%}"> <span>반려동물</span>
+                    </div>
+                </div>
+                <div class="product-upload-info note">
+                    <div class="product-upload-title">
+                        5. 작업 전 유의사항
+                    </div>
+                    <div class="product-upload-note">
+                        <textarea placeholder="포스팅불가능 업종, A/S 규정, 진행방법등" rows="4" cols="100" value="" >
+                        </textarea>
+                    </div>
+                </div>
+                <div class="product-upload-info oneline">
+                    <div class="product-upload-title">
+                        7. 한줄소개
+                    </div>
+                    <div class="product-upload-oneline">
+                        <input id="oneline-intro" name="oneline-intro" type="text" placeholder="SNS특징을 30자 이내로 써주세요."/>
+                    </div>
+                </div>
+                <div class="product-upload-info description">
+                    <div class="product-upload-title">
+                        8. 상품소개
+                    </div>
+                    <div class="product-upload-description">
+                        <div class="desc-intro">
+                            별도의 문의없이도 의뢰가 가능하도록 상품에 대해 구체적으로 명시해주세요.
+                            연락처(전화번호/메일 등) ,사이트 링크 기재가 불가능하며 기재시 서비스 이용에 제한이 됩니다.
                         </div>
-                        <div class="form-right">
-                            <div class="form-input">
-                                <label><span>*</span>제목</label>
-                                {{ form.title }}
-                            </div>
-                            <div class="form-input">
-                                <label><span>*</span>SNS 주소</label>
-                                {{ url_formset.management_form }}
-                                {% for field in url_formset %}
-                                    <div class="form-url-input">
-                                        {{ field.url }}
-                                        {% if forloop.first %}
-                                            <div class="button add_url">+</div>
-                                        {% else %}
-                                            <div class="button minus">-</div>
-                                        {% endif %}
-{#                                        <input type="checkbox" id="is_active" name="url_is_active" checked><label#}
-{#                                            for="is_active">비공개</label>#}
-                                    </div>
-                                {% endfor %}
-                            </div>
-                            <div class="form-input" style="position:relative;">
-                                <label>연락처</label>
-                                <input id="id_phone" name="phone" type="text">
-                                <div class="button config">인증하기</div>
-                            </div>
-                            <div class="form-input" style="clear: both;">
-                                <label><span>*</span>SNS 영향력</label>
-                                {{ form.influence }}
-                            </div>
+                        <br>
+                        <div class="desc-textarea">
+                            <textarea name="editor1" class="ckeditor"></textarea>
                         </div>
                     </div>
                 </div>
+                <div class="product-upload-info upload-price">
+                    <div class="product-upload-title">
+                        9. 가격
+                    </div>
+                    <div class="product-upload-sub pricing">
+                        <div id="one-posting-div">
+                            <span>1회 포스팅</span> <input id="one-posting" name="one-posting" type="text"/> 원
+                        </div>
+                        <div id="draft-possible-div">
+                            <input type="checkbox" name="draft-possible_check"/> <span>원고가능</span> <input id="draft-possible" name="draft-possible" type="text"/> 원
+                        </div>
+                        <div id="exposure-div">
+                            <input type="checkbox" name="exposure_check"/> <span>상위노출</span> <input id="exposure" name="exposure" type="text"/> 원
+                        </div>
+                    </div>
+                </div>
+                <div class="product-upload-info period">
+                    <div class="product-upload-title">
+                        10. 작업기간
+                    </div>
+                    <div class="product-upload-sub period">
+                        <input id="period" name="period" type="text"/> 일
+                    </div>
+                </div>
+                <div class="product-upload-info delivery">
+                    <div class="product-upload-title">
+                        11. 승인 전 전달사항
+                    </div>
+                    <div class="product-upload-sub delivery">
+                        <textarea placeholder="구매자에겐 보이지 않습니다." rows="4" cols="100" value="" ></textarea>
+                    </div>
+                </div>
+                <!--
+                <div class="form-left">
+                    <div class="post_image">
+                        <p><span>*</span>메인 이미지 등록</p>
+                        {% if form.image.value.url %}
+                            <img id="post_image" src="{{ form.image.value.url }}">
+                        {% else %}
+                            <img id="post_image" src="">
+                            <img id="default_image" src="{% static 'img/upload_image.png' %}">
+                            <h2>2MB 이내로 올려주세요!<br/>권장 사이즈: 430*320</h2>
+                        {% endif %}
+                    </div>
+                    {{ form.image }}
+                </div>
+
+                <div class="form-right">
+                    <div class="form-input">
+                        <label><span>*</span>제목</label>
+                        {{ form.title }}
+                    </div>
+                    <div class="form-input">
+                        <label><span>*</span>SNS 주소</label>
+                        {{ url_formset.management_form }}
+                        {% for field in url_formset %}
+                            <div class="form-url-input">
+                                {{ field.url }}
+                                {% if forloop.first %}
+                                    <div class="button add_url">+</div>
+                                {% else %}
+                                    <div class="button minus">-</div>
+                                {% endif %}
+{#                                        <input type="checkbox" id="is_active" name="url_is_active" checked><label#}
+{#                                            for="is_active">비공개</label>#}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="form-input" style="position:relative;">
+                        <label>연락처</label>
+                        <input id="id_phone" name="phone" type="text">
+                        <div class="button config">인증하기</div>
+                    </div>
+                    <div class="form-input" style="clear: both;">
+                        <label><span>*</span>SNS 영향력</label>
+                        {{ form.influence }}
+                    </div>
+                </div>
+                -->
+                <!--
                 <div class="area-title">
                     SNS 필터 등록
                     <span>광고주가 쉽고 빠르게 운영자님의 SNS를 찾을 수 있습니다</span>
@@ -182,6 +294,7 @@
                         </table>
                     </div>
                 </div>
+                -->
             </div>
             <div class="steps_ step2">
                 <div class="area-title">
