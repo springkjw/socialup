@@ -16,15 +16,18 @@ from django_summernote.widgets import (
     SummernoteInplaceWidget,
 )
 
-
 class ProductForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProductForm, self).__init__(*args, **kwargs)
-        self.fields['influence'].widget = forms.TextInput(
+        self.fields['follower_num'].widget = forms.TextInput(
             attrs={
                 'placeholder': '예시) 팔로워 10만명, 일평균 방문자수 8천명 등'
             }
         )
+        self.fields['sns_type'] = forms.ChoiceField(widget=forms.RadioSelect(attrs={'type': 'radio'}), choices=sns_type_list)
+        self.fields['sns_additional_info'] = forms.ChoiceField(widget=forms.RadioSelect, choices=sns_additional_info_list)
+        self.fields['sex'] = forms.ChoiceField(widget=forms.RadioSelect, choices=(('male','남자'),('female','여자')))
+        self.fields['is_url_open'] = forms.BooleanField(label='')
 
     class Meta:
         model = Product
@@ -35,7 +38,8 @@ class ProductForm(forms.ModelForm):
             'is_url_open',
             'sns_url',
             'follower_num',
-            #'product_tag',
+            'follower_visit_num',
+            'follower_friends_num',
             'message_to_buyer',
             'oneline_intro',
             'description',

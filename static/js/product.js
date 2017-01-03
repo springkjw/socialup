@@ -273,3 +273,48 @@ function check_step2() {
     $('.buttons .start').hide();
     //}
 }
+
+/* this is for sns_type_color */
+$('#product-upload-form input').on('change', function() {
+   $('input[name=sns_type][type="radio"]', '#product-upload-form').parent().css(
+       {'color': '#a3a3a3',
+        'border': 'solid 1px #a3a3a3',
+        'background-color':'white'
+       }
+   );
+    $('input[name=sns_type]:checked', '#product-upload-form').parent().css(
+       {'background-color':'#648efc',
+        'color': 'white',
+        'border': 'solid 1px #648efc'}
+   );
+});
+
+/* this is for sns_additional_info_color */
+$('#product-upload-form input').on('change', function() {
+   $('input[name=sns_additional_info][type="radio"]', '#product-upload-form').parent().css(
+       {'color': '#a3a3a3',
+        'border': 'solid 1px #a3a3a3',
+        'background-color':'white'
+       }
+   );
+    $('input[name=sns_additional_info]:checked', '#product-upload-form').parent().css(
+       {'background-color':'#648efc',
+        'color': 'white',
+        'border': 'solid 1px #648efc'}
+   );
+});
+
+/* this is for sex_color */
+$('#product-upload-form input').on('change', function() {
+   $('input[name=sex][type="radio"]', '#product-upload-form').parent().css(
+       {'color': '#a3a3a3',
+        'border': 'solid 1px #a3a3a3',
+        'background-color':'white'
+       }
+   );
+    $('input[name=sex]:checked', '#product-upload-form').parent().css(
+       {'background-color':'#648efc',
+        'color': 'white',
+        'border': 'solid 1px #648efc'}
+   );
+});
