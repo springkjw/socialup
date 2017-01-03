@@ -103,9 +103,8 @@
 }
 
 .special-service {
-    height:80px;
+    min-height:500px;
     margin-top: 60px;
-    margin-bottom: 50px;
     overflow: hidden;
 }
 

@@ -686,6 +686,30 @@
     color: #a3a3a3;
 }
 
+/* radio part */
+
+.product-upload-type-list input[type="radio"] {
+    display:none;
+}
+
+.product-upload-type-list label {
+    display:inline-block;
+    color: #a3a3a3;
+    border: solid 1px #a3a3a3;
+    height: 35px;
+    width: 85px;
+    text-align:center;
+    font-family:Arial;
+    font-size:12px;
+    padding-bottom:6px;
+}
+
+.product-upload-type-list input[type="radio"]:checked + label {
+    background-color:#648efc;
+    color:white;
+    border: solid 1px #648efc;
+}
+
 .product-upload-info.type .product-upload-type-list {
     float: left;
     line-height: 45px;
@@ -695,6 +719,7 @@
     width:80%;
 }
 
+/*
 .product-upload-info.type .product-upload-type-list .type-detail{
     height:35px;
     display: inline-block;
@@ -731,7 +756,7 @@
 
 .product-upload-info.type .product-upload-type-list .type-detail.kakaostory {
     width:80px;
-}
+}*/
 
 /* sns addr part */
 .product-upload-info.snsaddr .product-upload-snsaddr input[type="text"]{
