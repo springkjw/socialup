@@ -10,20 +10,6 @@
 {% block js %}
     <script type="text/javascript" src="{% static 'js/autoNumeric-min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/product.js' %}"></script>
-    <script type="text/javascript">
-        $(function () {
-            {#            {% if url_list %}#}
-            {#                {% for url in url_list %}#}
-            {#                    {% if not forloop.first %}#}
-            {#                        $('.add_url').trigger('click');#}
-            {#                        var index = $('.form-url-input input').index();#}
-            {#                        console.log(index);#}
-            {#                    {% endif %}#}
-            {#                {% endfor %}#}
-            {#            {% endif %}#}
-
-        });
-    </script>
     {% block dashboard_js %}
     {% endblock %}
 {% endblock %}
@@ -31,11 +17,6 @@
 {% block content %}
     <div class="dashboard_container">
         <div class="dashboard-header">
-            <!--
-            <div class="dashboard-title">
-                <a href="{% url 'dashboard' %}">포스팅 게시</a>
-            </div>
-            -->
             <div class="dashboard-sub">
                 <ul>
                     <li id="header-wish"><a href="{% url 'wish_list' %}">위시리스트
@@ -54,123 +35,25 @@
               <option value="audi">Audi</option>
             </select>
         </div>
-        <!--
-        <div class="step">
-            <div class="step_num border first active" id="step1_">
-                <div class="title" id="step1">
-                    STEP1
-                </div>
-                <p>기본정보</p>
-            </div>
-            <div class="step_num border" id="step2_">
-                <div class="title" id="step2">
-                    STEP2
-                </div>
-                <p>상세정보</p>
-            </div>
-            <div class="step_num border" id="step3_">
-                <div class="title" id="step3">
-                    STEP3
-                </div>
-                <p>가격 및 옵션</p>
-            </div>
-        </div>
-        -->
-        <form method="POST" enctype="multipart/form-data">{% csrf_token %}
-            <!-- sns done -->
-            {{ sns_type_form.as_p }}
-            {{ url_form.as_p }}
+        <form id="product-upload-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
             {% for field in form %}
                 <div class="product-upload-info">
                     <div class="product-upload-title">
                          <label class="my_class" for="{{ field.name }}">{{ field.label }}</label>
                     </div>
                     <div class="product-upload-sub">
-                       {{ field }}
+                        {{ field.widget.attrs.type }}
+                        {{ field }}
                     </div>
                 </div>
                 <br>
             {% endfor %}
-            {{ tag_form.as_p }}
-
-            <div class="steps_ step2">
-                <div class="area-title">
-                    상세정보
-                </div>
-                <div class="area request">
-                    <div class="form-area">
-                        <div class="form-input">
-                            <label><span>*</span>유의사항</label>
-                            {{ form.required }}
-                            <p>결제 전 고객에게 보임</p>
-                        </div>
-                        <div class="form-input">
-                            <label><span>*</span>지시사항</label>
-                            {{ form.command }}
-                            <p>결제 후 고객에게 보임</p>
-                        </div>
-                        <div class="form-input">
-                            <label><span>*</span>환불 및 A/S 규정</label>
-                            {{ form.refund }}
-                        </div>
-                        <div class="form-input" id="description">
-                            <label class="description"><span>*</span>상품 상세 내용</label>
-                            <div class="sub-description">
-                                <p>&#183;별도의 문의 없이도 의뢰가 가능하도록 상품에 대해 구체적으로 명시해주세요.</p>
-                                <p>&#183;연락처(전화번호/이메일 등), 사이트 링크 기재가 불가능하며, 기재시 서비스 이용에 제한이 됩니다.</p>
-                                <p>&#183;법 혹은 타 회사의 약관과 저촉되는 상품은 판매가 불가능합니다.</p>
-                            </div>
-                            {{ form.description }}
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="steps_ step3">
-                <div class="area-title">
-                    가격 및 옵션
-                </div>
-                <div class="area price">
-                    <div class="form-area">
-                        {{ formset.management_form }}
-                        {% for field in formset %}
-                            {{ field.is_default }}
-                            <div class="form-input">
-                                <label><span>*</span>기본가</label>
-                                {{ field.price }}
-                                <span class="price_unit">원</span>
-                            </div>
-                            <div class="form-input">
-                                <label><span>*</span>기본가 작업 설명</label>
-                                {{ field.title }}
-                                <span class="price_unit">가 포함됨</span>
-                            </div>
-                            <div class="form-input">
-                                <label><span>*</span>기본 작업일</label>
-                                {{ field.day }}
-                                <span class="price_unit">일</span>
-                            </div>
-                            <div class="step3_button">
-                                <button class="add_option" type="button">옵션추가하기</button>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="notice">
-                    <h1>다음 사항을 지키지 않을 시에 판매정지 처리 될 수 있습니다.</h1>
-                    <div class="notice-sub">
-                        <p>1. 계좌이체 외부 결제 등을 통한 직거래를 요구하지 않습니다.</p>
-                        <p>2. SNS에 대한 정보를 허위나 과장하여 등록하지 않습니다.</p>
-                        <p>3. 상품 등록 내용을 모두 지켜 거래를 진행합니다.</p>
-                    </div>
-                </div>
-            </div>
+        <br><br>
+        <br>
+        {{ tag_form.as_p }}
             <div class="buttons">
                 <button class="final" type="submit">동의하고 등록하기</button>
             </div>
         </form>
-        <div class="buttons">
-            <button class="start">다음 단계</button>
-        </div>
     </div>
 {% endblock %}

@@ -564,7 +564,7 @@
 }
 
 .buttons .final {
-    display: none;
+    display: block;
     padding-left: 10px;
     padding-right: 10px;
     width: 140px;
@@ -667,15 +667,7 @@
 /* product-upload part */
 
 /* type select part */
-.product-upload-info {
-    /*border-bottom: 1px solid #DFDFDF;*/
-    height: 45px;
-    position: relative;
-    padding-left: 20px;
-    padding-right: 10px;
-    margin-bottom: 10px;
-    color: #a3a3a3;
-}
+
 
 .product-upload-info .product-upload-title {
     width: 120px;
@@ -696,12 +688,11 @@
     display:inline-block;
     color: #a3a3a3;
     border: solid 1px #a3a3a3;
-    height: 35px;
-    width: 85px;
     text-align:center;
     font-family:Arial;
     font-size:12px;
-    padding-bottom:6px;
+    padding:15px;
+    padding-bottom:10px;
 }
 
 .product-upload-type-list input[type="radio"]:checked + label {
@@ -882,4 +873,106 @@
 .product-upload-info .product-upload-sub.delivery{
     font-size:13px;
     padding-top:14px;
+}
+
+/* version 2 css */
+.product-upload-info {
+    position: relative;
+    padding-left: 20px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+    color: #a3a3a3;
+}
+
+.product-upload-info .product-upload-sub{
+    font-size:13px;
+}
+
+.product-upload-info .product-upload-sub input[type="text"]{
+    border:1px solid #a3a3a3;
+    width:15%;
+    height:1.5em;
+    margin-top:1.5%;
+}
+
+.product-upload-info .product-upload-sub input[type="number"]{
+    border:1px solid #a3a3a3;
+    width:15%;
+    height:1.5em;
+    margin-top:1.5%;
+}
+
+.product-upload-info .product-upload-sub input[type="url"]{
+    border:1px solid #a3a3a3;
+    width:15%;
+    height:1.5em;
+    margin-top:1.5%;
+}
+
+/* sns_type part */
+#id_sns_type li{
+    display: inline;
+}
+#id_sns_type li input[type="radio"]{
+    display: none;
+}
+#id_sns_type li label{
+    display:inline-block;
+    color: #a3a3a3;
+    border: solid 1px #a3a3a3;
+    text-align:center;
+    font-family:Arial;
+    font-size:12px;
+    padding:15px;
+    padding-bottom:10px;
+}
+#id_sns_type li input[type="radio"]:checked {
+    background-color:#648efc;
+    color:white;
+    border: solid 1px #648efc;
+}
+/* sns_additional part */
+#id_sns_additional_info li{
+    display: inline;
+}
+#id_sns_additional_info li input[type="radio"]{
+    display: none;
+}
+#id_sns_additional_info li label{
+    display:inline-block;
+    color: #a3a3a3;
+    border: solid 1px #a3a3a3;
+    text-align:center;
+    font-family:Arial;
+    font-size:12px;
+    padding:15px;
+    padding-bottom:10px;
+}
+#id_sns_additional_info li input[type="radio"]:checked {
+    background-color:#648efc;
+    color:white;
+    border: solid 1px #648efc;
+}
+
+/* sex part */
+#id_sex li{
+    display: inline;
+}
+#id_sex li input[type="radio"]{
+    display: none;
+}
+#id_sex li label{
+    display:inline-block;
+    color: #a3a3a3;
+    border: solid 1px #a3a3a3;
+    text-align:center;
+    font-family:Arial;
+    font-size:12px;
+    padding:15px;
+    padding-bottom:10px;
+}
+#id_sex li input[type="radio"]:checked {
+    background-color:#648efc;
+    color:white;
+    border: solid 1px #648efc;
 }
