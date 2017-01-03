@@ -94,8 +94,8 @@
         <div class="content">
             <div class="product-top">
                 <div class="info-left">
-                    <img id="product-type-image" src="{{ product.product_type_image_url }}" alt="{{ product.product_type }}" />
-                    <div class="product-gauge" data-color="{{ product.product_type_color }}">
+                    <img id="product-type-image" src="{{ product.sns_type_image_url }}" alt="{{ product.sns_type }}" />
+                    <div class="product-gauge" data-color="{{ product.sns_type_color }}">
                         <div class="circle-wrapper">
                             <img class="circle-arrow" src="/static/img/arrow_gauge.png" >
                             <ul class="circle">
@@ -122,17 +122,10 @@
                                 </div>
                             </ul>
                             <div class="cash">
-                                <span style="font-size:1.5em; color:grey;">{{ product.variation_set.first.price }}원~</span>
+                                <span style="font-size:1.5em; color:grey;">{{ product.price }}원~</span>
                             </div>
                         </div>
                     </div>
-                    <!--
-                    {% if product.get_thumb_hd_url %}
-                        <img class="product-image" src="{{ product.get_thumb_hd_url }}">
-                    {% else %}
-                        <img class="product-image" src="{{ product.get_image_url }}">
-                    {% endif %}
-                    -->
                     <div class="product-seller">
                         <div class="seller-id">
                             <h2 class="header">{{ product.seller }}</h2>
@@ -170,8 +163,8 @@
                         </div>
                         <div class="product-price">
                             <h2 id="product-price"
-                                data-price="{{ product.variation_set.first.price }}">
-                                {{ product.variation_set.first.price }}원
+                                data-price="{{ product.oneline_intro }}">
+                                {{ product.price }}원
                                 {% if variation|length > 1 %}
                                     ~
                                 {% endif %}
@@ -200,8 +193,6 @@
                         </div>
                         <div class="sub-content">
                             <span>2</span>일
-                            <!--<span class="orange">{{ default_price.day }}</span>일 (실제평균작업기간 : <span
-                                class="orange">1일</span>)-->
                         </div>
                     </div>
                     <div class="product-sub-info">
@@ -218,16 +209,6 @@
                             </div>
                         </div>
                     </div>
-                    <!--
-                    <div class="product-sub-info">
-                        <div class="title">
-                            주문성공율
-                        </div>
-                        <div class="sub-content">
-                            <span class="green">높음</span>
-                        </div>
-                    </div>
-                    -->
                     <div class="product-sub-info">
                         <div class="title">
                             최근 로그인
@@ -236,20 +217,6 @@
                             {{ product.seller.user.last_login|time_since }}
                         </div>
                     </div>
-                    <!--
-                    <div class="product-sub-info">
-                        <div class="title">
-                            연락처
-                        </div>
-                        <div class="sub-content">
-                            {% if request.user.seller %}
-                                {{ product.seller }}
-                            {% else %}
-                                (주문 후 공개)
-                            {% endif %}
-                        </div>
-                    </div>
-                    -->
                     {#% if product.seller.user.id != user.id %#}
                         <div class="product-sub-info ask">
                             <div class="title">
@@ -264,39 +231,15 @@
                     {#% endif %#}
 
                     <div class="product-option">
-                        <!--
-                        <div class="product-dropdown">
-                            {% if variation|length > 1 %}
-                                <input id="product-option" value="옵션" name="product-option" placeholder="" readonly>
-                                <div class="product-dropdown-icon">
-                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                </div>
-                                <ul class="product-list" style="display: none;">
-                                    {% for item in variation %}
-                                        {% if forloop.counter0 != 0 %}
-                                            <li id="product-option" data-id="{{ item.id }}"
-                                                data-price="{{ item.price }}"
-                                                data-item="{{ item }}">
-                                                <input type="checkbox" id="product-item-{{ forloop.counter }}"><label
-                                                    for="product-item-{{ forloop.counter }}">{{ item }}</label>
-                                                <h3>+ {{ item.price }}원</h3>
-                                            </li>
-                                        {% endif %}
-                                    {% endfor %}
-                                </ul>
-                            {% endif %}
-                        </div>
-                        -->
                         <div class="product-select-list">
                             <div class="product-select-item">
-                                <!--{{ default_price }} - <span>{{ default_price.price }}</span>원-->
                                 <!--<input type="checkbox" name="test" value="test_val"/>-->
                                 <span>원고가능</span>
                                 <span>+30,000원</span>
                             </div>
                         </div>
                         <div class="product-total">
-                            총 상품금액 : <span id="product-total">{{ product.variation_set.first.price }}</span><span
+                            총 상품금액 : <span id="product-total">{{ product.price }}</span><span
                                 id="product-unit">원</span>
                         </div>
                     </div>

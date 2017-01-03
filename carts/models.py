@@ -3,12 +3,12 @@ from __future__ import unicode_literals
 from django.db import models
 from django.db.models.signals import pre_save, post_save, post_delete
 from accounts.models import MyUser
-from markets.models import Product, Variation
+from markets.models import Product
 
 
 class CartItem(models.Model):
     cart = models.ForeignKey("Cart")
-    item = models.ForeignKey(Variation)
+    item = models.ForeignKey(Product)
     quantity = models.PositiveIntegerField(default=1)
     line_item_total = models.IntegerField(default=0)
 
@@ -40,7 +40,7 @@ post_delete.connect(cart_item_post_save_receiver, sender=CartItem)
 
 class Cart(models.Model):
     user = models.ForeignKey(MyUser, null=True, blank=True)
-    items = models.ManyToManyField(Variation, through=CartItem)
+    items = models.ManyToManyField(Product, through=CartItem)
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
     subtotal = models.IntegerField(default=0)

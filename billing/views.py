@@ -9,7 +9,6 @@ from django.http import JsonResponse
 from .models import PointTransaction, PointHistory, Order
 from socialup.mixins import AjaxRequireMixin
 from carts.models import Cart
-from markets.models import Variation
 from .iamport import validation_prepare
 from datetime import datetime, timedelta
 
