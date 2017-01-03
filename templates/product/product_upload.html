@@ -36,21 +36,47 @@
             </select>
         </div>
         <form id="product-upload-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
-            {% for field in form %}
-                <div class="product-upload-info">
-                    <div class="product-upload-title">
-                         <label class="my_class" for="{{ field.name }}">{{ field.label }}</label>
-                    </div>
-                    <div class="product-upload-sub">
-                        {{ field.widget.attrs.type }}
-                        {{ field }}
-                    </div>
+            <div class="product-upload-info">
+                <div class="product-upload-title">
+                     <label class="product-upload-title-label">SNS 선택</label>
                 </div>
+                <div class="product-upload-sub">
+                    {{ form.sns_type }}
+                </div>
+            </div>
+
+            <div class="product-upload-info">
+                <div class="product-upload-title">
+                     <label class="product-upload-title-label">SNS 추가정보</label>
+                </div>
+                <div class="product-upload-sub">
+                    {{ form.sns_additional_info }}
+                </div>
+            </div>
+
+            <div class="product-upload-info">
+                <div class="product-upload-title">
+                     <label class="product-upload-title-label">성별</label>
+                </div>
+                <div class="product-upload-sub">
+                    {{ form.sex }}
+                </div>
+            </div>
+
+            <div class="product-upload-info">
+                <div class="product-upload-title">
+                     <label class="product-upload-title-label">SNS 주소</label>
+                </div>
+                <div class="product-upload-sub">
+                    {{ form.sns_url }}
+                </div>
+                <div class="product-upload-sub url_check">
+                    {{ form.is_url_open }}
+                    주소 공개
+                </div>
+            </div>
+
                 <br>
-            {% endfor %}
-        <br><br>
-        <br>
-        {{ tag_form.as_p }}
             <div class="buttons">
                 <button class="final" type="submit">동의하고 등록하기</button>
             </div>

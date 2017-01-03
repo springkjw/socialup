@@ -886,6 +886,7 @@
 
 .product-upload-info .product-upload-sub{
     font-size:13px;
+    display: inline;
 }
 
 .product-upload-info .product-upload-sub input[type="text"]{
@@ -953,7 +954,6 @@
     color:white;
     border: solid 1px #648efc;
 }
-
 /* sex part */
 #id_sex li{
     display: inline;
