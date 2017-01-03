@@ -14,7 +14,7 @@ $(function () {
 
 
     // set summer-note initial height
-    $('.panel-body').css('height', '400px');
+    $('.panel-body').css('height', '558px');
 
     // trigger post image
     $('.post_image').on('click', function () {

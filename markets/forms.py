@@ -21,13 +21,37 @@ class ProductForm(forms.ModelForm):
         super(ProductForm, self).__init__(*args, **kwargs)
         self.fields['follower_num'].widget = forms.TextInput(
             attrs={
-                'placeholder': '예시) 팔로워 10만명, 일평균 방문자수 8천명 등'
+                'placeholder': '팔로워수'
+            }
+        )
+        self.fields['follower_visit_num'].widget = forms.TextInput(
+            attrs={
+                'placeholder': '일평균방문자수'
+            }
+        )
+        self.fields['follower_friends_num'].widget = forms.TextInput(
+            attrs={
+                'placeholder': '친구수'
             }
         )
         self.fields['sns_type'] = forms.ChoiceField(widget=forms.RadioSelect(attrs={'type': 'radio'}), choices=sns_type_list)
         self.fields['sns_additional_info'] = forms.ChoiceField(widget=forms.RadioSelect, choices=sns_additional_info_list)
         self.fields['sex'] = forms.ChoiceField(widget=forms.RadioSelect, choices=(('male','남자'),('female','여자')))
         self.fields['is_url_open'] = forms.BooleanField(label='')
+        self.fields['message_to_buyer'] = forms.CharField(widget=forms.Textarea(
+                attrs={'placeholder':'포스팅불가능 업종, A/S규정, 진행방법등'
+                }
+            )
+        )
+        self.fields['oneline_intro'] = forms.CharField(widget=forms.TextInput(
+            attrs={'placeholder':'SNS특징을 30자 이내로 써주세요.'
+        }))
+        self.fields['message_to_admin'] = forms.CharField(widget=forms.Textarea(
+            attrs={'placeholder': '구매자에겐 보이지 않습니다.'
+                   }
+            )
+        )
+
 
     class Meta:
         model = Product

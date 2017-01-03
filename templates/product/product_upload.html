@@ -76,6 +76,106 @@
                 </div>
             </div>
 
+            <div class="product-upload-info">
+                <div class="product-upload-title">
+                     <label class="product-upload-title-label">팔로워수</label>
+                </div>
+                <div class="product-upload-sub follower_visit_num">
+                    {{ form.follower_visit_num }}
+                </div>
+                <div class="product-upload-sub follower_num">
+                    {{ form.follower_num }}
+                </div>
+                <div class="product-upload-sub follower_friends_num">
+                    {{ form.follower_friends_num }}
+                </div>
+            </div>
+
+            <div class="product-upload-info">
+                <div class="product-upload-title">
+                     <label class="product-upload-title-label">포스팅가능 분야</label>
+                </div>
+                <div class="product-upload-sub">
+                    {{ tag_form.as_p }}
+                </div>
+            </div>
+
+            <div class="product-upload-info">
+                <div class="product-upload-title">
+                     <label class="product-upload-title-label">작업 전 유의사항</label>
+                </div>
+                <div class="product-upload-sub">
+                    {{ form.message_to_buyer }}
+                </div>
+            </div>
+
+            <div class="product-upload-info">
+                <div class="product-upload-title">
+                     <label class="product-upload-title-label">한줄소개</label>
+                </div>
+                <div class="product-upload-sub">
+                    {{ form.oneline_intro }}
+                </div>
+            </div>
+
+            <div class="product-upload-info">
+                <div class="product-upload-title">
+                     <label class="product-upload-title-label">상품소개</label>
+                </div>
+                <div class="product-upload-sub">
+                    <span>별도의 문의없어도 의뢰가 가능하도록 상품에 대해 구체적으로
+                    명시해주세요.<br>연락처(전화번호/메일 등), 사이트 링크 기재가 불가능
+                    하며 기재시 서비스 이용에 제한이 됩니다.</span>
+                    {{ form.description }}
+                </div>
+            </div>
+
+            <div class="product-upload-info">
+                <div class="product-upload-title">
+                     <label class="product-upload-title-label">가격</label>
+                </div>
+                <div class="product-upload-sub">
+                    1회 포스팅
+                    {{ form.price }}
+                </div>
+                <div class="product-upload-sub manuscript">
+                    <div class="manuscript_available">
+                        {{ form.manuscript_available }}
+                        원고가능
+                    </div>
+                    <div class="manuscript_price">
+                        {{ form.manuscript_price }} 원
+                    </div>
+                </div>
+                <div class="product-upload-sub highrank">
+                    <div class="highrank_available">
+                        {{ form.highrank_available }}
+                        상위노출
+                    </div>
+                    <div class="highrank_price">
+                        {{ form.highrank_price }} 원
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-upload-info">
+                <div class="product-upload-title">
+                     <label class="product-upload-title-label">작업기간</label>
+                </div>
+                <div class="product-upload-sub">
+                    {{ form.working_period }} 일
+                </div>
+            </div>
+
+            <div class="product-upload-info">
+                <div class="product-upload-title">
+                     <label class="product-upload-title-label">승인 전 전달사항</label>
+                </div>
+                <div class="product-upload-sub">
+                    {{ form.message_to_admin }}
+                </div>
+            </div>
+
                 <br>
             <div class="buttons">
                 <button class="final" type="submit">동의하고 등록하기</button>
