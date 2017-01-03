@@ -15,7 +15,7 @@ from accounts.models import Seller
 
 class ProductQueryset(models.query.QuerySet):
     def active(self):
-        return self.filter(is_active=True)
+        return self.filter(is_now_selling=True)
 
 
 class ProductManager(models.Manager):
@@ -30,7 +30,7 @@ sns_type_list = (
     ("blog", "블로그"),
     ("facebook", "페이스북"),
     ("instagram", "인스타그램"),
-    ("kakaostroy", "카카오스토리"),
+    ("kakaostory", "카카오스토리"),
     #("twitter", "트위터"),
     #("cafe", "카페"),
     #("afreecatv", "아프리카TV"),
@@ -128,6 +128,9 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
+    # 판매중 or 판매완료
+    is_now_selling = models.BooleanField(default=True)
+
     objects = ProductManager()
 
     # 필드 업데이트 감지를 위한 트래커
@@ -137,7 +140,22 @@ class Product(models.Model):
         return u'%s' % (self.oneline_intro)
 
     @property
-    def product_type_color(self):
+    def sns_type_image_url(self):
+        image_url = None
+
+        if self.sns_type == 'blog':
+            image_url = '/static/img/naver.png'
+        elif self.sns_type == 'facebook':
+            image_url = '/static/img/facebook.png'
+        elif self.sns_type == 'instagram':
+            image_url = '/static/img/insta.png'
+        elif self.sns_type == 'kakaostory':
+            image_url = '/static/img/kakao.png'
+
+        return image_url
+
+    @property
+    def sns_type_color(self):
         color = None
 
         if self.sns_type == 'blog':

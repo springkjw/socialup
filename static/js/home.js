@@ -163,7 +163,7 @@ function filter_ajax(min, max){
             });
             $('#loading').css("display","none");
         }});
-    },2000);
+    },1000);
 
     /*
     */

@@ -129,7 +129,7 @@
                     </div>
                 {% endif %}
             </div>
-            <span id="range-wrapper">
+            <div id="range-wrapper">
                 <div id="slider-range"></div>
                 <span id="first_span_val"></span>
                 <span id="second_span_val"></span>
@@ -191,12 +191,12 @@
                             {% cycle '<div class="row">' '' '' '' %}
                             <a href="{{ product.get_absolute_url }}"
                                class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}">
-                                <div class="card-main-info" data-type="{{ product.product_type }}" data-color="{{ product.product_type_color }}">
+                                <div class="card-main-info" data-type="{{ product.sns_type }}" data-color="{{ product.sns_type_color }}">
                                   <div class="card-type">
-                                    <img class="product-type-image" src="{{ product.product_type_image_url }}" alt="{{ product.product_type }}" />
+                                    <img class="product-type-image" src="{{ product.sns_type_image_url }}" alt="{{ product.sns_type }}" />
                                   </div>
                                   <div class="card-title">
-                                        {{product.title}}
+                                        {{product.oneline_intro}}
                                     </div>
                                     <div class="circle-wrapper">
                                         <img class="circle-arrow" src="/static/img/arrow_gauge.png" >
@@ -224,13 +224,9 @@
                                             </div>
                                         </ul>
                                         <div class="cash">
-                                            <span style="font-size:1.2em; color:grey;" data-price="{{ product.variation_set.first.price }}">{{ product.variation_set.first.price }}원~</span>
+                                            <span style="font-size:1.2em; color:grey;" data-price="{{ product.price }}">{{ product.price }}원~</span>
                                         </div>
                                     </div>
-                                    <!--
-     <div class="socialup-gauge" style="width: 256px; height: 120px;" data-color="{{ product.product_type_color }}"></div>
-                                    <div class="product-price">{{ product.variation_set.first.price }}원~</div>
-                                    -->
                                 </div>
                                 <div class="card-info">
                                     <div class="card-subtitle">
@@ -269,12 +265,12 @@
                             {% cycle '<div class="row">' '' '' '' %}
                             <a href="{{ product.get_absolute_url }}"
                                class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}">
-                                <div class="card-main-info" data-type="{{ product.product_type }}" data-color="{{ product.product_type_color }}">
+                                <div class="card-main-info" data-type="{{ product.sns_type }}" data-color="{{ product.sns_type_color }}">
                                   <div class="card-type">
-                                    <img class="product-type-image" src="{{ product.product_type_image_url }}" alt="{{ product.product_type }}" />
+                                    <img class="product-type-image" src="{{ product.sns_type_image_url }}" alt="{{ product.sns_type }}" />
                                   </div>
                                   <div class="card-title">
-                                        {{product.title}}
+                                        {{product.oneline_intro}}
                                     </div>
                                     <div class="circle-wrapper">
                                         <img class="circle-arrow" src="/static/img/arrow_gauge.png" >
@@ -302,13 +298,9 @@
                                             </div>
                                         </ul>
                                         <div class="cash">
-                                            <span style="font-size:1.2em; color:grey;" data-price="{{ product.variation_set.first.price }}">{{ product.variation_set.first.price }}원~</span>
+                                            <span style="font-size:1.2em; color:grey;" data-price="{{ product.price }}">{{ product.price }}원~</span>
                                         </div>
                                     </div>
-                                    <!--
-     <div class="socialup-gauge" style="width: 256px; height: 120px;" data-color="{{ product.product_type_color }}"></div>
-                                    <div class="product-price">{{ product.variation_set.first.price }}원~</div>
-                                    -->
                                 </div>
                                 <div class="card-info">
                                     <div class="card-subtitle">
