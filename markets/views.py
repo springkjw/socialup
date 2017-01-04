@@ -141,12 +141,10 @@ def product_upload(request, product_id=None):
 
         form = ProductForm(request.POST or None, request.FILES or None)
         tag_form = TagForm(request.POST)
-
         if form.is_valid():
             instance = form.save(commit=False)
             instance.seller = seller
             instance.save()
-
             if tag_form.is_valid():
                 tags = request.POST.getlist('tag')
                 for tag in tags:
@@ -157,7 +155,8 @@ def product_upload(request, product_id=None):
                         object_id=instance.id
                     )
 
-            return HttpResponseRedirect('/dashboard/')
+            #return HttpResponseRedirect('/dashboard/')
+            return HttpResponseRedirect('/')
 
         else:
             pass

@@ -15,7 +15,11 @@ from django_summernote.widgets import (
     SummernoteWidget,
     SummernoteInplaceWidget,
 )
+from django.utils.safestring import mark_safe
+from django.forms import widgets
 
+
+#u'''<img src="/static/img/fasion.png">%s''' % (super(TagWidget, self).render(name, value, attrs))
 class ProductForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProductForm, self).__init__(*args, **kwargs)
@@ -35,13 +39,13 @@ class ProductForm(forms.ModelForm):
             }
         )
         self.fields['sns_type'] = forms.ChoiceField(widget=forms.RadioSelect(attrs={'type': 'radio'}), choices=sns_type_list)
-        self.fields['sns_additional_info'] = forms.ChoiceField(widget=forms.RadioSelect, choices=sns_additional_info_list)
-        self.fields['sex'] = forms.ChoiceField(widget=forms.RadioSelect, choices=(('male','남자'),('female','여자')))
-        self.fields['is_url_open'] = forms.BooleanField(label='')
+        self.fields['sns_additional_info'] = forms.ChoiceField(widget=forms.RadioSelect, choices=sns_additional_info_list, initial='individual')
+        self.fields['sex'] = forms.ChoiceField(widget=forms.RadioSelect, choices=(('male','남자'),('female','여자')), initial='female')
+        #self.fields['is_url_open'] = forms.BooleanField(label='',default=True)
         self.fields['message_to_buyer'] = forms.CharField(widget=forms.Textarea(
                 attrs={'placeholder':'포스팅불가능 업종, A/S규정, 진행방법등'
                 }
-            )
+            ), required=False
         )
         self.fields['oneline_intro'] = forms.CharField(widget=forms.TextInput(
             attrs={'placeholder':'SNS특징을 30자 이내로 써주세요.'
@@ -49,6 +53,10 @@ class ProductForm(forms.ModelForm):
         self.fields['message_to_admin'] = forms.CharField(widget=forms.Textarea(
             attrs={'placeholder': '구매자에겐 보이지 않습니다.'
                    }
+            ), required=False
+        )
+        self.fields['description'] = forms.CharField(widget=SummernoteWidget(
+            attrs={'width': '100%', 'height': '400px'}
             )
         )
 
@@ -82,12 +90,12 @@ class ProductForm(forms.ModelForm):
         }
 
 
+
 class TagForm(forms.Form):
     tag = forms.MultipleChoiceField(
         required=True,
         widget=forms.CheckboxSelectMultiple,
         choices=product_tag_list,
-        label='',
     )
 
 

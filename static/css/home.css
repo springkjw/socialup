@@ -293,7 +293,7 @@
 
 .list-card .card-main-info .socialup-gauge {
     position: absolute;
-    top: 85;
+    top: 85px;
     left: 30px;
     z-index: 9;
 }
