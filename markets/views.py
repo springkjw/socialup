@@ -124,7 +124,6 @@ def product_detail(request, product_id):
 
 @login_required
 def product_upload(request, product_id=None):
-
     form = ProductForm()
     tag_form = TagForm()
 
@@ -169,7 +168,6 @@ def product_upload(request, product_id=None):
         "tag_form": tag_form,
         "type_": type_,
     }
-
     return render(request, template, context)
 
 
@@ -236,8 +234,35 @@ def product_change(request, product_id):
 
     type_ = "수정"
 
+
+    seller = Seller.objects.filter(user=request.user)[0]
+
     if request.method == 'POST':
-        form = ProductForm(request.POST or None, request.FILES or None)
+        form = ProductForm(request.POST or None, request.FILES or None, instance=product)
+        tag_form = TagForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.seller = seller
+            instance.save()
+            if tag_form.is_valid():
+                old_tags = ProductTag.objects.filter(object_id=instance.id)
+                for old_tag in old_tags:
+                    old_tag.delete(using=None, keep_parents=False)
+
+                tags = request.POST.getlist('tag')
+                for tag in tags:
+                    related_object_type = ContentType.objects.get_for_model(instance)
+
+                    ProductTag.objects.create(
+                        tag=tag,
+                        content_type=related_object_type,
+                        object_id=instance.id
+                    )
+
+            return HttpResponseRedirect('/')
+
+        else:
+            pass
 
     template = 'product/product_upload.html'
 
@@ -260,7 +285,7 @@ def product_delete(request):
         raise Http404
 
     # disable the product
-    product.is_active = False
+    product.is_now_selling = False
     product.save()
 
     return redirect(reverse('product_manage'))
