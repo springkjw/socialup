@@ -73,7 +73,7 @@
                            class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}">
                             <div class="card-image">
                                 <div class="card-price">
-                                    {{ product.variation_set.first.price }}&#8361;~
+                                    {{ product.price }}&#8361;~
                                 </div>
                                 <div class="card-price-back"></div>
                                 {% if product.get_thumb_sd_url %}
@@ -123,7 +123,7 @@
                                class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}">
                                 <div class="card-image">
                                     <div class="card-price">
-                                        {{ product.variation_set.first.price }}&#8361;~
+                                        {{ product.price }}&#8361;~
                                     </div>
                                     <div class="card-price-back"></div>
                                     {% if product.get_thumb_sd_url %}
@@ -173,7 +173,7 @@
                                class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}">
                                 <div class="card-image">
                                     <div class="card-price">
-                                        {{ product.variation_set.first.price }}&#8361;~
+                                        {{ product.price }}&#8361;~
                                     </div>
                                     <div class="card-price-back"></div>
                                     {% if product.get_thumb_sd_url %}
