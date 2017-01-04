@@ -89,6 +89,12 @@ class Product(models.Model):
     # 팔로워수
     follower_num = models.CharField(max_length=255, null=True, blank=True)
 
+    # 일평균 방문자수
+    follower_visit_num = models.CharField(max_length=255, null=True, blank=True)
+
+    # 친구수
+    follower_friends_num = models.CharField(max_length=255, null=True, blank=True)
+
     # 포스팅가능 분야
     product_tag = GenericRelation("ProductTag", null=True, blank=True)
 

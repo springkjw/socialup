@@ -564,7 +564,7 @@
 }
 
 .buttons .final {
-    display: block;
+    display: inline-block;
     padding-left: 10px;
     padding-right: 10px;
     width: 140px;
@@ -876,16 +876,23 @@
 }
 
 /* version 2 css */
+input::-webkit-input-placeholder {
+    padding-left:7px;
+    font-size:12px;
+}
+
 .product-upload-info {
     position: relative;
     padding-left: 20px;
     padding-right: 10px;
     margin-bottom: 10px;
     color: #a3a3a3;
+    clear:both;
 }
 
 .product-upload-info .product-upload-sub{
     font-size:13px;
+    display: inline;
 }
 
 .product-upload-info .product-upload-sub input[type="text"]{
@@ -897,14 +904,14 @@
 
 .product-upload-info .product-upload-sub input[type="number"]{
     border:1px solid #a3a3a3;
-    width:15%;
+    width:8em;
     height:1.5em;
     margin-top:1.5%;
 }
 
 .product-upload-info .product-upload-sub input[type="url"]{
     border:1px solid #a3a3a3;
-    width:15%;
+    width:8em;
     height:1.5em;
     margin-top:1.5%;
 }
@@ -953,7 +960,6 @@
     color:white;
     border: solid 1px #648efc;
 }
-
 /* sex part */
 #id_sex li{
     display: inline;
@@ -975,4 +981,40 @@
     background-color:#648efc;
     color:white;
     border: solid 1px #648efc;
+}
+
+/* product_tag part */
+#id_tag li{
+    display: inline;
+}
+
+/* description part */
+#id_description_iframe{
+    height:558px;
+}
+
+/*price part */
+.product-upload-info .product-upload-sub.manuscript{
+    display: block;
+}
+
+.product-upload-info .product-upload-sub.manuscript .manuscript_available{
+    display: inline-block;
+}
+
+.product-upload-info .product-upload-sub.manuscript .manuscript_price{
+    display: inline;
+}
+
+.product-upload-info .product-upload-sub.highrank{
+    display: block;
+    margin-left:120px;
+}
+
+.product-upload-info .product-upload-sub.highrank .highrank_available{
+    display: inline-block;
+}
+
+.product-upload-info .product-upload-sub.highrank .highrank_price{
+    display: inline;
 }
