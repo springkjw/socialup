@@ -13,7 +13,7 @@ class CartItem(models.Model):
     line_item_total = models.IntegerField(default=0)
 
     def __unicode__(self):
-        return self.item.title
+        return self.item.oneline_intro
 
     def remove(self):
         return self.item.remove_from_cart()
@@ -63,4 +63,4 @@ class WishList(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
 
     def __unicode__(self):
-        return self.item.title
+        return self.item.oneline_intro
