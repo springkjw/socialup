@@ -319,11 +319,33 @@ $('#product-upload-form input').on('change', function() {
    );
 });
 
+/* this is for tag */
+$('#product-upload-form input').on('change', function() {
+    //console.log($('input[name=tag]:checked').next().find('.tag_image_clicked')[0]);
+    var checked = $('input[name=tag]:checked').next().find('.tag_image_clicked');
+    var unchecked = $('input[name=tag]:checked').next().find('.tag_image_before_click');
+    //console.log(checked);
+    checked.each(function(){
+        //console.log($(this));
+        $(this).css({'display':'inline-block'});
+    });
+    unchecked.each(function(){
+        //console.log($(this));
+        $(this).css({'display':'none'});
+    });
+    $('input[name=tag]', '#product-upload-form').find($('.tag_image_before_click')).css(
+       {'display':'none'
+        }
+   );
+    $('input[name=tag]:checked', '#product-upload-form').find($('.tag_image_before_click')).css(
+       {'display':'inline-block'
+        }
+   );
+});
+
 /* this is for hide additional_inform, sex
  * additional_inform for facebook
   * sex for instagram */
-
-
 $('#product-upload-form input').on('change', function() {
    if($('#id_sns_type_0').is(":checked")){
         //blog

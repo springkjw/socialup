@@ -46,26 +46,28 @@ sns_additional_info_list = (
 product_tag_list = (
     ('all', "전체"),
     ("it", "IT/인터넷"),
-    ("fasion", "패션/뷰티"),
-    ("travel", "여행/숙박"),
-    ("game", "게임"),
-    ("car", "자동차"),
-    ("financial", "재테크/금융"),
-    ("study", "취업/학업"),
-    ("baby", "육아"),
+    ("food", "식품/맛집"),
+    ("fashion", "패션/뷰티"),
     ("pet", "반려동물"),
-    ("media", "미디어/영화"),
+    ("car", "자동차"),
+    ("travel", "여행/취미"),
+    ("health", "건강/의료"),
     ("interior", "인테리어"),
-    ("food", "맛집/식품"),
-    ("music", "음악"),
-    ("diet", "다이어트"),
-    ("health", "리빙/건강"),
-    ("life", "일상/생활"),
-    ("picture", "사진"),
-    ("love", "결혼/연애"),
-    ("sports", "스포츠/레저"),
+    ("etc", "기타"),
 )
-
+"""
+("game", "게임"),
+("financial", "재테크/금융"),
+("study", "취업/학업"),
+("baby", "육아"),
+("media", "미디어/영화"),
+("music", "음악"),
+("diet", "다이어트"),
+("life", "일상/생활"),
+("picture", "사진"),
+("love", "결혼/연애"),
+("sports", "스포츠/레저"),
+"""
 
 class Product(models.Model):
     # 판매자 instance

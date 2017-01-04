@@ -15,7 +15,11 @@ from django_summernote.widgets import (
     SummernoteWidget,
     SummernoteInplaceWidget,
 )
+from django.utils.safestring import mark_safe
+from django.forms import widgets
 
+
+#u'''<img src="/static/img/fasion.png">%s''' % (super(TagWidget, self).render(name, value, attrs))
 class ProductForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProductForm, self).__init__(*args, **kwargs)
@@ -53,7 +57,7 @@ class ProductForm(forms.ModelForm):
         )
         self.fields['description'] = forms.CharField(widget=SummernoteWidget(
             attrs={'width': '100%', 'height': '400px'}
-        )
+            )
         )
 
 
@@ -86,12 +90,12 @@ class ProductForm(forms.ModelForm):
         }
 
 
+
 class TagForm(forms.Form):
     tag = forms.MultipleChoiceField(
         required=True,
         widget=forms.CheckboxSelectMultiple,
         choices=product_tag_list,
-        label='',
     )
 
 

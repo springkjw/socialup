@@ -97,8 +97,17 @@
                 <div class="product-upload-title">
                      <label class="product-upload-title-label">포스팅가능 분야</label>
                 </div>
-                <div class="product-upload-sub">
-                    {{ tag_form.as_p }}
+                <div class="product-upload-sub tags">
+                    {% for choice in tag_form.tag %}
+                    <div class="tag_wrapper">
+                    {{ choice.tag }}
+                    <label for="id_tag_{{ forloop.counter0 }}">
+                        <img class="tag_image_before_click" src="/static/img/{{ choice.choice_value }}.png">
+                        <img class="tag_image_clicked" src="/static/img/{{ choice.choice_value }}_click.png">
+                        {{ choice.choice_label }}
+                    </label>
+                        </div>
+                    {% endfor %} 
                 </div>
             </div>
 
