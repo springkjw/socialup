@@ -98,7 +98,7 @@
                         <div class="dashboard-wishlist-item-title">
                             <h3><a href="{{ list.item.get_absolute_url }}">{{ list|truncatechars:21 }}</a></h3>
                             <div class="dashboard-wishlist-item-meta">
-                                <p id="wishlist-price">{{ list.item.variation_set.first.price }}원~</p>
+                                <p id="wishlist-price">{{ list.item.price }}원~</p>
                                 <p id="wishlist-updated">{{ list.item.updated|date:"Y.m.d" }}</p>
                             </div>
                         </div>
@@ -116,14 +116,14 @@
                                 <li>
                                     <form method="GET" id="add-form" action="{% url 'cart' %}">
                                         <input type="hidden" name="item"
-                                               value="{{ list.item.variation_set.first.id }}"/>
+                                               value="{{ list.item.id }}"/>
                                         <input id="cart-add" type="submit" value="장바구니"/>
                                     </form>
                                 </li>
                                 <li id="popup-buy">
                                     <form method="GET" id="add-form" action="{% url 'cart' %}">
                                         <input type="hidden" name="buy_item"
-                                               value="{{ list.item.variation_set.first.id }}"/>
+                                               value="{{ list.item.id }}"/>
                                         <input id="cart-add" type="submit" value="바로구매"/>
                                     </form>
                                 </li>
