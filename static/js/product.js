@@ -14,7 +14,7 @@ $(function () {
 
 
     // set summer-note initial height
-    $('.panel-body').css('height', '558px');
+    $('panel-body').css('height', '400px');
 
     // trigger post image
     $('.post_image').on('click', function () {
@@ -317,4 +317,51 @@ $('#product-upload-form input').on('change', function() {
         'color': 'white',
         'border': 'solid 1px #648efc'}
    );
+});
+
+/* this is for hide additional_inform, sex
+ * additional_inform for facebook
+  * sex for instagram */
+
+
+$('#product-upload-form input').on('change', function() {
+   if($('#id_sns_type_0').is(":checked")){
+        //blog
+        $('.product-upload-info.additional_info').css('display','none');
+        $('.product-upload-info.sex').css('display','none');
+        $('.product-upload-sub.follower_visit_num').css('display','inline');
+        $('.product-upload-sub.follower_num').css('display','inline');
+        $('.product-upload-sub.follower_friends_num').css('display','none');
+        $('.product-upload-sub.highrank').css('display','block');
+
+   }
+   else if($('#id_sns_type_1').is(":checked")){
+        //facebook
+        $('.product-upload-info.additional_info').css('display','block');
+        $('.product-upload-info.sex').css('display','none');
+        $('.product-upload-sub.follower_visit_num').css('display','none');
+        $('.product-upload-sub.follower_num').css('display','inline');
+        $('.product-upload-sub.follower_friends_num').css('display','inline');
+        $('.product-upload-sub.highrank').css('display','none');
+
+   }
+   else if($('#id_sns_type_2').is(":checked")) {
+        //instagram
+        $('.product-upload-info.additional_info').css('display','none');
+        $('.product-upload-info.sex').css('display','block');
+        $('.product-upload-sub.follower_visit_num').css('display','none');
+        $('.product-upload-sub.follower_num').css('display','block');
+        $('.product-upload-sub.follower_friends_num').css('display','none');
+        $('.product-upload-sub.highrank').css('display','block');
+
+   }
+   else if($('#id_sns_type_3').is(":checked")) {
+        //kakaostory
+        $('.product-upload-info.additional_info').css('display','none');
+        $('.product-upload-info.sex').css('display','none');
+        $('.product-upload-sub.follower_visit_num').css('display','none');
+        $('.product-upload-sub.follower_num').css('display','block');
+        $('.product-upload-sub.follower_friends_num').css('display','none');
+        $('.product-upload-sub.highrank').css('display','none');
+   }
 });

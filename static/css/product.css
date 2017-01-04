@@ -710,6 +710,10 @@
     width:80%;
 }
 
+.note-editable.panel-body{
+    height:400px;
+}
+
 /*
 .product-upload-info.type .product-upload-type-list .type-detail{
     height:35px;
@@ -939,6 +943,10 @@ input::-webkit-input-placeholder {
     border: solid 1px #648efc;
 }
 /* sns_additional part */
+.product-upload-info.additional_info{
+    display:none;
+}
+
 #id_sns_additional_info li{
     display: inline;
 }
@@ -961,6 +969,10 @@ input::-webkit-input-placeholder {
     border: solid 1px #648efc;
 }
 /* sex part */
+.product-upload-info.sex{
+    display:none;
+}
+
 #id_sex li{
     display: inline;
 }
