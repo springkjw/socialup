@@ -179,6 +179,10 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('product_detail', kwargs={"product_id": self.id})
 
+    @property
+    def get_price(self):
+        return self.price
+
 
 class ProductTag(models.Model):
     tag = models.CharField(choices=product_tag_list, max_length=15, null=False)
