@@ -165,7 +165,7 @@
                             <h2 id="product-price"
                                 data-price="{{ product.oneline_intro }}">
                                 {{ product.price }}원
-                                {% if variation|length > 1 %}
+                                {% if product.manuscript_price > 0 or product.highrank_price > 0 %}
                                     ~
                                 {% endif %}
                             </h2>
@@ -184,7 +184,7 @@
                             팔로워
                         </div>
                         <div class="sub-content">
-                            <span>16,000명</span>
+                            <span>{{ product.follower_num }}</span>
                         </div>
                     </div>
                     <div class="product-sub-info">
@@ -192,7 +192,7 @@
                             작업기간
                         </div>
                         <div class="sub-content">
-                            <span>2</span>일
+                            <span>{{ product.working_period }}일</span>
                         </div>
                     </div>
                     <div class="product-sub-info">
@@ -235,7 +235,7 @@
                             <div class="product-select-item">
                                 <!--<input type="checkbox" name="test" value="test_val"/>-->
                                 <span>원고가능</span>
-                                <span>+30,000원</span>
+                                <span>+{{ product.manuscript_price }}원</span>
                             </div>
                         </div>
                         <div class="product-total">
