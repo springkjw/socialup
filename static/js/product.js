@@ -321,26 +321,23 @@ $('#product-upload-form input').on('change', function() {
 
 /* this is for tag */
 $('#product-upload-form input').on('change', function() {
-    //console.log($('input[name=tag]:checked').next().find('.tag_image_clicked')[0]);
-    var checked = $('input[name=tag]:checked').next().find('.tag_image_clicked');
-    var unchecked = $('input[name=tag]:checked').next().find('.tag_image_before_click');
-    //console.log(checked);
-    checked.each(function(){
-        //console.log($(this));
-        $(this).css({'display':'inline-block'});
-    });
-    unchecked.each(function(){
-        //console.log($(this));
+    var checked_clicked = $('input[name=tag]:checked').next().find('.tag_image_clicked');
+    var checked_before_clicked = $('input[name=tag]:checked').next().find('.tag_image_before_click');
+    var unchecked_clicked = $('input[name=tag]').next().find('.tag_image_clicked');
+    var unchecked_before_clicked = $('input[name=tag]').next().find('.tag_image_before_click');
+
+    unchecked_clicked.each(function(){
         $(this).css({'display':'none'});
     });
-    $('input[name=tag]', '#product-upload-form').find($('.tag_image_before_click')).css(
-       {'display':'none'
-        }
-   );
-    $('input[name=tag]:checked', '#product-upload-form').find($('.tag_image_before_click')).css(
-       {'display':'inline-block'
-        }
-   );
+    unchecked_before_clicked.each(function(){
+        $(this).css({'display':'inline-block'});
+    });
+    checked_before_clicked.each(function(){
+        $(this).css({'display':'none'});
+    });
+    checked_clicked.each(function(){
+        $(this).css({'display':'inline-block'});
+    });
 });
 
 /* this is for hide additional_inform, sex
