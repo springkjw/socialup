@@ -320,23 +320,50 @@ $('#product-upload-form input').on('change', function() {
 });
 
 /* this is for tag */
-$('#product-upload-form input').on('change', function() {
-    var checked_clicked = $('input[name=tag]:checked').next().find('.tag_image_clicked');
-    var checked_before_clicked = $('input[name=tag]:checked').next().find('.tag_image_before_click');
-    var unchecked_clicked = $('input[name=tag]').next().find('.tag_image_clicked');
-    var unchecked_before_clicked = $('input[name=tag]').next().find('.tag_image_before_click');
+$('#product-upload-form input[name=tag]').on('change', function() {
+    var checked_clicked = $('input[name=tag]:checked').next().find('.tag_image_clicked').get();
+    var checked_before_clicked = $('input[name=tag]:checked').next().find('.tag_image_before_click').get();
+    var unchecked_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_clicked').get();
+    var unchecked_before_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_before_click').get();
+    // all checkbox 예외처리
+    if($('#id_tag_0').prop('checked')){
+        if(jQuery(event.target).attr('id') !== 'id_tag_0'){
+            $('#id_tag_0').prop('checked', false);
+        }else{
+            $('input[name=tag]').not($('#id_tag_0')).prop('checked', false);
+        }
+        // 변경한 사항 다시 array에 저장
+        checked_clicked = $('input[name=tag]:checked').next().find('.tag_image_clicked').get();
+        checked_before_clicked = $('input[name=tag]:checked').next().find('.tag_image_before_click').get();
+        unchecked_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_clicked').get();
+        unchecked_before_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_before_click').get();
+    }
+    else{
+        $('input[name=tag]:not(:checked)').prop('disabled',false);
+    }
 
-    unchecked_clicked.each(function(){
-        $(this).css({'display':'none'});
+    if(checked_clicked.length>5) {
+        var clicked_input = jQuery(event.target);
+        clicked_input.prop('checked',false);
+        // 변경한 사항 다시 array에 저장
+        checked_clicked = $('input[name=tag]:checked').next().find('.tag_image_clicked').get();
+        checked_before_clicked = $('input[name=tag]:checked').next().find('.tag_image_before_click').get();
+        unchecked_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_clicked').get();
+        unchecked_before_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_before_click').get();
+        alert('you should select less than 5');
+    }
+    // display attr 조정해서 이미지 바꿔주기
+    unchecked_clicked.forEach(function(val){
+        jQuery(val).css({'display':'none'});
     });
-    unchecked_before_clicked.each(function(){
-        $(this).css({'display':'inline-block'});
+    unchecked_before_clicked.forEach(function(val){
+        jQuery(val).css({'display':'inline-block'});
     });
-    checked_before_clicked.each(function(){
-        $(this).css({'display':'none'});
+    checked_before_clicked.forEach(function(val){
+        jQuery(val).css({'display':'none'});
     });
-    checked_clicked.each(function(){
-        $(this).css({'display':'inline-block'});
+    checked_clicked.forEach(function(val) {
+        jQuery(val).css({'display': 'inline-block'});
     });
 });
 

@@ -90,13 +90,25 @@ class ProductForm(forms.ModelForm):
         }
 
 
+def validate_tag(value):
+    if(len(value)>5):
+        raise forms.ValidationError('select no more thant 5')
+
 
 class TagForm(forms.Form):
     tag = forms.MultipleChoiceField(
         required=True,
         widget=forms.CheckboxSelectMultiple,
         choices=product_tag_list,
+        #validators=[validate_tag]
     )
+    """
+    def clean_tag(self):
+        if len(self.cleaned_data['tag'])>5:
+            print('hi')
+            raise forms.ValidationError('select no more than 5')
+        return self.cleaned_data['tag']
+    """
 
 
 class SellerAccountForm(forms.ModelForm):

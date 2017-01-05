@@ -1115,4 +1115,8 @@ input::-webkit-input-placeholder {
     left:10%;
 }
 
+.product-upload-sub.tags label{
+    padding-top:20px;
+}
+
 

@@ -146,6 +146,8 @@ def product_upload(request, product_id=None):
             instance.save()
             if tag_form.is_valid():
                 tags = request.POST.getlist('tag')
+                if len(tags)>5:
+                    print('no more than 5')
                 for tag in tags:
                     related_object_type = ContentType.objects.get_for_model(instance)
                     ProductTag.objects.create(
