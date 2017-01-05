@@ -325,24 +325,8 @@ $('#product-upload-form input[name=tag]').on('change', function() {
     var checked_before_clicked = $('input[name=tag]:checked').next().find('.tag_image_before_click').get();
     var unchecked_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_clicked').get();
     var unchecked_before_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_before_click').get();
-    // all checkbox 예외처리
-    if($('#id_tag_0').prop('checked')){
-        if(jQuery(event.target).attr('id') !== 'id_tag_0'){
-            $('#id_tag_0').prop('checked', false);
-        }else{
-            $('input[name=tag]').not($('#id_tag_0')).prop('checked', false);
-        }
-        // 변경한 사항 다시 array에 저장
-        checked_clicked = $('input[name=tag]:checked').next().find('.tag_image_clicked').get();
-        checked_before_clicked = $('input[name=tag]:checked').next().find('.tag_image_before_click').get();
-        unchecked_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_clicked').get();
-        unchecked_before_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_before_click').get();
-    }
-    else{
-        $('input[name=tag]:not(:checked)').prop('disabled',false);
-    }
 
-    if(checked_clicked.length>5) {
+    if(checked_clicked.length>6) {
         var clicked_input = jQuery(event.target);
         clicked_input.prop('checked',false);
         // 변경한 사항 다시 array에 저장
@@ -398,7 +382,7 @@ $('#product-upload-form input').on('change', function() {
         $('.product-upload-sub.follower_visit_num').css('display','none');
         $('.product-upload-sub.follower_num').css('display','block');
         $('.product-upload-sub.follower_friends_num').css('display','none');
-        $('.product-upload-sub.highrank').css('display','block');
+        $('.product-upload-sub.highrank').css('display','none');
 
    }
    else if($('#id_sns_type_3').is(":checked")) {
@@ -410,4 +394,25 @@ $('#product-upload-form input').on('change', function() {
         $('.product-upload-sub.follower_friends_num').css('display','none');
         $('.product-upload-sub.highrank').css('display','none');
    }
+});
+
+$(function () {
+    $('.auth-agreement').on('click', '.fa-caret-down', function () {
+        jQuery($(this).parent().prev().get(0)).text('다음사항에 동의합니다.');
+        $(this).parent().parent().parent().find('.auth-agreement-content').show();
+        $(this).removeClass('fa-caret-down').addClass('fa-caret-up');
+    });
+
+    $('.auth-agreement').on('click', '.fa-caret-up', function () {
+        jQuery($(this).parent().prev().get(0)).text('이용약관에 동의합니다.');
+        $(this).parent().parent().parent().find('.auth-agreement-content').hide();
+        $(this).removeClass('fa-caret-up').addClass('fa-caret-down');
+    });
+
+    $('#product-upload-form').submit(function () {
+        if (!$('#agreenment1').is(":checked") || !$('#agreenment2').is(":checked")) {
+            alert('약관에 동의해주세요.');
+            return false;
+        }
+    });
 });

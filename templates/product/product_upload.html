@@ -115,7 +115,7 @@
                 <div class="product-upload-title">
                      <label class="product-upload-title-label">작업 전 유의사항</label>
                 </div>
-                <div class="product-upload-sub">
+                <div class="product-upload-sub message_to_buyer">
                     {{ form.message_to_buyer }}
                 </div>
             </div>
@@ -124,7 +124,7 @@
                 <div class="product-upload-title">
                      <label class="product-upload-title-label">한줄소개</label>
                 </div>
-                <div class="product-upload-sub">
+                <div class="product-upload-sub oneline_intro">
                     {{ form.oneline_intro }}
                 </div>
             </div>
@@ -133,7 +133,7 @@
                 <div class="product-upload-title">
                      <label class="product-upload-title-label">상품소개</label>
                 </div>
-                <div class="product-upload-sub">
+                <div class="product-upload-sub description">
                     <span>별도의 문의없어도 의뢰가 가능하도록 상품에 대해 구체적으로
                     명시해주세요.<br>연락처(전화번호/메일 등), 사이트 링크 기재가 불가능
                     하며 기재시 서비스 이용에 제한이 됩니다.</span>
@@ -180,14 +180,24 @@
 
             <div class="product-upload-info">
                 <div class="product-upload-title">
-                     <label class="product-upload-title-label">승인 전 전달사항</label>
+                     <label class="product-upload-title-label">관리자에게 전달사항</label>
                 </div>
-                <div class="product-upload-sub">
+                <div class="product-upload-sub message_to_admin">
                     {{ form.message_to_admin }}
                 </div>
             </div>
 
-                <br>
+            <div class="auth-agreement">
+                <div class="auth-agreement-title">
+                    <input type="checkbox" class="" id="agreenment1"><label for="agreenment1">이용약관에 동의합니다.</label>
+                    <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                </div>
+                <div class="auth-agreement-content">
+                    {% include 'account/auth/auth_paper_3.html' %}
+                </div>
+            </div>
+
+            <br>
             <div class="buttons">
                 <button class="final" type="submit">동의하고 등록하기</button>
             </div>
