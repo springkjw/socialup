@@ -78,13 +78,9 @@ def product_detail(request, product_id):
                 cart = request.POST.getlist('cart[]')
 
                 if cart:
-                    cart = add_to_cart(request, default, cart)
+                    data = add_to_cart(request, default, cart)
 
-                    if cart is not None:
-                        data = {
-                            "status": "success",
-                        }
-
+                    if data is not None:
                         return HttpResponse(json.dumps(data), content_type='application/json')
                     else:
                         raise Http404
@@ -240,9 +236,15 @@ def product_change(request, product_id):
 
 
     seller = Seller.objects.filter(user=request.user)[0]
+
+    # 리스트에 모델 담기
     seller_products = Product.objects.filter(seller=seller)
+    print(seller_products)
+    # 리스트에 있는 모델들을 순회하며 json타입으로
     json_seller_products = [res.as_json().encode('utf-8','ignore') for res in seller_products]
-    #print(type(json_seller_products[0]))
+
+    print(json_seller_products)
+
 
     json_arr = [res[1:-2] for res in json_seller_products]
 
