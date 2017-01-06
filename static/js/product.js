@@ -320,27 +320,35 @@ $('#product-upload-form input').on('change', function() {
 });
 
 /* this is for tag */
-$('#product-upload-form input').on('change', function() {
-    //console.log($('input[name=tag]:checked').next().find('.tag_image_clicked')[0]);
-    var checked = $('input[name=tag]:checked').next().find('.tag_image_clicked');
-    var unchecked = $('input[name=tag]:checked').next().find('.tag_image_before_click');
-    //console.log(checked);
-    checked.each(function(){
-        //console.log($(this));
-        $(this).css({'display':'inline-block'});
+$('#product-upload-form input[name=tag]').on('change', function() {
+    var checked_clicked = $('input[name=tag]:checked').next().find('.tag_image_clicked').get();
+    var checked_before_clicked = $('input[name=tag]:checked').next().find('.tag_image_before_click').get();
+    var unchecked_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_clicked').get();
+    var unchecked_before_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_before_click').get();
+
+    if(checked_clicked.length>6) {
+        var clicked_input = jQuery(event.target);
+        clicked_input.prop('checked',false);
+        // 변경한 사항 다시 array에 저장
+        checked_clicked = $('input[name=tag]:checked').next().find('.tag_image_clicked').get();
+        checked_before_clicked = $('input[name=tag]:checked').next().find('.tag_image_before_click').get();
+        unchecked_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_clicked').get();
+        unchecked_before_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_before_click').get();
+        alert('you should select less than 5');
+    }
+    // display attr 조정해서 이미지 바꿔주기
+    unchecked_clicked.forEach(function(val){
+        jQuery(val).css({'display':'none'});
     });
-    unchecked.each(function(){
-        //console.log($(this));
-        $(this).css({'display':'none'});
+    unchecked_before_clicked.forEach(function(val){
+        jQuery(val).css({'display':'inline-block'});
     });
-    $('input[name=tag]', '#product-upload-form').find($('.tag_image_before_click')).css(
-       {'display':'none'
-        }
-   );
-    $('input[name=tag]:checked', '#product-upload-form').find($('.tag_image_before_click')).css(
-       {'display':'inline-block'
-        }
-   );
+    checked_before_clicked.forEach(function(val){
+        jQuery(val).css({'display':'none'});
+    });
+    checked_clicked.forEach(function(val) {
+        jQuery(val).css({'display': 'inline-block'});
+    });
 });
 
 /* this is for hide additional_inform, sex
@@ -374,7 +382,7 @@ $('#product-upload-form input').on('change', function() {
         $('.product-upload-sub.follower_visit_num').css('display','none');
         $('.product-upload-sub.follower_num').css('display','block');
         $('.product-upload-sub.follower_friends_num').css('display','none');
-        $('.product-upload-sub.highrank').css('display','block');
+        $('.product-upload-sub.highrank').css('display','none');
 
    }
    else if($('#id_sns_type_3').is(":checked")) {
@@ -387,3 +395,40 @@ $('#product-upload-form input').on('change', function() {
         $('.product-upload-sub.highrank').css('display','none');
    }
 });
+
+$(function () {
+    $('.auth-agreement').on('click', '.fa-caret-down', function () {
+        jQuery($(this).parent().prev().get(0)).text('다음사항에 동의합니다.');
+        $(this).parent().parent().parent().find('.auth-agreement-content').show();
+        $(this).removeClass('fa-caret-down').addClass('fa-caret-up');
+    });
+
+    $('.auth-agreement').on('click', '.fa-caret-up', function () {
+        jQuery($(this).parent().prev().get(0)).text('이용약관에 동의합니다.');
+        $(this).parent().parent().parent().find('.auth-agreement-content').hide();
+        $(this).removeClass('fa-caret-up').addClass('fa-caret-down');
+    });
+
+    $('#product-upload-form').submit(function () {
+        if (!$('#agreenment1').is(":checked") || !$('#agreenment2').is(":checked")) {
+            alert('약관에 동의해주세요.');
+            return false;
+        }
+    });
+});
+
+/* product_edit product_previous select part
+$(function(){
+    $.ajax({url: "/", success: function(result){
+        alert($("#previous_proudcts_select option:selected").val());
+    }});
+});
+
+
+$( "#previous_proudcts_select" ).change(function() {
+    var temp = $("#previous_proudcts_select option:selected").val();
+    //alert($("#previous_proudcts_select option:selected").val());
+    $.ajax({url: "/", success: function(result){
+    }});
+});
+    */
