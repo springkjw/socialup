@@ -34,7 +34,8 @@ def change_info(request):
     if request.method == "POST":
         form = ChangeForm(request.POST or None, request.FILES or None)
         if form.is_valid():
-            user.media = form.cleaned_data['media']
+            if form.cleaned_data['media'] != None:
+                user.media = form.cleaned_data['media']
             user.name = form.cleaned_data['name']
             user.phone = form.cleaned_data['phone']
             user.description = form.cleaned_data['description']

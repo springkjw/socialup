@@ -17,3 +17,4 @@ class CartAdmin(admin.ModelAdmin):
 
 admin.site.register(Cart, CartAdmin)
 admin.site.register(WishList)
+admin.site.register(CartItem)
