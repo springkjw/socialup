@@ -25,6 +25,8 @@ from billing.models import Order, ProductManage
 from accounts.models import MyUser, Seller, Profit, SellerAccount
 from reviews.models import ProductReview
 
+from django.core import serializers
+
 import json
 
 
@@ -238,6 +240,20 @@ def product_change(request, product_id):
 
 
     seller = Seller.objects.filter(user=request.user)[0]
+    seller_products = Product.objects.filter(seller=seller)
+    json_seller_products = [res.as_json().encode('utf-8','ignore') for res in seller_products]
+    #print(type(json_seller_products[0]))
+
+    json_arr = [res[1:-2] for res in json_seller_products]
+
+    # json_seller_products = json_seller_products.encode('utf-8','ignore')
+    #json_seller_products = serializers.serialize('json',[seller_products,])
+    #json_seller_products = json.dumps(seller_products)
+
+
+    #print(len(json_seller_products))
+    print(json_arr)
+
 
     if request.method == 'POST':
         form = ProductForm(request.POST or None, request.FILES or None, instance=product)
@@ -266,12 +282,13 @@ def product_change(request, product_id):
         else:
             pass
 
-    template = 'product/product_upload.html'
+    template = 'product/product_edit.html'
 
     context = {
         "form": form,
         "tag_form": tag_form,
-        "type_": type_
+        "type_": type_,
+        "seller_products":json_arr
     }
 
     return render(request, template, context)
