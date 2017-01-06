@@ -156,10 +156,6 @@ class WishListView(SingleObjectMixin, View):
 
 
 def add_to_cart(request, default, list):
-    data = {
-        "status": "fail",
-        "cart_id": None
-    }
     # request 세션 100분 설정
     request.session.set_expiry(6000)
     # card_id를 세션에서 가져오기
@@ -192,6 +188,9 @@ def add_to_cart(request, default, list):
         cart_instance = Cart.objects.create(user=request.user)
         request.session['cart_id'] = cart_instance.id
 
+    data = {
+        "status": "fail",
+    }
     # 카트 인스턴스가 존재할 때
     if cart_instance is not None:
         # ajax로 넘어온 variation item 조회
@@ -201,12 +200,9 @@ def add_to_cart(request, default, list):
                 option_instance = Product.objects.get(id=item)
                 cart_item, created = CartItem.objects.get_or_create(cart=cart_instance, item=option_instance)
                 if created:
-                    data = {
-                        "status": "success",
-                        "cart_id": cart.id,
-                    }
+                    data["status"] = "success"
                 cart_item.save()
             # 없으면 카트 인스턴스 초기화
             else:
                 cart_instance = None
-    return cart_instance
+    return data

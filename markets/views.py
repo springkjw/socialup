@@ -95,14 +95,9 @@ def product_detail(request, product_id):
                     except KeyError:
                         pass
                     finally:
-                        cart = add_to_cart(request, default, option)
+                        data = add_to_cart(request, default, option)
 
-                    if cart is not None:
-                        data = {
-                            "status": "success",
-                            "cart_id": cart.id
-                        }
-
+                    if data is not None:
                         return HttpResponse(json.dumps(data), content_type='application/json')
                     else:
                         raise Http404
