@@ -7,6 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 from django.db import models
 from model_utils import FieldTracker
+from django.core.exceptions import ValidationError
 
 # app import
 from django_summernote import fields as summer_fields
@@ -44,7 +45,7 @@ sns_additional_info_list = (
 )
 
 product_tag_list = (
-    ('all', "전체"),
+    #('all', "전체"),
     ("it", "IT/인터넷"),
     ("food", "식품/맛집"),
     ("fashion", "패션/뷰티"),
@@ -187,10 +188,12 @@ class Product(models.Model):
 
 
 class ProductTag(models.Model):
-    tag = models.CharField(choices=product_tag_list, max_length=15, null=False)
+    tag = models.CharField(choices=product_tag_list, max_length=15, null=False, )
     content_type = models.ForeignKey(ContentType, related_name='ptags')
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
 
     def __unicode__(self):
         return self.tag
+
+
