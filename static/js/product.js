@@ -416,3 +416,19 @@ $(function () {
         }
     });
 });
+
+/* product_edit product_previous select part
+$(function(){
+    $.ajax({url: "/", success: function(result){
+        alert($("#previous_proudcts_select option:selected").val());
+    }});
+});
+
+
+$( "#previous_proudcts_select" ).change(function() {
+    var temp = $("#previous_proudcts_select option:selected").val();
+    //alert($("#previous_proudcts_select option:selected").val());
+    $.ajax({url: "/", success: function(result){
+    }});
+});
+    */

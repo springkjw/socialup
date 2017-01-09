@@ -41,7 +41,12 @@
                     success: function (data) {
                         if (data['status'] == 'success') {
                             alert('장바구니에 성공적으로 담겼습니다.');
+                        } else if (data['status'] == 'already_exist') {
+                            alert('이미 장바구니에 있습니다.');
+                        } else {
+                            alert('다시 시도해주세요.');
                         }
+
                     },
                     error: function (data) {
                     }
@@ -75,14 +80,12 @@
 
         function get_item() {
             var item = [];
-            item.push('{{ default_price.id }}');
+            item.push('{{ product.id }}');
 
             $('.product-option input:checked').each(function () {
                 var option_id = $(this).parent().attr('data-id');
                 item.push(option_id);
             });
-
-            console.log(item)
 
             return item;
         }

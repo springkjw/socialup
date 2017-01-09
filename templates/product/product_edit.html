@@ -12,10 +12,22 @@
     <script type="text/javascript" src="{% static 'js/product.js' %}"></script>
     {% block dashboard_js %}
     {% endblock %}
-
+    <script type="text/javascript">
+        $( "#previous_proudcts_select" ).change(function() {
+            var temp = $("#previous_proudcts_select option:selected").val();
+            {% autoescape off %}
+            var hey = '{{ seller_products.0}}'
+            {% endautoescape %}
+            $.ajax({url: "/", success: function(result){
+                alert(hey["fields"]);
+            }});
+        });
+    </script>
 {% endblock %}
 
 {% block content %}
+
+
     <div class="dashboard_container">
         <div class="dashboard-header">
             <div class="dashboard-sub">
@@ -29,11 +41,11 @@
             </div>
         </div>
         <div class="previous_record">
-            <select>
-              <option value="volvo">Volvo</option>
-              <option value="saab">Saab</option>
-              <option value="mercedes">Mercedes</option>
-              <option value="audi">Audi</option>
+            <select id="previous_proudcts_select">
+            <option value=None>--------------------</option>
+                {% for product in seller_products %}
+                    <option value={{ product }}>{{ product|safe }}</option>
+                {% endfor %}
             </select>
         </div>
         <form id="product-upload-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
@@ -204,4 +216,6 @@
             </div>
         </form>
     </div>
+
+
 {% endblock %}
