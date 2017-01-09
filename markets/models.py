@@ -12,6 +12,8 @@ from django.core.exceptions import ValidationError
 # app import
 from django_summernote import fields as summer_fields
 from accounts.models import Seller
+import json
+from django.core import serializers
 
 
 class ProductQueryset(models.query.QuerySet):
@@ -147,6 +149,36 @@ class Product(models.Model):
 
     def __unicode__(self):
         return u'%s' % (self.oneline_intro)
+
+    def as_json(self):
+        return serializers.serialize('json',[self,])
+
+    """
+    def as_json(self):
+        return dict(
+            id=self.id,
+            seller=self.seller,
+            sns_type = self.sns_type,
+            sns_additional_info = self.sns_additional_info,
+            sex = self.sex,
+            is_url_open = self.is_url_open,
+            sns_url = self.sns_url,
+            follower_num = self.follower_num,
+            follower_visit_num = self.follower_visit_num,
+            follower_friends_num = self.follower_friends_num,
+            product_tag = self.product_tag,
+            message_to_buyer = self.message_to_buyer,
+            oneline_intro = self.oneline_intro,
+            description = self.description,
+            price = self.price,
+            manuscript_available = self.manuscript_available,
+            manuscript_price = self.manuscript_price,
+            highrank_available = self.highrank_available,
+            highrank_price = self.highrank_price,
+            working_period = self.working_period,
+            message_to_admin = self.message_to_admin,
+        )
+    """
 
     @property
     def sns_type_image_url(self):

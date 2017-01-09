@@ -25,6 +25,8 @@ from billing.models import Order, ProductManage
 from accounts.models import MyUser, Seller, Profit, SellerAccount
 from reviews.models import ProductReview
 
+from django.core import serializers
+
 import json
 
 
@@ -146,8 +148,6 @@ def product_upload(request, product_id=None):
             instance.save()
             if tag_form.is_valid():
                 tags = request.POST.getlist('tag')
-                if len(tags)>5:
-                    print('no more than 5')
                 for tag in tags:
                     related_object_type = ContentType.objects.get_for_model(instance)
                     ProductTag.objects.create(
@@ -236,8 +236,10 @@ def product_change(request, product_id):
 
     type_ = "수정"
 
-
     seller = Seller.objects.filter(user=request.user)[0]
+    seller_products = Product.objects.filter(seller=seller)
+    json_seller_products = [res.as_json().encode('utf-8','ignore') for res in seller_products]
+    json_arr = [res[1:-1] for res in json_seller_products]
 
     if request.method == 'POST':
         form = ProductForm(request.POST or None, request.FILES or None, instance=product)
@@ -266,12 +268,13 @@ def product_change(request, product_id):
         else:
             pass
 
-    template = 'product/product_upload.html'
+    template = 'product/product_edit.html'
 
     context = {
         "form": form,
         "tag_form": tag_form,
-        "type_": type_
+        "type_": type_,
+        "seller_products":json_arr
     }
 
     return render(request, template, context)

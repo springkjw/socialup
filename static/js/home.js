@@ -131,8 +131,6 @@ $(document).ready(function(){
                 second_span = second_span+"px";
                 $("#first_span_val").text(ui.values[0]+"만원").css("margin-left", first_span);
                 $("#second_span_val").text(ui.values[1]+"만원").css("margin-left", second_span);
-                console.log('ui.values[0] : ', ui.values[0]);
-                console.log('ui.values[1] : ', ui.values[1]);
                 filter_ajax(ui.values[0],ui.values[1]);
             }
         });
