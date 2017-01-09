@@ -125,7 +125,7 @@
                                 <li id="popup-delete">
                                     <form method="GET" id="delete-form" action="{% url 'cart' %}">
                                         <input type="hidden" name="product_item"
-                                               value="{{ product.0.item.product.id }}"/>
+                                               value="{{ product.0.item.id }}"/>
                                         <input type="hidden" name="delete" value="true"/>
                                         <input id="cart_delete" type="submit" value="삭제하기"/>
                                     </form>

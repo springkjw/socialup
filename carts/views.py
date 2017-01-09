@@ -39,13 +39,13 @@ class CartView(SingleObjectMixin, View):
 
             cart_item = cart.cartitem_set.all()
             for i in cart_item:
-                product_list.append(i.item.product.id)
+                product_list.append(i.item.id)
             product_list = list(set(product_list))
 
             for product in product_list:
                 c_list = []
                 for c in cart.cartitem_set.all():
-                    if product == c.item.product.id:
+                    if product == c.item.id:
                         c_list.append(c)
                 cart_list.append(c_list)
         else:
@@ -69,8 +69,7 @@ class CartView(SingleObjectMixin, View):
             item_instance = get_object_or_404(Product, id=item_id)
             cart_item = CartItem.objects.get_or_create(cart=cart, item=item_instance)[0]
             if delete_item:
-                if not item_instance.is_default:
-                    cart_item.delete()
+                cart_item.delete()
             else:
                 cart_item.save()
 
