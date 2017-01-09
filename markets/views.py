@@ -41,9 +41,6 @@ def product_detail(request, product_id):
     seller_rating = int(round(seller.rating * 20))
     seller_count = Product.objects.filter(seller=seller).count()
 
-    # Product 중 기본가에 해당하는 아이템
-    default = product
-
     reviews = ProductReview.objects.filter(product=product)
     reviews_count = reviews.count()
 
@@ -78,13 +75,9 @@ def product_detail(request, product_id):
                 cart = request.POST.getlist('cart[]')
 
                 if cart:
-                    cart = add_to_cart(request, default, cart)
+                    data = add_to_cart(request, product, cart)
 
-                    if cart is not None:
-                        data = {
-                            "status": "success",
-                        }
-
+                    if data is not None:
                         return HttpResponse(json.dumps(data), content_type='application/json')
                     else:
                         raise Http404
@@ -99,14 +92,9 @@ def product_detail(request, product_id):
                     except KeyError:
                         pass
                     finally:
-                        cart = add_to_cart(request, default, option)
+                        data = add_to_cart(request, product, option)
 
-                    if cart is not None:
-                        data = {
-                            "status": "success",
-                            "cart_id": cart.id
-                        }
-
+                    if data is not None:
                         return HttpResponse(json.dumps(data), content_type='application/json')
                     else:
                         raise Http404
@@ -115,7 +103,6 @@ def product_detail(request, product_id):
     context = {
         'product': product,
         'count': seller_count,
-        'default_price': default,
         'rating': seller_rating,
         'reviews': reviews,
         'reviews_count': reviews_count
@@ -237,9 +224,15 @@ def product_change(request, product_id):
     type_ = "수정"
 
     seller = Seller.objects.filter(user=request.user)[0]
+
+    # 리스트에 모델 담기
     seller_products = Product.objects.filter(seller=seller)
+    print(seller_products)
+    # 리스트에 있는 모델들을 순회하며 json타입으로
     json_seller_products = [res.as_json().encode('utf-8','ignore') for res in seller_products]
-    json_arr = [res[1:-1] for res in json_seller_products]
+
+    # TODO: conflict check!
+    json_arr = [res[1:-2] for res in json_seller_products]
 
     if request.method == 'POST':
         form = ProductForm(request.POST or None, request.FILES or None, instance=product)

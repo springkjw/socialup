@@ -83,13 +83,13 @@
                 {% for product in object.item %}
                     <div class="dashboard-cart-item">
                         <div class="dashboard-cart-item-image">
-                            <a href="{{ product.0.item.product.get_absolute_url }}">
-                                <img src="{{ product.0.item.product.get_image_url }}">
+                            <a href="{{ product.0.item.get_absolute_url }}">
+                                <img src="{{ product.0.item.get_image_url }}">
                             </a>
                         </div>
                         <div class="dashboard-cart-item-title">
                             <h3>
-                                <a href="{{ product.0.item.product.get_absolute_url }}">{{ product.0.item.product|truncatechars:33 }}</a>
+                                <a href="{{ product.0.item.get_absolute_url }}">{{ product.0.item|truncatechars:33 }}</a>
                             </h3>
                             <div class="dashboard-cart-item-meta">
                                 {% for c in product %}
@@ -108,8 +108,8 @@
                             </div>
                         </div>
                         <div class="dashboard-cart-item-seller">
-                            <p>{{ product.0.item.product.seller }}</p>
-                            <button id="ask-seller" data-id="{{ product.0.item.product.seller.user.id }}" data-name="{{ product.0.item.product.seller }}" data-profile="{{ product.0.item.product.seller.user.get_avatar }}">
+                            <p>{{ product.0.item.seller }}</p>
+                            <button id="ask-seller" data-id="{{ product.0.item.seller.user.id }}" data-name="{{ product.0.item.seller }}" data-profile="{{ product.0.item.seller.user.get_avatar }}">
                                 문의하기
                             </button>
                         </div>
@@ -125,7 +125,7 @@
                                 <li id="popup-delete">
                                     <form method="GET" id="delete-form" action="{% url 'cart' %}">
                                         <input type="hidden" name="product_item"
-                                               value="{{ product.0.item.product.id }}"/>
+                                               value="{{ product.0.item.id }}"/>
                                         <input type="hidden" name="delete" value="true"/>
                                         <input id="cart_delete" type="submit" value="삭제하기"/>
                                     </form>

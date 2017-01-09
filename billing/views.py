@@ -134,7 +134,7 @@ def history_point(request):
         else:
             data_usage = {
                 'timestamp': item.timestamp,
-                'product': item.product,
+                'product': item,
                 'amount': item.amount,
                 'status': switch_history_status(item.status),
             }
@@ -191,14 +191,14 @@ def purchase(request, cart_id):
 
         cart_item = cart.cartitem_set.all()
         for i in cart_item:
-            product_list.append(i.item.product.id)
+            product_list.append(i.item.id)
         product_list = list(set(product_list))
 
         for product in product_list:
             c_list = []
             c_price = 0
             for c in cart.cartitem_set.all():
-                if product == c.item.product.id:
+                if product == c.item.id:
                     c_list.append(c)
                     c_price += c.item.price
             c_data = {
