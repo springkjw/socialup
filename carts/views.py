@@ -74,7 +74,7 @@ class CartView(SingleObjectMixin, View):
                 cart_item.save()
 
         if buy_id:
-            # product 기본가 variation 추가
+            # product 추가
             buy_instance = get_object_or_404(Product, id=buy_id)
 
             # cart session 초기화
@@ -102,12 +102,12 @@ class CartView(SingleObjectMixin, View):
     # 카트에서 바로 구매 클릭 시
     def post(self, request, *args, **kwargs):
         option = request.POST.getlist('cart[]')
-        default = Product.objects.get(id=option[0])
+        product = Product.objects.get(id=option[0])
 
         if option:
             del request.session['cart_id']
 
-            cart = add_to_cart(request, default, option)
+            cart = add_to_cart(request, product, option)
 
             if cart is not None:
                 data = {
@@ -154,7 +154,7 @@ class WishListView(SingleObjectMixin, View):
         return render(request, template, context)
 
 
-def add_to_cart(request, default, list):
+def add_to_cart(request, product, list):
     # request 세션 100분 설정
     request.session.set_expiry(6000)
     # card_id를 세션에서 가져오기

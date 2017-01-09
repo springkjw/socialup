@@ -80,14 +80,12 @@
 
         function get_item() {
             var item = [];
-            item.push('{{ default_price.id }}');
+            item.push('{{ product.id }}');
 
             $('.product-option input:checked').each(function () {
                 var option_id = $(this).parent().attr('data-id');
                 item.push(option_id);
             });
-
-            console.log(item)
 
             return item;
         }

@@ -41,9 +41,6 @@ def product_detail(request, product_id):
     seller_rating = int(round(seller.rating * 20))
     seller_count = Product.objects.filter(seller=seller).count()
 
-    # Product 중 기본가에 해당하는 아이템
-    default = product
-
     reviews = ProductReview.objects.filter(product=product)
     reviews_count = reviews.count()
 
@@ -78,7 +75,7 @@ def product_detail(request, product_id):
                 cart = request.POST.getlist('cart[]')
 
                 if cart:
-                    data = add_to_cart(request, default, cart)
+                    data = add_to_cart(request, product, cart)
 
                     if data is not None:
                         return HttpResponse(json.dumps(data), content_type='application/json')
@@ -95,7 +92,7 @@ def product_detail(request, product_id):
                     except KeyError:
                         pass
                     finally:
-                        data = add_to_cart(request, default, option)
+                        data = add_to_cart(request, product, option)
 
                     if data is not None:
                         return HttpResponse(json.dumps(data), content_type='application/json')
@@ -106,7 +103,6 @@ def product_detail(request, product_id):
     context = {
         'product': product,
         'count': seller_count,
-        'default_price': default,
         'rating': seller_rating,
         'reviews': reviews,
         'reviews_count': reviews_count
