@@ -14,20 +14,81 @@
     {% endblock %}
     <script type="text/javascript">
         $( "#previous_proudcts_select" ).change(function() {
-            var temp = $("#previous_proudcts_select option:selected").val();
+            //var temp = $("#previous_proudcts_select option:selected").text();
+            //console.log(temp);
+            var selected_index = $("#previous_proudcts_select option:selected").index()-1;
             {% autoescape off %}
-            var hey = '{{ seller_products.0}}'
+            var seller_products_arr = {{ seller_products }};
             {% endautoescape %}
-            $.ajax({url: "/", success: function(result){
-                alert(hey["fields"]);
+            var selected_product = seller_products_arr[selected_index];
+            var json_selected_product = jQuery.parseJSON(selected_product)["fields"];
+            $.ajax({url: "/",
+                success: function(result){
+                //console.log(json_selected_product);
+                /* type check */
+                if(json_selected_product["sns_type"]=='blog'){
+                    $('#id_sns_type_0').prop('checked',true);
+                    color_unchecked_sns_type();
+                    color_checked_sns_type();
+                    check_sns_type_for_display();
+                }else if(json_selected_product["sns_type"]=='facebook'){
+                    $('#id_sns_type_1').prop('checked',true);
+                    color_unchecked_sns_type();
+                    color_checked_sns_type();
+                    check_sns_type_for_display();
+                    if(json_selected_product["sns_additional_info"]=='individual'){
+                        $('#id_sns_additional_info_0').prop('checked',true);
+                        $('#id_sns_additional_info_1').prop('checked',false);
+                        color_unchecked_additional_info();
+                        color_checked_additional_info();
+
+                    }else{
+                        $('#id_sns_additional_info_0').prop('checked',false);
+                        $('#id_sns_additional_info_1').prop('checked',true);
+                        color_unchecked_additional_info();
+                        color_checked_additional_info();
+                    }
+                    set_input_value('#id_follower_friends_num', json_selected_product["follower_friends_num"]);
+                    set_input_value('#id_follower_num', json_selected_product["follower_num"]);
+
+                }else if(json_selected_product["sns_type"]=='instagram'){
+                    $('#id_sns_type_2').prop('checked',true);
+                    color_unchecked_sns_type();
+                    color_checked_sns_type();
+                    check_sns_type_for_display();
+                    if(json_selected_product["sex"]=='male'){
+                        $('#id_sex_0').prop('checked',true);
+                        $('#id_sex_1').prop('checked',false);
+                        color_unchecked_sex();
+                        color_checked_sex();
+
+                    }else{
+                        $('#id_sex_0').prop('checked',false);
+                        $('#id_sex_1').prop('checked',true);
+                        color_unchecked_sex();
+                        color_checked_sex();
+                    }
+                }else if(json_selected_product["sns_type"]=='kakaostory'){
+                    $('#id_sns_type_3').prop('checked',true);
+                    color_unchecked_sns_type();
+                    color_checked_sns_type();
+                    check_sns_type_for_display();
+                }
+                $('#id_sns_url').val(json_selected_product["sns_url"]);
+                $('#id_message_to_buyer').val(json_selected_product["message_to_buyer"]);
+                $('#id_oneline_intro').val(json_selected_product["oneline_intro"]);
+                $($($('iframe').get(0).contentDocument).find('.note-editable p')[0]).html(json_selected_product["description"]);
+                $('#id_price').val(json_selected_product["price"]);
+                $('#id_manuscript_price').val(json_selected_product["manuscript_price"]);
+                $('#id_highrank_price').val(json_selected_product["highrank_price"]);
+                $('#id_working_period').val(json_selected_product["working_period"]);
+                $('#id_message_to_admin').val(json_selected_product["message_to_admin"]);
             }});
         });
     </script>
 {% endblock %}
 
 {% block content %}
-
-
     <div class="dashboard_container">
         <div class="dashboard-header">
             <div class="dashboard-sub">
@@ -51,7 +112,7 @@
         <form id="product-upload-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
             {{ form.errors }}
             {{ form.non_field_errors }}
-            <div class="product-upload-info">
+            <div class="product-upload-info sns_type">
                 <div class="product-upload-title">
                      <label class="product-upload-title-label">SNS 선택</label>
                 </div>
@@ -78,7 +139,7 @@
                 </div>
             </div>
 
-            <div class="product-upload-info">
+            <div class="product-upload-info sns_url">
                 <div class="product-upload-title">
                      <label class="product-upload-title-label">SNS 주소</label>
                 </div>
@@ -91,7 +152,7 @@
                 </div>
             </div>
 
-            <div class="product-upload-info">
+            <div class="product-upload-info follower">
                 <div class="product-upload-title">
                      <label class="product-upload-title-label">팔로워수</label>
                 </div>
@@ -202,7 +263,7 @@
 
             <div class="auth-agreement">
                 <div class="auth-agreement-title">
-                    <input type="checkbox" class="" id="agreenment1"><label for="agreenment1">이용약관에 동의합니다.</label>
+                    <input type="checkbox" id="agreenment1"><label for="agreenment1">이용약관에 동의합니다.</label>
                     <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
                 </div>
                 <div class="auth-agreement-content">

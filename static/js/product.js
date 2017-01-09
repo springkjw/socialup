@@ -274,50 +274,97 @@ function check_step2() {
     //}
 }
 
+
 /* this is for sns_type_color */
-$('#product-upload-form input').on('change', function() {
-   $('input[name=sns_type][type="radio"]', '#product-upload-form').parent().css(
-       {'color': '#a3a3a3',
-        'border': 'solid 1px #a3a3a3',
-        'background-color':'white'
-       }
+
+
+function sns_type_color(){
+    $('#product-upload-form input').on('change', function() {
+        color_unchecked_sns_type();
+        color_checked_sns_type();
+    });
+}
+
+function color_unchecked_sns_type() {
+    $('input[name=sns_type][type="radio"]', '#product-upload-form').parent().css(
+           {'color': '#a3a3a3',
+            'border': 'solid 1px #a3a3a3',
+            'background-color':'white'
+           }
    );
+}
+function color_checked_sns_type(){
     $('input[name=sns_type]:checked', '#product-upload-form').parent().css(
-       {'background-color':'#648efc',
-        'color': 'white',
-        'border': 'solid 1px #648efc'}
-   );
+           {'background-color':'#648efc',
+            'color': 'white',
+            'border': 'solid 1px #648efc'}
+    );
+}
+
+
+$(document).ready(function(){
+    color_unchecked_sns_type();
+    color_checked_sns_type();
+    sns_type_color();
+    color_checked_additional_info();
+    sns_additional_info_color();
+    color_checked_sex();
+    sex_color();
 });
 
 /* this is for sns_additional_info_color */
-$('#product-upload-form input').on('change', function() {
-   $('input[name=sns_additional_info][type="radio"]', '#product-upload-form').parent().css(
-       {'color': '#a3a3a3',
-        'border': 'solid 1px #a3a3a3',
-        'background-color':'white'
-       }
-   );
+
+function sns_additional_info_color() {
+    $('#product-upload-form input').on('change', function () {
+        color_unchecked_additional_info();
+        color_checked_additional_info();
+    });
+}
+
+function color_checked_additional_info(){
     $('input[name=sns_additional_info]:checked', '#product-upload-form').parent().css(
        {'background-color':'#648efc',
         'color': 'white',
         'border': 'solid 1px #648efc'}
    );
-});
+}
 
-/* this is for sex_color */
-$('#product-upload-form input').on('change', function() {
-   $('input[name=sex][type="radio"]', '#product-upload-form').parent().css(
+function color_unchecked_additional_info(){
+    $('input[name=sns_additional_info][type="radio"]', '#product-upload-form').parent().css(
        {'color': '#a3a3a3',
         'border': 'solid 1px #a3a3a3',
         'background-color':'white'
        }
    );
+}
+
+
+/* this is for sex_color */
+function sex_color(){
+    $('#product-upload-form input').on('change', function() {
+        color_unchecked_sex();
+        color_checked_sex();
+    });
+}
+
+function color_checked_sex(){
     $('input[name=sex]:checked', '#product-upload-form').parent().css(
        {'background-color':'#648efc',
         'color': 'white',
         'border': 'solid 1px #648efc'}
    );
-});
+}
+
+function color_unchecked_sex(){
+    $('input[name=sex][type="radio"]', '#product-upload-form').parent().css(
+       {'color': '#a3a3a3',
+        'border': 'solid 1px #a3a3a3',
+        'background-color':'white'
+       }
+   );
+}
+
+
 
 /* this is for tag */
 $('#product-upload-form input[name=tag]').on('change', function() {
@@ -334,7 +381,7 @@ $('#product-upload-form input[name=tag]').on('change', function() {
         checked_before_clicked = $('input[name=tag]:checked').next().find('.tag_image_before_click').get();
         unchecked_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_clicked').get();
         unchecked_before_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_before_click').get();
-        alert('you should select less than 5');
+        alert('포스팅가능 분야는 최대 6개까지 선택 가능합니다.');
     }
     // display attr 조정해서 이미지 바꿔주기
     unchecked_clicked.forEach(function(val){
@@ -354,8 +401,9 @@ $('#product-upload-form input[name=tag]').on('change', function() {
 /* this is for hide additional_inform, sex
  * additional_inform for facebook
   * sex for instagram */
-$('#product-upload-form input').on('change', function() {
-   if($('#id_sns_type_0').is(":checked")){
+function check_sns_type_for_display(){
+    if($('#id_sns_type_0').is(":checked")){
+        console.log('blog');
         //blog
         $('.product-upload-info.additional_info').css('display','none');
         $('.product-upload-info.sex').css('display','none');
@@ -366,6 +414,7 @@ $('#product-upload-form input').on('change', function() {
 
    }
    else if($('#id_sns_type_1').is(":checked")){
+        console.log('facebook');
         //facebook
         $('.product-upload-info.additional_info').css('display','block');
         $('.product-upload-info.sex').css('display','none');
@@ -376,16 +425,18 @@ $('#product-upload-form input').on('change', function() {
 
    }
    else if($('#id_sns_type_2').is(":checked")) {
+        console.log('instagram');
         //instagram
         $('.product-upload-info.additional_info').css('display','none');
         $('.product-upload-info.sex').css('display','block');
         $('.product-upload-sub.follower_visit_num').css('display','none');
         $('.product-upload-sub.follower_num').css('display','block');
         $('.product-upload-sub.follower_friends_num').css('display','none');
-        $('.product-upload-sub.highrank').css('display','none');
+        $('.product-upload-sub.highrank').css('display','block');
 
    }
    else if($('#id_sns_type_3').is(":checked")) {
+        console.log('kakaostory');
         //kakaostory
         $('.product-upload-info.additional_info').css('display','none');
         $('.product-upload-info.sex').css('display','none');
@@ -394,7 +445,13 @@ $('#product-upload-form input').on('change', function() {
         $('.product-upload-sub.follower_friends_num').css('display','none');
         $('.product-upload-sub.highrank').css('display','none');
    }
+}
+
+$('#product-upload-form input').on('change', function() {
+    check_sns_type_for_display();
 });
+
+
 
 $(function () {
     $('.auth-agreement').on('click', '.fa-caret-down', function () {
@@ -410,12 +467,18 @@ $(function () {
     });
 
     $('#product-upload-form').submit(function () {
-        if (!$('#agreenment1').is(":checked") || !$('#agreenment2').is(":checked")) {
+        if (!$('#agreenment1').is(":checked")) {
             alert('약관에 동의해주세요.');
             return false;
+        }else{
+            return true;
         }
     });
 });
+
+function set_input_value(selector, new_val){
+    $(selector).val(new_val);
+}
 
 /* product_edit product_previous select part
 $(function(){
