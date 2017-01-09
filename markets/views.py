@@ -135,8 +135,6 @@ def product_upload(request, product_id=None):
             instance.save()
             if tag_form.is_valid():
                 tags = request.POST.getlist('tag')
-                if len(tags)>5:
-                    print('no more than 5')
                 for tag in tags:
                     related_object_type = ContentType.objects.get_for_model(instance)
                     ProductTag.objects.create(
@@ -225,7 +223,6 @@ def product_change(request, product_id):
 
     type_ = "수정"
 
-
     seller = Seller.objects.filter(user=request.user)[0]
 
     # 리스트에 모델 담기
@@ -234,19 +231,8 @@ def product_change(request, product_id):
     # 리스트에 있는 모델들을 순회하며 json타입으로
     json_seller_products = [res.as_json().encode('utf-8','ignore') for res in seller_products]
 
-    print(json_seller_products)
-
-
+    # TODO: conflict check!
     json_arr = [res[1:-2] for res in json_seller_products]
-
-    # json_seller_products = json_seller_products.encode('utf-8','ignore')
-    #json_seller_products = serializers.serialize('json',[seller_products,])
-    #json_seller_products = json.dumps(seller_products)
-
-
-    #print(len(json_seller_products))
-    print(json_arr)
-
 
     if request.method == 'POST':
         form = ProductForm(request.POST or None, request.FILES or None, instance=product)

@@ -149,8 +149,10 @@ class Product(models.Model):
 
     def __unicode__(self):
         return u'%s' % (self.oneline_intro)
+
     def as_json(self):
         return serializers.serialize('json',[self,])
+
     """
     def as_json(self):
         return dict(
@@ -177,6 +179,7 @@ class Product(models.Model):
             message_to_admin = self.message_to_admin,
         )
     """
+
     @property
     def sns_type_image_url(self):
         image_url = None
