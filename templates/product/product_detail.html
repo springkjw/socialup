@@ -41,12 +41,14 @@
                     success: function (data) {
                         if (data['status'] == 'success') {
                             alert('장바구니에 성공적으로 담겼습니다.');
-                        } else {
+                        } else if (data['status'] == 'already_exist') {
                             alert('이미 장바구니에 있습니다.');
+                        } else {
+                            alert('다시 시도해주세요.');
                         }
+
                     },
                     error: function (data) {
-                        alert('에러');
                     }
                 });
             });
