@@ -183,14 +183,14 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
             {% for item in cart %}
                 <div class="item">
                     <div class="item-image">
-                        <img src="{{ item.item.0.item.product.get_image_url }}">
+                        <img src="{{ item.item.0.item.get_image_url }}">
                     </div>
                     <div class="item-info">
                         <div class="item-seller">
-                            {{ item.item.0.item.product.seller }}
+                            {{ item.item.0.item.seller }}
                         </div>
                         <div class="item-title">
-                            {{ item.item.0.item.product }}
+                            {{ item.item.0.item }}
                         </div>
                         <div class="item-subtitle">
                             {% for list in item.item %}

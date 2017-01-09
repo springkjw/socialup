@@ -134,7 +134,7 @@
                             <td class="history-num-u">{{ forloop.revcounter }}</td>
                             <td class="history-date-u">{{ item.timestamp|date:"m.d" }}</td>
                             <td class="history-product-u"><a
-                                    href="{{ item.product.get_absolute_url }}">{{ item.product.title|truncatechars:23 }}</a>
+                                    href="{{ item.get_absolute_url }}">{{ item.title|truncatechars:23 }}</a>
                             </td>
                             <td class="history-amount-u">{{ item.amount|multi_minus }}원</td>
                             <td class="history-status-u">{{ item.status }}</td>
