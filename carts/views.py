@@ -89,7 +89,7 @@ class CartView(SingleObjectMixin, View):
             return HttpResponseRedirect(reverse('purchase', kwargs={'cart_id': self.request.session.get('cart_id')}))
 
         if product_id:
-            product_item = CartItem.objects.filter(item__product__id=product_id)
+            product_item = CartItem.objects.filter(item__id=product_id)
             if delete_item:
                 product_item.delete()
 
