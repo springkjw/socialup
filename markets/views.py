@@ -226,7 +226,7 @@ def product_change(request, product_id):
     seller = Seller.objects.filter(user=request.user)[0]
 
     # 리스트에 모델 담기
-    seller_products = Product.objects.filter(seller=seller)
+    gseller_products = Product.objects.filter(seller=seller)
     print(seller_products)
     # 리스트에 있는 모델들을 순회하며 json타입으로
     json_seller_products = [res.as_json().encode('utf-8','ignore') for res in seller_products]
