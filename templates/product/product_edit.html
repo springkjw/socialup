@@ -14,17 +14,17 @@
     {% endblock %}
     <script type="text/javascript">
         $( "#previous_proudcts_select" ).change(function() {
-            //var temp = $("#previous_proudcts_select option:selected").text();
-            //console.log(temp);
             var selected_index = $("#previous_proudcts_select option:selected").index()-1;
             {% autoescape off %}
             var seller_products_arr = {{ seller_products }};
+            var seller_products_tag_arr = {{ tags }};
             {% endautoescape %}
+
             var selected_product = seller_products_arr[selected_index];
             var json_selected_product = jQuery.parseJSON(selected_product)["fields"];
+            var selected_tags_arr = seller_products_tag_arr[selected_index];
             $.ajax({url: "/",
                 success: function(result){
-                //console.log(json_selected_product);
                 /* type check */
                 if(json_selected_product["sns_type"]=='blog'){
                     $('#id_sns_type_0').prop('checked',true);
@@ -74,6 +74,12 @@
                     color_checked_sns_type();
                     check_sns_type_for_display();
                 }
+                uncheck_tags_for_hover();
+                check_tags_for_hover();
+                for (idx in selected_tags_arr){
+                    $("input[name=tag][value=" + selected_tags_arr[idx] + "]").prop('checked', true);
+                    check_tags_for_hover();
+                }
                 $('#id_sns_url').val(json_selected_product["sns_url"]);
                 $('#id_message_to_buyer').val(json_selected_product["message_to_buyer"]);
                 $('#id_oneline_intro').val(json_selected_product["oneline_intro"]);
@@ -103,8 +109,8 @@
         </div>
         <div class="previous_record">
             <select id="previous_proudcts_select">
-            <option value=None>--------------------</option>
-                {% for product in seller_products %}
+            <option value=None>이전 기록 불러오기</option>
+                {% for product in oneline_intros %}
                     <option value={{ product }}>{{ product|safe }}</option>
                 {% endfor %}
             </select>
@@ -261,19 +267,9 @@
                 </div>
             </div>
 
-            <div class="auth-agreement">
-                <div class="auth-agreement-title">
-                    <input type="checkbox" id="agreenment1"><label for="agreenment1">이용약관에 동의합니다.</label>
-                    <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
-                </div>
-                <div class="auth-agreement-content">
-                    {% include 'account/auth/auth_paper_3.html' %}
-                </div>
-            </div>
-
             <br>
             <div class="buttons">
-                <button class="final" type="submit">동의하고 등록하기</button>
+                <button class="final" type="submit">수정하기</button>
             </div>
         </form>
     </div>

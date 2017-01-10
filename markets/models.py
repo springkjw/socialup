@@ -221,7 +221,7 @@ class Product(models.Model):
 
 class ProductTag(models.Model):
     tag = models.CharField(choices=product_tag_list, max_length=15, null=False, )
-    content_type = models.ForeignKey(ContentType, related_name='ptags')
+    content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
 
