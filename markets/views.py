@@ -231,7 +231,6 @@ def product_change(request, product_id):
     # 리스트에 있는 모델들을 순회하며 json타입으로
     json_seller_products = [res.as_json().encode('utf-8','ignore') for res in seller_products]
 
-    # TODO: conflict check!
     json_arr = [res[1:-1] for res in json_seller_products]
 
     if request.method == 'POST':
