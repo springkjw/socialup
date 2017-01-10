@@ -231,8 +231,7 @@ def product_change(request, product_id):
     # 리스트에 있는 모델들을 순회하며 json타입으로
     json_seller_products = [res.as_json().encode('utf-8','ignore') for res in seller_products]
 
-    # TODO: conflict check!
-    json_arr = [res[1:-2] for res in json_seller_products]
+    json_arr = [res[1:-1] for res in json_seller_products]
 
     if request.method == 'POST':
         form = ProductForm(request.POST or None, request.FILES or None, instance=product)
@@ -333,7 +332,7 @@ def product_profit_manage(request):
 
         if possible_profit is None:
             possible_profit = 0
-        
+
         instance, instance_created = SellerAccount.objects.get_or_create(seller=seller)
 
         if request.method == 'POST':
@@ -348,7 +347,7 @@ def product_profit_manage(request):
 
                 return HttpResponseRedirect('/product/profit/')
         else:
-            form = SellerAccountForm(instance=instance) 
+            form = SellerAccountForm(instance=instance)
 
         template = 'seller/profit_manage.html'
         context = {
