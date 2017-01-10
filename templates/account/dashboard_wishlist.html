@@ -9,9 +9,9 @@
     <script type="text/javascript" src="{% static 'js/dashboard/wishlist.js' %}"></script>
     <script type="text/javascript">
         $(function () {
-            $('#wish_list_delete').on('click', function (e) {
+            $('.wish_list_delete').on('click', function (e) {
                 e.preventDefault();
-                var formData = $('#delete-form').serialize();
+                var formData = $(this).parent().serialize();
 
                 $.ajax({
                     type: 'GET',
@@ -27,17 +27,24 @@
                 });
             });
 
-            $('#cart-add').on('click', function (e) {
+            $('.cart-add').on('click', function (e) {
                 e.preventDefault();
-                var formData = $('#add-form').serialize();
+                var formData = $(this).parent().serialize();
 
                 $.ajax({
                     type: 'GET',
                     url: "{% url 'cart' %}",
                     data: formData,
                     success: function (data) {
-                        alert('카트에 성공적으로 추가되었습니다.');
-                        window.location.href = "{% url 'cart' %}";
+                        if (data['status'] == 'success') {
+                            alert('장바구니에 성공적으로 담겼습니다.');
+                            window.location.href = "{% url 'cart' %}";
+                        } else if (data['status'] == 'already_exist') {
+                            alert('이미 장바구니에 있습니다.');
+                        } else {
+                            console.log(data);
+                            alert('다시 시도해주세요.');
+                        }
                     },
                     error: function (response, error) {
                         $('#add-form').submit();
@@ -45,7 +52,7 @@
                 });
             });
 
-            $('#ask-seller').on('click', function () {
+            $('.ask-seller').on('click', function () {
                 startMessage('{{ user.id }}', $(this).data('id'), $(this).data('name'), $(this).data('profile'));
             });
         });
@@ -104,7 +111,7 @@
                         </div>
                         <div class="dashboard-wishlist-item-seller">
                             <p>{{ list.item.seller }}</p>
-                            <button id="ask-seller" data-id="{{ list.item.seller.user.id }}" data-name="{{ list.item.seller }}" data-profile="{{ list.item.seller.user.get_avatar }}">
+                            <button class="ask-seller" data-id="{{ list.item.seller.user.id }}" data-name="{{ list.item.seller }}" data-profile="{{ list.item.seller.user.get_avatar }}">
                                 문의하기
                             </button>
                         </div>
@@ -117,7 +124,7 @@
                                     <form method="GET" id="add-form" action="{% url 'cart' %}">
                                         <input type="hidden" name="item"
                                                value="{{ list.item.id }}"/>
-                                        <input id="cart-add" type="submit" value="장바구니"/>
+                                        <input class="cart-add" type="submit" value="장바구니"/>
                                     </form>
                                 </li>
                                 <li id="popup-buy">
@@ -131,7 +138,7 @@
                                     <form method="GET" id="delete-form" action="{% url 'wish_list' %}">
                                         <input type="hidden" name="product" value="{{ list.item.id }}"/>
                                         <input type="hidden" name="delete" value="true"/>
-                                        <input id="wish_list_delete" type="submit" value="삭제하기"/>
+                                        <input class="wish_list_delete" type="submit" value="삭제하기"/>
                                     </form>
                                 </li>
                             </ul>
