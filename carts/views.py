@@ -184,6 +184,7 @@ def add_to_cart(request, product, list):
         request.session['cart_id'] = cart_instance.id
 
     data = {
+        "cart_id": cart_id,
         "status": "fail",
     }
     # 카트 인스턴스가 존재할 때
@@ -202,4 +203,5 @@ def add_to_cart(request, product, list):
             # 없으면 카트 인스턴스 초기화
             else:
                 cart_instance = None
+        data["cart_id"] = cart_instance.id
     return data
