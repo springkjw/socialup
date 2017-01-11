@@ -87,6 +87,7 @@ class CartView(SingleObjectMixin, View):
             # return render(request, template, context)
             return HttpResponse(json.dumps(context), content_type='application/json')
 
+        # 위시리스트에서 바로구매
         if buy_id:
             # product 추가
             buy_instance = get_object_or_404(Product, id=buy_id)
@@ -114,7 +115,7 @@ class CartView(SingleObjectMixin, View):
         template = self.template_name
         return render(request, template, context)
 
-    # 카트에서 바로 구매 클릭 시
+    # 장바구니에서 바로구매
     def post(self, request, *args, **kwargs):
         option = request.POST.getlist('cart[]')
         product = Product.objects.get(id=option[0])
@@ -127,7 +128,7 @@ class CartView(SingleObjectMixin, View):
             if cart is not None:
                 data = {
                     "status": "success",
-                    "cart_id": cart.id
+                    "cart_id": cart['cart_id']
                 }
 
                 return HttpResponse(json.dumps(data), content_type='application/json')
