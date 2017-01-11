@@ -207,7 +207,7 @@ def purchase(request, cart_id):
             }
             cart_list.append(c_data)
 
-    seller = cart.items.all()[0].product.seller
+    seller = cart.items.all()[0].seller
 
     order, created = Order.objects.get_or_create(
         user=request.user,
