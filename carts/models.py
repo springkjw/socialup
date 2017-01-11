@@ -9,7 +9,8 @@ from markets.models import Product
 class CartItem(models.Model):
     cart = models.ForeignKey("Cart")
     item = models.ForeignKey(Product)
-    quantity = models.PositiveIntegerField(default=1)
+    manuscript_checked = models.BooleanField(default=False)
+    highrank_checked = models.BooleanField(default=False)
     line_item_total = models.IntegerField(default=0)
 
     def __unicode__(self):
@@ -20,11 +21,18 @@ class CartItem(models.Model):
 
 
 def cart_item_pre_save_receiver(sender, instance, *args, **kwargs):
-    qty = instance.quantity
-    if qty >= 1:
-        price = instance.item.get_price
-        line_item_total = price * qty
-        instance.line_item_total = line_item_total
+    price = instance.item.get_price
+    line_item_total = price
+
+    if instance.manuscript_checked:
+        manuscript_price = instance.item.get_manuscript_price
+        line_item_total += manuscript_price
+
+    if instance.highrank_checked:
+        highrank_price = instance.item.get_highrank_price
+        line_item_total += highrank_price
+
+    instance.line_item_total = line_item_total
 
 
 pre_save.connect(cart_item_pre_save_receiver, sender=CartItem)
