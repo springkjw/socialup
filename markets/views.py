@@ -77,6 +77,7 @@ def product_detail(request, product_id):
             return HttpResponse(json.dumps(data), content_type='application/json')
 
         if request.method == 'POST':
+            # 상품 상세 페이지에서 장바구니 추가
             if request.POST['action'] == 'cart':
                 cart = request.POST.getlist('cart[]')
 
@@ -88,6 +89,7 @@ def product_detail(request, product_id):
                     else:
                         raise Http404
 
+            # 상품 상세 페이지에서 바로구매
             elif request.POST['action'] == 'purchase':
                 option = request.POST.getlist('cart[]')
 
