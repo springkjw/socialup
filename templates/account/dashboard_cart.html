@@ -10,7 +10,6 @@
     <script type="text/javascript">
         $(function () {
             $('.buy').on('click', function () {
-                console.log('a');
                 var item = get_item($(this));
 
                 $.ajax({
@@ -22,7 +21,7 @@
                     },
                     success: function (data) {
                         if (data['status'] == 'success') {
-                            window.location.href = '/dashboard/purchase/' + data.cart_id;
+                            window.location.href = '/dashboard/purchase/' + data['cart_id'];
                         }
                     }
                 });
