@@ -60,6 +60,8 @@ def product_detail(request, product_id):
             )
 
             if created:
+                seller.num_heart += 1
+                seller.save()
                 data = {
                     "status": "success"
                 }

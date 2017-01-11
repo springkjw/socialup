@@ -160,6 +160,8 @@ class WishListView(SingleObjectMixin, View):
             wish_item = WishList.objects.get_or_create(user=user, item=product_instance)[0]
             if delete_item:
                 wish_item.delete()
+                product_instance.seller.num_heart += -1
+                product_instance.seller.save()
             else:
                 wish_item.save()
         context = {
