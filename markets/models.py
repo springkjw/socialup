@@ -136,6 +136,9 @@ class Product(models.Model):
     # 구매 만족도
     rating = models.DecimalField(default=0.00, decimal_places=2, max_digits=3)
 
+    # 위시리스트(찜하기)에 담긴 횟수
+    num_heart = models.PositiveIntegerField(default=0)
+
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 

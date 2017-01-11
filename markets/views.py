@@ -60,8 +60,12 @@ def product_detail(request, product_id):
             )
 
             if created:
-                seller.num_heart += 1
+                # num_heart 증가
+                product.num_heart += 1
+                product.save()
+                seller.total_num_heart += 1
                 seller.save()
+
                 data = {
                     "status": "success"
                 }
