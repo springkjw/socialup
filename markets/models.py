@@ -58,19 +58,6 @@ product_tag_list = (
     ("interior", "인테리어"),
     ("etc", "기타"),
 )
-"""
-("game", "게임"),
-("financial", "재테크/금융"),
-("study", "취업/학업"),
-("baby", "육아"),
-("media", "미디어/영화"),
-("music", "음악"),
-("diet", "다이어트"),
-("life", "일상/생활"),
-("picture", "사진"),
-("love", "결혼/연애"),
-("sports", "스포츠/레저"),
-"""
 
 class Product(models.Model):
     # 판매자 instance
@@ -227,5 +214,3 @@ class ProductTag(models.Model):
 
     def __unicode__(self):
         return self.tag
-
-

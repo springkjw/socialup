@@ -134,32 +134,62 @@
                             </div>
                         </div>
                     </div>
-                    <div class="product-seller">
-                        <div class="seller-id">
-                            <h2 class="header">{{ product.seller }}</h2>
-                            <i class="fa fa-heart" aria-hidden="true"></i>
-                        </div>
-                    </div>
                     <div class="seller-info">
-                        <div class="seller-img">
-                            <img id="seller" src="{{ product.seller.user.get_avatar }}">
+                        <div class="seller-right-info">
+                            <div class="seller-img">
+                                <img id="seller" src="{{ product.seller.user.get_avatar }}">
+                                <br>
+                                <h2 class="product-seller-name">{{ product.seller }}</h2>
+                            </div>
+                            <div class="show-seller-detail">
+                                <button id="btn-show-seller-detail">판매자의 상세정보 보기</button>
+                            </div>
                         </div>
                         <div class="seller-detail-info">
-                            <div class="seller-detail-info-top">
-                                <div class="seller-info-item seller-detail-total">
-                                    총 작업 갯수
-                                    <h2>{{ count }}개</h2>
+                            <div class="seller-detail-info-each top">
+                                <div class="seller-info-rating seller-rating">
+                                    판매자 평가
+                                    <div class="seller-rating" data-rating="{{ product.rating }}">
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <span class="">4/5</span>
+                                        <span class="">(28개)</span>
+                                    </div>
+                                </div>
+                                <!--
+                                <div class="seller-info-like">
+                                    <img src="/static/img/heart.png" style="width:60%;">
+                                    <div id="seller-info-like-num">236</div>
+                                </div>-->
+                            </div>
+                            <div class="seller-detail-info-each mid">
+                                <div class="seller-info-item seller-detail-intro">
+                                    <div>자기소개</div>
+                                    <div class="seller-detail-intro-content">
+                                        {% if product.seller.description %}
+                                            {{ product.seller.description }}
+                                        {% else %}
+                                        판매자에 대한 소개가 없습니다.
+                                        {% endif %}
+                                    </div>
+                                    <!--작업수
+                                    <h2>{# count #}개</h2>-->
                                 </div>
                             </div>
-                            <div class="seller-detail-info-bottom">
-                                전문가 소개
-                                <p>
-                                    {% if product.seller.description %}
-                                        {{ product.seller.description }}
-                                    {% else %}
-                                        판매자에 대한 소개가 없습니다.
-                                    {% endif %}
-                                </p>
+                            <div class="seller-detail-info-each bottom">
+                                <div class="seller-detail-session-title">
+                                    <div>최근로그인</div>
+                                    <div>작업수</div>
+                                    <div>평균 응답시간</div>
+                                </div>
+                                <div class="seller-detail-session-sub">
+                                    <div>{{ product.seller.user.last_login|date:"Y.m.d h:i" }}</div>
+                                    <div>{{ count }}개</div>
+                                    <div>1시간</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -167,7 +197,7 @@
                 <div class="info-right">
                     <div class="product-info">
                         <div class="product-title">
-                            <h2 id="product-title">{{ product.title }}</h2>
+                            <h2 id="product-title">{{ product.oneline_intro }}</h2>
                         </div>
                         <div class="product-price">
                             <h2 id="product-price"
@@ -180,12 +210,23 @@
                         </div>
                     </div>
                     <div class="product-category">
-                        <img class="product-category-image" src="{% static 'img/fashion.png'%}">
-                        <span class="product-category-text">패션/뷰티</span>
+                        {% for tag in product_tag %}
+                            <div class="product-tag-each">
+                                <img class="product-category-image" src="/static/img/{{ tag }}.png">
+                                <span class="product-category-text">{{ tag.get_tag_display }}</span>
+                            </div>
+                        {% endfor %}
                     </div>
                     <div class="product-sns">
-                        <img class="product-sns-image" src="{% static 'img/lock.png'%}">
-                        <span class="product-sns-text">SNS 주소구매 후 공개</span>
+                        {% if product.is_url_open %}
+                            <a href="{{ product.sns_url }}">
+                                <img class="product-sns-image open" src="{% static 'img/house.png'%}">
+                                <button class="product-sns-text open">판매자 SNS 바로가기</button>
+                            </a>
+                       {% else %}
+                            <img class="product-sns-image" src="{% static 'img/lock.png'%}">
+                            <span class="product-sns-text">서비스 구매 고객에게 SNS 주소 공개</span>
+                        {% endif %}
                     </div>
                     <div class="product-sub-info">
                         <div class="title">
@@ -205,7 +246,7 @@
                     </div>
                     <div class="product-sub-info">
                         <div class="title">
-                            구매만족도
+                            서비스 만족도
                         </div>
                         <div class="sub-content">
                             <div class="seller-rating" data-rating="{{ product.rating }}">
@@ -240,11 +281,20 @@
 
                     <div class="product-option">
                         <div class="product-select-list">
-                            <div class="product-select-item">
-                                <!--<input type="checkbox" name="test" value="test_val"/>-->
+                            {% if product.manuscript_available %}
+                            <div class="product-select-item manuscript">
+                                <input type="checkbox" name="test" value="test_val" id="add_manuscript-price"/>
                                 <span>원고가능</span>
-                                <span>+{{ product.manuscript_price }}원</span>
+                                <span id="product-manuscript-price">+{{ product.manuscript_price }}원</span>
                             </div>
+                            {% endif %}
+                            {% if product.highrank_available %}
+                            <div class="product-select-item highrank">
+                                <input type="checkbox" name="test" value="test_val" id="add_highrank-price"/>
+                                <span>상위노출</span>
+                                <span id="product-highrank-price">+{{ product.highrank_price }}원</span>
+                            </div>
+                            {% endif %}
                         </div>
                         <div class="product-total">
                             총 상품금액 : <span id="product-total">{{ product.price }}</span><span
@@ -253,7 +303,10 @@
                     </div>
                     <div class="product-button">
                         <form method="GET" action="">
-                            <button class="wish-list">위시리스트</button>
+                            <button class="wish-list">
+                                <img src="/static/img/zzim.png" style="width:6%";>
+                                찜하기
+                            </button>
                         </form>
                         {% csrf_token %}
                         <button class="cart">장바구니</button>
@@ -265,16 +318,16 @@
                 <div class="product-menu">
                     <ul>
                         <li id="detail-info">
-                            상품상세정보
+                            서비스 상세 설명
                         </li>
                         <li id="use-info">
-                            이용방법 및 주의사항
+                            유의사항
                         </li>
                         <li id="review-info">
-                            고객후기
+                            고객 리뷰
                         </li>
                         <li id="caution-info">
-                            포스팅 유의사항
+                            이용방법
                         </li>
                     </ul>
                 </div>
@@ -286,7 +339,7 @@
                 <div class="tab product-info">
                     <div class="product-content product-detail-info">
                         <div class="tab-title">
-                            상품상세정보
+                            서비스 상세 설명
                         </div>
                         <div class="tab-content">
                             {{ product.description|safe }}
@@ -294,7 +347,7 @@
                     </div>
                     <div class="product-content product-detail-use">
                         <div class="tab-title">
-                            이용방법 및 주의사항
+                            유의사항
                         </div>
                         <div class="tab-content">
                             {% if product.refund %}
@@ -308,7 +361,7 @@
                     </div>
                     <div class="product-content product-detail-review">
                         <div class="tab-title">
-                            고객후기
+                            고객 리뷰
                         </div>
                         <div class="tab-content">
                             <div class="total-rating seller-rating" data-rating="{{ product.rating }}">
@@ -319,9 +372,40 @@
                                 <i class="fa fa-star" aria-hidden="true"></i>
                                 <span>({{ reviews_count }})</span>
                             </div>
-                            {% if reviews %}
-                                {% for review in reviews %}
-                                    <div class="tab-review">
+                            <div class="graph-part">
+                                콘텐츠
+                                <div class="stacked-bar-graph">
+                                  <span style="width:20%" class="bar-1"></span>
+                                  <span style="width:20%" class="bar-2"></span>
+                                  <span style="width:10%" class="bar-3"></span>
+                                </div>
+                            </div>
+                            <div class="graph-part">
+                                광고효과
+                                <div class="stacked-bar-graph">
+                                  <span style="width:17%" class="bar-1"></span>
+                                  <span style="width:23%" class="bar-2"></span>
+                                  <span style="width:10%" class="bar-3"></span>
+                                </div>
+                            </div>
+                            <div class="graph-part">
+                                친절도
+                                <div class="stacked-bar-graph">
+                                  <span style="width:17%" class="bar-1"></span>
+                                  <span style="width:20%" class="bar-2"></span>
+                                  <span style="width:13%" class="bar-3"></span>
+                                </div>
+                            </div>
+                            {% if True %}
+                                <div class="tab-review">
+                                    <div class="user-img">
+                                        <img id="user" src="{{ product.seller.user.get_avatar }}">
+                                    </div>
+                                    <div class="review-wrapper">
+                                        <div class="review-user">
+                                            <span class="review-user-name">ohlee*****</span>
+                                            <span class="review-created">2017.01.13 23:11</span>
+                                        </div>
                                         <div class="seller-rating" data-rating="{{ review.rating }}">
                                             <i class="fa fa-star" aria-hidden="true"></i>
                                             <i class="fa fa-star" aria-hidden="true"></i>
@@ -329,11 +413,39 @@
                                             <i class="fa fa-star" aria-hidden="true"></i>
                                             <i class="fa fa-star" aria-hidden="true"></i>
                                         </div>
+                                        <div class="review-satisfiy">
+                                            <div class="review-satisfiy-sub contents">
+                                                콘텐츠
+                                                <div class="review-satisfiy-sub-box">불만족</div>
+                                            </div>
+                                            <div class="review-satisfiy-sub ads">
+                                                광고효과
+                                                <div class="review-satisfiy-sub-box">보통</div>
+                                            </div>
+                                            <div class="review-satisfiy-sub kindness">
+                                                친절도
+                                                <div class="review-satisfiy-sub-box">만족</div>
+                                            </div>
+                                        </div>
+                                        <div class="review-content">
+                                            광고효과도 좋고 인플루언서님이 굉장히 친절해서 만족스럽습니다.
+                                        </div>
+                                    </div>
+                                </div>
+                                {% for review in reviews %}
+                                    <div class="tab-review">
                                         <div class="review-content">
                                             {{ review.review }}
                                         </div>
                                         <div class="review-timestamp">
                                             {{ review.updated|date:'Y.m.d' }}
+                                        </div>
+                                        <div class="seller-rating" data-rating="{{ review.rating }}">
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
                                         </div>
                                     </div>
                                 {% endfor %}
@@ -346,7 +458,7 @@
                     </div>
                     <div class="product-content product-detail-caution">
                         <div class="tab-title">
-                            포스팅 유의사항
+                            이용방법
                         </div>
                         <div class="tab-content">
                             <div class="seller-img">
