@@ -118,7 +118,15 @@ def product_upload(request, product_id=None):
     form = ProductForm()
     tag_form = TagForm()
 
-    seller = Seller.objects.filter(user=request.user)[0]
+    # 만약 처음 올리는거라면 판매자로 등록
+    try:
+        seller = Seller.objects.get(user=request.user)
+    except:
+        seller = Seller(
+            user=request.user
+        )
+        seller.save()
+
     # 리스트에 모델 담기
     seller_products = Product.objects.filter(seller=seller)
 
@@ -145,15 +153,6 @@ def product_upload(request, product_id=None):
 
     # 저장하기 눌렀을 경우
     if request.method == 'POST':
-        # 만약 처음 올린거라면 판매자로 등록
-        try:
-            seller = Seller.objects.get(user=request.user)
-        except:
-            seller = Seller(
-                user=request.user
-            )
-            seller.save()
-
         form = ProductForm(request.POST or None, request.FILES or None)
         tag_form = TagForm(request.POST)
         if form.is_valid():
