@@ -218,6 +218,14 @@ class Product(models.Model):
     def get_price(self):
         return self.price
 
+    @property
+    def get_manuscript_price(self):
+        return self.manuscript_price
+
+    @property
+    def get_highrank_price(self):
+        return self.highrank_price
+
 
 class ProductTag(models.Model):
     tag = models.CharField(choices=product_tag_list, max_length=15, null=False, )
