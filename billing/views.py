@@ -216,9 +216,6 @@ def purchase(request, cart_id):
         order_total=cart.subtotal
     )
 
-    for item in cart_list:
-        print(Product.objects.filter(cartitem__id=item['item'][0].id))
-
 
     template = 'account/dashboard_purchase.html'
     context = {

@@ -202,8 +202,8 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                             {% endfor %}
                         </div>
                     </div>
-                    <div class="item-price" manuscript="{{ item.manuscript_price }}">
-                        <h2>{{ item.price }}원</h2>
+                    <div class="item-price">
+                        <h2>{{ item.item.0.line_item_total }}원</h2>
                     </div>
                 </div>
             {% endfor %}
