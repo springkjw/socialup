@@ -20,9 +20,12 @@
                     success: function (data) {
                         if (data['status'] == 'success') {
                             $('.wish-list-modal').show();
-                            alert('위시리스트에 성공적으로 담겼습니다.');
+                            $('.wish-list-zzim.on').show();
+                            $('.wish-list-zzim.off').hide();
+
                         } else {
-                            alert('이미 위시리스트에 있습니다.');
+                            $('.wish-list-zzim.on').hide();
+                            $('.wish-list-zzim.off').show();
                         }
                     }
                 });
@@ -310,8 +313,14 @@
                             </div>
                         </div>
                             <button class="wish-list">
-                                <img src="/static/img/zzim.png" style="width:7%" class="wish-list-zzim on";>
-                                <img src="/static/img/zzim_un.png" style="width:7%" class="wish-list-zzim off";>
+                                {% if is_user_wished %}
+                                    <img src="/static/img/zzim.png" style="width:7%; display:inline-block" class="wish-list-zzim on";>
+                                    <img src="/static/img/zzim_un.png" style="width:7%; display:none" class="wish-list-zzim off";>
+                                {% else %}
+                                    <img src="/static/img/zzim.png" style="width:7%; display:none" class="wish-list-zzim on";>
+                                    <img src="/static/img/zzim_un.png" style="width:7%; display:inline-block" class="wish-list-zzim off";>
+                                {% endif %}
+
                                 찜하기
                             </button>
                         {% csrf_token %}

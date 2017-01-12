@@ -76,3 +76,7 @@ $(".product-select-item.highrank input").change(function() {
     }
             $('#product-total').digits();
 });
+
+function heart_on_off(){
+
+}

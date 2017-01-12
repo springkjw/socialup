@@ -1014,11 +1014,6 @@ li:nth-child(5) .circle-text {
 }
 
 
-/* zzim part */
-.wish-list-zzim.off{
-    display: none;
-}
-
 /* wish-list-modal part */
 .wish-list-modal{
     display: none;

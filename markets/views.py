@@ -45,6 +45,11 @@ def product_detail(request, product_id):
 
     reviews = ProductReview.objects.filter(product=product)
     reviews_count = reviews.count()
+    # 현재 product가 담긴 현재 유저의 찜목록
+    is_user_wished = False
+    user_wished_list = WishList.objects.filter(user=request.user, item=product.id)
+    if user_wished_list:
+        is_user_wished = True
 
     if request.is_ajax():
         wish = request.GET.get('wish')
@@ -72,6 +77,11 @@ def product_detail(request, product_id):
                     "status": "success"
                 }
             else:
+                wish_list.delete()
+                product.num_heart += -1
+                product.save()
+                seller.total_num_heart += -1
+                seller.save()
                 data = {
                     "status": "fail"
                 }
@@ -115,7 +125,8 @@ def product_detail(request, product_id):
         'count': seller_count,
         'rating': seller_rating,
         'reviews': reviews,
-        'reviews_count': reviews_count
+        'reviews_count': reviews_count,
+        'is_user_wished':is_user_wished
     }
     return render(request, template, context)
 
