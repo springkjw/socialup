@@ -10,6 +10,7 @@
     <script type="text/javascript" src="{% static 'js/product-detail.js' %}"></script>
     <script type="text/javascript">
         $(function () {
+            // 상품 상세 페이지에서 위시리스트 담기(찜하기)
             $('.product-button .wish-list').on('click', function () {
                 $.ajax({
                     method: 'GET',
@@ -31,6 +32,7 @@
                 });
             });
 
+            // 상품 상세 페이지에서 장바구니 담기
             $('.product-button .cart').on('click', function () {
                 var item = get_item();
 
@@ -40,7 +42,9 @@
                     data: {
                         csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
                         cart: item,
-                        action: 'cart'
+                        action: 'cart',
+                        manuscript_checked: $('#add-manuscript-price').is(':checked'),
+                        highrank_checked: $('#add-highrank-price').is(':checked')
                     },
                     success: function (data) {
                         if (data['status'] == 'success') {
@@ -57,6 +61,7 @@
                 });
             });
 
+            // 상품 상세 페이지에서 바로구매
             $('.product-button .purchase').on('click', function () {
                 var item = get_item();
 
@@ -66,7 +71,9 @@
                     data: {
                         csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
                         cart: item,
-                        action: 'purchase'
+                        action: 'purchase',
+                        manuscript_checked: $('#add-manuscript-price').is(':checked'),
+                        highrank_checked: $('#add-highrank-price').is(':checked')
                     },
                     success: function (data) {
                         if (data['status'] == 'success') {
@@ -76,6 +83,7 @@
                 });
             });
 
+            // 상품 상세 페이지에서 문의하기
             $('.ask-seller').on('click', function () {
                 startMessage('{{ user.id }}',
                         '{{ product.seller.user.id }}', '{{ product.seller.user.get_short_name }}', '{{ product.seller.user.get_avatar }}');
