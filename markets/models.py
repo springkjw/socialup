@@ -58,19 +58,6 @@ product_tag_list = (
     ("interior", "인테리어"),
     ("etc", "기타"),
 )
-"""
-("game", "게임"),
-("financial", "재테크/금융"),
-("study", "취업/학업"),
-("baby", "육아"),
-("media", "미디어/영화"),
-("music", "음악"),
-("diet", "다이어트"),
-("life", "일상/생활"),
-("picture", "사진"),
-("love", "결혼/연애"),
-("sports", "스포츠/레저"),
-"""
 
 class Product(models.Model):
     # 판매자 instance
@@ -135,6 +122,9 @@ class Product(models.Model):
 
     # 구매 만족도
     rating = models.DecimalField(default=0.00, decimal_places=2, max_digits=3)
+
+    # 위시리스트(찜하기)에 담긴 횟수
+    num_heart = models.PositiveIntegerField(default=0)
 
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
@@ -218,14 +208,20 @@ class Product(models.Model):
     def get_price(self):
         return self.price
 
+    @property
+    def get_manuscript_price(self):
+        return self.manuscript_price
+
+    @property
+    def get_highrank_price(self):
+        return self.highrank_price
+
 
 class ProductTag(models.Model):
     tag = models.CharField(choices=product_tag_list, max_length=15, null=False, )
-    content_type = models.ForeignKey(ContentType, related_name='ptags')
+    content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
 
     def __unicode__(self):
         return self.tag
-
-

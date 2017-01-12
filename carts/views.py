@@ -65,14 +65,29 @@ class CartView(SingleObjectMixin, View):
         buy_id = request.GET.get("buy_item")
         delete_item = request.GET.get("delete")
 
+        # 위시리스트에서 장바구니 담기
         if item_id:
+            context = {
+                "status": "fail"
+            }
             item_instance = get_object_or_404(Product, id=item_id)
-            cart_item = CartItem.objects.get_or_create(cart=cart, item=item_instance)[0]
+            cart_item, created = CartItem.objects.get_or_create(cart=cart, item=item_instance)
+            if created:
+                context["status"] = "success"
+            else:
+                context["status"] = "already_exist"
+
             if delete_item:
                 cart_item.delete()
             else:
                 cart_item.save()
 
+            # template = self.template_name
+            template = WishListView.template_name
+            # return render(request, template, context)
+            return HttpResponse(json.dumps(context), content_type='application/json')
+
+        # 위시리스트에서 바로구매
         if buy_id:
             # product 추가
             buy_instance = get_object_or_404(Product, id=buy_id)
@@ -88,6 +103,7 @@ class CartView(SingleObjectMixin, View):
 
             return HttpResponseRedirect(reverse('purchase', kwargs={'cart_id': self.request.session.get('cart_id')}))
 
+        # 장바구니에서 장바구니 아이템 삭제
         if product_id:
             product_item = CartItem.objects.filter(item__id=product_id)
             if delete_item:
@@ -99,7 +115,7 @@ class CartView(SingleObjectMixin, View):
         template = self.template_name
         return render(request, template, context)
 
-    # 카트에서 바로 구매 클릭 시
+    # 장바구니에서 바로구매
     def post(self, request, *args, **kwargs):
         option = request.POST.getlist('cart[]')
         product = Product.objects.get(id=option[0])
@@ -112,7 +128,7 @@ class CartView(SingleObjectMixin, View):
             if cart is not None:
                 data = {
                     "status": "success",
-                    "cart_id": cart.id
+                    "cart_id": cart['cart_id']
                 }
 
                 return HttpResponse(json.dumps(data), content_type='application/json')
@@ -145,6 +161,13 @@ class WishListView(SingleObjectMixin, View):
             wish_item = WishList.objects.get_or_create(user=user, item=product_instance)[0]
             if delete_item:
                 wish_item.delete()
+
+                # num_heart 감소
+                product_instance.num_heart += -1
+                product_instance.save()
+                product_instance.seller.total_num_heart += -1
+                product_instance.seller.save()
+
             else:
                 wish_item.save()
         context = {
@@ -169,6 +192,7 @@ def add_to_cart(request, product, list):
         request.session['cart_id'] = cart_instance.id
 
     data = {
+        "cart_id": cart_id,
         "status": "fail",
     }
     # 카트 인스턴스가 존재할 때
@@ -187,4 +211,5 @@ def add_to_cart(request, product, list):
             # 없으면 카트 인스턴스 초기화
             else:
                 cart_instance = None
+        data["cart_id"] = cart_instance.id
     return data

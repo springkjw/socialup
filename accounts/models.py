@@ -288,6 +288,7 @@ class Seller(models.Model):
     rating = models.DecimalField(default=0.00, decimal_places=2, max_digits=3)
     is_active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    total_num_heart = models.PositiveIntegerField(default=0)
 
     def __unicode__(self):
         user = self.user

@@ -35,6 +35,8 @@ def product_detail(request, product_id):
     # product_id로 상품 조회
     product_instance = Product.objects.active()
     product = get_object_or_404(product_instance, id=product_id)
+    product_tag = ProductTag.objects.filter(object_id=product.id, content_type=ContentType.objects.get_for_model(product))
+
     # product 판매자
     seller = product.seller
     # product 판매자 평점 조회
@@ -60,6 +62,12 @@ def product_detail(request, product_id):
             )
 
             if created:
+                # num_heart 증가
+                product.num_heart += 1
+                product.save()
+                seller.total_num_heart += 1
+                seller.save()
+
                 data = {
                     "status": "success"
                 }
@@ -71,6 +79,7 @@ def product_detail(request, product_id):
             return HttpResponse(json.dumps(data), content_type='application/json')
 
         if request.method == 'POST':
+            # 상품 상세 페이지에서 장바구니 추가
             if request.POST['action'] == 'cart':
                 cart = request.POST.getlist('cart[]')
 
@@ -82,6 +91,7 @@ def product_detail(request, product_id):
                     else:
                         raise Http404
 
+            # 상품 상세 페이지에서 바로구매
             elif request.POST['action'] == 'purchase':
                 option = request.POST.getlist('cart[]')
 
@@ -102,6 +112,7 @@ def product_detail(request, product_id):
     template = 'product/product_detail.html'
     context = {
         'product': product,
+        'product_tag':product_tag,
         'count': seller_count,
         'rating': seller_rating,
         'reviews': reviews,
@@ -116,17 +127,41 @@ def product_upload(request, product_id=None):
     form = ProductForm()
     tag_form = TagForm()
 
+    # 만약 처음 올리는거라면 판매자로 등록
+    try:
+        seller = Seller.objects.get(user=request.user)
+    except:
+        seller = Seller(
+            user=request.user
+        )
+        seller.save()
+
+    # 리스트에 모델 담기
+    seller_products = Product.objects.filter(seller=seller)
+
+    # 태그 리스트, oneline_intro 리스트 만들기
+    seller_tag_list = []
+    products_intro_list = []
+    for product in seller_products:
+        temp_tag = ProductTag.objects.filter(object_id=product.id,
+                                             content_type=ContentType.objects.get_for_model(product))
+        products_intro_list.append(product.oneline_intro)
+        if not temp_tag:
+            seller_tag_list.append(temp_tag)
+            pass
+        else:
+            temp_arr = []
+            for ta in temp_tag:
+                temp_arr.append(ta.tag.encode('utf-8', 'ignore'))
+            seller_tag_list.append(temp_arr)
+
+    # 리스트에 있는 모델들을 순회하며 json타입으로
+    json_seller_products = [res.as_json().encode('utf-8', 'ignore') for res in seller_products]
+
+    json_arr = [res[1:-1] for res in json_seller_products]
+
     # 저장하기 눌렀을 경우
     if request.method == 'POST':
-        # 만약 처음 올린거라면 판매자로 등록
-        try:
-            seller = Seller.objects.get(user=request.user)
-        except:
-            seller = Seller(
-                user=request.user
-            )
-            seller.save()
-
         form = ProductForm(request.POST or None, request.FILES or None)
         tag_form = TagForm(request.POST)
         if form.is_valid():
@@ -156,6 +191,9 @@ def product_upload(request, product_id=None):
         "form": form,
         "tag_form": tag_form,
         "type_": type_,
+        "seller_products": json_arr,
+        "tags": seller_tag_list,
+        "oneline_intros": products_intro_list
     }
     return render(request, template, context)
 
@@ -224,10 +262,26 @@ def product_change(request, product_id):
     type_ = "수정"
 
     seller = Seller.objects.filter(user=request.user)[0]
-
     # 리스트에 모델 담기
-    gseller_products = Product.objects.filter(seller=seller)
-    print(seller_products)
+    seller_products = Product.objects.filter(seller=seller)
+
+    # 태그 리스트, oneline_intro 리스트 만들기
+    seller_tag_list = []
+    products_intro_list = []
+    for product in seller_products:
+        temp_tag = ProductTag.objects.filter(object_id=product.id,
+                                             content_type=ContentType.objects.get_for_model(product))
+        products_intro_list.append(product.oneline_intro)
+        if not temp_tag:
+            seller_tag_list.append(temp_tag)
+            pass
+        else:
+            temp_arr = []
+            for ta in temp_tag:
+                temp_arr.append(ta.tag.encode('utf-8', 'ignore'))
+            seller_tag_list.append(temp_arr)
+
+>>>>>>> 88bc1be28609553450049598a64505d08968c9cf
     # 리스트에 있는 모델들을 순회하며 json타입으로
     json_seller_products = [res.as_json().encode('utf-8','ignore') for res in seller_products]
 
@@ -266,7 +320,9 @@ def product_change(request, product_id):
         "form": form,
         "tag_form": tag_form,
         "type_": type_,
-        "seller_products":json_arr
+        "seller_products":json_arr,
+        "tags":seller_tag_list,
+        "oneline_intros": products_intro_list
     }
 
     return render(request, template, context)

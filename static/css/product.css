@@ -915,7 +915,7 @@ input::-webkit-input-placeholder {
 
 .product-upload-info .product-upload-sub input[type="url"]{
     border:1px solid #a3a3a3;
-    width:8em;
+    width:15em;
     height:1.5em;
     margin-top:1.5%;
 }
@@ -1199,4 +1199,35 @@ input::-webkit-input-placeholder {
     line-height: 1.5;
     color: #555555;
     overflow: scroll;
+}
+
+
+/* previous record */
+.previous_record{
+    position:relative;
+    top:0;
+    left:77%;
+    margin-bottom: 20px;
+    padding: 0;
+    border: 1px solid #ccc;
+    width: 170px;
+    overflow: hidden;
+    background-color: #fff;
+    background: #fff url("http://www.scottgood.com/jsg/blog.nsf/images/arrowdown.gif") no-repeat 95% 50%;
+}
+
+.previous_record select{
+    padding: 5px 8px;
+    width: 100%;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+}
+
+.previous_record select:focus {
+    outline: none;
 }
