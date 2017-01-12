@@ -65,7 +65,7 @@ class CartView(SingleObjectMixin, View):
         buy_id = request.GET.get("buy_item")
         delete_item = request.GET.get("delete")
 
-        # 위시리스트에서 장바구니 담기
+        # 위시리스트에서 장바구니 담기   # 삭제 예정
         if item_id:
             context = {
                 "status": "fail"
@@ -117,20 +117,19 @@ class CartView(SingleObjectMixin, View):
 
     # 장바구니에서 바로구매
     def post(self, request, *args, **kwargs):
-        option = request.POST.getlist('cart[]')
-        product = Product.objects.get(id=option[0])
+        cart_items = request.POST.getlist('cart[]')
+        product = Product.objects.get(id=cart_items[0])
 
-        if option:
+        if cart_items:
             del request.session['cart_id']
 
-            cart = add_to_cart(request, product, option)
+            cart = add_to_cart(request, product, cart_items)
 
             if cart is not None:
                 data = {
                     "status": "success",
                     "cart_id": cart['cart_id']
                 }
-
                 return HttpResponse(json.dumps(data), content_type='application/json')
             else:
                 raise Http404
@@ -178,7 +177,7 @@ class WishListView(SingleObjectMixin, View):
         return render(request, template, context)
 
 
-def add_to_cart(request, product, list):
+def add_to_cart(request, product, cart_items):
     # request 세션 100분 설정
     request.session.set_expiry(6000)
     # card_id를 세션에서 가져오기
@@ -198,17 +197,43 @@ def add_to_cart(request, product, list):
     }
     # 카트 인스턴스가 존재할 때
     if cart_instance is not None:
-        # ajax로 넘어온 variation item 조회
-        for item in list:
-            # variation item이 존재할 때
+        # ajax로 넘어온 item 조회
+        for item in cart_items:
+            # item이 존재할 때
             if Product.objects.filter(id=item).exists():
-                option_instance = Product.objects.get(id=item)
-                cart_item, created = CartItem.objects.get_or_create(cart=cart_instance, item=option_instance)
-                if created:
-                    data["status"] = "success"
+                item_instance = Product.objects.get(id=item)
+
+                manuscript = False
+                highrank = False
+                if request.POST['manuscript_checked'] == 'true':
+                    manuscript = True
+                if request.POST['highrank_checked'] == 'true':
+                    highrank = True
+
+                cart_item_list = CartItem.objects.filter(cart=cart_instance, item=item_instance)
+                # 장바구니에 해당 상품이 이미 있을 때
+                if cart_item_list:
+                    # 추가 옵션(원고, 상위노출 여부)도 동일 할 때
+                    if cart_item_list[0].manuscript_checked == manuscript and cart_item_list[0].highrank_checked == highrank:
+                        data["status"] = "already_exist"
+                    # 추가 옵션이 변경 되었을 때
+                    else:
+                        cart_item_list[0].manuscript_checked = manuscript
+                        cart_item_list[0].highrank_checked = highrank
+                        cart_item_list[0].save()
+                        data["status"] = "success"
+
+                # 장바구니에 해당 상품이 없을 때
                 else:
-                    data["status"] = "already_exist"
-                cart_item.save()
+                    cart_item, created = CartItem.objects.get_or_create(
+                        cart=cart_instance,
+                        item=item_instance,
+                        manuscript_checked=manuscript,
+                        highrank_checked=highrank
+                    )
+                    data["status"] = "success"
+                    cart_item.save()
+
             # 없으면 카트 인스턴스 초기화
             else:
                 cart_instance = None

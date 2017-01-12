@@ -92,6 +92,8 @@ function highrank_price_change_for_total(){
 }
 
 
+/* add highrank part */
+// $(".product-select-item.highrank input").change(function() {
 function add_highrank_price_to_total_init() {
     var previous_total = parseInt(removeComma($('.product-total #product-total').text()));
     var highrank_price = parseInt(removeComma($('#product-highrank-price').text()));
