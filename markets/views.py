@@ -281,7 +281,6 @@ def product_change(request, product_id):
                 temp_arr.append(ta.tag.encode('utf-8', 'ignore'))
             seller_tag_list.append(temp_arr)
 
->>>>>>> 88bc1be28609553450049598a64505d08968c9cf
     # 리스트에 있는 모델들을 순회하며 json타입으로
     json_seller_products = [res.as_json().encode('utf-8','ignore') for res in seller_products]
 
