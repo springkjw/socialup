@@ -1023,13 +1023,83 @@ li:nth-child(5) .circle-text {
 }
 .wish-list-modal-content{
     width:200px;
-    height:75px;
+    height:85px;
     background-color: #FFFFFFFF;
     border:1px solid #5a5a5a;
     border-radius:3px;
     text-align: center;
+    font-weight:bold;
 }
 
-.wish-list-modal-content-top{
-    margin-top:20px;
+.wish-list-modal-content .wish-list-modal-btn-close{
+    float:right;
+    width:8%;
+    background: none;
+    margin-top:7px;
+    margin-right:7px;
+}
+
+.wish-list-modal-content .wish-list-modal-content-top{
+    margin-top:26px;
+}
+
+.wish-list-modal-content .wish-list-modal-btn-list{
+    text-decoration: underline;
+    color:blue;
+    font-weight: normal;
+}
+
+/* cart-confirm-modal */
+.cart-confirm-modal{
+    display: none;
+    width:50%;
+    height:25%;
+    position:absolute;
+    left:25%;
+    top:25%;
+    border:1px solid black;
+    z-index: 3;
+    background-color: white;
+    text-align:center;
+}
+
+.cart-confirm-modal .cart-confirm-modal-btn-close{
+    float:right;
+    width:5%;
+    background: none;
+    margin-top:5%;
+    margin-right:8%;
+}
+
+.cart-confirm-modal .cart-confirm-modal-title{
+    padding-top:6%;
+    width:86%;
+    border-bottom:1px solid black;
+    margin-left:7%;
+    text-align:left;
+    height:13%;
+    font-weight:bold;
+}
+
+.cart-confirm-modal .cart-confirm-modal-content{
+    margin-top:8%;
+    font-size:18px;
+}
+
+.cart-confirm-modal .cart-confirm-modal-btns{
+    margin-top:6%;
+}
+
+.cart-confirm-modal .cart-confirm-modal-btns .cart-confirm-modal-btn{
+    width:85px;
+    height:33px;
+    background-color:white;
+    border-radius:3px;
+    border:1px solid #cecece;
+}
+
+.cart-confirm-modal .cart-confirm-modal-btns .cart-confirm-modal-btn.yes{
+    background-color:#648efc;
+    border:1px solid #648efc;
+    color:white;
 }

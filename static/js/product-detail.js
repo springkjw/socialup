@@ -77,6 +77,12 @@ $(".product-select-item.highrank input").change(function() {
             $('#product-total').digits();
 });
 
-function heart_on_off(){
+/* wish-list-modal part */
+$('.wish-list-modal-btn-close').on('click', function () {
+    $('.wish-list-modal').hide();
+})
 
-}
+/* car-modal part */
+$('.cart-confirm-modal-btn-close').on('click', function () {
+    $('.cart-confirm-modal').hide();
+})
