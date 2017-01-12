@@ -65,7 +65,7 @@ class CartView(SingleObjectMixin, View):
         buy_id = request.GET.get("buy_item")
         delete_item = request.GET.get("delete")
 
-        # 위시리스트에서 장바구니 담기
+        # 위시리스트에서 장바구니 담기   # 삭제 예정
         if item_id:
             context = {
                 "status": "fail"
@@ -202,7 +202,15 @@ def add_to_cart(request, product, list):
             # variation item이 존재할 때
             if Product.objects.filter(id=item).exists():
                 option_instance = Product.objects.get(id=item)
-                cart_item, created = CartItem.objects.get_or_create(cart=cart_instance, item=option_instance)
+                manuscript_checked = request.POST['manuscript_checked']
+                highrank_checked = request.POST['highrank_checked']
+
+                cart_item, created = CartItem.objects.get_or_create(
+                    cart=cart_instance,
+                    item=option_instance,
+                    manuscript_checked=manuscript_checked,
+                    highrank_checked=highrank_checked
+                )
                 if created:
                     data["status"] = "success"
                 else:
