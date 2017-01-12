@@ -44,7 +44,6 @@ $(document).ready(function() {
     /* Adding comma */
     var cash  = parseInt($('.cash span').text());
     cash = AddComma(cash);
-    $('.cash span').text(cash + '원~');
 });
 
 function AddComma(data_value) {

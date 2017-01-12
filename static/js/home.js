@@ -106,7 +106,6 @@ $(document).ready(function(){
         $(this).find('.circle-wrapper .circle-list').eq(0).find('.circle-text').css({'background-color': color, 'color': 'white'});
         var cash  = parseInt($(this).find('.cash span').text());
         cash = AddComma(cash);
-        $(this).find('.cash span').text(cash + '원~');
         var num = 1;
         if(num == 1){
             $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'-10px', 'top':'60px', 'transform': 'rotate(18deg)'});
