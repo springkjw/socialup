@@ -42,39 +42,65 @@ $(document).ready(function() {
         });
     }
     /* Adding comma */
-    var cash  = parseInt($('.cash span').text());
-    cash = AddComma(cash);
+    $('.cash .cash-price').digits();
+    add_manuscript_price_to_total_init();
+    add_highrank_price_to_total_init();
+    highrank_price_change_for_total();
+    manuscript_price_change_for_total();
 });
 
-function AddComma(data_value) {
-    return Number(data_value).toLocaleString('en');
+
+/* add manuscript part */
+function manuscript_price_change_for_total() {
+    $(".product-select-item.manuscript input").change(function () {
+        var previous_total = parseInt(removeComma($('.product-total #product-total').text()));
+        var manuscript_price = parseInt(removeComma($('#product-manuscript-price').text()));
+        if (this.checked) {
+            $('.product-total #product-total').text(previous_total + manuscript_price);
+        }
+        else {
+            $('.product-total #product-total').text(previous_total - manuscript_price);
+        }
+        $('#product-total').digits();
+    });
 }
 
-/* add manuscript part */
-$(".product-select-item.manuscript input").change(function() {
-    var previous_total = parseInt(removeComma($('.product-total #product-total').text()));
-    var manuscript_price = parseInt(removeComma($('#product-manuscript-price').text()));
-    if(this.checked) {
-        $('.product-total #product-total').text(previous_total+manuscript_price);
-    }
-    else{
-        $('.product-total #product-total').text(previous_total-manuscript_price);
-    }
-            $('#product-total').digits();
-});
+
+function add_manuscript_price_to_total_init() {
+        var previous_total = parseInt(removeComma($('.product-total #product-total').text()));
+        var manuscript_price = parseInt(removeComma($('#product-manuscript-price').text()));
+        if ($('.product-select-item.manuscript input').is(':checked')) {
+            $('.product-total #product-total').text(previous_total + manuscript_price);
+        }
+        $('#product-total').digits();
+}
+
 
 /* add manuscript part */
-$(".product-select-item.highrank input").change(function() {
+function highrank_price_change_for_total(){
+    $(".product-select-item.highrank input").change(function() {
+        var previous_total = parseInt(removeComma($('.product-total #product-total').text()));
+        var highrank_price = parseInt(removeComma($('#product-highrank-price').text()));
+        if(this.checked) {
+            $('.product-total #product-total').text(previous_total+highrank_price);
+        }
+        else{
+            $('.product-total #product-total').text(previous_total-highrank_price);
+        }
+            $('#product-total').digits();
+    });
+}
+
+
+function add_highrank_price_to_total_init() {
     var previous_total = parseInt(removeComma($('.product-total #product-total').text()));
     var highrank_price = parseInt(removeComma($('#product-highrank-price').text()));
-    if(this.checked) {
+    if($('.product-select-item.highrank input').is(':checked')) {
         $('.product-total #product-total').text(previous_total+highrank_price);
     }
-    else{
-        $('.product-total #product-total').text(previous_total-highrank_price);
-    }
-            $('#product-total').digits();
-});
+    $('#product-total').digits();
+}
+
 
 /* wish-list-modal part */
 $('.wish-list-modal-btn-close').on('click', function () {
