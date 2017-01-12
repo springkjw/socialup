@@ -64,7 +64,7 @@ $(".product-select-item.manuscript input").change(function() {
             $('#product-total').digits();
 });
 
-/* add manuscript part */
+/* add highrank part */
 $(".product-select-item.highrank input").change(function() {
     var previous_total = parseInt(removeComma($('.product-total #product-total').text()));
     var highrank_price = parseInt(removeComma($('#product-highrank-price').text()));
