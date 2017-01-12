@@ -495,16 +495,39 @@
                             이용방법
                         </div>
                         <div class="tab-content">
-                            <div class="seller-img">
-                                <img id="seller" src="{{ product.seller.user.get_avatar }}">
-                            </div>
-                            <div class="tab-caution">
-                                {% if product.required %}
-                                    {{ product.required }}
-                                {% else %}
-                                    유의사항이 없습니다.
-                                {% endif %}
-                            </div>
+                            <img id="caution-image" src="/static/img/guide.png">
+                            <ul id="caution-ul" >
+                                <li>
+                                    <div class="caution-div-each">
+                                        <span class="caution-div-num">01</span><br>
+                                        광고에 적합한 SNS의 종류와 테마 선택
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="caution-div-each">
+                                        <span class="caution-div-num">02</span><br>
+                                        1회 포스팅 비용과 영향력 비교
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="caution-div-each">
+                                        <span class="caution-div-num">03</span><br>
+                                        인플루언서에게 포스팅 견적 문의
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="caution-div-each">
+                                        <span class="caution-div-num">04</span><br>
+                                        포스팅 서비스 구매 및 자료 전달
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="caution-div-each">
+                                        <span class="caution-div-num">05</span><br>
+                                        업로드 확인 후 구매 결정
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
