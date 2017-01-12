@@ -279,7 +279,7 @@ def product_change(request, product_id):
     products_intro_list = []
     for product in seller_products:
         temp_tag = ProductTag.objects.filter(object_id=product.id,
-                                             content_type=ContentType.objects.get_for_model(product))
+        content_type=ContentType.objects.get_for_model(product))
         products_intro_list.append(product.oneline_intro)
         if not temp_tag:
             seller_tag_list.append(temp_tag)

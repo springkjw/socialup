@@ -224,8 +224,8 @@
                                             </div>
                                         </ul>
                                         <div class="cash">
-                                            <span style="font-size:1.2em; color:grey;" data-price="{{ product.price }}">
-                                                {{ product.price }}원
+                                            <span class="cash-price" style="font-size:1.2em; color:grey;" data-price="{{ product.price }}">
+                                               {{ product.price }}원
                                                 {% if product.manuscript_price > 0 or product.highrank_price > 0 %}
                                                     ~
                                                 {% endif %}
@@ -303,7 +303,12 @@
                                             </div>
                                         </ul>
                                         <div class="cash">
-                                            <span style="font-size:1.2em; color:grey;" data-price="{{ product.price }}">{{ product.price }}원~</span>
+                                            <span class="cash-price" style="font-size:1.2em; color:grey;" data-price="{{ product.price }}">
+                                               {{ product.price }}원
+                                                {% if product.manuscript_price > 0 or product.highrank_price > 0 %}
+                                                    ~
+                                                {% endif %}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>

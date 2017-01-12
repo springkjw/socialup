@@ -48,7 +48,13 @@
                     },
                     success: function (data) {
                         if (data['status'] == 'success') {
-                            alert('장바구니에 성공적으로 담겼습니다.');
+                            $('.cart-confirm-modal').show();
+                            $('.cart-confirm-modal-btn.yes').on('click', function () {
+                                window.location.href = '/dashboard/purchase/cart';
+                            })
+                            $('.cart-confirm-modal-btn.no').on('click', function () {
+                                $('.cart-confirm-modal').hide();
+                            })
                         } else if (data['status'] == 'already_exist') {
                             alert('이미 장바구니에 있습니다.');
                         } else {
@@ -137,8 +143,8 @@
                                 </div>
                             </ul>
                             <div class="cash">
-                                <span style="font-size:1.5em; color:grey;">
-                                    {{ product.price }}원 여기
+                                <span class="cash-price" style="font-size:1.5em; color:grey;">
+                                    {{ product.price }}원
                                     {% if product.manuscript_price > 0 or product.highrank_price > 0 %}
                                         ~
                                     {% endif %}
@@ -224,7 +230,7 @@
                     <div class="product-category">
                         {% for tag in product_tag %}
                             <div class="product-tag-each">
-                                <img class="product-category-image" src="/static/img/{{ tag }}.png">
+                                <img class="product-category-image" src="/static/img/{{ tag }}_click.png">
                                 <span class="product-category-text">{{ tag.get_tag_display }}</span>
                             </div>
                         {% endfor %}
@@ -295,14 +301,14 @@
                         <div class="product-select-list">
                             {% if product.manuscript_available %}
                             <div class="product-select-item manuscript">
-                                <input type="checkbox" name="test" value="manuscript-available" id="add-manuscript-price"/>
+                                <input type="checkbox" name="manuscript-available" value="manuscript-available" id="add-manuscript-price"/>
                                 <span>원고가능</span>
                                 <span id="product-manuscript-price">+{{ product.manuscript_price }}원</span>
                             </div>
                             {% endif %}
                             {% if product.highrank_available %}
                             <div class="product-select-item highrank">
-                                <input type="checkbox" name="test" value="test_val" id="add-highrank-price"/>
+                                <input type="checkbox" name="highrank-available" value="highrank-available" id="add-highrank-price"/>
                                 <span>상위노출</span>
                                 <span id="product-highrank-price">+{{ product.highrank_price }}원</span>
                             </div>
@@ -316,8 +322,9 @@
                     <div class="product-button">
                         <div class="wish-list-modal">
                             <div class="wish-list-modal-content">
-                                <div class="wish-list-modal-content-top">찜하기가 되었습니다.</div>
-                                <a href="#" >전체 목록 보기</a>
+                                <button class="wish-list-modal-btn-close" ><img src="/static/img/cancle.png" style="width:100%;"></button>
+                                <div class="wish-list-modal-content-top"><span style="color:hotpink">찜하기</span>가 되었습니다.</div>
+                                <a href="#" class="wish-list-modal-btn-list">전체 목록 보기</a>
                             </div>
                         </div>
                             <button class="wish-list">
@@ -332,6 +339,18 @@
                                 찜하기
                             </button>
                         {% csrf_token %}
+                        <div class="cart-confirm-modal">
+                            <button class="cart-confirm-modal-btn-close" ><img src="/static/img/cancle.png" style="width:100%;"></button>
+                            <div class="cart-confirm-modal-title">장바구니 담기 완료</div>
+                            <div class="cart-confirm-modal-content">
+                                상품이 장바구니에 담겼습니다.<br>바로 확인하시겠습니까?
+                            </div>
+                            <div class="cart-confirm-modal-btns">
+                                <button class="cart-confirm-modal-btn yes">예</button>
+                                <button class="cart-confirm-modal-btn no">아니오</button>
+                            </div>
+
+                        </div>
                         <button class="cart">장바구니</button>
                         <button class="purchase">바로구매</button>
                     </div>
@@ -484,16 +503,39 @@
                             이용방법
                         </div>
                         <div class="tab-content">
-                            <div class="seller-img">
-                                <img id="seller" src="{{ product.seller.user.get_avatar }}">
-                            </div>
-                            <div class="tab-caution">
-                                {% if product.required %}
-                                    {{ product.required }}
-                                {% else %}
-                                    유의사항이 없습니다.
-                                {% endif %}
-                            </div>
+                            <img id="caution-image" src="/static/img/guide.png">
+                            <ul id="caution-ul" >
+                                <li>
+                                    <div class="caution-div-each">
+                                        <span class="caution-div-num">01</span><br>
+                                        광고에 적합한 SNS의 종류와 테마 선택
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="caution-div-each">
+                                        <span class="caution-div-num">02</span><br>
+                                        1회 포스팅 비용과 영향력 비교
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="caution-div-each">
+                                        <span class="caution-div-num">03</span><br>
+                                        인플루언서에게 포스팅 견적 문의
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="caution-div-each">
+                                        <span class="caution-div-num">04</span><br>
+                                        포스팅 서비스 구매 및 자료 전달
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="caution-div-each">
+                                        <span class="caution-div-num">05</span><br>
+                                        업로드 확인 후 구매 결정
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>

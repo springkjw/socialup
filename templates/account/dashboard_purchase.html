@@ -203,7 +203,7 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                         </div>
                     </div>
                     <div class="item-price">
-                        <h2>{{ item.price }}원</h2>
+                        <h2>{{ item.item.0.line_item_total }}원</h2>
                     </div>
                 </div>
             {% endfor %}

@@ -169,6 +169,7 @@ class WishListView(SingleObjectMixin, View):
 
             else:
                 wish_item.save()
+
         context = {
             "lists": self.get_object()
         }
