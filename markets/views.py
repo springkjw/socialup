@@ -75,7 +75,6 @@ def product_detail(request, product_id):
                 data = {
                     "status": "fail"
                 }
-
             return HttpResponse(json.dumps(data), content_type='application/json')
 
         if request.method == 'POST':
@@ -118,7 +117,6 @@ def product_detail(request, product_id):
         'reviews': reviews,
         'reviews_count': reviews_count
     }
-
     return render(request, template, context)
 
 

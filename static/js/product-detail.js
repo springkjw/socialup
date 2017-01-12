@@ -2,6 +2,7 @@
 $('#product-price').digits(); 
 $('#product-option h3').digits();
 $('#product-manuscript-price').digits(); 
+$('#product-highrank-price').digits(); 
 $('#product-total').digits();
 $('.price-sub').digits();
 
@@ -53,7 +54,7 @@ function AddComma(data_value) {
 /* add manuscript part */
 $(".product-select-item.manuscript input").change(function() {
     var previous_total = parseInt(removeComma($('.product-total #product-total').text()));
-    var manuscript_price = parseInt($('#product-manuscript-price').text());
+    var manuscript_price = parseInt(removeComma($('#product-manuscript-price').text()));
     if(this.checked) {
         $('.product-total #product-total').text(previous_total+manuscript_price);
     }
@@ -66,7 +67,7 @@ $(".product-select-item.manuscript input").change(function() {
 /* add manuscript part */
 $(".product-select-item.highrank input").change(function() {
     var previous_total = parseInt(removeComma($('.product-total #product-total').text()));
-    var highrank_price = parseInt($('#product-highrank-price').text());
+    var highrank_price = parseInt(removeComma($('#product-highrank-price').text()));
     if(this.checked) {
         $('.product-total #product-total').text(previous_total+highrank_price);
     }

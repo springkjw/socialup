@@ -405,7 +405,7 @@ body {
     color: #648efc;
 }
 
-.content .product-top .info-right .product-button form .wish-list {
+.content .product-top .info-right .product-button .wish-list {
     width: 50%;
     height: 66px;
     float: left;
@@ -1013,3 +1013,28 @@ li:nth-child(5) .circle-text {
     background: #e8e8e8;
 }
 
+
+/* zzim part */
+.wish-list-zzim.off{
+    display: none;
+}
+
+/* wish-list-modal part */
+.wish-list-modal{
+    display: none;
+    float:left;
+    position:absolute;
+    left:26%;
+}
+.wish-list-modal-content{
+    width:200px;
+    height:75px;
+    background-color: #FFFFFFFF;
+    border:1px solid #5a5a5a;
+    border-radius:3px;
+    text-align: center;
+}
+
+.wish-list-modal-content-top{
+    margin-top:20px;
+}

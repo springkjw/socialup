@@ -13,12 +13,13 @@
             $('.product-button .wish-list').on('click', function () {
                 $.ajax({
                     method: 'GET',
-                    url: '/product/' + '{{ product.id }}',
+                    url: '/product/' + '{{ product.id }}' + '/',
                     data: {
                         wish: {{ product.id }}
                     },
                     success: function (data) {
                         if (data['status'] == 'success') {
+                            $('.wish-list-modal').show();
                             alert('위시리스트에 성공적으로 담겼습니다.');
                         } else {
                             alert('이미 위시리스트에 있습니다.');
@@ -283,14 +284,14 @@
                         <div class="product-select-list">
                             {% if product.manuscript_available %}
                             <div class="product-select-item manuscript">
-                                <input type="checkbox" name="test" value="test_val" id="add_manuscript-price"/>
+                                <input type="checkbox" name="test" value="manuscript-available" id="add-manuscript-price"/>
                                 <span>원고가능</span>
                                 <span id="product-manuscript-price">+{{ product.manuscript_price }}원</span>
                             </div>
                             {% endif %}
                             {% if product.highrank_available %}
                             <div class="product-select-item highrank">
-                                <input type="checkbox" name="test" value="test_val" id="add_highrank-price"/>
+                                <input type="checkbox" name="test" value="test_val" id="add-highrank-price"/>
                                 <span>상위노출</span>
                                 <span id="product-highrank-price">+{{ product.highrank_price }}원</span>
                             </div>
@@ -302,12 +303,17 @@
                         </div>
                     </div>
                     <div class="product-button">
-                        <form method="GET" action="">
+                        <div class="wish-list-modal">
+                            <div class="wish-list-modal-content">
+                                <div class="wish-list-modal-content-top">찜하기가 되었습니다.</div>
+                                <a href="#" >전체 목록 보기</a>
+                            </div>
+                        </div>
                             <button class="wish-list">
-                                <img src="/static/img/zzim.png" style="width:6%";>
+                                <img src="/static/img/zzim.png" style="width:7%" class="wish-list-zzim on";>
+                                <img src="/static/img/zzim_un.png" style="width:7%" class="wish-list-zzim off";>
                                 찜하기
                             </button>
-                        </form>
                         {% csrf_token %}
                         <button class="cart">장바구니</button>
                         <button class="purchase">바로구매</button>
