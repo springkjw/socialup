@@ -173,7 +173,7 @@ function check_sns_type_for_display(){
         $('.product-upload-sub.follower_visit_num').css('display','none');
         $('.product-upload-sub.follower_num').css('display','block');
         $('.product-upload-sub.follower_friends_num').css('display','none');
-        $('.product-upload-sub.highrank').css('display','block');
+        $('.product-upload-sub.highrank').css('display','none');
 
    }
    else if($('#id_sns_type_3').is(":checked")) {
