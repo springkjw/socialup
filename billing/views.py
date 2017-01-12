@@ -11,7 +11,7 @@ from socialup.mixins import AjaxRequireMixin
 from carts.models import Cart
 from .iamport import validation_prepare
 from datetime import datetime, timedelta
-
+from markets.models import Product
 
 class PointCheckoutAjaxView(AjaxRequireMixin, View):
     def post(self, request, *args, **kwargs):
@@ -215,6 +215,10 @@ def purchase(request, cart_id):
         seller=seller,
         order_total=cart.subtotal
     )
+
+    for item in cart_list:
+        print(Product.objects.filter(cartitem__id=item['item'][0].id))
+
 
     template = 'account/dashboard_purchase.html'
     context = {
