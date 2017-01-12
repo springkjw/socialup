@@ -200,7 +200,7 @@ def add_to_cart(request, product, cart_items):
         for item in cart_items:
             # item이 존재할 때
             if Product.objects.filter(id=item).exists():
-                option_instance = Product.objects.get(id=item)
+                item_instance = Product.objects.get(id=item)
 
                 manuscript = False
                 highrank = False
@@ -209,7 +209,7 @@ def add_to_cart(request, product, cart_items):
                 if request.POST['highrank_checked'] == 'true':
                     highrank = True
 
-                cart_item_list = CartItem.objects.filter(cart=cart_instance, item=option_instance)
+                cart_item_list = CartItem.objects.filter(cart=cart_instance, item=item_instance)
                 # 장바구니에 해당 상품이 이미 있을 때
                 if cart_item_list:
                     # 추가 옵션(원고, 상위노출 여부)도 동일 할 때
@@ -226,7 +226,7 @@ def add_to_cart(request, product, cart_items):
                 else:
                     cart_item, created = CartItem.objects.get_or_create(
                         cart=cart_instance,
-                        item=option_instance,
+                        item=item_instance,
                         manuscript_checked=manuscript,
                         highrank_checked=highrank
                     )
