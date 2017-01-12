@@ -35,6 +35,8 @@ def product_detail(request, product_id):
     # product_id로 상품 조회
     product_instance = Product.objects.active()
     product = get_object_or_404(product_instance, id=product_id)
+    product_tag = ProductTag.objects.filter(object_id=product.id, content_type=ContentType.objects.get_for_model(product))
+
     # product 판매자
     seller = product.seller
     # product 판매자 평점 조회
@@ -102,6 +104,7 @@ def product_detail(request, product_id):
     template = 'product/product_detail.html'
     context = {
         'product': product,
+        'product_tag':product_tag,
         'count': seller_count,
         'rating': seller_rating,
         'reviews': reviews,
