@@ -96,7 +96,7 @@
                                         {{ c.item }} - <span class="item-money">{{ c.item.price }}</span>원
                                         {% if c.item.title != '기본가' %}
                                             <form method="GET" id="delete-form" action="{% url 'cart' %}">
-                                                <input type="hidden" name="item" value="{{ c.item.id }}"/>
+                                                <input type="hidden" name="product_item" value="{{ product.0.item.id }}"/>
                                                 <input type="hidden" name="delete" value="true"/>
                                                 <button type="submit"><i class="fa fa-times" aria-hidden="true"></i>
                                                 </button>
@@ -123,8 +123,7 @@
                                 </li>
                                 <li id="popup-delete">
                                     <form method="GET" id="delete-form" action="{% url 'cart' %}">
-                                        <input type="hidden" name="product_item"
-                                               value="{{ product.0.item.id }}"/>
+                                        <input type="hidden" name="product_item" value="{{ product.0.item.id }}"/>
                                         <input type="hidden" name="delete" value="true"/>
                                         <input id="cart_delete" type="submit" value="삭제하기"/>
                                     </form>
