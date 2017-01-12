@@ -62,6 +62,12 @@ def product_detail(request, product_id):
             )
 
             if created:
+                # num_heart 증가
+                product.num_heart += 1
+                product.save()
+                seller.total_num_heart += 1
+                seller.save()
+
                 data = {
                     "status": "success"
                 }
@@ -73,6 +79,7 @@ def product_detail(request, product_id):
             return HttpResponse(json.dumps(data), content_type='application/json')
 
         if request.method == 'POST':
+            # 상품 상세 페이지에서 장바구니 추가
             if request.POST['action'] == 'cart':
                 cart = request.POST.getlist('cart[]')
 
@@ -84,6 +91,7 @@ def product_detail(request, product_id):
                     else:
                         raise Http404
 
+            # 상품 상세 페이지에서 바로구매
             elif request.POST['action'] == 'purchase':
                 option = request.POST.getlist('cart[]')
 
@@ -119,7 +127,15 @@ def product_upload(request, product_id=None):
     form = ProductForm()
     tag_form = TagForm()
 
-    seller = Seller.objects.filter(user=request.user)[0]
+    # 만약 처음 올리는거라면 판매자로 등록
+    try:
+        seller = Seller.objects.get(user=request.user)
+    except:
+        seller = Seller(
+            user=request.user
+        )
+        seller.save()
+
     # 리스트에 모델 담기
     seller_products = Product.objects.filter(seller=seller)
 
@@ -146,15 +162,6 @@ def product_upload(request, product_id=None):
 
     # 저장하기 눌렀을 경우
     if request.method == 'POST':
-        # 만약 처음 올린거라면 판매자로 등록
-        try:
-            seller = Seller.objects.get(user=request.user)
-        except:
-            seller = Seller(
-                user=request.user
-            )
-            seller.save()
-
         form = ProductForm(request.POST or None, request.FILES or None)
         tag_form = TagForm(request.POST)
         if form.is_valid():
