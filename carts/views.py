@@ -177,7 +177,7 @@ class WishListView(SingleObjectMixin, View):
         return render(request, template, context)
 
 
-def add_to_cart(request, product, list):
+def add_to_cart(request, product, cart_items):
     # request 세션 100분 설정
     request.session.set_expiry(6000)
     # card_id를 세션에서 가져오기
@@ -197,19 +197,24 @@ def add_to_cart(request, product, list):
     }
     # 카트 인스턴스가 존재할 때
     if cart_instance is not None:
-        # ajax로 넘어온 variation item 조회
-        for item in list:
-            # variation item이 존재할 때
+        # ajax로 넘어온 item 조회
+        for item in cart_items:
+            # item이 존재할 때
             if Product.objects.filter(id=item).exists():
                 option_instance = Product.objects.get(id=item)
-                manuscript_checked = request.POST['manuscript_checked']
-                highrank_checked = request.POST['highrank_checked']
+
+                manuscript = False
+                highrank = False
+                if request.POST['manuscript_checked'] == 'true':
+                    manuscript = True
+                if request.POST['highrank_checked'] == 'true':
+                    highrank = True
 
                 cart_item, created = CartItem.objects.get_or_create(
                     cart=cart_instance,
                     item=option_instance,
-                    manuscript_checked=manuscript_checked,
-                    highrank_checked=highrank_checked
+                    manuscript_checked=manuscript,
+                    highrank_checked=highrank
                 )
                 if created:
                     data["status"] = "success"
