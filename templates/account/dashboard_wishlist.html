@@ -1,5 +1,7 @@
 {% extends 'account/dashboard_base.html' %}
 {% load staticfiles %}
+{% load producttags %}
+
 
 {% block dashboard_css %}
     <link rel="stylesheet" href="{% static 'css/dashboard/wishlist.css' %}">
@@ -94,62 +96,86 @@
             </div>
         </div>
         <div class="dashboard-wishlist">
-            {% if lists %}
-                {% for list in lists %}
-                    <div class="dashboard-wishlist-item">
-                        <div class="dashboard-wishlist-item-image">
-                            <a href="{{ list.item.get_absolute_url }}">
-                                <img src="{{ list.item.get_image_url }}">
-                            </a>
-                        </div>
-                        <div class="dashboard-wishlist-item-title">
-                            <h3><a href="{{ list.item.get_absolute_url }}">{{ list|truncatechars:21 }}</a></h3>
-                            <div class="dashboard-wishlist-item-meta">
-                                <p id="wishlist-price">{{ list.item.price }}원~</p>
-                                <p id="wishlist-updated">{{ list.item.updated|date:"Y.m.d" }}</p>
+                {% for product in lists %}
+                    {% cycle '<div class="row">' '' '' '' %}
+                        <a href="{{ product.get_absolute_url }}"
+                           class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}">
+                            <div class="card-main-info" data-type="{{ product.sns_type }}" data-color="{{ product.sns_type_color }}">
+                                  <div class="card-type">
+                                    <img class="product-type-image" src="{{ product.sns_type_image_url }}" alt="{{ product.sns_type }}" />
+                                  </div>
+                                <div class="card-title">
+                                    {{product.oneline_intro}}
+                                </div>
+                                <div class="circle-wrapper">
+                                    <img class="circle-arrow" src="/static/img/arrow_gauge.png" >
+                                    <ul class="circle">
+                                        <li class="circle-list">
+                                            <div class="circle-text">1</div>
+                                        </li>
+                                        <li class="circle-list">
+                                            <div class="circle-text">2</div>
+                                        </li>
+                                        <li class="circle-list">
+                                            <div class="circle-text">3</div>
+                                        </li>
+                                        <li class="circle-list">
+                                            <div class="circle-text">4</div>
+                                        </li>
+                                        <li class="circle-list">
+                                            <div class="circle-text">5</div>
+                                        </li>
+                                        <div class="circle-mask2">
+                                            <div class="circle-mask2-text">
+                                                <span style="font-size:2em;">50</span>
+                                                <span style="font-size:1em;">원</span>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                    <div class="cash">
+                                        <span class="cash-price" style="font-size:1.2em; color:grey;" data-price="{{ product.price }}">
+                                           {{ product.price }}원
+                                            {% if product.manuscript_price > 0 or product.highrank_price > 0 %}
+                                                ~
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="dashboard-wishlist-item-seller">
-                            <p>{{ list.item.seller }}</p>
-                            <button class="ask-seller" data-id="{{ list.item.seller.user.id }}" data-name="{{ list.item.seller }}" data-profile="{{ list.item.seller.user.get_avatar }}">
-                                문의하기
-                            </button>
-                        </div>
-                        <div class="dashboard-wishlist-item-more">
-                            <i class="fa fa-angle-down" aria-hidden="true"></i>
-                        </div>
-                        <div class="dashboard-wishlist-item-popup">
-                            <ul>
-                                <li>
-                                    <form method="GET" id="add-form" action="{% url 'cart' %}">
-                                        <input type="hidden" name="item"
-                                               value="{{ list.item.id }}"/>
-                                        <input class="cart-add" type="submit" value="장바구니"/>
-                                    </form>
-                                </li>
-                                <li id="popup-buy">
-                                    <form method="GET" id="add-form" action="{% url 'cart' %}">
-                                        <input type="hidden" name="buy_item"
-                                               value="{{ list.item.id }}"/>
-                                        <input id="cart-add" type="submit" value="바로구매"/>
-                                    </form>
-                                </li>
-                                <li id="popup-delete">
-                                    <form method="GET" id="delete-form" action="{% url 'wish_list' %}">
-                                        <input type="hidden" name="product" value="{{ list.item.id }}"/>
-                                        <input type="hidden" name="delete" value="true"/>
-                                        <input class="wish_list_delete" type="submit" value="삭제하기"/>
-                                    </form>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                            <div class="card-info">
+                                <div class="card-subtitle">
+                                    {% for sns in product.sns_set.all %}
+                                        {% for item in sns.analytics.all %}
+                                            {{ item }}
+                                        {% endfor %}
+                                    {% endfor %}
+                                </div>
+                                <div class="card-author">
+                                    <div class="card-author-info">
+                                        <img src="{{ product.seller.user.get_avatar }}" >
+                                        <span>{{ product.seller }}</span>
+                                    </div>
+                                    <div class="card-author-info-rating" data-rating="{{ product.rating }}">
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+                        {% if products|length == forloop.counter %}
+                            </div>
+                        {% else %}
+                            {% cycle '' '' '' '</div>' %}
+                        {% endif %}
                 {% endfor %}
-            {% else %}
+               </div>
                 <div class="no-wishlist">
                     앗! 아직 위시리스트가 없네요!
                 </div>
-            {% endif %}
         </div>
     </div>
 {% endblock %}
