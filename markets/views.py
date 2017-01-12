@@ -90,10 +90,10 @@ def product_detail(request, product_id):
         if request.method == 'POST':
             # 상품 상세 페이지에서 장바구니 추가
             if request.POST['action'] == 'cart':
-                cart = request.POST.getlist('cart[]')
+                cart_items = request.POST.getlist('cart[]')
 
-                if cart:
-                    data = add_to_cart(request, product, cart)
+                if cart_items:
+                    data = add_to_cart(request, product, cart_items)
 
                     if data is not None:
                         return HttpResponse(json.dumps(data), content_type='application/json')
@@ -102,16 +102,16 @@ def product_detail(request, product_id):
 
             # 상품 상세 페이지에서 바로구매
             elif request.POST['action'] == 'purchase':
-                option = request.POST.getlist('cart[]')
+                cart_items = request.POST.getlist('cart[]')
 
-                if option:
+                if cart_items:
                     # 카트 세션이 남아 있는 경우 제거
                     try:
                         del request.session['cart_id']
                     except KeyError:
                         pass
                     finally:
-                        data = add_to_cart(request, product, option)
+                        data = add_to_cart(request, product, cart_items)
 
                     if data is not None:
                         return HttpResponse(json.dumps(data), content_type='application/json')

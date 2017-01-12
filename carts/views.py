@@ -117,20 +117,19 @@ class CartView(SingleObjectMixin, View):
 
     # 장바구니에서 바로구매
     def post(self, request, *args, **kwargs):
-        option = request.POST.getlist('cart[]')
-        product = Product.objects.get(id=option[0])
+        cart_items = request.POST.getlist('cart[]')
+        product = Product.objects.get(id=cart_items[0])
 
-        if option:
+        if cart_items:
             del request.session['cart_id']
 
-            cart = add_to_cart(request, product, option)
+            cart = add_to_cart(request, product, cart_items)
 
             if cart is not None:
                 data = {
                     "status": "success",
                     "cart_id": cart['cart_id']
                 }
-
                 return HttpResponse(json.dumps(data), content_type='application/json')
             else:
                 raise Http404
