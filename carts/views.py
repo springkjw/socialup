@@ -209,17 +209,30 @@ def add_to_cart(request, product, cart_items):
                 if request.POST['highrank_checked'] == 'true':
                     highrank = True
 
-                cart_item, created = CartItem.objects.get_or_create(
-                    cart=cart_instance,
-                    item=option_instance,
-                    manuscript_checked=manuscript,
-                    highrank_checked=highrank
-                )
-                if created:
-                    data["status"] = "success"
+                cart_item_list = CartItem.objects.filter(cart=cart_instance, item=option_instance)
+                # 장바구니에 해당 상품이 이미 있을 때
+                if cart_item_list:
+                    # 추가 옵션(원고, 상위노출 여부)도 동일 할 때
+                    if cart_item_list[0].manuscript_checked == manuscript and cart_item_list[0].highrank_checked == highrank:
+                        data["status"] = "already_exist"
+                    # 추가 옵션이 변경 되었을 때
+                    else:
+                        cart_item_list[0].manuscript_checked = manuscript
+                        cart_item_list[0].highrank_checked = highrank
+                        cart_item_list[0].save()
+                        data["status"] = "success"
+
+                # 장바구니에 해당 상품이 없을 때
                 else:
-                    data["status"] = "already_exist"
-                cart_item.save()
+                    cart_item, created = CartItem.objects.get_or_create(
+                        cart=cart_instance,
+                        item=option_instance,
+                        manuscript_checked=manuscript,
+                        highrank_checked=highrank
+                    )
+                    data["status"] = "success"
+                    cart_item.save()
+
             # 없으면 카트 인스턴스 초기화
             else:
                 cart_instance = None
