@@ -11,13 +11,16 @@
         $(function () {
             $('.buy').on('click', function () {
                 var item = get_item($(this));
-
+                var options = get_option($(this));
                 $.ajax({
                     method: 'POST',
                     url: '{% url "cart" %}',
                     data: {
                         csrfmiddlewaretoken: $(this).parent().find('input[name="csrfmiddlewaretoken"]').val(),
-                        cart: item
+                        cart: item,
+                        action: 'purchase',
+                        manuscript_checked: options[0],
+                        highrank_checked: options[1]
                     },
                     success: function (data) {
                         if (data['status'] == 'success') {
@@ -33,12 +36,21 @@
 
         function get_item(ele) {
             var item = [];
-            ele.parent().parent().parent().parent().find('.dashboard-cart-item-meta .cart-item').each(function () {
-                var option_id = $(this).attr('data-id');
-                item.push(option_id);
-            });
-
+//            ele.parent().parent().parent().parent().find('.cart-item').each(function () {
+            var cart_item = ele.parent().parent().parent().prev().prev().find('.cart-item');
+            var option_id = cart_item.attr('data-id');
+            item.push(option_id);
             return item;
+        }
+
+        function get_option(ele) {
+            var options = [];
+            var cart_option = ele.parent().parent().parent().prev().prev().find('.cart-item-option');
+            var option_manuscript_checked = cart_option.attr('manuscript_available');
+            var option_highrank_checked = cart_option.attr('highrank_available');
+            options.push(option_manuscript_checked);
+            options.push(option_highrank_checked);
+            return options;
         }
     </script>
 {% endblock %}
@@ -79,56 +91,89 @@
         </div>
         <div class="dashboard-cart">
             {% if object.item %}
-                {% for product in object.item %}
+                {% for cartitem in object.item %}
                     <div class="dashboard-cart-item">
                         <div class="dashboard-cart-item-image">
-                            <a href="{{ product.0.item.get_absolute_url }}">
-                                <img src="{{ product.0.item.get_image_url }}">
-                            </a>
+                            <div class="circle-wrapper">
+                                    <img class="circle-arrow" src="/static/img/arrow_gauge.png" >
+                                    <ul class="circle">
+                                        <li class="circle-list">
+                                            <div class="circle-text">1</div>
+                                        </li>
+                                        <li class="circle-list">
+                                            <div class="circle-text">2</div>
+                                        </li>
+                                        <li class="circle-list">
+                                            <div class="circle-text">3</div>
+                                        </li>
+                                        <li class="circle-list">
+                                            <div class="circle-text">4</div>
+                                        </li>
+                                        <li class="circle-list">
+                                            <div class="circle-text">5</div>
+                                        </li>
+                                        <div class="circle-mask2">
+                                            <div class="circle-mask2-text">
+                                                <span style="font-size:1.3em;">50</span>
+                                                <span style="font-size:1em;">원</span>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                    <div class="cash">
+                                        <span class="cash-price" style="font-size:1em; color:grey;" data-price="{{ cartitem_product.1.price }}">
+                                            <span class="item-money">{{ cartitem.0.item.price }}</span>원
+                                            {% if cartitem.0.item.manuscript_price > 0 or cartitem.0.item.highrank_price > 0 %}
+                                                ~
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                </div>
                         </div>
                         <div class="dashboard-cart-item-title">
-                            <h3>
-                                <a href="{{ product.0.item.get_absolute_url }}">{{ product.0.item|truncatechars:33 }}</a>
-                            </h3>
+                            <div class="cart-item" data-id="{{ cartitem.0.item.id }}">
+                                <a href="{{ cartitem.0.item.get_absolute_url }}">{{ cartitem.0.item|truncatechars:33 }}</a>
+                            </div>
                             <div class="dashboard-cart-item-meta">
-                                {% for c in product %}
-                                    <div class="cart-item" data-id="{{ c.item.id }}">
-                                        {{ c.item }} - <span class="item-money">{{ c.item.price }}</span>원
-                                        {% if c.item.title != '기본가' %}
-                                            <form method="GET" id="delete-form" action="{% url 'cart' %}">
-                                                <input type="hidden" name="product_item" value="{{ product.0.item.id }}"/>
-                                                <input type="hidden" name="delete" value="true"/>
-                                                <button type="submit"><i class="fa fa-times" aria-hidden="true"></i>
-                                                </button>
-                                            </form>
+                                <div class="cart-item-option" manuscript_available="{{ cartitem.0.manuscript_checked }}" highrank_available="{{ cartitem.0.highrank_checked }}">
+                                    {% if cartitem.0.manuscript_checked or cartitem.0.haighrank_checked %}
+                                        [옵션] 원고추가
+                                        {% if cartitem.0.item.manuscript_price != 0 %}
+                                        + <span>{{ cartitem.0.item.manuscript_price }}원</span>
                                         {% endif %}
-                                    </div>
-                                {% endfor %}
+
+                                        {% if cartitem.0.item.highrank_price != 0 %}
+                                            + <span>{{ cartitem.0.item.highrank_price }}원</span>
+                                        {% endif %}
+                                    {% else %}
+                                        [옵션]없음
+                                    {% endif %}
+                                </div>
+                                <div class="cart-item-total-price">
+                                    서비스 금액 ￦ <span class="item-money">{{ cartitem.0.line_item_total }}</span> 원
+                                </div>
                             </div>
                         </div>
                         <div class="dashboard-cart-item-seller">
-                            <p>{{ product.0.item.seller }}</p>
-                            <button id="ask-seller" data-id="{{ product.0.item.seller.user.id }}" data-name="{{ product.0.item.seller }}" data-profile="{{ product.0.item.seller.user.get_avatar }}">
+                            <p>{{ cartitem.0.item.seller }}</p>
+                            <button id="ask-seller" data-id="{{ cartitem.0.item.seller.user.id }}" data-name="{{ cartitem.0.item.seller }}" data-profile="{{ cartitem.0.item.seller.user.get_avatar }}">
                                 문의하기
                             </button>
                         </div>
-                        <div class="dashboard-cart-item-more">
-                            <i class="fa fa-angle-down" aria-hidden="true"></i>
-                        </div>
-                        <div class="dashboard-cart-item-popup">
-                            <ul>
-                                <li id="popup-buy">
+                        <div>
+                            <ul class="dashboard-cart-btns-ul">
+                                <li>
                                     {% csrf_token %}
                                     <input class="buy" id="cart-buy" value="바로구매"/>
                                 </li>
-                                <li id="popup-delete">
+                                <li>
                                     <form method="GET" id="delete-form" action="{% url 'cart' %}">
-                                        <input type="hidden" name="product_item" value="{{ product.0.item.id }}"/>
+                                        <input type="hidden" name="product_item" value="{{ cartitem.0.item.id }}"/>
                                         <input type="hidden" name="delete" value="true"/>
                                         <input id="cart_delete" type="submit" value="삭제하기"/>
                                     </form>
                                 </li>
                             </ul>
+
                         </div>
                     </div>
                 {% endfor %}
@@ -138,6 +183,7 @@
                 </div>
             {% endif %}
         </div>
+
         <div class="dashboard-cart-total">
             <div class="dashboard-cart-subtotal">
                 <p>상품 금액</p>

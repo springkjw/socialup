@@ -150,10 +150,10 @@
 
 .list-card {
     float: left;
-    width: 32%;
-    height: 265px;
+    width: 30%;
+    height: 222px;
     background: white;
-    margin-right: 18px;
+    margin-right: 16px;
     padding-bottom: 10px;
     cursor: pointer;
     position: relative;
@@ -221,7 +221,7 @@
 }
 
 .list-card .card-main-info {
-    height: 180px;
+    height: 150px;
     /*width: 266px;*/
     padding: 13px 15px 22px 15px;
     /*text-align: center;*/
@@ -264,14 +264,14 @@
 }
 
 .list-card .card-info {
-    height: 46px;
-    padding: 10px 15px 0px 15px;
+    height: 40px;
+    padding: 3px 15px 0px 15px;
     margin-top: 3px;
     font-size: 12px;
     font-weight: 600;
     border-top: 1px solid #DADADA;
-    color: #333;
-    background: #F2F2F2;
+    color: #333;    background: #F2F2F2;
+
 }
 
 .list-card .card-author {
@@ -423,10 +423,11 @@
   height: 100px;
   text-align: center;
   transform: skewY(36deg) rotate(18deg);
-  padding-top: 20px;
+  padding-top: 4%;
   border-radius: 90px 90px 0 0;
   -moz-border-radius: 90px 90px 0 0;
   -webkit-border-radius: 90px 90px 0 0;
+    font-size:12px;
 }
 .circle-list:first-child {
   transform: rotate(270deg) skewY(-36deg);
@@ -444,27 +445,22 @@
   transform: rotate(54deg) skewY(-36deg);
 }
 li:first-child .circle-text {
-	padding-top:2%;
 	color:black;
     background: #cecece;
 }
 li:nth-child(2) .circle-text {
-	padding-top:2%;
 	color:black;
     background: #cecece;
 }
 li:nth-child(3) .circle-text {
-	padding-top:2%;
 	color:black;
     background: #cecece;
 }
 li:nth-child(4) .circle-text {
-	padding-top:2%;
 	color:black;
     background: #cecece;
 }
 li:nth-child(5) .circle-text {
-	padding-top:2%;
 	color:black;
     background: #cecece;
 }
@@ -483,13 +479,13 @@ li:nth-child(5) .circle-text {
 	z-index:3;
 }
 .circle-mask2-text{
-  padding-top:1em;
+  padding-top:10px;
 }
 
 .cash{
   position:relative;
-  width:60%;
-  height:18%;
+  width:45%;
+    height: 20%;
   padding-top:3%;
   border:1px solid grey;
   border-radius:15px;

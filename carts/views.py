@@ -109,9 +109,18 @@ class CartView(SingleObjectMixin, View):
             if delete_item:
                 product_item.delete()
 
+
+        cart_list = self.get_object()
+        cartitem_product_list = []
+        for cartitem in cart_list['item']:
+            temp_product = Product.objects.get(id = cartitem[0].item_id)
+            cartitem_product_list.append([cartitem[0],temp_product])
+
         context = {
-            "object": self.get_object()
+            "object": self.get_object(),
+            #"cartitem_product_list":cartitem_product_list
         }
+
         template = self.template_name
         return render(request, template, context)
 
@@ -170,8 +179,14 @@ class WishListView(SingleObjectMixin, View):
             else:
                 wish_item.save()
 
+        wish_list = self.get_object()
+        product_list = []
+        for wish in wish_list:
+            temp_product = Product.objects.get(id = wish.item_id)
+            product_list.append(temp_product)
+
         context = {
-            "lists": self.get_object()
+            "lists": product_list
         }
         template = self.template_name
         return render(request, template, context)
@@ -205,9 +220,9 @@ def add_to_cart(request, product, cart_items):
 
                 manuscript = False
                 highrank = False
-                if request.POST['manuscript_checked'] == 'true':
+                if request.POST['manuscript_checked'] == 'true' or request.POST['manuscript_checked'] == 'True':
                     manuscript = True
-                if request.POST['highrank_checked'] == 'true':
+                if request.POST['highrank_checked'] == 'true' or request.POST['highrank_checked'] == 'True':
                     highrank = True
 
                 cart_item_list = CartItem.objects.filter(cart=cart_instance, item=item_instance)
