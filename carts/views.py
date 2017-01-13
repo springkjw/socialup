@@ -111,7 +111,6 @@ class CartView(SingleObjectMixin, View):
 
 
         cart_list = self.get_object()
-        print(cart_list['item'])
         cartitem_product_list = []
         for cartitem in cart_list['item']:
             temp_product = Product.objects.get(id = cartitem[0].item_id)
@@ -221,9 +220,9 @@ def add_to_cart(request, product, cart_items):
 
                 manuscript = False
                 highrank = False
-                if request.POST['manuscript_checked'] == 'true':
+                if request.POST['manuscript_checked'] == 'true' or request.POST['manuscript_checked'] == 'True':
                     manuscript = True
-                if request.POST['highrank_checked'] == 'true':
+                if request.POST['highrank_checked'] == 'true' or request.POST['highrank_checked'] == 'True':
                     highrank = True
 
                 cart_item_list = CartItem.objects.filter(cart=cart_instance, item=item_instance)

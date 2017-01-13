@@ -380,3 +380,11 @@ li:nth-child(5) .circle-text {
     text-align: right;
     width:100%;
 }
+
+/* cart-item-btns-ul */
+.dashboard-cart-btns-ul{
+    list-style-type: none;
+}
+.dashboard-cart-btns-ul li{
+    float:left;
+}

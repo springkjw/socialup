@@ -11,13 +11,16 @@
         $(function () {
             $('.buy').on('click', function () {
                 var item = get_item($(this));
-
+                var options = get_option($(this));
                 $.ajax({
                     method: 'POST',
                     url: '{% url "cart" %}',
                     data: {
                         csrfmiddlewaretoken: $(this).parent().find('input[name="csrfmiddlewaretoken"]').val(),
-                        cart: item
+                        cart: item,
+                        action: 'purchase',
+                        manuscript_checked: options[0],
+                        highrank_checked: options[1]
                     },
                     success: function (data) {
                         if (data['status'] == 'success') {
@@ -33,12 +36,21 @@
 
         function get_item(ele) {
             var item = [];
-            ele.parent().parent().parent().parent().find('.dashboard-cart-item-meta .cart-item').each(function () {
-                var option_id = $(this).attr('data-id');
-                item.push(option_id);
-            });
-
+//            ele.parent().parent().parent().parent().find('.cart-item').each(function () {
+            var cart_item = ele.parent().parent().parent().prev().prev().find('.cart-item');
+            var option_id = cart_item.attr('data-id');
+            item.push(option_id);
             return item;
+        }
+
+        function get_option(ele) {
+            var options = [];
+            var cart_option = ele.parent().parent().parent().prev().prev().find('.cart-item-option');
+            var option_manuscript_checked = cart_option.attr('manuscript_available');
+            var option_highrank_checked = cart_option.attr('highrank_available');
+            options.push(option_manuscript_checked);
+            options.push(option_highrank_checked);
+            return options;
         }
     </script>
 {% endblock %}
@@ -122,9 +134,13 @@
                                 <a href="{{ cartitem.0.item.get_absolute_url }}">{{ cartitem.0.item|truncatechars:33 }}</a>
                             </div>
                             <div class="dashboard-cart-item-meta">
-                                <div class="cart-item-option">
+                                <div class="cart-item-option" manuscript_available="{{ cartitem.0.manuscript_checked }}" highrank_available="{{ cartitem.0.highrank_checked }}">
                                     {% if cartitem.0.manuscript_checked or cartitem.0.haighrank_checked %}
-                                        [옵션] 원고추가 + <span>{{ cartitem.0.item.manuscript_price }}원</span>
+                                        [옵션] 원고추가
+                                        {% if cartitem.0.item.manuscript_price != 0 %}
+                                        + <span>{{ cartitem.0.item.manuscript_price }}원</span>
+                                        {% endif %}
+
                                         {% if cartitem.0.item.highrank_price != 0 %}
                                             + <span>{{ cartitem.0.item.highrank_price }}원</span>
                                         {% endif %}
@@ -143,16 +159,13 @@
                                 문의하기
                             </button>
                         </div>
-                        <div class="dashboard-cart-item-more">
-                            <i class="fa fa-angle-down" aria-hidden="true"></i>
-                        </div>
-                        <div class="dashboard-cart-item-popup">
-                            <ul>
-                                <li id="popup-buy">
+                        <div>
+                            <ul class="dashboard-cart-btns-ul">
+                                <li>
                                     {% csrf_token %}
                                     <input class="buy" id="cart-buy" value="바로구매"/>
                                 </li>
-                                <li id="popup-delete">
+                                <li>
                                     <form method="GET" id="delete-form" action="{% url 'cart' %}">
                                         <input type="hidden" name="product_item" value="{{ cartitem.0.item.id }}"/>
                                         <input type="hidden" name="delete" value="true"/>
@@ -160,6 +173,7 @@
                                     </form>
                                 </li>
                             </ul>
+
                         </div>
                     </div>
                 {% endfor %}
