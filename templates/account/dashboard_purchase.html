@@ -92,7 +92,8 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                                         var msg = '결제에 실패하였습니다.';
                                         msg += '에러내용 : ' + rsp.error_msg;
                                         alert(msg);
-                                        location.reload();
+                                        window.location.href='/dashboard/purchase/fail'
+                                        //location.reload();
                                     }
                                 });
                             } else {
@@ -139,6 +140,7 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                 } else {
                     alert("문제가 발생했습니다. 다시 시도해주세요.");
                 }
+                window.location.href='/dashboard/purchase/fail'
             });
 
             return pay_total;
@@ -161,6 +163,7 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
             request.done(function (data) {
                 if (data.works) {
                     alert("결제가 완료되었습니다.");
+                    window.location.href='/dashboard/purchase/success'
                 }
             });
 
@@ -172,6 +175,7 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                 } else {
                     alert("문제가 발생했습니다. 다시 시도해주세요.");
                 }
+                window.location.href='/dashboard/purchase/fail'
             });
         }
     </script>
