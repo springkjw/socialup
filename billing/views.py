@@ -343,6 +343,7 @@ def charge_fail(request):
 @login_required
 def pay_success(request):
     template = 'account/dashboard_success.html'
+    del request.session['cart_id']
     context = {
 
     }
