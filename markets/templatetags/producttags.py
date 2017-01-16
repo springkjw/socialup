@@ -1,6 +1,7 @@
 #-*- coding: utf-8 -*-
 from django import template
-from carts.models import Cart, WishList
+from carts.models import Cart, WishList, CartItem
+from billing.models import Order
 from django.contrib.contenttypes.models import ContentType
 import datetime, pytz
 
@@ -60,6 +61,16 @@ def user_cart_count(cart_id):
     else:
         return 0
 
+@register.filter(name='user_purchase_count')
+def user_purchase_count(user_id):
+    order_list = Order.objects.filter(user__id=user_id, status='paid')
+    purchase_count = 0
+    for order in order_list:
+        temp_cart = Cart.objects.filter(id=order.cart_id)
+        cart_items = CartItem.objects.filter(cart=temp_cart[0])
+        purchase_count += len(cart_items)
+
+    return purchase_count
 
 @register.filter(name='multi_minus')
 def multi_minus(amount):

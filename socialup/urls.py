@@ -22,7 +22,7 @@ from accounts.views import dashboard, change_info
 from markets.views import product_detail, product_upload, product_manage, product_change, product_delete, \
     product_order_manage, product_profit_manage
 from billing.views import charge_point, history_point, PointCheckoutAjaxView, PointImpAjaxView, purchase, \
-    CheckoutAjaxView, ImpAjaxView, purchase_list, charge_fail, charge_success
+    CheckoutAjaxView, ImpAjaxView, purchase_list, charge_fail, charge_success, pay_success, pay_fail
 from carts.views import CartView, WishListView
 from messages.views import message_lounge, message_room
 from contact.views import contact, contact_history
@@ -51,6 +51,8 @@ urlpatterns = [
     url(r'^dashboard/purchase/checkout/$', CheckoutAjaxView.as_view(), name='checkout'),
     url(r'^dashboard/purchase/validation/$', ImpAjaxView.as_view(), name='validation'),
     url(r'^dashboard/purchase/list/$', purchase_list, name='purchase_list'),
+    url(r'^dashboard/purchase/success/$', pay_success, name='pay_success'),
+    url(r'^dashboard/purchase/fail/$', pay_fail, name='pay_fail'),
 
     url(r'^dashboard/seller/manage/$', product_manage, name='product_manage'),
 

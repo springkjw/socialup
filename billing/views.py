@@ -339,3 +339,21 @@ def charge_fail(request):
     }
 
     return render(request, template, context)
+
+@login_required
+def pay_success(request):
+    template = 'account/dashboard_success.html'
+    context = {
+
+    }
+
+    return render(request, template, context)
+
+@login_required
+def pay_fail(request):
+    template = 'account/dashboard_fail.html'
+    context = {
+
+    }
+
+    return render(request, template, context)
