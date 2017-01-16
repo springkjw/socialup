@@ -22,10 +22,17 @@ class ProductReview(models.Model):
 def new_review_receiver(sender, instance, created, *args, **kwargs):
     if created:
         product = Product.objects.get(id=instance.product.id)
+        ratings = ProductReview.objects.filter(product=product)
+        sum_of_ratings = 0
+        for rat in ratings:
+            sum_of_ratings += rat.rating
 
-        rating = product.rating
-        rating = (rating + instance.rating) / 2
-        product.rating = rating
+        avg_of_rating = sum_of_ratings / len(ratings)
+
+        # rating = product.rating
+        # rating = (rating + instance.rating) / 2
+
+        product.rating = avg_of_rating
         product.save()
 
 post_save.connect(new_review_receiver, sender=ProductReview)
