@@ -303,15 +303,15 @@ class ImpAjaxView(AjaxRequireMixin, View):
 
 @login_required
 def purchase_list(request):
-    purchase_list = Order.objects.filter(user=request.user).exclude(status='created')
-    status_0 = purchase_list.filter(status='paid').count()
-    status_1 = purchase_list.filter(status='processing').count()
-    status_2 = purchase_list.filter(status='finished').count()
-    status_3 = purchase_list.filter(status='refunded').count()
+    orders = Order.objects.filter(user=request.user).exclude(status='created')
+    status_0 = orders.filter(status='paid').count()
+    status_1 = orders.filter(status='processing').count()
+    status_2 = orders.filter(status='finished').count()
+    status_3 = orders.filter(status='refunded').count()
 
     template = 'account/dashboard_purchase_list.html'
     context = {
-        "list": purchase_list,
+        "orders": orders,
         "status_0": status_0,
         "status_1": status_1,
         "status_2": status_2,
@@ -343,6 +343,7 @@ def charge_fail(request):
 @login_required
 def pay_success(request):
     template = 'account/dashboard_success.html'
+    del request.session['cart_id']
     context = {
 
     }
