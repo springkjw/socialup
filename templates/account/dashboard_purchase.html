@@ -63,7 +63,7 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                         if ($('.item').length == 1) {
                             purchase_name = $.trim($('.item .item-title').text());
                         } else {
-                            purchase_name = $.trim($('.item:first-child .item-title').text()) + ' 외 ' + $('.item').length - 1 + '개';
+                            purchase_name = $.trim($('.item:first-child .item-title').text()) + ' 외 ' + ($('.item').length-1).toString() + '개';
                         }
 
                         if (total_info !== '') {
