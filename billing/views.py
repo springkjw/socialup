@@ -6,7 +6,7 @@ from django.shortcuts import render, Http404
 from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from .models import PointTransaction, PointHistory, Order
+from .models import PointTransaction, PointHistory, Order, OrderItem
 from socialup.mixins import AjaxRequireMixin
 from carts.models import Cart
 from .iamport import validation_prepare
@@ -304,6 +304,17 @@ class ImpAjaxView(AjaxRequireMixin, View):
 @login_required
 def purchase_list(request):
     orders = Order.objects.filter(user=request.user).exclude(status='created')
+    order_items = []
+    for order in orders:
+        for order_item in OrderItem.objects.filter(order=order):
+            order_items.append(order_item)
+
+    order_items_ready = OrderItem.objects.filter(user=request.user, status='paid')
+    order_items_processing = OrderItem.objects.filter(user=request.user, status='processing')
+    order_items_finished = OrderItem.objects.filter(user=request.user, status='finished')
+    order_items_refunded = OrderItem.objects.filter(user=request.user, status='refunded')
+
+
     orders_wait = Order.objects.filter(user=request.user, status='paid')
     orders_processing = Order.objects.filter(user=request.user, status='processing')
     status_0 = orders.filter(status='paid').count()
@@ -316,6 +327,11 @@ def purchase_list(request):
         "orders": orders,
         "order_wait":orders_wait,
         "order_processing": orders_processing,
+        "order_items": order_items,
+        "order_items_ready": order_items_ready,
+        "order_items_processing": order_items_processing,
+        "order_items_finished": order_items_finished,
+        "order_items_refunded": order_items_refunded,
         "status_0": status_0,
         "status_1": status_1,
         "status_2": status_2,

@@ -26,13 +26,24 @@ $('.table_product_detail').each(function(){
     }
 });
 
-$('.show_detail_btn').on('click', function () {
+$('.show_detail_btn.first').on('click', function () {
     if($(this).attr('aria-hidden')=='true'){
         $(this).parent().next().show();
         $(this).attr('aria-hidden', false);
     }
     else{
         $(this).parent().next().hide();
+        $(this).attr('aria-hidden', true);
+    }
+});
+
+$('.show_detail_btn.second').on('click', function () {
+    if($(this).attr('aria-hidden')=='true'){
+        $(this).parent().next().next().show();
+        $(this).attr('aria-hidden', false);
+    }
+    else{
+        $(this).parent().next().next().hide();
         $(this).attr('aria-hidden', true);
     }
 });
