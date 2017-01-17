@@ -53,6 +53,20 @@ class MyUserManager(BaseUserManager):
 def download_profile_location(instance, filename):
     return "avatar/%s/%s" % (instance, filename)
 
+address_list=(
+    ("Seoul", "서울"),
+    ("Gyeonggi", "경기"),
+    ("Incheon", "인천"),
+    ("Gangwon", "강원"),
+    ("Gyeongnam", "경남"),
+    ("Gyeongbuk", "경북"),
+    ("Jeonbuk", "전북"),
+    ("Jeonnam", "전남"),
+    ("Jeju", "제주"),
+    ("Chungbuk", "충북"),
+    ("Chungnam", "충남"),
+    ("etc", "기타")
+)
 
 class MyUser(AbstractBaseUser):
     email = models.EmailField(
@@ -68,6 +82,18 @@ class MyUser(AbstractBaseUser):
     description = models.TextField(null=True, blank=True)
     name = models.CharField(max_length=10, null=True, blank=True)
     phone = models.CharField(max_length=12, null=True, blank=True)
+    sex = models.CharField(choices=(("male","남자"),("female","여자")), max_length=15, null=True)
+    address = models.CharField(max_length=15, null=True)
+    job = models.CharField(max_length=15, null=True)
+    birth_year = models.PositiveIntegerField(null=True)
+
+    agree_purchase_info_email = models.BooleanField(default=True)
+    agree_purchase_info_SMS = models.BooleanField(default=False)
+    agree_selling_info_email = models.BooleanField(default=True)
+    agree_selling_info_SMS = models.BooleanField(default=True)
+    agree_marketing_info_email = models.BooleanField(default=True)
+    agree_marketing_info_SMS = models.BooleanField(default=False)
+
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
@@ -280,6 +306,12 @@ def myuser_post_save_receiver(sender, instance, created, *args, **kwargs):
 post_save.connect(myuser_post_save_receiver, sender=MyUser)
 
 
+seller_type_list=(
+    ("individual", "개인"),
+    ("personal_business", "개인사업자"),
+    ("corporate_business","법인사업자")
+)
+
 class Seller(models.Model):
     user = models.OneToOneField(MyUser)
     maxWorking = models.PositiveIntegerField(default=0)
@@ -289,6 +321,31 @@ class Seller(models.Model):
     is_active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     total_num_heart = models.PositiveIntegerField(default=0)
+
+    type = models.CharField(choices=seller_type_list, max_length=12, null=True, blank=False)
+    company_name = models.CharField(max_length=12, null=True, blank=True)
+    representative_name = models.CharField(max_length=12, null=True, blank=True)
+    corporate_number = models.CharField(max_length=12, null=True, blank=False)
+    business_field = models.CharField(max_length=12, null=True, blank=True)
+    company_type = models.CharField(max_length=12, null=True, blank=True)
+    business_license = models.ImageField(
+        blank=True,
+        null=True,
+        upload_to=settings.MEDIA_ROOT+'/business_license/'
+    )
+    account_copy = models.ImageField(
+        blank=True,
+        null=True,
+        upload_to=settings.MEDIA_ROOT + '/account_copy/'
+    )
+
+    # seller_account
+    #account_number = models.CharField(max_length=120, null=True, blank=True)
+    # account_name = models.CharField(max_length=50, null=True, blank=True)
+    # bank = models.CharField(max_length=120, null=True, blank=True, choices=BANK_TYPE)
+    # timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+
+
 
     def __unicode__(self):
         user = self.user
