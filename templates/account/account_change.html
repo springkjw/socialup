@@ -10,7 +10,42 @@
         <div class="dashboard-nav">
             정보수정
         </div>
-        <div class="dashboard-change-form">
+        <div class="dashboard-change-form-menu">
+            <ul>
+                <li>
+                    <button>
+                        기본정보
+                    </button>
+                </li>
+                <li>
+                    <button>
+                        판매자 등록 정보
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="dashboard-change-form base">
+            <form class="change_form" id="change_form" method="POST" action="{% url 'change_info' %}" enctype="multipart/form-data">{%  csrf_token %}
+                기본정보
+                <div class="base_info">
+                    <div class="base_info_image">
+                        <img src="{{ user.get_avatar }}">
+                        <!--<div class="add_image"><i class="fa fa-plus" aria-hidden="true"></i></div>-->
+                    </div>
+                    <div class="base_info_basic">
+                        <div class="base_info_basic_content name">
+                            이름 <input type="text"></input>
+                        </div>
+                        <div class="base_info_basic_content birth">생년월일</div>
+                        <div class="base_info_basic_content sex">성별</div>
+                        <div class="base_info_basic_content address">거주지역</div>
+                    </div>
+
+                </div>
+                <button class="change_button" type="submit">변경하기</button>
+            </form>
+        </div>
+        <div class="dashboard-change-form seller">
             <form class="change_form" id="change_form" method="POST" action="{% url 'change_info' %}" enctype="multipart/form-data">{%  csrf_token %}
                 <div class="image">
                     <img src="{{ user.get_avatar }}">
@@ -24,5 +59,6 @@
                 <button class="change_button" type="submit">변경하기</button>
             </form>
         </div>
+
     </div>
 {% endblock %}

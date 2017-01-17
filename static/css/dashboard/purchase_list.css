@@ -217,7 +217,19 @@
     height:100%;
 }
 
-.item-list .purchase-table-ul{
+.item-list .product_item_each_wrapper {
+    margin-top:2%;
+}
+
+.item-list .product_item_each_wrapper .purchase-table-ul{
+    width:77%;
+    height:35px;
+    border:1px solid grey;
+    margin-bottom:10px;
+    float:left;
+}
+
+.item-list .content.status_0 .product_item_each_wrapper .purchase-table-ul {
     width:90%;
     height:35px;
     border:1px solid grey;
@@ -225,20 +237,45 @@
     float:left;
 }
 
-.item-list .purchase-table-ul li{
+.item-list .product_item_each_wrapper .purchase-table-ul li{
     position: relative;
     width:15%;
     top:10px;
 }
 
-.item-list .purchase-table-ul li:nth-child(2) {
-    width:27%;
+.item-list .product_item_each_wrapper .purchase-table-ul li:nth-child(2) {
+    width:35%;
 }
-.item-list .purchase-table-ul li:nth-child(6) {
+
+.item-list .product_item_each_wrapper .purchase-table-ul li:nth-child(4) {
+    width:18%;
+}
+
+.item-list .product_item_each_wrapper .purchase-table-ul li:nth-child(6) {
     width:13%;
 }
 
-.item-list .purchase-table-ul li:nth-child(7){
+.item-list .product_item_each_wrapper .purchase-table-ul li:nth-child(7){
+    position: relative;
+    top:0px;
+}
+
+/* except for status 0 */
+
+.item-list .content.status_0 .product_item_each_wrapper .purchase-table-ul li{
+    position: relative;
+    width:15%;
+    top:10px;
+}
+
+.item-list .content.status_0 .product_item_each_wrapper .purchase-table-ul li:nth-child(2) {
+    width:27%;
+}
+.item-list .content.status_0 .product_item_each_wrapper .purchase-table-ul li:nth-child(6) {
+    width:13%;
+}
+
+.item-list .content.status_0 .product_item_each_wrapper .purchase-table-ul li:nth-child(7){
     position: relative;
     top:0px;
 }
@@ -259,6 +296,23 @@
 
 .item-list .table_product.btn img{
     width:82%;
+}
+
+.item-list .table_product_btn.change{
+    width: 70px;
+    float:right;
+    height:25px;
+    background-color:#648efc;
+    color:white;
+    border: 1px solid #648efc;
+    text-align: center;
+    font-size:13px;
+    padding-top:10px;
+    margin-right:5px;
+}
+
+.item-list .table_product_btn.change button{
+    background: none;
 }
 
 /* table_product_detail */

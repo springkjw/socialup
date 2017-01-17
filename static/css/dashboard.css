@@ -317,9 +317,8 @@ body {
 .dashboard-content .dashboard-change-form {
     border: 2px solid #DADADA;
     width: 510px;
-    margin-top: 20px;
+    margin-top: 15px;
     padding: 40px 25px 40px 25px;
-    text-align: right;
 }
 
 .dashboard-content .dashboard-change-form input {
@@ -359,6 +358,29 @@ body {
 
 .dashboard-content .dashboard-change-form #id_media {
     display: none;
+}
+
+.dashboard-content .dashboard-change-form .base_info{
+    margin-top:20px;
+}
+
+.dashboard-content .dashboard-change-form .base_info .base_info_image {
+    display: inline-block;
+    width:30%;
+    height:100%;
+}
+
+.dashboard-content .dashboard-change-form .base_info .base_info_image img {
+    width: 100px;
+    height : 100px;
+    border-radius: 50%;
+}
+
+.dashboard-content .dashboard-change-form .base_info .base_info_basic {
+    display: inline-block;
+    float:right;
+    width:70%;
+    height:100%;
 }
 
 .dashboard-content .dashboard-change-form .image {
@@ -413,4 +435,44 @@ body {
     color: white;
     line-height: 25px;
     border-radius: 50%;
+}
+
+/* account_change added */
+.dashboard-change-form-menu{
+    width:561px;
+    height:40px;
+    border: 1px solid #DEDEDE;
+    margin-top:15px;
+}
+
+.dashboard-change-form-menu ul{
+    list-style:none;
+    width:100%;
+    height:100%;
+    padding-top:2%;
+}
+
+.dashboard-change-form-menu li{
+    float:left;
+}
+
+.dashboard-change-form-menu li:nth-child(1){
+    width:15%;
+    margin-left:7%;
+}
+
+.dashboard-change-form-menu li:nth-child(2){
+    width:25%;
+    margin-left:5%;
+}
+
+.dashboard-change-form-menu button{
+    background:none;
+    width:100%;
+    text-align:center;
+}
+
+/* dashboard-change-form seller */
+.dashboard-change-form.seller{
+    display: none;
 }

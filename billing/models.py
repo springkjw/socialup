@@ -328,6 +328,7 @@ post_save.connect(product_receiver, sender=ProductManage)
 
 
 class OrderItem(models.Model):
+    user = models.ForeignKey(MyUser, null=True)
     order = models.ForeignKey(Order)
     cart_item = models.ForeignKey(CartItem)
     status = models.CharField(max_length=120, choices=ORDER_STATUS_CHOICES, default='created')
