@@ -18,7 +18,7 @@ from django.core import serializers
 
 class ProductQueryset(models.query.QuerySet):
     def active(self):
-        return self.filter(is_now_selling=True)
+        return self.filter(product_status="now_selling")
 
 
 class ProductManager(models.Manager):
@@ -57,6 +57,12 @@ product_tag_list = (
     ("health", "건강/의료"),
     ("interior", "인테리어"),
     ("etc", "기타"),
+)
+
+product_status_list = (
+    ("ready","ready"),
+    ("now_selling","now_selling"),
+    ("terminated","terminated")
 )
 
 class Product(models.Model):
@@ -130,7 +136,7 @@ class Product(models.Model):
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
     # 판매중 or 판매완료
-    is_now_selling = models.BooleanField(default=True)
+    product_status = models.CharField(choices=product_status_list, max_length=15, null=False, default="ready")
 
     objects = ProductManager()
 

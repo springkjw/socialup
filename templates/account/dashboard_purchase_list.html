@@ -10,7 +10,7 @@
     <script type="text/javascript" src="{% static 'js/dashboard/list.js' %}"></script>
     <script type="text/javascript">
         $(function () {
-            $('#ask-seller').on('click', function () {
+            $('.detail_bottom_btn-talk').on('click', function () {
                 startMessage('{{ user.id }}', $(this).data('id'), $(this).data('name'), $(this).data('profile'));
             });
 
@@ -21,11 +21,44 @@
                 $('.content').hide();
                 var class_ = '.content.' + $(this).attr('class').replace('_menu active', '');
 
-                console.log(class_);
                 $(class_).show();
 
             });
+
+            $('.detail_bottom_btn.processing').on('click', function(){
+                $.ajax({
+                    method: 'GET',
+                    url: '/product/' + '{{ product.id }}' + '/',
+                    data: {
+                        csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+                        cart: item,
+                        action: 'cart',
+                        manuscript_checked: $('#add-manuscript-price').is(':checked'),
+                        highrank_checked: $('#add-highrank-price').is(':checked')
+                    },
+                    success: function (data) {
+                        if (data['status'] == 'success') {
+                            $('.cart-confirm-modal').show();
+                            $('.cart-confirm-modal-btn.yes').on('click', function () {
+                                window.location.href = '/dashboard/purchase/cart';
+                            })
+                            $('.cart-confirm-modal-btn.no').on('click', function () {
+                                $('.cart-confirm-modal').hide();
+                            })
+                        } else if (data['status'] == 'already_exist') {
+                            alert('이미 장바구니에 있습니다.');
+                        } else {
+                            alert('다시 시도해주세요.');
+                        }
+
+                    },
+                    error: function (data) {
+                    }
+                });
+            });
+            });
         });
+
     </script>
 {% endblock %}
 
@@ -89,91 +122,277 @@
                     <div class="content status_0">
                         {% for order in orders %}
                             {% for cart_item in order.cart.cartitem_set.all %}
-                                <ul class="purchase-table-ul">
-                                    <li class="table_product number">{{ cart_item.item.id }}</li>
-                                    <li class="table_product name">{{ cart_item.item.oneline_intro }}</li>
-                                    <li class="table_product seller_id">{{ cart_item.item.seller }}</li>
-                                    <li class="table_product when_purchase">{{ order.timestamp|date:"m.d" }}</li>
-                                    <li class="table_product working_status">{{ order.status }}</li>
-                                    <li class="table_product price">{{ order.order_total }}</li>
-                                    <li class="table_product empty">
-                                        <div>
-                                            <button>
-                                                상세
-                                            </button>
+                                <div class="product_item_each_wrapper">
+                                    <ul class="purchase-table-ul">
+                                        <li class="table_product number">{{ cart_item.item.id }}</li>
+                                        <li class="table_product name">{{ cart_item.item.oneline_intro }}</li>
+                                        <li class="table_product seller_id">{{ cart_item.item.seller }}</li>
+                                        <li class="table_product when_purchase">{{ order.timestamp|date:"m.d" }}</li>
+                                        <li class="table_product working_status">{{ order.status }}</li>
+                                        <li class="table_product price">{{ cart_item.line_item_total }}</li>
+                                    </ul>
+                                    <div class="table_product btn" >
+                                        <button class="show_detail_btn" aria-hidden="true">
+                                            <img src="/static/img/downward_arrow.png"/>
+                                        </button>
+                                    </div>
+                                    <div class="table_product_detail" data-type="{{ cart_item.item.sns_type }}" data-color="{{ cart_item.item.sns_type_color }}">
+                                        <div class="table_product_detail_left">
+                                            <div class="circle-wrapper">
+                                                <img class="circle-arrow" src="/static/img/arrow_gauge.png" >
+                                                <ul class="circle">
+                                                    <li class="circle-list">
+                                                        <div class="circle-text">1</div>
+                                                    </li>
+                                                    <li class="circle-list">
+                                                        <div class="circle-text">2</div>
+                                                    </li>
+                                                    <li class="circle-list">
+                                                        <div class="circle-text">3</div>
+                                                    </li>
+                                                    <li class="circle-list">
+                                                        <div class="circle-text">4</div>
+                                                    </li>
+                                                    <li class="circle-list">
+                                                        <div class="circle-text">5</div>
+                                                    </li>
+                                                    <div class="circle-mask2">
+                                                        <div class="circle-mask2-text">
+                                                            <span style="font-size:1.3em;">50</span>
+                                                            <span style="font-size:1em;">원</span>
+                                                        </div>
+                                                    </div>
+                                                </ul>
+                                                <div class="cash">
+                                                    <span class="cash-price" style="font-size:1em; color:grey;" data-price="{{ cart_item.item.price }}">
+                                                        <span class="item-money">{{ cart_item.item.price }}</span>원
+                                                        {% if cart_item.item.manuscript_price > 0 or cart_item.item.highrank_price > 0 %}
+                                                            ~
+                                                        {% endif %}
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </li>
-                                </ul>
-                                <div class="table_product_detail">
-                                    hi
+                                        <div class="table_product_detail_right">
+                                            <div class="table_product_detail_right_title">
+                                                <h2>[{{ cart_item.item.id }}]{{ cart_item.item.oneline_intro }}</h2>
+                                                <p>주문번호:{{ order.order_id }} &nbsp  판매자:{{ cart_item.item.seller }} &nbsp 구매날짜:{{ order.timestamp|date:"m.d" }} </p>
+                                                <p>결제금액:{{ cart_item.line_item_total }} &nbsp 결제수단:{{ order.type }}</p>
+                                            </div>
+                                            <div class="table_product_detail_right_tbl">
+                                                <table>
+                                                  <tr style="background-color:#e8e8e8">
+                                                    <th width="55%">내용</th>
+                                                    <th width="10%">수량</th>
+                                                    <th width="35%">금액</th>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>기본작업 포스팅 게시</td>
+                                                    <td>1</td>
+                                                    <td class="price">{{ cart_item.item.price }}원</td>
+                                                  </tr>
+                                                  {% if cart_item.manuscript_checked %}
+                                                      {% if cart_item.item.manuscript_price != 0 %}
+                                                          <tr>
+                                                              <td>옵션(원고작성)</td>
+                                                              <td>1</td>
+                                                              <td class="price">{{ cart_item.item.manuscript_price }}원</td>
+                                                          </tr>
+                                                      {% endif %}
+                                                  {% endif %}
+                                                  {% if cart_item.highrank_checked %}
+                                                      {% if cart_item.item.highrank_price != 0 %}
+                                                          <tr>
+                                                              <td>옵션(상위노출)</td>
+                                                              <td>1</td>
+                                                              <td class="price">{{ cart_item.item.highrank_price }}원</td>
+                                                          </tr>
+                                                      {% endif %}
+                                                  {% endif %}
+                                                <tr style="background-color:lavender">
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                        {% if cart_item.highrank_checked and cart_item.manuscript_checked %}
+                                                            3
+                                                        {% elif not cart_item.highrank_checked and not cart_item.manuscript_checked%}
+                                                            1
+                                                        {% else %}
+                                                            2
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="price">{{ cart_item.line_item_total }}원</td>
+                                                </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="table_product_detail_bottom"">
+                                            <ul>
+                                                <li>
+                                                    <button class="detail_bottom_btn-talk" data-id="{{ cart_item.item.seller.user.id }}"
+                                                        data-name="{{  cart_item.item.seller }}"
+                                                        data-profile="{{  cart_item.item.seller.user.get_avatar }}">
+                                                        구매자와의 대화
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button class="detail_bottom_btn processing">
+                                                        작업진행
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button class="detail_bottom_btn finished">
+                                                        작업완료
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button class="detail_bottom_btn refunded">
+                                                        작업취소
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             {% endfor %}
                         {% endfor %}
                     </div>
                     <div class="content status_1" style="display:none;">
-                        {% for item in list %}
-                            {% if item.status == 'paid' %}
-                                <div class="item">
-                                    <div class="image">
-                                        {% for obj in item.cart.items.all %}
-                                            {% if forloop.counter0 == 0 %}
-                                                <img src="{{ obj.product.get_image_url }}">
-                                            {% endif %}
-                                        {% endfor %}
+                        {% for order in orders %}
+                            {% for cart_item in order.cart.cartitem_set.all %}
+                                <div class="product_item_each_wrapper">
+                                    <ul class="purchase-table-ul">
+                                        <li class="table_product number">{{ cart_item.item.id }}</li>
+                                        <li class="table_product name">{{ cart_item.item.oneline_intro }}</li>
+                                        <li class="table_product seller_id">{{ cart_item.item.seller }}</li>
+                                        <li class="table_product when_purchase">{{ order.timestamp|date:"m.d" }}</li>
+                                        <li class="table_product working_status">{{ order.status }}</li>
+                                        <li class="table_product price">{{ cart_item.line_item_total }}</li>
+                                    </ul>
+                                    <div class="table_product btn" >
+                                        <button class="show_detail_btn" aria-hidden="true">
+                                            <img src="/static/img/downward_arrow.png"/>
+                                        </button>
                                     </div>
-                                    <div class="title">
-                                        {% for obj in item.cart.items.all %}
-                                            {% if forloop.counter0 == 0 %}
-                                                <h3>{{ obj.product.title|truncatechars:27 }}</h3>
-                                                <div class="meta">
-                                                    <p class="price">{{ item.order_total }}원</p>
-                                                    <p class="date"></p>
-                                                </div>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </div>
-
-                                    {% for obj in item.cart.items.all %}
-                                        {% if forloop.counter0 == 0 %}
-                                            <div class="seller">
-                                                <p>{{ obj.product.seller }}</p>
-                                                <button id="ask-seller" data-id="{{ obj.product.seller.user.id }}"
-                                                        data-name="{{ obj.product.seller }}"
-                                                        data-profile="{{ obj.product.seller.user.get_avatar }}">
-                                                    문의하기
-                                                </button>
-                                            </div>
-                                            <div class="more" data-seller-id="{{ obj.product.seller.user }}">
-                                                <i class="fa fa-angle-down" aria-hidden="true"></i>
-                                            </div>
-                                        {% endif %}
-                                    {% endfor %}
-                                    <div class="item-info">
-                                        <div class="purchase-info">
-                                            {% for obj in item.cart.items.all %}
-                                                {% if forloop.counter0 == 0 %}
-                                                    <p>주문번호 {{ item.order_id }}</p>
-                                                    <p>판매자 {{ obj.product.seller }}</p>
-                                                    <p>결제금액 <span class="money">{{ item.order_total }}원</span></p>
-                                                    <p>결제 수단
-                                                        {% if item.type == 'card' %}
-                                                            신용카드
-                                                        {% elif item.type == 'phone' %}
-                                                            휴대폰결제
+                                    <div class="table_product_detail" data-type="{{ cart_item.item.sns_type }}" data-color="{{ cart_item.item.sns_type_color }}">
+                                        <div class="table_product_detail_left">
+                                            <div class="circle-wrapper">
+                                                <img class="circle-arrow" src="/static/img/arrow_gauge.png" >
+                                                <ul class="circle">
+                                                    <li class="circle-list">
+                                                        <div class="circle-text">1</div>
+                                                    </li>
+                                                    <li class="circle-list">
+                                                        <div class="circle-text">2</div>
+                                                    </li>
+                                                    <li class="circle-list">
+                                                        <div class="circle-text">3</div>
+                                                    </li>
+                                                    <li class="circle-list">
+                                                        <div class="circle-text">4</div>
+                                                    </li>
+                                                    <li class="circle-list">
+                                                        <div class="circle-text">5</div>
+                                                    </li>
+                                                    <div class="circle-mask2">
+                                                        <div class="circle-mask2-text">
+                                                            <span style="font-size:1.3em;">50</span>
+                                                            <span style="font-size:1em;">원</span>
+                                                        </div>
+                                                    </div>
+                                                </ul>
+                                                <div class="cash">
+                                                    <span class="cash-price" style="font-size:1em; color:grey;" data-price="{{ cart_item.item.price }}">
+                                                        <span class="item-money">{{ cart_item.item.price }}</span>원
+                                                        {% if cart_item.item.manuscript_price > 0 or cart_item.item.highrank_price > 0 %}
+                                                            ~
                                                         {% endif %}
-                                                    </p>
-                                                    <p>결제 날짜 {{ item.created }}</p>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </div>
-                                        <div class="message">
-                                            <div class="chat-canvas">
-
+                                                    </span>
+                                                </div>
                                             </div>
+                                        </div>
+                                        <div class="table_product_detail_right">
+                                            <div class="table_product_detail_right_title">
+                                                <h2>[{{ cart_item.item.id }}]{{ cart_item.item.oneline_intro }}</h2>
+                                                <p>주문번호:{{ order.order_id }} &nbsp  판매자:{{ cart_item.item.seller }} &nbsp 구매날짜:{{ order.timestamp|date:"m.d" }} </p>
+                                                <p>결제금액:{{ cart_item.line_item_total }} &nbsp 결제수단:{{ order.type }}</p>
+                                            </div>
+                                            <div class="table_product_detail_right_tbl">
+                                                <table>
+                                                  <tr style="background-color:#e8e8e8">
+                                                    <th width="55%">내용</th>
+                                                    <th width="10%">수량</th>
+                                                    <th width="35%">금액</th>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>기본작업 포스팅 게시</td>
+                                                    <td>1</td>
+                                                    <td class="price">{{ cart_item.item.price }}원</td>
+                                                  </tr>
+                                                  {% if cart_item.manuscript_checked %}
+                                                      {% if cart_item.item.manuscript_price != 0 %}
+                                                          <tr>
+                                                              <td>옵션(원고작성)</td>
+                                                              <td>1</td>
+                                                              <td class="price">{{ cart_item.item.manuscript_price }}원</td>
+                                                          </tr>
+                                                      {% endif %}
+                                                  {% endif %}
+                                                  {% if cart_item.highrank_checked %}
+                                                      {% if cart_item.item.highrank_price != 0 %}
+                                                          <tr>
+                                                              <td>옵션(상위노출)</td>
+                                                              <td>1</td>
+                                                              <td class="price">{{ cart_item.item.highrank_price }}원</td>
+                                                          </tr>
+                                                      {% endif %}
+                                                  {% endif %}
+                                                <tr style="background-color:lavender">
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                        {% if cart_item.highrank_checked and cart_item.manuscript_checked %}
+                                                            3
+                                                        {% elif not cart_item.highrank_checked and not cart_item.manuscript_checked%}
+                                                            1
+                                                        {% else %}
+                                                            2
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="price">{{ cart_item.line_item_total }}원</td>
+                                                </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="table_product_detail_bottom"">
+                                            <ul>
+                                                <li>
+                                                    <button class="detail_bottom_btn-talk" data-id="{{ cart_item.item.seller.user.id }}"
+                                                        data-name="{{  cart_item.item.seller }}"
+                                                        data-profile="{{  cart_item.item.seller.user.get_avatar }}">
+                                                        구매자와의 대화
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button class="detail_bottom_btn processing">
+                                                        작업진행
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button class="detail_bottom_btn finished">
+                                                        작업완료
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button class="detail_bottom_btn refunded">
+                                                        작업취소
+                                                    </button>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
-                            {% endif %}
+                            {% endfor %}
                         {% endfor %}
                     </div>
                     <div class="content status_2" style="display:none;">

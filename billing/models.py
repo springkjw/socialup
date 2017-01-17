@@ -13,7 +13,7 @@ from django.db.models.signals import post_save
 # app import
 from accounts.models import MyUser, Seller
 from markets.models import Product
-from carts.models import Cart
+from carts.models import Cart, CartItem
 from .iamport import validation_prepare, get_transaction
 
 
@@ -270,6 +270,10 @@ def new_order_receiver(sender, instance, created, *args, **kwargs):
                     except:
                         raise ValueError('거래에 문제가 발생했습니다.')
 
+                for cart_item in CartItem.objects.filter(cart = instance.cart):
+                    new_order_item = OrderItem.objects.create(order=instance, cart_item=cart_item, status="paid")
+                    new_order_item.save()
+
                 instance.status = 'paid'
                 instance.save()
 
@@ -321,3 +325,9 @@ def product_receiver(instance, sender, created, *args, **kwargs):
 
 
 post_save.connect(product_receiver, sender=ProductManage)
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order)
+    cart_item = models.ForeignKey(CartItem)
+    status = models.CharField(max_length=120, choices=ORDER_STATUS_CHOICES, default='created')
