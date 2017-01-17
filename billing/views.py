@@ -304,6 +304,8 @@ class ImpAjaxView(AjaxRequireMixin, View):
 @login_required
 def purchase_list(request):
     orders = Order.objects.filter(user=request.user).exclude(status='created')
+    orders_wait = Order.objects.filter(user=request.user, status='paid')
+    orders_processing = Order.objects.filter(user=request.user, status='processing')
     status_0 = orders.filter(status='paid').count()
     status_1 = orders.filter(status='processing').count()
     status_2 = orders.filter(status='finished').count()
@@ -312,6 +314,8 @@ def purchase_list(request):
     template = 'account/dashboard_purchase_list.html'
     context = {
         "orders": orders,
+        "order_wait":orders_wait,
+        "order_processing": orders_processing,
         "status_0": status_0,
         "status_1": status_1,
         "status_2": status_2,

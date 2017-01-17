@@ -1,6 +1,14 @@
 from django.contrib import admin
-from .models import Point, PointTransaction, PointHistory, Order
+from .models import Point, PointTransaction, PointHistory, Order, OrderItem
 
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
+
+class OrderAdmin(admin.ModelAdmin):
+    inlines = [OrderItemInline, ]
+
+    class Meta:
+        model = Order
 
 class PointAdmin(admin.ModelAdmin):
     list_display = ('user', '__unicode__', 'timestamp')
@@ -17,4 +25,4 @@ class PointHistoryAdmin(admin.ModelAdmin):
 admin.site.register(Point, PointAdmin)
 admin.site.register(PointTransaction, PointTransactionAdmin)
 admin.site.register(PointHistory, PointHistoryAdmin)
-admin.site.register(Order)
+admin.site.register(Order, OrderAdmin)

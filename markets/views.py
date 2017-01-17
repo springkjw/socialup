@@ -91,10 +91,8 @@ def product_detail(request, product_id):
             # 상품 상세 페이지에서 장바구니 추가
             if request.POST['action'] == 'cart':
                 cart_items = request.POST.getlist('cart[]')
-
                 if cart_items:
                     data = add_to_cart(request, product, cart_items)
-
                     if data is not None:
                         return HttpResponse(json.dumps(data), content_type='application/json')
                     else:
@@ -346,7 +344,7 @@ def product_delete(request):
         raise Http404
 
     # disable the product
-    product.is_now_selling = False
+    product.product_status = "terminated"
     product.save()
 
     return redirect(reverse('product_manage'))
