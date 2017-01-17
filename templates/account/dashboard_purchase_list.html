@@ -34,7 +34,7 @@
         <div class="dashboard-info">
             <div class="dashboard-info-summary info-order-wish">
                 <div class="dashboard-info-summary-title">
-                    위시리스트
+                    찜목록
                 </div>
                 <div class="dashboard-info-summary-count">
                     <a href="{% url 'wish_list' %}" class="dashboard-info-img">
@@ -73,54 +73,39 @@
                     <li class="status_4_menu">취소({{ status_3 }})</li>
                 </ul>
             </div>
+            <div class="purchase-table-wrapper">
+                <ul class="purchase-table-ul">
+                    <li class="table_product number">상품번호</li>
+                    <li class="table_product name">상품명</li>
+                    <li class="table_product seller_id">판매자ID</li>
+                    <li class="table_product when_purchase">구매날짜</li>
+                    <li class="table_product working_status">작업상태</li>
+                    <li class="table_product price">결제금액</li>
+                    <li class="table_product empty"></li>
+                </ul>
+            </div>
             <div class="item-list">
                 {% if orders %}
                     <div class="content status_0">
                         {% for order in orders %}
                             {% for cart_item in order.cart.cartitem_set.all %}
-                                <div class="item">
-                                    <div class="image">
-
-                                    </div>
-                                    <div class="title">
-                                        <h3>{{ cart_item.item.oneline_intro|truncatechars:27 }}</h3>
-                                        <div class="meta">
-                                            <p class="price">{{ cart_item.line_item_total }}원</p>
-                                            <p class="date"></p>
+                                <ul class="purchase-table-ul">
+                                    <li class="table_product number">{{ cart_item.item.id }}</li>
+                                    <li class="table_product name">{{ cart_item.item.oneline_intro }}</li>
+                                    <li class="table_product seller_id">{{ cart_item.item.seller }}</li>
+                                    <li class="table_product when_purchase">{{ order.timestamp|date:"m.d" }}</li>
+                                    <li class="table_product working_status">{{ order.status }}</li>
+                                    <li class="table_product price">{{ order.order_total }}</li>
+                                    <li class="table_product empty">
+                                        <div>
+                                            <button>
+                                                상세
+                                            </button>
                                         </div>
-                                    </div>
-
-                                    <div class="seller">
-                                        <p>{{ cart_item.item.seller }}</p>
-                                        <button id="ask-seller" data-id="{{ cart_item.item.seller.user.id }}"
-                                                data-name="{{ cart_item.item.seller }}"
-                                                data-profile="{{ cart_item.item.seller.user.get_avatar }}">
-                                            문의하기
-                                        </button>
-                                    </div>
-                                    <div class="more" data-seller-id="{{ cart_item.item.seller.user }}">
-                                        <i class="fa fa-angle-down" aria-hidden="true"></i>
-                                    </div>
-                                    <div class="item-info">
-                                        <div class="purchase-info">
-                                            <p>주문번호 {{ order.order_id }}</p>
-                                            <p>판매자 {{ cart_item.item.seller }}</p>
-                                            <p>결제금액 <span class="money">{{ cart_item.line_item_total }}원</span></p>
-                                            <p>결제 수단
-                                                {% if order.type == 'card' %}
-                                                    신용카드
-                                                {% elif order.type == 'phone' %}
-                                                    휴대폰결제
-                                                {% endif %}
-                                            </p>
-                                            <p>결제 날짜 {{ order.created }}</p>
-                                        </div>
-                                        <div class="message">
-                                            <div class="chat-canvas">
-
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </li>
+                                </ul>
+                                <div class="table_product_detail">
+                                    hi
                                 </div>
                             {% endfor %}
                         {% endfor %}

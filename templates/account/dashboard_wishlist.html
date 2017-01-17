@@ -66,7 +66,7 @@
         <div class="dashboard-info">
             <div class="dashboard-info-summary info-order-wish">
                 <div class="dashboard-info-summary-title">
-                    위시리스트
+                    찜목록
                 </div>
                 <div class="dashboard-info-summary-count">
                     <a href="{% url 'wish_list' %}" class="dashboard-info-img active">
@@ -98,8 +98,9 @@
         <div class="dashboard-wishlist">
                 {% for product in lists %}
                     {% cycle '<div class="row">' '' '' '' %}
+                    <div class="list-card-wrapper">
                         <a href="{{ product.get_absolute_url }}"
-                           class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}">
+                           class="{% cycle 'list-card' 'list-card' 'list-card last' %}">
                             <div class="card-main-info" data-type="{{ product.sns_type }}" data-color="{{ product.sns_type_color }}">
                                   <div class="card-type">
                                     <img class="product-type-image" src="{{ product.sns_type_image_url }}" alt="{{ product.sns_type }}" />
@@ -164,7 +165,26 @@
                                 </div>
                             </div>
                         </a>
+                        <div class="card-btns-wrapper">
+                            <ul>
+                                <li>
+                                    <button class="ask-seller" data-id="{{ product.seller.user.id }}" data-name="{{ product.seller }}" data-profile="{{ product.seller.user.get_avatar }}" >
+                                        문의하기
+                                    </button>
+                                </li>
+                                <li>
+                                    <form method="GET" id="delete-form" action="{% url 'wish_list' %}"> 
+                                        <input type="hidden" name="product" value="{{ product.id }}"/> 
+                                        <input type="hidden" name="delete" value="true"/>
+                                        <button class="wish_list_delete" type="submit" value="삭제하기">
+                                        삭제하기
+                                        </button>
+                                    </form>
 
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                         {% if products|length == forloop.counter %}
                             </div>
                         {% else %}
