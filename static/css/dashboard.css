@@ -316,11 +316,14 @@ body {
 
 .dashboard-content .dashboard-change-form {
     border: 2px solid #DADADA;
-    width: 510px;
+    width: 535px;
     margin-top: 15px;
-    padding: 40px 25px 40px 25px;
+    padding: 40px 0px 40px 25px;
+    font-size:14px;
 }
 
+
+/*
 .dashboard-content .dashboard-change-form input {
     width: 385px;
     height: 25px;
@@ -330,6 +333,7 @@ body {
     padding: 5px 10px;
     margin-right: 35px;
 }
+*/
 
 .dashboard-content .dashboard-change-form textarea {
     width: 365px;
@@ -344,7 +348,7 @@ body {
     padding-right: 25px;
     padding-bottom: 20px;
     padding-left: 15px;
-    margin-right: 35px;
+    margin-left: 25px;
 }
 
 .dashboard-content .dashboard-change-form label {
@@ -360,13 +364,17 @@ body {
     display: none;
 }
 
+
+
+
 .dashboard-content .dashboard-change-form .base_info{
     margin-top:20px;
+    height:220px;
 }
 
 .dashboard-content .dashboard-change-form .base_info .base_info_image {
     display: inline-block;
-    width:30%;
+    width:25%;
     height:100%;
 }
 
@@ -379,9 +387,132 @@ body {
 .dashboard-content .dashboard-change-form .base_info .base_info_basic {
     display: inline-block;
     float:right;
-    width:70%;
+    width:75%;
     height:100%;
 }
+
+.dashboard-change-form .base_info .base_info_basic .base_info_basic_content.title {
+    display: inline-block;
+    width:70px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.dashboard-change-form .base_info .base_info_basic .base_info_basic_content.name{
+    display: inline-block;
+}
+
+.dashboard-change-form .base_info .base_info_basic .base_info_basic_content.name input{
+    width: 100px;
+    height: 25px;
+    background: #F2F2F2;
+    margin-bottom: 10px;
+    font-size: 14px;
+    padding: 5px 10px;
+    margin-right: 35px;
+}
+
+.dashboard-change-form .base_info .base_info_basic .base_info_basic_content.birth_year {
+    display: inline-block;
+}
+
+/* sex part */
+.dashboard-change-form .base_info .base_info_basic .base_info_basic_content.sex .radio_female_wrapper{
+    width:30%;
+    margin-left: 15%;
+    margin-bottom:10px;
+}
+
+.dashboard-change-form .base_info .base_info_basic .base_info_basic_content.sex .radio_male_wrapper{
+    width:30%;
+    margin-left: 15%;
+}
+
+.dashboard-change-form .base_info .base_info_basic .base_info_basic_content.address{
+    display: inline-block;
+}
+
+.dashboard-change-form .base_info .base_info_basic .base_info_basic_content.job{
+    display: inline-block;
+}
+
+.dashboard-change-form .base_info .base_info_basic .base_info_basic_content.job input {
+    width: 70px;
+    height: 25px;
+    background: #F2F2F2;
+    margin-bottom: 10px;
+    font-size: 14px;
+    padding: 5px 10px;
+    margin-right: 35px;
+}
+
+.dashboard-change-form .base_info .base_info_basic .base_info_basic_content.email input {
+    width: 250px;
+    height: 25px;
+    background: #F2F2F2;
+    margin-bottom: 10px;
+    font-size: 14px;
+    padding: 5px 10px;
+    margin-right: 35px;
+}
+
+.dashboard-change-form .base_info .base_info_basic .base_info_basic_content.phone input {
+    width: 250px;
+    height: 25px;
+    background: #F2F2F2;
+    margin-bottom: 10px;
+    font-size: 14px;
+    padding: 5px 10px;
+    margin-right: 35px;
+}
+
+.description_title{
+    display: inline-block;
+}
+
+.description_text_wrapper{
+    display: inline-block;
+    vertical-align: top;
+}
+
+.password_rest_content{
+    display: inline-block;
+    margin-left:15%;
+}
+
+.password_rest_content input{
+    width: 150px;
+    height: 25px;
+    background: #F2F2F2;
+    margin-bottom: 10px;
+    font-size: 14px;
+    padding: 5px 10px;
+    margin-right: 35px;
+}
+
+.agree_alarm_title{
+}
+
+.agree_alarm_content_wrapper{
+    display: inline-block;
+    margin-left:15%;
+    width:100%;
+}
+
+.alarm_content_title{
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 13px;
+    width:30%;
+    margin-right:5%;
+    margin-bottom: 10px;
+}
+
+.alarm_content_checkbox{
+    display: inline-block;
+}
+
 
 .dashboard-content .dashboard-change-form .image {
     margin-bottom: 35px;
@@ -421,7 +552,8 @@ body {
     padding-left: 10px;
     padding-right: 10px;
     background: #648efc;
-    margin-right: 200px;
+    margin-top:5%;
+    margin-left: 40%;
 }
 
 .dashboard-menu .sub-info {

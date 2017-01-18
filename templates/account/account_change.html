@@ -26,6 +26,7 @@
         </div>
         <div class="dashboard-change-form base">
             <form class="change_form" id="change_form" method="POST" action="{% url 'change_info' %}" enctype="multipart/form-data">{%  csrf_token %}
+                <!-- basic info part -->
                 기본정보
                 <div class="base_info">
                     <div class="base_info_image">
@@ -34,14 +35,130 @@
                     </div>
                     <div class="base_info_basic">
                         <div class="base_info_basic_content name">
-                            이름 <input type="text"></input>
+                            <div class="base_info_basic_content title">
+                                이름
+                            </div>
+                            <input type="text" name="name" value="{{ request.user.name }}"/>
                         </div>
-                        <div class="base_info_basic_content birth">생년월일</div>
-                        <div class="base_info_basic_content sex">성별</div>
-                        <div class="base_info_basic_content address">거주지역</div>
+                        <div class="base_info_basic_content birth_year">
+                            <div class="base_info_basic_content title">
+                                출생년도
+                            </div>
+                            <select name="birth_year">
+                                {% for year in year_list %}
+                                <option value="{{ year }}">{{ year }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="base_info_basic_content sex">
+                            <div class="base_info_basic_content title">
+                                성별
+                            </div>
+                            <span class="radio_female_wrapper">
+                                <input type="radio" name="sex" value="female"> 여성
+                            </span>
+                            <span class="radio_male_wrapper">
+                                <input type="radio" name="sex" value="male"> 남성
+                            </span>
+                        </div>
+                        <div class="base_info_basic_content address">
+                            <div class="base_info_basic_content title">
+                                거주지역
+                            </div>
+                            <select name="address">
+                                {% for address in address_list %}
+                                <option value="{{ address.1 }}">{{ address.1 }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="base_info_basic_content job">
+                            <div class="base_info_basic_content title">
+                                직업
+                            </div>
+                            <input type="job" name="job" value="{{ request.user.job }}"/>
+                        </div>
+                        <div class="base_info_basic_content email">
+                            <div class="base_info_basic_content title">
+                                * 이메일
+                            </div>
+                            <input type="email" name="email" value="{{ request.user.email }}"/>
+                        </div>
+                        <div class="base_info_basic_content phone">
+                            <div class="base_info_basic_content title">
+                            * 연락처
+                            </div>
+                            <input type="phone" name="phone" value="{{ request.user.phone }}"/>
+                        </div>
                     </div>
-
                 </div>
+                <!-- 자기소개 -->
+                <div class="description_wrapper">
+                    <div class="description_title">
+                        자기소개
+                    </div>
+                    <div class="description_text_wrapper">
+                        <textarea id="id_description" name="description" rows="7" cols="40">
+                            {{ request.user.description }}
+                        </textarea>
+                    </div>
+                </div>
+                <!-- 비밀번호 변경 -->
+                <div class="password_reset_wrapper">
+                    <div class="password_reset_title">
+                        비밀번호 변경
+                    </div>
+                    <div class="password_rest_content">
+                        <div>
+                            현재 비밀번호 <input type="password">
+                        </div>
+                        <div>
+                            변경 비밀번호 <input type="password">
+                        </div>
+                        <div>
+                            비밀번호 확인 <input type="password">
+                        </div>
+                    </div>
+                </div>
+                <!-- 알림 수신 설정 -->
+                <div class="agree_alarm_wrapper">
+                    <div class="agree_alarm_title">
+                        알림 수신 설정
+                    </div>
+                    <div class="agree_alarm_content_wrapper">
+                        <div class="agree_alarm_content purchase">
+                            <div class="alarm_content_title">
+                                <div>구매정보 수신</div>
+                                <div>(메시지, 작업요청 정보 등)</div>
+                            </div>
+                            <div class="alarm_content_checkbox">
+                                <input type="checkbox"> 이메일
+                                <input type="checkbox"> SMS/MMS
+                            </div>
+                        </div>
+                        <div class="agree_alarm_content selling">
+                            <div class="alarm_content_title">
+                                <div>판매정보 수신</div>
+                                <div>(메시지, 작업요청 정보 등)</div>
+                                <div>* 판매자는 꼭 동의해주세요.</div>
+                            </div>
+                            <div class="alarm_content_checkbox">
+                                <input type="checkbox"> 이메일
+                                <input type="checkbox"> SMS/MMS
+                            </div>
+                        </div>
+                        <div class="agree_alarm_content marketing">
+                            <div class="alarm_content_title">
+                                <div>마케팅정보 수신</div>
+                                <div>(할인정보, 이벤트 등)</div>
+                            </div>
+                            <div class="alarm_content_checkbox">
+                                <input type="checkbox"> 이메일
+                                <input type="checkbox"> SMS/MMS
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <button class="change_button" type="submit">변경하기</button>
             </form>
         </div>
