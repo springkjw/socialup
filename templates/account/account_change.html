@@ -46,7 +46,11 @@
                             </div>
                             <select name="birth_year">
                                 {% for year in year_list %}
-                                <option value="{{ year }}">{{ year }}</option>
+                                    {% if request.user.birth_year == year %}
+                                        <option value="{{ year }}" selected>{{ year }}</option>
+                                    {% else %}
+                                        <option value="{{ year }}">{{ year }}</option>
+                                    {% endif %}
                                 {% endfor %}
                             </select>
                         </div>
@@ -54,12 +58,28 @@
                             <div class="base_info_basic_content title">
                                 성별
                             </div>
+                            {% if request.user.sex == 'female' %}
+                            <span class="radio_female_wrapper">
+                                <input type="radio" name="sex" value="female" checked="checked"> 여성
+                            </span>
+                            <span class="radio_male_wrapper">
+                                <input type="radio" name="sex" value="male"> 남성
+                            </span>
+                            {% elif request.user.sex == 'male' %}
+                            <span class="radio_female_wrapper">
+                                <input type="radio" name="sex" value="female"> 여성
+                            </span>
+                            <span class="radio_male_wrapper">
+                                <input type="radio" name="sex" value="male" checked="checked"> 남성
+                            </span>
+                            {% else %}
                             <span class="radio_female_wrapper">
                                 <input type="radio" name="sex" value="female"> 여성
                             </span>
                             <span class="radio_male_wrapper">
                                 <input type="radio" name="sex" value="male"> 남성
                             </span>
+                            {% endif %}
                         </div>
                         <div class="base_info_basic_content address">
                             <div class="base_info_basic_content title">
@@ -67,7 +87,11 @@
                             </div>
                             <select name="address">
                                 {% for address in address_list %}
-                                <option value="{{ address.1 }}">{{ address.1 }}</option>
+                                    {% if request.user.address == address %}
+                                        <option value="{{ address }}" selected>{{ address}}</option>
+                                    {% else %}
+                                        <option value="{{ address }}">{{ address}}</option>
+                                    {% endif %}
                                 {% endfor %}
                             </select>
                         </div>

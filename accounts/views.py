@@ -25,7 +25,7 @@ year_list = []
 for i in range(1930, 2003):
     year_list.append(i)
 
-
+"""
 address_list=(
     ("Seoul", "서울"),
     ("Gyeonggi", "경기"),
@@ -40,6 +40,10 @@ address_list=(
     ("Chungnam", "충남"),
     ("etc", "기타")
 )
+"""
+
+address_list=[ "서울", "경기", "인천", "강원", "경남", "경북", "전북",
+               "전남", "제주", "충북", "충남", "기타"]
 
 def change_info(request):
     user = MyUser.objects.get(id=request.user.id)
@@ -62,6 +66,9 @@ def change_info(request):
             user.phone = form.cleaned_data['phone']
             user.description = form.cleaned_data['description']
             user.job = form.cleaned_data['job']
+            user.sex = form.cleaned_data['sex']
+            user.birth_year = form.cleaned_data['birth_year']
+            user.address = form.cleaned_data['address']
             user.save()
 
             return HttpResponseRedirect('/dashboard/change/')
