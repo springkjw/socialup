@@ -98,11 +98,11 @@
         <div class="dashboard-purchase-list">
             <div class="purchase-list-nav">
                 <ul>
-                    <li class="active status_0_menu">전체({{ orders|length }})</li>
-                    <li class="status_1_menu">작업대기({{ status_0 }})</li>
-                    <li class="status_2_menu">작업진행({{ status_1 }})</li>
-                    <li class="status_3_menu">작업완료({{ status_2 }})</li>
-                    <li class="status_4_menu">취소({{ status_3 }})</li>
+                    <li class="active status_0_menu">전체({{ order_items|length }})</li>
+                    <li class="status_1_menu">작업대기({{ order_items_ready|length }})</li>
+                    <li class="status_2_menu">작업진행({{ order_items_processing|length }})</li>
+                    <li class="status_3_menu">작업완료({{ order_items_finished|length }})</li>
+                    <li class="status_4_menu">취소({{ order_items_refunded|length }})</li>
                 </ul>
             </div>
 

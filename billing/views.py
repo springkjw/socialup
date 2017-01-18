@@ -303,39 +303,19 @@ class ImpAjaxView(AjaxRequireMixin, View):
 
 @login_required
 def purchase_list(request):
-    orders = Order.objects.filter(user=request.user).exclude(status='created')
-    order_items = []
-    for order in orders:
-        for order_item in OrderItem.objects.filter(order=order):
-            order_items.append(order_item)
-
+    order_items = OrderItem.objects.filter(user=request.user)
     order_items_ready = OrderItem.objects.filter(user=request.user, status='paid')
     order_items_processing = OrderItem.objects.filter(user=request.user, status='processing')
     order_items_finished = OrderItem.objects.filter(user=request.user, status='finished')
     order_items_refunded = OrderItem.objects.filter(user=request.user, status='refunded')
 
-
-    orders_wait = Order.objects.filter(user=request.user, status='paid')
-    orders_processing = Order.objects.filter(user=request.user, status='processing')
-    status_0 = orders.filter(status='paid').count()
-    status_1 = orders.filter(status='processing').count()
-    status_2 = orders.filter(status='finished').count()
-    status_3 = orders.filter(status='refunded').count()
-
     template = 'account/dashboard_purchase_list.html'
     context = {
-        "orders": orders,
-        "order_wait":orders_wait,
-        "order_processing": orders_processing,
         "order_items": order_items,
         "order_items_ready": order_items_ready,
         "order_items_processing": order_items_processing,
         "order_items_finished": order_items_finished,
         "order_items_refunded": order_items_refunded,
-        "status_0": status_0,
-        "status_1": status_1,
-        "status_2": status_2,
-        "status_3": status_3,
     }
 
     return render(request, template, context)

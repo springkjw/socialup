@@ -271,7 +271,7 @@ def new_order_receiver(sender, instance, created, *args, **kwargs):
                         raise ValueError('거래에 문제가 발생했습니다.')
 
                 for cart_item in CartItem.objects.filter(cart = instance.cart):
-                    new_order_item = OrderItem.objects.create(order=instance, cart_item=cart_item, status="paid")
+                    new_order_item = OrderItem.objects.create(user=instance.user, order=instance, cart_item=cart_item, status="paid")
                     new_order_item.save()
 
                 instance.status = 'paid'
