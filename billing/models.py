@@ -196,6 +196,7 @@ class Order(models.Model):
     transaction_id = models.CharField(max_length=120, null=True, blank=True)
     type = models.CharField(max_length=120, null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False, null=True, blank=True)
+    receipt = models.CharField(max_length=255, null=True, blank=True)
 
     objects = OrderManager()
 
@@ -274,6 +275,7 @@ def new_order_receiver(sender, instance, created, *args, **kwargs):
                     new_order_item = OrderItem.objects.create(user=instance.user, order=instance, cart_item=cart_item, status="paid")
                     new_order_item.save()
 
+                instance.receipt = v_trans['receipt_url']
                 instance.status = 'paid'
                 instance.save()
 
@@ -332,3 +334,6 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order)
     cart_item = models.ForeignKey(CartItem)
     status = models.CharField(max_length=120, choices=ORDER_STATUS_CHOICES, default='created')
+
+    def __unicode__(self):
+        return str(self.id)

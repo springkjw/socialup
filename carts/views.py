@@ -105,10 +105,9 @@ class CartView(SingleObjectMixin, View):
 
         # 장바구니에서 장바구니 아이템 삭제
         if product_id:
-            product_item = CartItem.objects.filter(item__id=product_id)
+            product_item = CartItem.objects.filter(item__id=product_id, cart=cart)
             if delete_item:
                 product_item.delete()
-
 
         cart_list = self.get_object()
         cartitem_product_list = []
@@ -118,7 +117,6 @@ class CartView(SingleObjectMixin, View):
 
         context = {
             "object": self.get_object(),
-            #"cartitem_product_list":cartitem_product_list
         }
 
         template = self.template_name
