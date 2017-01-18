@@ -3,7 +3,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from .models import MyUser, Seller
-from .forms import ChangeForm
+from .forms import ChangeForm, ChangeSellerForm, ChangeSellerAccountForm
 from django.contrib.auth import authenticate, login
 
 
@@ -50,6 +50,8 @@ address_list=[ "서울", "경기", "인천", "강원", "경남", "경북", "전�
 def change_info(request):
     user = MyUser.objects.get(id=request.user.id)
     form = ChangeForm()
+    seller_form = ChangeSellerForm()
+    seller_account_form = ChangeSellerAccountForm()
     template = 'account/account_change.html'
 
 
@@ -62,6 +64,8 @@ def change_info(request):
             context= {
                 "error_message":error_message,
                 "form": form,
+                "seller_form": seller_form,
+                "seller_account_form": seller_account_form,
                 "year_list": year_list,
                 "address_list":address_list,
             }
@@ -96,6 +100,8 @@ def change_info(request):
 
     context = {
         "form": form,
+        "seller_form": seller_form,
+        "seller_account_form":seller_account_form,
         "year_list": year_list,
         "address_list":address_list,
     }

@@ -33,7 +33,7 @@
             </ul>
         </div>
         <div class="dashboard-change-form base">
-            <form class="change_form" id="change_form" method="POST" action="{% url 'change_info' %}" enctype="multipart/form-data">{%  csrf_token %}
+            <form class="change_form user" id="change_form_user" method="POST" action="{% url 'change_info' %}" enctype="multipart/form-data">{%  csrf_token %}
                 <!-- basic info part -->
                 기본정보
                 <div class="base_info">
@@ -219,9 +219,91 @@
             </form>
         </div>
         <div class="dashboard-change-form seller">
-            <form class="change_form" id="change_form" method="POST" action="{% url 'change_info' %}" enctype="multipart/form-data">{%  csrf_token %}
-                {{ form.as_p }}
-                <button class="change_button" type="submit">변경하기</button>
+            <form class="change_form seller" id="change_form_seller" method="POST" action="{% url 'change_info' %}" enctype="multipart/form-data">{%  csrf_token %}
+                <div class="change_seller_form_wrapper">
+                    <div class="seller_form_content type">
+                        <div class="seller_form_title type">
+                            {{ seller_form.type.label }}
+                        </div>
+                        <div class="seller_form_input type">
+                            {{ seller_form.type }}
+                        </div>
+                    </div>
+                    <div class="seller_form_content account_name">
+                        <div class="seller_form_title account_name">
+                            {{ seller_account_form.account_name.label }}
+                        </div>
+                        <div class="seller_form_input account_name">
+                            {{ seller_account_form.account_name }}
+                        </div>
+                    </div>
+                    <div class="seller_form_content account_number">
+                        <div class="seller_form_title account_number">
+                            {{ seller_account_form.account_number.label }}
+                        </div>
+                        <div class="seller_form_input account_number">
+                            {{ seller_account_form.bank }}
+                            {{ seller_account_form.account_number }}
+                        </div>
+                    </div>
+                    <div class="seller_form_content company_name">
+                        <div class="seller_form_title company_name">
+                            {{ seller_form.company_name.label }}
+                        </div>
+                        <div class="seller_form_input company_name">
+                            {{ seller_form.company_name }}
+                        </div>
+                    </div>
+                    <div class="seller_form_content representative_name">
+                        <div class="seller_form_title representative_name">
+                            {{ seller_form.representative_name.label }}
+                        </div>
+                        <div class="seller_form_input representative_name">
+                            {{ seller_form.representative_name }}
+                        </div>
+                    </div>
+                    <div class="seller_form_content corporate_number">
+                        <div class="seller_form_title corporate_number">
+                            {{ seller_form.corporate_number.label }}
+                        </div>
+                        <div class="seller_form_input corporate_number">
+                            {{ seller_form.corporate_number }}
+                        </div>
+                    </div>
+                    <div class="seller_form_content business_field">
+                        <div class="seller_form_title business_field">
+                            {{ seller_form.business_field.label }}
+                        </div>
+                        <div class="seller_form_input business_field">
+                            {{ seller_form.business_field }}
+                        </div>
+                    </div>
+                    <div class="seller_form_content company_type">
+                        <div class="seller_form_title company_type">
+                            {{ seller_form.company_type.label }}
+                        </div>
+                        <div class="seller_form_input company_type">
+                            {{ seller_form.company_type }}
+                        </div>
+                    </div>
+                    <div class="seller_form_content business_license">
+                        <div class="seller_form_title business_license">
+                            {{ seller_form.business_license.label }}
+                        </div>
+                        <div class="seller_form_input business_license">
+                            {{ seller_form.business_license }}
+                        </div>
+                    </div>
+                    <div class="seller_form_content account_copy">
+                        <div class="seller_form_title account_copy">
+                            {{ seller_form.account_copy.label }}
+                        </div>
+                        <div class="seller_form_input account_copy">
+                            {{ seller_form.account_copy }}
+                        </div>
+                    </div>
+                </div>
+                <button class="change_button_seller" type="submit">변경하기</button>
             </form>
         </div>
 
