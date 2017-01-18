@@ -21,7 +21,7 @@ from .models import (
 from .forms import ProductForm, TagForm, SellerAccountForm
 from carts.models import WishList
 from carts.views import add_to_cart
-from billing.models import Order, ProductManage
+from billing.models import Order, ProductManage, OrderItem
 from accounts.models import MyUser, Seller, Profit, SellerAccount
 from reviews.models import ProductReview
 
@@ -358,19 +358,19 @@ def product_order_manage(request):
         seller = None
 
     if seller:
-        purchase_list = Order.objects.filter(seller=seller)
-        status_0 = purchase_list.filter(status='paid').count()
-        status_1 = purchase_list.filter(status='processing').count()
-        status_2 = purchase_list.filter(status='finished').count()
-        status_3 = purchase_list.filter(status='refunded').count()
+        order_items = OrderItem.objects.filter(user=request.user)
+        order_items_ready = OrderItem.objects.filter(user=request.user, status='paid')
+        order_items_processing = OrderItem.objects.filter(user=request.user, status='processing')
+        order_items_finished = OrderItem.objects.filter(user=request.user, status='finished')
+        order_items_refunded = OrderItem.objects.filter(user=request.user, status='refunded')
 
         template = 'seller/order_manage.html'
         context = {
-            "orders": purchase_list,
-            "status_0": status_0,
-            "status_1": status_1,
-            "status_2": status_2,
-            "status_3": status_3,
+            "order_items": order_items,
+            "order_items_ready": order_items_ready,
+            "order_items_processing": order_items_processing,
+            "order_items_finished": order_items_finished,
+            "order_items_refunded": order_items_refunded,
         }
 
         return render(request, template, context)
