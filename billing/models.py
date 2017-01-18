@@ -332,3 +332,6 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order)
     cart_item = models.ForeignKey(CartItem)
     status = models.CharField(max_length=120, choices=ORDER_STATUS_CHOICES, default='created')
+
+    def __unicode__(self):
+        return str(self.id)

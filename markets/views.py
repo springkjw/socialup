@@ -352,6 +352,15 @@ def product_delete(request):
 
 @login_required
 def product_order_manage(request):
+    if request.POST.get('is_status_change'):
+        order_item_id = request.POST.get('order_item')
+        try:
+            order_item = OrderItem.objects.get(id=order_item_id)
+            order_item.status = request.POST.get('new_status')
+            order_item.save()
+        except:
+            pass
+
     try:
         seller = Seller.objects.get(user=request.user)
     except:
