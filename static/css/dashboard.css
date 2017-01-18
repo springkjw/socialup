@@ -604,6 +604,11 @@ body {
     text-align:center;
 }
 
+/* button for transition */
+#btn_basic_info{
+    color: #648efc;
+}
+
 /* dashboard-change-form seller */
 .dashboard-change-form.seller{
     display: none;

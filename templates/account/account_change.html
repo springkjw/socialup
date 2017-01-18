@@ -5,6 +5,7 @@
      <script type="text/javascript" src="{% static 'js/accounts.js' %}"></script>
      <script type="text/javascript">
          $(function(){
+             /* 비밀번호 틀렸을때 에러 메세지 날려주기 */
              {% if error_message %}
                  alert("{{ error_message }}");
              {% endif %}
@@ -20,12 +21,12 @@
         <div class="dashboard-change-form-menu">
             <ul>
                 <li>
-                    <button>
+                    <button id="btn_basic_info">
                         기본정보
                     </button>
                 </li>
                 <li>
-                    <button>
+                    <button id="btn_seller_info">
                         판매자 등록 정보
                     </button>
                 </li>
@@ -219,14 +220,6 @@
         </div>
         <div class="dashboard-change-form seller">
             <form class="change_form" id="change_form" method="POST" action="{% url 'change_info' %}" enctype="multipart/form-data">{%  csrf_token %}
-                <div class="image">
-                    <img src="{{ user.get_avatar }}">
-                    <div class="add_image"><i class="fa fa-plus" aria-hidden="true"></i></div>
-                </div>
-                <p>
-                    <label for="id_email">이메일</label>
-                    <input id="id_email" maxlength="255" name="email" type="email" value="{{ request.user.email }}" disabled="">
-                </p>
                 {{ form.as_p }}
                 <button class="change_button" type="submit">변경하기</button>
             </form>

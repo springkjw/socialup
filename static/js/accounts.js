@@ -25,10 +25,20 @@ $('.change_button').on('click', function () {
         alert('변경할 비밀번호가 다릅니다.');
         window.location.reload();
     }
-})
+});
 
-/*
-$(document).ready(function(){
-             alert('hi');
-         });
-    */
+
+/* transition div by button click (basic_info, seller_info) */
+$('#btn_basic_info').on('click', function(){
+    $('.dashboard-change-form.base').show();
+    $('.dashboard-change-form.seller').hide();
+    $('#btn_basic_info').css('color','#648efc');
+    $('#btn_seller_info').css('color', 'black');
+});
+
+$('#btn_seller_info').on('click', function(){
+    $('.dashboard-change-form.base').hide();
+    $('.dashboard-change-form.seller').show();
+    $('#btn_basic_info').css('color','black');
+    $('#btn_seller_info').css('color', '#648efc');
+});
