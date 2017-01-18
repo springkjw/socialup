@@ -138,6 +138,9 @@ class Product(models.Model):
     # 판매중 or 판매완료
     product_status = models.CharField(choices=product_status_list, max_length=15, null=False, default="ready")
 
+    # 승인 거절 사유
+    reject_reason = models.CharField(max_length=255, null=True, blank=True)
+
     objects = ProductManager()
 
     # 필드 업데이트 감지를 위한 트래커
