@@ -12,7 +12,9 @@ class UserAdmin(admin.ModelAdmin):
 	list_filter = ('is_admin', 'is_active')
 	fieldsets = (
 	    (None, {'fields': ('password', 'media',)}),
-	    ('Personal info', {'fields': ('email', 'name', 'phone', 'description',)}),
+	    ('Personal info', {'fields': ('email', 'name', 'phone',
+									  'description', 'sex', 'address',
+									  'job', 'birth_year', 'agree_purchase_info_email')}),
 	    ('Permissions', {'fields': ('is_admin', 'is_active')}),
 	)
 	ordering = ('email',)

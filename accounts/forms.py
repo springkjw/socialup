@@ -119,7 +119,7 @@ class ChangeForm(forms.ModelForm):
 
     class Meta:
         model = MyUser
-        fields = ('media', 'name', 'phone', 'description',)
+        fields = ('media', 'name', 'phone', 'description', 'job', 'sex','address','birth_year')
 
 
 class ResetPasswordForm(ResetPasswordForm):

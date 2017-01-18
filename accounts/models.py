@@ -53,20 +53,7 @@ class MyUserManager(BaseUserManager):
 def download_profile_location(instance, filename):
     return "avatar/%s/%s" % (instance, filename)
 
-address_list=(
-    ("Seoul", "서울"),
-    ("Gyeonggi", "경기"),
-    ("Incheon", "인천"),
-    ("Gangwon", "강원"),
-    ("Gyeongnam", "경남"),
-    ("Gyeongbuk", "경북"),
-    ("Jeonbuk", "전북"),
-    ("Jeonnam", "전남"),
-    ("Jeju", "제주"),
-    ("Chungbuk", "충북"),
-    ("Chungnam", "충남"),
-    ("etc", "기타")
-)
+
 
 class MyUser(AbstractBaseUser):
     email = models.EmailField(
