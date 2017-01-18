@@ -604,7 +604,73 @@ body {
     text-align:center;
 }
 
+/* button for transition */
+#btn_basic_info{
+    color: #648efc;
+}
+
 /* dashboard-change-form seller */
 .dashboard-change-form.seller{
     display: none;
+}
+
+.dashboard-change-form.seller input{
+    height: 16px;
+    background: #F2F2F2;
+    margin-bottom: 10px;
+    font-size: 14px;
+    padding: 5px 10px;
+}
+
+.dashboard-change-form.seller .seller_form_content {
+    width:100%;
+}
+
+.dashboard-change-form.seller .seller_form_title{
+    display:inline-block;
+    width:25%;
+    text-align:center;
+}
+
+.dashboard-change-form.seller .seller_form_input {
+    display:inline-block;
+    width:70%;
+}
+
+/* type part */
+
+.seller_form_content.type .seller_form_input.type {
+    vertical-align: top;
+}
+.seller_form_content.type .seller_form_input.type #id_type{
+    list-style:none;
+}
+
+.seller_form_content.type .seller_form_input.type #id_type li{
+    float:left;
+}
+
+/* company_name part */
+.dashboard-change-form.seller .seller_form_content.company_name{
+    width:50%;
+    display: inline-block;
+}
+
+.dashboard-change-form.seller .seller_form_content.company_name .seller_form_title.company_name{
+    width:50%;
+}
+
+.dashboard-change-form.seller .seller_form_content.company_name .seller_form_input.company_name{
+    width:48%;
+}
+
+.seller_form_content.company_name #id_company_name{
+    width:80%;
+}
+
+/* representative_name part */
+
+.dashboard-change-form.seller .seller_form_content.representative_name {
+    width:45%;
+    display: inline-block;
 }

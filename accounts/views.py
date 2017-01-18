@@ -3,7 +3,9 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from .models import MyUser, Seller
-from .forms import ChangeForm
+from .forms import ChangeForm, ChangeSellerForm, ChangeSellerAccountForm
+from django.contrib.auth import authenticate, login
+
 
 
 def dashboard(request):
@@ -47,21 +49,33 @@ address_list=[ "서울", "경기", "인천", "강원", "경남", "경북", "전�
 
 def change_info(request):
     user = MyUser.objects.get(id=request.user.id)
-    form = ChangeForm(initial={
-        'email': user.email,
-        'name': user.name,
-        'phone': user.phone,
-        'description': user.description
-    })
+    form = ChangeForm()
+    seller_form = ChangeSellerForm()
+    seller_account_form = ChangeSellerAccountForm()
+    template = 'account/account_change.html'
+
 
     if request.method == "POST":
-        print('Post')
         form = ChangeForm(request.POST or None, request.FILES or None)
+        password_success = user.check_password(request.POST['current_passwd'])
+
+        if not password_success:
+            error_message = "입력하신 비밀번호가 틀렸습니다."
+            context= {
+                "error_message":error_message,
+                "form": form,
+                "seller_form": seller_form,
+                "seller_account_form": seller_account_form,
+                "year_list": year_list,
+                "address_list":address_list,
+            }
+            return render(request, template, context)
+
         if form.is_valid():
-            print('fomr_is_valid()')
+            print(password_success)
+
             if form.cleaned_data['media'] != None:
                 user.media = form.cleaned_data['media']
-            print(form.cleaned_data)
             user.name = form.cleaned_data['name']
             user.phone = form.cleaned_data['phone']
             user.description = form.cleaned_data['description']
@@ -69,13 +83,25 @@ def change_info(request):
             user.sex = form.cleaned_data['sex']
             user.birth_year = form.cleaned_data['birth_year']
             user.address = form.cleaned_data['address']
+            user.agree_purchase_info_email = form.cleaned_data['agree_purchase_info_email']
+            user.agree_purchase_info_SMS = form.cleaned_data['agree_purchase_info_SMS']
+            user.agree_selling_info_email = form.cleaned_data['agree_selling_info_email']
+            user.agree_selling_info_SMS = form.cleaned_data['agree_selling_info_SMS']
+            user.agree_marketing_info_email = form.cleaned_data['agree_marketing_info_email']
+            user.agree_marketing_info_SMS = form.cleaned_data['agree_marketing_info_SMS']
+            new_password = request.POST['new_passwd2']
+            if new_password != '' and new_password != request.POST['current_passwd'] and request.POST['new_passwd1'] == request.POST['new_passwd2']:
+                user.set_password(new_password)
+                user.backend = 'django.contrib.auth.backends.ModelBackend'
+                login(request, user)
             user.save()
 
             return HttpResponseRedirect('/dashboard/change/')
 
-    template = 'account/account_change.html'
     context = {
         "form": form,
+        "seller_form": seller_form,
+        "seller_account_form":seller_account_form,
         "year_list": year_list,
         "address_list":address_list,
     }

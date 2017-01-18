@@ -2,7 +2,7 @@
 
 from __future__ import unicode_literals
 from django import forms
-from accounts.models import MyUser
+from accounts.models import MyUser, Seller, SellerAccount, seller_type_list
 from allauth.account.forms import (
     # SignupForm,
     BaseSignupForm,
@@ -119,7 +119,58 @@ class ChangeForm(forms.ModelForm):
 
     class Meta:
         model = MyUser
-        fields = ('media', 'name', 'phone', 'description', 'job', 'sex','address','birth_year')
+        fields = ('media', 'name', 'phone', 'description', 'job',
+                  'sex', 'address', 'birth_year', 'agree_purchase_info_email',
+                  'agree_purchase_info_SMS', 'agree_selling_info_email',
+                  'agree_selling_info_SMS', 'agree_marketing_info_email',
+                  'agree_marketing_info_SMS')
+
+
+class ChangeSellerForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('label_suffix', '')
+        super(ChangeSellerForm, self).__init__(*args, **kwargs)
+
+        # labels
+        self.fields['type'].label = '판매 회원 유형'
+        self.fields['company_name'].label = '회사명'
+        self.fields['representative_name'].label = '대표자명'
+        self.fields['corporate_number'].label = '사업자 번호'
+        self.fields['business_field'].label = '업태'
+        self.fields['company_type'].label = '종목'
+        self.fields['business_license'].label = '사업자등록증 사본'
+        self.fields['account_copy'].label = '사업자 통장 사본'
+
+        #widgets
+        self.fields['type'] = forms.ChoiceField(widget=forms.RadioSelect(attrs={'type': 'radio'}), choices=seller_type_list)
+
+    class Meta:
+        model = Seller
+        fields = ('user', 'type', 'company_name', 'representative_name',
+                  'corporate_number', 'business_field', 'company_type',
+                  'business_license', 'account_copy')
+
+
+class ChangeSellerAccountForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('label_suffix', '')
+        super(ChangeSellerAccountForm, self).__init__(*args, **kwargs)
+
+        self.fields['account_name'].label = '예금주'
+        self.fields['bank'].label = '은행'
+        self.fields['account_number'].label = '계좌번호'
+
+    class Meta:
+        model = SellerAccount
+        fields = ('account_name', 'bank', 'account_number',)
+        widgets = {
+            'account_number': forms.TextInput(
+                attrs={
+                    'placeholder': 'ex) 000-000-000'
+                }
+            ),
+        }
+
 
 
 class ResetPasswordForm(ResetPasswordForm):

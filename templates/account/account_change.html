@@ -3,6 +3,14 @@
 
 {% block dashboard_js %}
      <script type="text/javascript" src="{% static 'js/accounts.js' %}"></script>
+     <script type="text/javascript">
+         $(function(){
+             /* 비밀번호 틀렸을때 에러 메세지 날려주기 */
+             {% if error_message %}
+                 alert("{{ error_message }}");
+             {% endif %}
+         })
+     </script>
 {% endblock %}
 
 {% block dashboard_content %}
@@ -13,19 +21,19 @@
         <div class="dashboard-change-form-menu">
             <ul>
                 <li>
-                    <button>
+                    <button id="btn_basic_info">
                         기본정보
                     </button>
                 </li>
                 <li>
-                    <button>
+                    <button id="btn_seller_info">
                         판매자 등록 정보
                     </button>
                 </li>
             </ul>
         </div>
         <div class="dashboard-change-form base">
-            <form class="change_form" id="change_form" method="POST" action="{% url 'change_info' %}" enctype="multipart/form-data">{%  csrf_token %}
+            <form class="change_form user" id="change_form_user" method="POST" action="{% url 'change_info' %}" enctype="multipart/form-data">{%  csrf_token %}
                 <!-- basic info part -->
                 기본정보
                 <div class="base_info">
@@ -88,7 +96,7 @@
                             <select name="address">
                                 {% for address in address_list %}
                                     {% if request.user.address == address %}
-                                        <option value="{{ address }}" selected>{{ address}}</option>
+                                        <option value="{{ address }}" selected>{{ address }}</option>
                                     {% else %}
                                         <option value="{{ address }}">{{ address}}</option>
                                     {% endif %}
@@ -133,13 +141,13 @@
                     </div>
                     <div class="password_rest_content">
                         <div>
-                            현재 비밀번호 <input type="password">
+                            현재 비밀번호 <input type="password" name="current_passwd" id="current_passwd">
                         </div>
                         <div>
-                            변경 비밀번호 <input type="password">
+                            변경 비밀번호 <input type="password" name="new_passwd1" id="new_passwd1">
                         </div>
                         <div>
-                            비밀번호 확인 <input type="password">
+                            비밀번호 확인 <input type="password" name="new_passwd2" id="new_passwd2">
                         </div>
                     </div>
                 </div>
@@ -155,8 +163,16 @@
                                 <div>(메시지, 작업요청 정보 등)</div>
                             </div>
                             <div class="alarm_content_checkbox">
-                                <input type="checkbox"> 이메일
-                                <input type="checkbox"> SMS/MMS
+                                {% if request.user.agree_purchase_info_email %}
+                                    <input type="checkbox" name="agree_purchase_info_email" checked="checked"> 이메일
+                                {% else %}
+                                    <input type="checkbox" name="agree_purchase_info_email"> 이메일
+                                {% endif %}
+                                {% if request.user.agree_purchase_info_SMS %}
+                                    <input type="checkbox" name="agree_purchase_info_SMS" checked="checked"> SMS/MMS
+                                {% else %}
+                                    <input type="checkbox" name="agree_purchase_info_SMS"> SMS/MMS
+                                {% endif %}
                             </div>
                         </div>
                         <div class="agree_alarm_content selling">
@@ -166,8 +182,16 @@
                                 <div>* 판매자는 꼭 동의해주세요.</div>
                             </div>
                             <div class="alarm_content_checkbox">
-                                <input type="checkbox"> 이메일
-                                <input type="checkbox"> SMS/MMS
+                                {% if request.user.agree_selling_info_email %}
+                                    <input type="checkbox" name="agree_selling_info_email" checked="checked"> 이메일
+                                {% else %}
+                                    <input type="checkbox" name="agree_selling_info_email"> 이메일
+                                {% endif %}
+                                {% if request.user.agree_selling_info_SMS %}
+                                    <input type="checkbox" name="agree_selling_info_SMS" checked="checked">  SMS/MMS
+                                {% else %}
+                                    <input type="checkbox" name="agree_selling_info_SMS">  SMS/MMS
+                                {% endif %}
                             </div>
                         </div>
                         <div class="agree_alarm_content marketing">
@@ -176,8 +200,16 @@
                                 <div>(할인정보, 이벤트 등)</div>
                             </div>
                             <div class="alarm_content_checkbox">
-                                <input type="checkbox"> 이메일
-                                <input type="checkbox"> SMS/MMS
+                                {% if request.user.agree_marketing_info_email %}
+                                    <input type="checkbox" name="agree_marketing_info_email" checked="checked"> 이메일
+                                {% else %}
+                                    <input type="checkbox" name="agree_marketing_info_email"> 이메일
+                                {% endif %}
+                                {% if request.user.agree_marketing_info_SMS %}
+                                    <input type="checkbox" name="agree_marketing_info_SMS" checked="checked">  SMS/MMS
+                                {% else %}
+                                    <input type="checkbox" name="agree_marketing_info_SMS">  SMS/MMS
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -187,17 +219,91 @@
             </form>
         </div>
         <div class="dashboard-change-form seller">
-            <form class="change_form" id="change_form" method="POST" action="{% url 'change_info' %}" enctype="multipart/form-data">{%  csrf_token %}
-                <div class="image">
-                    <img src="{{ user.get_avatar }}">
-                    <div class="add_image"><i class="fa fa-plus" aria-hidden="true"></i></div>
+            <form class="change_form seller" id="change_form_seller" method="POST" action="{% url 'change_info' %}" enctype="multipart/form-data">{%  csrf_token %}
+                <div class="change_seller_form_wrapper">
+                    <div class="seller_form_content type">
+                        <div class="seller_form_title type">
+                            {{ seller_form.type.label }}
+                        </div>
+                        <div class="seller_form_input type">
+                            {{ seller_form.type }}
+                        </div>
+                    </div>
+                    <div class="seller_form_content account_name">
+                        <div class="seller_form_title account_name">
+                            {{ seller_account_form.account_name.label }}
+                        </div>
+                        <div class="seller_form_input account_name">
+                            {{ seller_account_form.account_name }}
+                        </div>
+                    </div>
+                    <div class="seller_form_content account_number">
+                        <div class="seller_form_title account_number">
+                            {{ seller_account_form.account_number.label }}
+                        </div>
+                        <div class="seller_form_input account_number">
+                            {{ seller_account_form.bank }}
+                            {{ seller_account_form.account_number }}
+                        </div>
+                    </div>
+                    <div class="seller_form_content company_name">
+                        <div class="seller_form_title company_name">
+                            {{ seller_form.company_name.label }}
+                        </div>
+                        <div class="seller_form_input company_name">
+                            {{ seller_form.company_name }}
+                        </div>
+                    </div>
+                    <div class="seller_form_content representative_name">
+                        <div class="seller_form_title representative_name">
+                            {{ seller_form.representative_name.label }}
+                        </div>
+                        <div class="seller_form_input representative_name">
+                            {{ seller_form.representative_name }}
+                        </div>
+                    </div>
+                    <div class="seller_form_content corporate_number">
+                        <div class="seller_form_title corporate_number">
+                            {{ seller_form.corporate_number.label }}
+                        </div>
+                        <div class="seller_form_input corporate_number">
+                            {{ seller_form.corporate_number }}
+                        </div>
+                    </div>
+                    <div class="seller_form_content business_field">
+                        <div class="seller_form_title business_field">
+                            {{ seller_form.business_field.label }}
+                        </div>
+                        <div class="seller_form_input business_field">
+                            {{ seller_form.business_field }}
+                        </div>
+                    </div>
+                    <div class="seller_form_content company_type">
+                        <div class="seller_form_title company_type">
+                            {{ seller_form.company_type.label }}
+                        </div>
+                        <div class="seller_form_input company_type">
+                            {{ seller_form.company_type }}
+                        </div>
+                    </div>
+                    <div class="seller_form_content business_license">
+                        <div class="seller_form_title business_license">
+                            {{ seller_form.business_license.label }}
+                        </div>
+                        <div class="seller_form_input business_license">
+                            {{ seller_form.business_license }}
+                        </div>
+                    </div>
+                    <div class="seller_form_content account_copy">
+                        <div class="seller_form_title account_copy">
+                            {{ seller_form.account_copy.label }}
+                        </div>
+                        <div class="seller_form_input account_copy">
+                            {{ seller_form.account_copy }}
+                        </div>
+                    </div>
                 </div>
-                <p>
-                    <label for="id_email">이메일</label>
-                    <input id="id_email" maxlength="255" name="email" type="email" value="{{ request.user.email }}" disabled="">
-                </p>
-                {{ form.as_p }}
-                <button class="change_button" type="submit">변경하기</button>
+                <button class="change_button_seller" type="submit">변경하기</button>
             </form>
         </div>
 
