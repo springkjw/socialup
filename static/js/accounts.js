@@ -19,3 +19,16 @@ function readImage(input) {
         image.readAsDataURL(input.files[0])
     }
 }
+
+$('.change_button').on('click', function () {
+    if($('#new_passwd1').val() != $('#new_passwd2').val()){
+        alert('변경할 비밀번호가 다릅니다.');
+        window.location.reload();
+    }
+})
+
+/*
+$(document).ready(function(){
+             alert('hi');
+         });
+    */

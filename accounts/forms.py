@@ -119,7 +119,11 @@ class ChangeForm(forms.ModelForm):
 
     class Meta:
         model = MyUser
-        fields = ('media', 'name', 'phone', 'description', 'job', 'sex','address','birth_year')
+        fields = ('media', 'name', 'phone', 'description', 'job',
+                  'sex','address','birth_year', 'agree_purchase_info_email',
+                  'agree_purchase_info_SMS', 'agree_selling_info_email',
+                  'agree_selling_info_SMS', 'agree_marketing_info_email',
+                  'agree_marketing_info_SMS')
 
 
 class ResetPasswordForm(ResetPasswordForm):

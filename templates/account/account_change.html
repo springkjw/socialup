@@ -3,6 +3,13 @@
 
 {% block dashboard_js %}
      <script type="text/javascript" src="{% static 'js/accounts.js' %}"></script>
+     <script type="text/javascript">
+         $(function(){
+             {% if error_message %}
+                 alert("{{ error_message }}");
+             {% endif %}
+         })
+     </script>
 {% endblock %}
 
 {% block dashboard_content %}
@@ -88,7 +95,7 @@
                             <select name="address">
                                 {% for address in address_list %}
                                     {% if request.user.address == address %}
-                                        <option value="{{ address }}" selected>{{ address}}</option>
+                                        <option value="{{ address }}" selected>{{ address }}</option>
                                     {% else %}
                                         <option value="{{ address }}">{{ address}}</option>
                                     {% endif %}
@@ -133,13 +140,13 @@
                     </div>
                     <div class="password_rest_content">
                         <div>
-                            현재 비밀번호 <input type="password">
+                            현재 비밀번호 <input type="password" name="current_passwd" id="current_passwd">
                         </div>
                         <div>
-                            변경 비밀번호 <input type="password">
+                            변경 비밀번호 <input type="password" name="new_passwd1" id="new_passwd1">
                         </div>
                         <div>
-                            비밀번호 확인 <input type="password">
+                            비밀번호 확인 <input type="password" name="new_passwd2" id="new_passwd2">
                         </div>
                     </div>
                 </div>
@@ -155,8 +162,16 @@
                                 <div>(메시지, 작업요청 정보 등)</div>
                             </div>
                             <div class="alarm_content_checkbox">
-                                <input type="checkbox"> 이메일
-                                <input type="checkbox"> SMS/MMS
+                                {% if request.user.agree_purchase_info_email %}
+                                    <input type="checkbox" name="agree_purchase_info_email" checked="checked"> 이메일
+                                {% else %}
+                                    <input type="checkbox" name="agree_purchase_info_email"> 이메일
+                                {% endif %}
+                                {% if request.user.agree_purchase_info_SMS %}
+                                    <input type="checkbox" name="agree_purchase_info_SMS" checked="checked"> SMS/MMS
+                                {% else %}
+                                    <input type="checkbox" name="agree_purchase_info_SMS"> SMS/MMS
+                                {% endif %}
                             </div>
                         </div>
                         <div class="agree_alarm_content selling">
@@ -166,8 +181,16 @@
                                 <div>* 판매자는 꼭 동의해주세요.</div>
                             </div>
                             <div class="alarm_content_checkbox">
-                                <input type="checkbox"> 이메일
-                                <input type="checkbox"> SMS/MMS
+                                {% if request.user.agree_selling_info_email %}
+                                    <input type="checkbox" name="agree_selling_info_email" checked="checked"> 이메일
+                                {% else %}
+                                    <input type="checkbox" name="agree_selling_info_email"> 이메일
+                                {% endif %}
+                                {% if request.user.agree_selling_info_SMS %}
+                                    <input type="checkbox" name="agree_selling_info_SMS" checked="checked">  SMS/MMS
+                                {% else %}
+                                    <input type="checkbox" name="agree_selling_info_SMS">  SMS/MMS
+                                {% endif %}
                             </div>
                         </div>
                         <div class="agree_alarm_content marketing">
@@ -176,8 +199,16 @@
                                 <div>(할인정보, 이벤트 등)</div>
                             </div>
                             <div class="alarm_content_checkbox">
-                                <input type="checkbox"> 이메일
-                                <input type="checkbox"> SMS/MMS
+                                {% if request.user.agree_marketing_info_email %}
+                                    <input type="checkbox" name="agree_marketing_info_email" checked="checked"> 이메일
+                                {% else %}
+                                    <input type="checkbox" name="agree_marketing_info_email"> 이메일
+                                {% endif %}
+                                {% if request.user.agree_marketing_info_SMS %}
+                                    <input type="checkbox" name="agree_marketing_info_SMS" checked="checked">  SMS/MMS
+                                {% else %}
+                                    <input type="checkbox" name="agree_marketing_info_SMS">  SMS/MMS
+                                {% endif %}
                             </div>
                         </div>
                     </div>
