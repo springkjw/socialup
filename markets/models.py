@@ -62,6 +62,7 @@ product_tag_list = (
 product_status_list = (
     ("ready","ready"),
     ("now_selling","now_selling"),
+    ("rejected","rejected"),
     ("terminated","terminated")
 )
 
