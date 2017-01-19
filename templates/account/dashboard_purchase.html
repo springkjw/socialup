@@ -81,19 +81,18 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                                     buyer_tel: buyer_phone
                                 }, function (rsp) {
                                     if (rsp.success) {
-                                        var msg = '결제가 완료되었습니다.';
-                                        msg += '고유ID : ' + rsp.imp_uid;
-                                        msg += '상점 거래ID : ' + rsp.merchant_uid;
-                                        msg += '결제 금액 : ' + rsp.paid_amount;
-                                        msg += '카드 승인번호 : ' + rsp.apply_num;
-                                        console.log(msg);
+                                        //var msg = '결제가 완료되었습니다.';
+                                        //msg += '고유ID : ' + rsp.imp_uid;
+                                        //msg += '상점 거래ID : ' + rsp.merchant_uid;
+                                        //msg += '결제 금액 : ' + rsp.paid_amount;
+                                        //msg += '카드 승인번호 : ' + rsp.apply_num;
+                                        //console.log(msg);
                                         ImpTransaction(e, rsp.merchant_uid, rsp.imp_uid, rsp.paid_amount);
                                     } else {
                                         var msg = '결제에 실패하였습니다.';
                                         msg += '에러내용 : ' + rsp.error_msg;
                                         alert(msg);
-                                        window.location.href='/dashboard/purchase/fail'
-                                        //location.reload();
+                                        post_to_url('/dashboard/purchase/fail/', {"order_id":order_info, "csrfmiddlewaretoken":"{{ csrf_token }}"});
                                     }
                                 });
                             } else {
@@ -177,6 +176,25 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                 }
                 window.location.href='/dashboard/purchase/fail'
             });
+        }
+
+        function post_to_url(path, params, method) {
+            method = method || "post";
+            var form = document.createElement("form");
+            form.setAttribute("method", method);
+            form.setAttribute("action", path);
+
+            for(var key in params) {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+
+                form.appendChild(hiddenField);
+            }
+
+            document.body.appendChild(form);
+            form.submit();
         }
     </script>
 {% endblock %}

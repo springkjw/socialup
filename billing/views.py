@@ -137,6 +137,7 @@ def history_point(request):
                 'product': item,
                 'amount': item.amount,
                 'status': switch_history_status(item.status),
+                'detail': item.detail
             }
             result_usage.append(data_usage)
 
@@ -353,6 +354,13 @@ def pay_success(request):
 @login_required
 def pay_fail(request):
     template = 'account/dashboard_fail.html'
+    if request.POST.get('order_id'):
+        order_id = request.POST.get('order_id')
+        try:
+            order = Order.objects.get(order_id=order_id)
+            order.delete()
+        except:
+            pass
     context = {
 
     }
