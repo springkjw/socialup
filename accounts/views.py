@@ -78,7 +78,6 @@ def change_info(request):
 
 
         if seller_form.is_valid():
-            print('seller_form.is_valid()')
             seller.type=seller_form.cleaned_data['type']
             seller.company_name=seller_form.cleaned_data['company_name']
             seller.representative_name=seller_form.cleaned_data['representative_name']
@@ -100,7 +99,6 @@ def change_info(request):
             return HttpResponseRedirect('/dashboard/change/')
 
         if form.is_valid():
-            print('form.is_valid')
             password_success = user.check_password(request.POST['current_passwd'])
             if not password_success:
                 error_message = "입력하신 비밀번호가 틀렸습니다."
