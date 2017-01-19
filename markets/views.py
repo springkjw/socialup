@@ -397,12 +397,16 @@ def product_profit_manage(request):
     if seller:
         expected_profit = Profit.objects.filter(seller=seller, is_expect_profit=True).aggregate(Sum('money'))['money__sum']
         possible_profit = Profit.objects.filter(seller=seller, is_possible_profit=True).aggregate(Sum('money'))['money__sum']
+        completed_profit = Profit.objects.filter(seller=seller, is_complete=True).aggregate(Sum('money'))['money__sum']
 
         if expected_profit is None:
             expected_profit = 0
 
         if possible_profit is None:
             possible_profit = 0
+
+        if completed_profit is None:
+            completed_profit = 0
 
         instance, instance_created = SellerAccount.objects.get_or_create(seller=seller)
 
@@ -425,6 +429,7 @@ def product_profit_manage(request):
             "forms" : form,
             "expected_profit": expected_profit,
             "possible_profit": possible_profit,
+            "completed_profit": completed_profit,
         }
 
         return render(request, template, context)

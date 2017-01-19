@@ -404,4 +404,4 @@ class Profit(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
 
     def __unicode__(self):
-        return self.money
+        return str(self.money)
