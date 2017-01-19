@@ -6,7 +6,7 @@ from django.shortcuts import render, Http404
 from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from .models import PointTransaction, PointHistory, Order, OrderItem
+from .models import PointTransaction, PointHistory, Order, OrderItem, Point
 from socialup.mixins import AjaxRequireMixin
 from carts.models import Cart
 from .iamport import validation_prepare
@@ -217,11 +217,17 @@ def purchase(request, cart_id):
         order_total=cart.subtotal
     )
 
+    try:
+        user_point = Point.objects.get(user=request.user)
+        user_point_val = getattr(user_point, 'point')
+    except:
+        user_point_val = 0
 
     template = 'account/dashboard_purchase.html'
     context = {
         "order": order,
-        "cart": cart_list
+        "cart": cart_list,
+        "user_point_val": user_point_val
     }
 
     return render(request, template, context)
