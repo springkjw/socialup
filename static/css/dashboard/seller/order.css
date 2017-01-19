@@ -507,6 +507,7 @@
     list-style: none;
     position: relative;
     top:30%;
+    font-size: 13px;
 }
 
 .purchase-table-ul li{
@@ -656,6 +657,11 @@
     background: none;
 }
 
+.item-list .table_product_btn.change input{
+    background: none;
+    color:white;
+}
+
 /* table_product_detail */
 .table_product_detail{
     width:99%;
@@ -768,6 +774,51 @@
     height:30px;
     color:grey;
     border:1px solid grey;
+}
+
+/* status_table part */
+.status_table{
+    width:100%;
+    clear:both;
+    margin-top:20%;
+}
+
+.status_table table{
+    width:100%;
+    border-collapse: collapse;
+}
+
+.status_table table td{
+    border: 1px solid #e8e8e8;
+    border-spacing: 0;
+}
+
+.status_table .status_table_content{
+    height:30px;
+    padding-top:1%;
+}
+
+.status_table .status_table_content .status_table_title{
+    display: inline-block;
+    margin-left:5%;
+    font-size: 12px;
+    width:13%;
+    height:65%;
+}
+
+.status_table .status_table_content .status_table_title div{
+    width:100%;
+    height:100%;
+    background-color: #648efc;
+    color:white;
+    padding-top:7%;
+    text-align: center;
+}
+
+.status_table .status_table_content .status_table_text{
+    display: inline-block;
+    margin-left:2%;
+    font-size: 13px;
 }
 
 /* gauge part */
