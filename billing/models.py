@@ -31,7 +31,7 @@ class PointHistory(models.Model):
     user = models.ForeignKey(MyUser)
     amount = models.IntegerField(default=0)
     type = models.CharField(max_length=20, null=True, blank=True)
-    product = models.ForeignKey(Product, null=True, blank=True)
+    detail = models.CharField(max_length=255, null=True, blank=True)
     status = models.CharField(max_length=20, null=True, blank=True)
     receipt = models.CharField(max_length=255, null=True, blank=True)
     timestamp = models.DateTimeField(auto_now=True)
@@ -261,11 +261,18 @@ def new_order_receiver(sender, instance, created, *args, **kwargs):
 
                 if instance.point > 0:
                     try:
+                        cart_items = CartItem.objects.filter(cart=instance.cart)
+                        if len(cart_items) == 1 :
+                            detail = cart_items[0].item.oneline_intro
+                        else:
+                            detail = cart_items[0].item.oneline_intro + " 외 " + str(len(cart_items)-1) + "개"
+
                         # 포인트 history 추가
                         h = PointHistory(
                             user=instance.user,
                             amount=-int(instance.point),
-                            status=v_trans['status']
+                            status=v_trans['status'],
+                            detail=detail
                         )
                         h.save()
                     except:

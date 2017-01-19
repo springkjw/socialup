@@ -137,6 +137,7 @@ def history_point(request):
                 'product': item,
                 'amount': item.amount,
                 'status': switch_history_status(item.status),
+                'detail': item.detail
             }
             result_usage.append(data_usage)
 
