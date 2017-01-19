@@ -18,7 +18,7 @@ from .views import (
     page_not_found,
     server_error,
 )
-from accounts.views import dashboard, change_info
+from accounts.views import dashboard, change_info, account_detail
 from markets.views import product_detail, product_upload, product_manage, product_change, product_delete, \
     product_order_manage, product_profit_manage
 from billing.views import charge_point, history_point, PointCheckoutAjaxView, PointImpAjaxView, purchase, \
@@ -37,6 +37,7 @@ urlpatterns = [
 
     url(r'^dashboard/$', dashboard, name='dashboard'),
     url(r'^dashboard/change/$', change_info, name='change_info'),
+    url(r'^dashboard/detail/$', account_detail, name='account_detail'),
 
     url(r'^dashboard/points/charge/$', charge_point, name='point_charge'),
     url(r'^dashboard/points/checkout/$', PointCheckoutAjaxView.as_view(), name='point_checkout'),

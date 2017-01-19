@@ -1,0 +1,41 @@
+{% extends 'category.html' %}
+{% load staticfiles %}
+{% load producttags %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/dashboard/account_detail.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    <div class="detail_wrapper">
+        <div class="detail_content_wrapper">
+            <div class="detail_content_wrapper_top">
+                <div class="detail_content_top_left">
+                    <div class="user_image">
+                        <img src="{{ user.get_avatar }}">
+                    </div>
+                    <div class="user_name">
+                        <div style="margin-top:10px;">{{ user.name }}</div>
+                    </div>
+                </div>
+                <div class="detail_content_top_right">
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div class="detail_content_wrapper_mid">
+                <div class="detail_content_mid_left">
+
+                </div>
+                <div class="detail_content_mid_right">
+
+                </div>
+            </div>
+            <div class="detail_content_wrapper_bot">
+                <div></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -18,7 +18,7 @@ $(function() {
     });
 
     $('.card-price').digits();
-
+    /*
     // socialup gauge
     Highcharts.setOptions({
         lang: {
@@ -97,6 +97,7 @@ $(function() {
 
         }));
     });
+    */
 });
 
 $(document).ready(function(){

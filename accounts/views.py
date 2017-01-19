@@ -157,3 +157,10 @@ def change_info(request):
 def login_cancelled(request):
     messages.error(request, "페이스북 연결이 취소 되었습니다. 다시 시도해주세요.")
     return HttpResponseRedirect(reverse('account_signup'))
+
+def account_detail(request):
+    template = 'account/account_detail.html'
+    context={
+        "hi":"hi",
+    }
+    return render(request, template, context)
