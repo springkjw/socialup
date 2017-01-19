@@ -353,6 +353,13 @@ def pay_success(request):
 @login_required
 def pay_fail(request):
     template = 'account/dashboard_fail.html'
+    if request.POST.get('order_id'):
+        order_id = request.POST.get('order_id')
+        try:
+            order = Order.objects.get(order_id=order_id)
+            order.delete()
+        except:
+            pass
     context = {
 
     }

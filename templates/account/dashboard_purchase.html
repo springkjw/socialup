@@ -92,8 +92,7 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                                         var msg = '결제에 실패하였습니다.';
                                         msg += '에러내용 : ' + rsp.error_msg;
                                         alert(msg);
-                                        window.location.href='/dashboard/purchase/fail'
-                                        //location.reload();
+                                        post_to_url('/dashboard/purchase/fail/', {"order_id":order_info, "csrfmiddlewaretoken":"{{ csrf_token }}"});
                                     }
                                 });
                             } else {
@@ -177,6 +176,25 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                 }
                 window.location.href='/dashboard/purchase/fail'
             });
+        }
+
+        function post_to_url(path, params, method) {
+            method = method || "post";
+            var form = document.createElement("form");
+            form.setAttribute("method", method);
+            form.setAttribute("action", path);
+
+            for(var key in params) {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+
+                form.appendChild(hiddenField);
+            }
+
+            document.body.appendChild(form);
+            form.submit();
         }
     </script>
 {% endblock %}
