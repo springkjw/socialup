@@ -131,6 +131,9 @@ class ChangeSellerForm(forms.ModelForm):
         kwargs.setdefault('label_suffix', '')
         super(ChangeSellerForm, self).__init__(*args, **kwargs)
 
+        # widgets
+        self.fields['type'] = forms.ChoiceField(widget=forms.RadioSelect(attrs={'type': 'radio'}),choices=seller_type_list)
+
         # labels
         self.fields['type'].label = '판매 회원 유형'
         self.fields['company_name'].label = '회사명'
@@ -141,12 +144,11 @@ class ChangeSellerForm(forms.ModelForm):
         self.fields['business_license'].label = '사업자등록증 사본'
         self.fields['account_copy'].label = '사업자 통장 사본'
 
-        #widgets
-        self.fields['type'] = forms.ChoiceField(widget=forms.RadioSelect(attrs={'type': 'radio'}), choices=seller_type_list)
+
 
     class Meta:
         model = Seller
-        fields = ('user', 'type', 'company_name', 'representative_name',
+        fields = ('type', 'company_name', 'representative_name',
                   'corporate_number', 'business_field', 'company_type',
                   'business_license', 'account_copy')
 

@@ -309,7 +309,7 @@ class Seller(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     total_num_heart = models.PositiveIntegerField(default=0)
 
-    type = models.CharField(choices=seller_type_list, max_length=12, null=True, blank=False)
+    type = models.CharField(choices=seller_type_list, max_length=20, null=True, blank=False)
     company_name = models.CharField(max_length=12, null=True, blank=True)
     representative_name = models.CharField(max_length=12, null=True, blank=True)
     corporate_number = models.CharField(max_length=12, null=True, blank=False)
