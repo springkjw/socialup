@@ -10,6 +10,25 @@
                  alert("{{ error_message }}");
              {% endif %}
          })
+
+        $(document).ready(function(){
+            {% if seller %}
+                $(".seller_form_input.type input[value='{{ seller.type }}']").prop('checked', true);
+                show_by_seller_type();
+                $(".seller_form_input.company_name input").val('{{ seller.company_name }}');
+                $(".seller_form_input.representative_name input").val('{{ seller.representative_name }}');
+                $(".seller_form_input.corporate_number input").val('{{ seller.corporate_number }}');
+                $(".seller_form_input.business_field input").val('{{ seller.business_field }}');
+                $(".seller_form_input.company_type input").val('{{ seller.company_type }}');
+            {% endif %}
+
+            {% if seller_account %}
+                $(".seller_form_input.account_name input").val('{{ seller_account.account_name }}');
+                $(".seller_form_input.account_number select option[value='{{ seller_account.bank }}']").prop('selected', true);
+                $(".seller_form_input.account_number #id_account_number").val({{ seller_account.account_number }});
+            {% endif %}
+
+        });
      </script>
 {% endblock %}
 
@@ -291,6 +310,8 @@
                             {{ seller_form.business_license.label }}
                         </div>
                         <div class="seller_form_input business_license">
+                            <input class="file_name business_license" value="파일선택" disabled="disabled">
+                            <label for="id_business_license">찾아보기</label>
                             {{ seller_form.business_license }}
                         </div>
                     </div>
@@ -299,6 +320,8 @@
                             {{ seller_form.account_copy.label }}
                         </div>
                         <div class="seller_form_input account_copy">
+                            <input class="file_name account_copy" value="파일선택" disabled="disabled">
+                            <label for="id_account_copy">찾아보기</label>
                             {{ seller_form.account_copy }}
                         </div>
                     </div>

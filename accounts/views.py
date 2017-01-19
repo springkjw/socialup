@@ -2,7 +2,7 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from .models import MyUser, Seller
+from .models import MyUser, Seller, SellerAccount
 from .forms import ChangeForm, ChangeSellerForm, ChangeSellerAccountForm
 from django.contrib.auth import authenticate, login
 
@@ -54,25 +54,66 @@ def change_info(request):
     seller_account_form = ChangeSellerAccountForm()
     template = 'account/account_change.html'
 
+    try:
+        seller = Seller.objects.get(user=request.user)
+    except:
+        seller = Seller(
+            user=request.user
+        )
+        seller.save()
+
+    try:
+        seller_account = SellerAccount.objects.get(seller=seller)
+    except:
+        seller_account = SellerAccount(
+            seller=seller
+        )
+        seller_account.save()
 
     if request.method == "POST":
         form = ChangeForm(request.POST or None, request.FILES or None)
-        password_success = user.check_password(request.POST['current_passwd'])
+        seller_form = ChangeSellerForm(request.POST or None, request.FILES or None)
+        seller_account_form = ChangeSellerAccountForm(request.POST or None, request.FILES or None)
 
-        if not password_success:
-            error_message = "입력하신 비밀번호가 틀렸습니다."
-            context= {
-                "error_message":error_message,
-                "form": form,
-                "seller_form": seller_form,
-                "seller_account_form": seller_account_form,
-                "year_list": year_list,
-                "address_list":address_list,
-            }
-            return render(request, template, context)
+
+
+        if seller_form.is_valid():
+            seller.type=seller_form.cleaned_data['type']
+            seller.company_name=seller_form.cleaned_data['company_name']
+            seller.representative_name=seller_form.cleaned_data['representative_name']
+            seller.corporate_number=seller_form.cleaned_data['corporate_number']
+            seller.business_field=seller_form.cleaned_data['business_field']
+            seller.company_type=seller_form.cleaned_data['company_type']
+            seller.business_license=seller_form.cleaned_data['business_license']
+            seller.account_copy=seller_form.cleaned_data['account_copy']
+            seller.save()
+
+        if seller_account_form.is_valid():
+            seller.type = request.POST['type']
+            seller.save()
+            seller_account.account_number= seller_account_form.cleaned_data['account_number']
+            seller_account.account_name= seller_account_form.cleaned_data['account_name']
+            seller_account.bank= seller_account_form.cleaned_data['bank']
+            seller_account.save()
+
+            return HttpResponseRedirect('/dashboard/change/')
 
         if form.is_valid():
-            print(password_success)
+            password_success = user.check_password(request.POST['current_passwd'])
+            if not password_success:
+                error_message = "입력하신 비밀번호가 틀렸습니다."
+                context = {
+                    "error_message": error_message,
+                    "form": form,
+                    "seller_form": seller_form,
+                    "seller_account_form": seller_account_form,
+                    "year_list": year_list,
+                    "address_list": address_list,
+                    "seller": seller,
+                    "seller_account": seller_account,
+                }
+                return render(request, template, context)
+
 
             if form.cleaned_data['media'] != None:
                 user.media = form.cleaned_data['media']
@@ -98,12 +139,16 @@ def change_info(request):
 
             return HttpResponseRedirect('/dashboard/change/')
 
+
+
     context = {
         "form": form,
         "seller_form": seller_form,
         "seller_account_form":seller_account_form,
         "year_list": year_list,
         "address_list":address_list,
+        "seller": seller,
+        "seller_account": seller_account,
     }
 
     return render(request, template, context)

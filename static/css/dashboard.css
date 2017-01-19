@@ -674,3 +674,116 @@ body {
     width:45%;
     display: inline-block;
 }
+
+
+/* corporate_number */
+.seller_form_input.corporate_number input{
+    width: 55%;
+}
+
+
+/* business_field part */
+.dashboard-change-form.seller .seller_form_content.business_field{
+    width:50%;
+    display: inline-block;
+}
+
+.dashboard-change-form.seller .seller_form_content.business_field .seller_form_title.business_field{
+    width:50%;
+}
+
+.dashboard-change-form.seller .seller_form_content.business_field .seller_form_input.business_field{
+    width:48%;
+}
+
+.seller_form_content.business_field #id_business_field{
+    width:80%;
+}
+
+/* company_type part */
+
+.dashboard-change-form.seller .seller_form_content.company_type {
+    width:45%;
+    display: inline-block;
+}
+
+/* business_license part */
+.seller_form_content.business_license .seller_form_input.business_license input{
+    /*background:none;*/
+}
+
+
+/* account_copy part */
+.seller_form_content.account_copy .seller_form_input.account_copy input{
+    /*background:none;*/
+}
+
+
+.seller_form_content input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip:rect(0,0,0,0);
+    border: 0;
+}
+
+.seller_form_input.business_license label {
+    display: inline-block;
+    padding: .3em .75em;
+    color: #999;
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: top;
+    background-color: white;
+    cursor: pointer;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: .25em;
+}
+
+.seller_form_input.account_copy label {
+    display: inline-block;
+    padding: .3em .75em;
+    color: #999;
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: top;
+    background-color: white;
+    cursor: pointer;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: .25em;
+}
+
+.seller_form_content .file_name {
+    display: inline-block;
+    padding: .5em .75em;
+    /* label의 패딩값과 일치 */
+    font-size: inherit;
+    font-family: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background: #5e5e5e;
+/*
+    background-color: #f5f5f5;
+
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: .25em;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;*/
+}
+
+/* change_button_seller part */
+.change_button_seller{
+    margin-left:40%;
+    width:15%;
+    height:30px;
+    margin-top:10%;
+    background-color: #648efc;
+    color:white;
+}
