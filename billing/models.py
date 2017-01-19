@@ -170,6 +170,7 @@ ORDER_STATUS_CHOICES = (
     ('paid', 'Paid'),
     ('refunded', 'Refunded'),
     ('processing', 'Processing'),
+    ('wait_confirm','wait_confirm'),
     ('finished', 'Finished'),
 )
 
@@ -290,6 +291,7 @@ def new_order_receiver(sender, instance, created, *args, **kwargs):
 
 post_save.connect(new_order_receiver, sender=Order)
 
+
 PRODUCT_STATUS_CHOICES = (
     ('ready', 'Ready'),
     ('progress', 'Progress'),
@@ -334,7 +336,6 @@ def product_receiver(instance, sender, created, *args, **kwargs):
 
 
 post_save.connect(product_receiver, sender=ProductManage)
-
 
 class OrderItem(models.Model):
     user = models.ForeignKey(MyUser, null=True)
