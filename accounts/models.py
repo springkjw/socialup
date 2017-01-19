@@ -405,3 +405,19 @@ class Profit(models.Model):
 
     def __unicode__(self):
         return str(self.money)
+
+
+withdrawal_status_list=(
+    ("request", "request"),
+    ("completed", "completed"),
+    ("rejected", "rejected")
+)
+
+class Withdrawal(models.Model):
+    seller = models.ForeignKey(Seller)
+    seller_account = models.ForeignKey(SellerAccount)
+    money = models.PositiveIntegerField(default=0)
+    status = models.CharField(choices=withdrawal_status_list, max_length=15, null=True)
+
+    def __unicode__(self):
+        return str(self.money)
