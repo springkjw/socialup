@@ -6,6 +6,9 @@ from .models import MyUser, Seller, SellerAccount
 from .forms import ChangeForm, ChangeSellerForm, ChangeSellerAccountForm
 from django.contrib.auth import authenticate, login
 
+from billing.models import OrderItem, Order
+from markets.models import Product
+
 
 
 def dashboard(request):
@@ -161,8 +164,17 @@ def login_cancelled(request):
 def account_detail(request, seller_id):
     template = 'account/account_detail.html'
     seller= Seller.objects.get(id=seller_id)
+    orders= Order.objects.filter(seller=seller)
+
+    order_item_count = 0
+    for order in orders:
+        order_item_count += OrderItem.objects.filter(order=order).count()
+
+    selling_products = Product.objects.filter(seller=seller, product_status="now_selling")
 
     context={
         "seller":seller,
+        "order_item_count":order_item_count,
+        "selling_products":selling_products
     }
     return render(request, template, context)
