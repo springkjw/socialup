@@ -7,34 +7,202 @@
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock %}
 
+{% block js %}
+    <script type="text/javascript" src="{% static 'js/account_detail.js' %}"></script>
+    <script type="text/javascript">
+    $(function () {
+        $('.ask_to_seller_btn').on('click', function () {
+            startMessage('{{ user.id }}', $(this).data('id'), $(this).data('name'), $(this).data('profile'));
+        });
+    });
+    </script>
+{% endblock %}
+
 
 {% block content %}
     <div class="detail_wrapper">
         <div class="detail_content_wrapper">
             <div class="detail_content_wrapper_top">
                 <div class="detail_content_top_left">
-                    <div class="user_image">
-                        <img src="{{ user.get_avatar }}">
+                    <div class="seller_image">
+                        <img src="{{ seller.user.get_avatar }}">
                     </div>
-                    <div class="user_name">
-                        <div style="margin-top:10px;">{{ user.name }}</div>
+                    <div class="seller_name_type">
+                        <div class="seller_name">{{ seller.user.name }}</div>
+                        <div class="seller_type">
+                            {{ seller.type }}
+                        </div>
+                        <div class="ask_to_seller">
+                            <button class="ask_to_seller_btn" data-id="{{ user.id }}"
+                                data-name="{{  seller }}"
+                                data-profile="{{  seller.user.get_avatar }}">
+                                문의하기
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="detail_content_top_right">
-                    <div></div>
-                    <div></div>
+                    <div class="seller_info">
+                        <div class="seller_basic_info">
+                            {{ seller.user.sex }} / {{ seller.user.birth_year }}년
+                            / {{ seller.user.address }} / {{ seller.user.job }}
+                        </div>
+                        <div class="seller_description">
+                            {{ seller.description }}
+                        </div>
+                    </div>
+                    <div class="seller_category">
+                        <div class="seller_category_each">
+                            <span class="category_each_title">관심수</span>
+                            <div><span class="category_each_number">{{ seller.total_num_heart }}</span>개</div>
+                        </div>
+                        <div class="seller_category_each">
+                            <span class="category_each_title">최근로그인</span>
+                            <div><span class="category_each_number">{{ seller.user.last_login|date:"h" }}</span>시간전</div>
+                        </div>
+                        <div class="seller_category_each">
+                            <span class="category_each_title">작업수</span>
+                            <div><span class="category_each_number">{{ order_item_count }}개</span></div>
+                        </div>
+                        <div class="seller_category_each">
+                            <span class="category_each_title">평균 응답시간</span>
+                            <div><span class="category_each_number">1</span>시간</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="detail_content_wrapper_mid">
                 <div class="detail_content_mid_left">
-
+                    <div class="seller-rating" data-rating="{{ product.rating }}">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                    </div>
+                    <div style="text-align:center;">
+                        4.5/5 (345개)
+                    </div>
                 </div>
                 <div class="detail_content_mid_right">
-
+                    <div class="graph-part">
+                        <div class="graph-part-title">
+                            콘텐츠
+                        </div>
+                        <div class="stacked-bar-graph">
+                          <span style="width:40%" class="bar-1"></span>
+                          <span style="width:40%" class="bar-2"></span>
+                          <span style="width:20%" class="bar-3"></span>
+                        </div>
+                    </div>
+                    <div class="graph-part">
+                        <div class="graph-part-title">
+                            광고효과
+                        </div>
+                        <div class="stacked-bar-graph">
+                          <span style="width:34%" class="bar-1"></span>
+                          <span style="width:46%" class="bar-2"></span>
+                          <span style="width:20%" class="bar-3"></span>
+                        </div>
+                    </div>
+                    <div class="graph-part">
+                        <div class="graph-part-title">
+                            친절도
+                        </div>
+                        <div class="stacked-bar-graph">
+                          <span style="width:34%" class="bar-1"></span>
+                          <span style="width:40%" class="bar-2"></span>
+                          <span style="width:26%" class="bar-3"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="detail_content_wrapper_bot">
-                <div></div>
+                <div class="seller_products_wrapper">
+                    <div class="seller_products_title">
+                        판매중인 상품 ({{ selling_products|length }}개)
+                    </div>
+                    <div class="seller_products_each_wrapper">
+                        {% for product in selling_products %}
+                            {% cycle '<div class="row">' '' '' '' %}
+                            <div class="list-card-wrapper">
+                                <a href="{{ product.get_absolute_url }}"
+                                   class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}">
+                                    <div class="card-main-info" data-type="{{ product.sns_type }}" data-color="{{ product.sns_type_color }}">
+                                          <div class="card-type">
+                                            <img class="product-type-image" src="{{ product.sns_type_image_url }}" alt="{{ product.sns_type }}" />
+                                          </div>
+                                        <div class="card-title">
+                                            {{product.oneline_intro}}
+                                        </div>
+                                        <div class="circle-wrapper">
+                                            <img class="circle-arrow" src="/static/img/arrow_gauge.png" >
+                                            <ul class="circle">
+                                                <li class="circle-list">
+                                                    <div class="circle-text">1</div>
+                                                </li>
+                                                <li class="circle-list">
+                                                    <div class="circle-text">2</div>
+                                                </li>
+                                                <li class="circle-list">
+                                                    <div class="circle-text">3</div>
+                                                </li>
+                                                <li class="circle-list">
+                                                    <div class="circle-text">4</div>
+                                                </li>
+                                                <li class="circle-list">
+                                                    <div class="circle-text">5</div>
+                                                </li>
+                                                <div class="circle-mask2">
+                                                    <div class="circle-mask2-text">
+                                                        <span style="font-size:1.3em;">50</span>
+                                                        <span style="font-size:1em;">원</span>
+                                                    </div>
+                                                </div>
+                                            </ul>
+                                            <div class="cash">
+                                                <span class="cash-price" style="font-size:15px; color:grey;" data-price="{{ product.price }}">
+                                                   {{ product.price }}원
+                                                    {% if product.manuscript_price > 0 or product.highrank_price > 0 %}
+                                                        ~
+                                                    {% endif %}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-info">
+                                        <div class="card-subtitle">
+                                            {% for sns in product.sns_set.all %}
+                                                {% for item in sns.analytics.all %}
+                                                    {{ item }}
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </div>
+                                        <div class="card-author">
+                                            <div class="card-author-info">
+                                                <span>{{ product.seller }}</span>
+                                            </div>
+                                            <div class="card-author-info-rating" data-rating="{{ product.rating }}">
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                                {% if products|length == forloop.counter %}
+                                    </div>
+                                {% else %}
+                                    {% cycle '' '' '' '</div>' %}
+                                {% endif %}
+                        {% endfor %}
+                       </div>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>

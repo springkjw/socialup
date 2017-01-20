@@ -37,7 +37,7 @@ urlpatterns = [
 
     url(r'^dashboard/$', dashboard, name='dashboard'),
     url(r'^dashboard/change/$', change_info, name='change_info'),
-    url(r'^dashboard/detail/$', account_detail, name='account_detail'),
+    url(r'^dashboard/seller/(?P<seller_id>\d+)/$', account_detail, name='account_detail'),
 
     url(r'^dashboard/points/charge/$', charge_point, name='point_charge'),
     url(r'^dashboard/points/checkout/$', PointCheckoutAjaxView.as_view(), name='point_checkout'),

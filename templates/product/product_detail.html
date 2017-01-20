@@ -159,7 +159,9 @@
                                 <h2 class="product-seller-name">{{ product.seller }}</h2>
                             </div>
                             <div class="show-seller-detail">
-                                <button id="btn-show-seller-detail">판매자의 상세정보 보기</button>
+                                <a href="{{ product.seller.get_absolute_url }}">
+                                    <button id="btn-show-seller-detail">판매자의 상세정보 보기</button>
+                                </a>
                             </div>
                         </div>
                         <div class="seller-detail-info">

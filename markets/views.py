@@ -368,11 +368,12 @@ def product_order_manage(request):
 
     if seller:
         order_items = OrderItem.objects.filter(user=request.user)
-        order_items_ready = OrderItem.objects.filter(user=request.user, status='paid')
-        order_items_processing = OrderItem.objects.filter(user=request.user, status='processing')
-        order_items_finished = OrderItem.objects.filter(user=request.user, status='finished')
-        order_items_wait_confirm = OrderItem.objects.filter(user=request.user, status='wait_confirm')
-        order_items_refunded = OrderItem.objects.filter(user=request.user, status='refunded')
+        order_items_ready = order_items.filter(user=request.user, status='paid')
+        order_items_processing = order_items.filter(user=request.user, status='processing')
+        order_items_finished = order_items.filter(user=request.user, status='finished')
+        order_items_wait_confirm = order_items.filter(user=request.user, status='wait_confirm')
+        order_items_refunded = order_items.filter(user=request.user, status='refunded')
+        order_items_request_refund = order_items.filter(user=request.user, status='request_refund')
 
         template = 'seller/order_manage.html'
         context = {
@@ -382,6 +383,8 @@ def product_order_manage(request):
             "order_items_finished": order_items_finished,
             "order_items_wait_confirm": order_items_wait_confirm,
             "order_items_refunded": order_items_refunded,
+            "order_items_request_refund": order_items_request_refund,
+            "order_items_request_refund_length": order_items_request_refund.count(),
         }
 
         return render(request, template, context)

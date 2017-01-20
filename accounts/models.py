@@ -18,6 +18,7 @@ from django.contrib.auth.models import (
 from django.core.files.storage import default_storage as storage
 from django.core.files import File
 from model_utils import FieldTracker
+from django.core.urlresolvers import reverse
 
 # allauth import
 from allauth.socialaccount.models import SocialAccount
@@ -337,6 +338,10 @@ class Seller(models.Model):
     def __unicode__(self):
         user = self.user
         return str(user).split("@")[0]
+
+    @property
+    def get_absolute_url(self):
+        return reverse('account_detail', kwargs={"seller_id": self.id})
 
 
 # new seller created
