@@ -404,7 +404,7 @@ profit_type_list=(
 
 class Profit(models.Model):
     seller = models.ForeignKey(Seller)
-    money = models.PositiveIntegerField(default=0)
+    money = models.IntegerField(default=0)
     type = models.CharField(choices=profit_type_list, max_length=20, null=True)
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
 
@@ -426,3 +426,14 @@ class Withdrawal(models.Model):
 
     def __unicode__(self):
         return str(self.money)
+
+
+def withdrawal_post_save_receiver(sender, instance, created, *args, **kwargs):
+    if created and instance.status == "request":
+        possible_profit = Profit.objects.create(seller=instance.seller, money=-instance.money, type="possible_profit")
+        possible_profit.save()
+        requested_profit = Profit.objects.create(seller=instance.seller, money=instance.money, type="requested_profit")
+        requested_profit.save()
+
+
+post_save.connect(withdrawal_post_save_receiver, sender=Withdrawal)
