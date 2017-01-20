@@ -6,9 +6,10 @@
 {% endblock %}
 
 {% block dashboard_js %}
-{#    <script type="text/javascript" src="{% static 'js/seller/profit.js' %}"></script>#}
+    <script type="text/javascript" src="{% static 'js/seller/profit.js' %}"></script>
     <script type="text/javascript">
         $(function () {
+            $('#id_money').prop('max',{{ possible_profit }});
             {#            {% if messages %}#}
             {#                {% for message in messages %}#}
             {#                    alert('{{ message }}');#}
@@ -85,45 +86,41 @@
                 </div>
             </div>
         </div>
-        <form method="POST">{% csrf_token %}
-            <div class="profit-info">
-                <div class="profit-info-left">
+        <div class="profit-info">
+            <form method="POST">{% csrf_token %}
+                <div class="profit-info-left account">
                     <div class="account-info">
-                            {% for form in seller_account_forms %}
+                        {% for form in seller_account_forms %}
+                            <div class="withdrawal_forms_each {{ form.name }}">
                                 <label for="{{form.name}}">{{ form.label }}</label>
                                 {{ form }}
-                            {% endfor %}
-                    </div>
-                    <div class="meta">
-                        출금 신청일로부터 영업일 기준 3일안에 입금해드립니다.
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="profit-info-right">
                     <input type="hidden" name="account_change" value="true"/>
                     <input type="submit" value="계좌수정"/>
                 </div>
-            </div>
-        </form>
-
-        <form method="POST">{% csrf_token %}
-            <div class="profit-info">
-                <div class="profit-info-left">
+            </form>
+            <form method="POST">{% csrf_token %}
+                <div class="profit-info-left withdrawal">
                     <div class="account-info">
-                            {% for form in withdrawal_forms %}
-                                <label for="{{form.name}}">{{ form.label }}</label>
-                                {{ form }}
-                            {% endfor %}
+                        <label for="{{ withdrawal_forms.money.name }}">출금가능 금액</label>
+                        {{ possible_profit }}원 중
+                        {{ withdrawal_forms.money }}원
+                        출금
                     </div>
-                    <div class="meta">
-                        출금 신청일로부터 영업일 기준 3일안에 입금해드립니다.
-                    </div>
+
                 </div>
                 <div class="profit-info-right">
                     <input type="hidden" name="withdraw" value="true"/>
                     <input type="submit" value="출금하기"/>
                 </div>
-            </div>
-        </form>
-
+                <div class="meta">
+                    출금 신청일로부터 영업일 기준 3일안에 입금해드립니다.
+                </div>
+            </form>
+        </div>
     </div>
 {% endblock %}
