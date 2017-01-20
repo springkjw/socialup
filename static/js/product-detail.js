@@ -109,7 +109,7 @@ $('.wish-list-modal-btn-close').on('click', function () {
     $('.wish-list-modal').hide();
 })
 
-/* car-modal part */
+/* cart-modal part */
 $('.cart-confirm-modal-btn-close').on('click', function () {
     $('.cart-confirm-modal').hide();
 })
