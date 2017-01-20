@@ -2,7 +2,7 @@
 
 from __future__ import unicode_literals
 from django import forms
-from accounts.models import MyUser, Seller, SellerAccount, seller_type_list
+from accounts.models import MyUser, Seller, SellerAccount, seller_type_list, Withdrawal
 from allauth.account.forms import (
     # SignupForm,
     BaseSignupForm,
@@ -217,3 +217,15 @@ class ResetPasswordKeyForm(ResetPasswordKeyForm):
 
     def save(self):
         get_adapter().set_password(self.user, self.cleaned_data["password1"])
+
+
+class WithdrawalForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault('label_suffix', '')
+        super(WithdrawalForm, self).__init__(*args, **kwargs)
+
+        self.fields['money'].label = '출금액'
+
+    class Meta:
+        model = Withdrawal
+        fields = ('money', )

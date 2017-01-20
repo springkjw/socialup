@@ -429,7 +429,7 @@ class Withdrawal(models.Model):
 
 
 def withdrawal_post_save_receiver(sender, instance, created, *args, **kwargs):
-    if created and instance.status == "request":
+    if not created and instance.status == "request":
         possible_profit = Profit.objects.create(seller=instance.seller, money=-instance.money, type="possible_profit")
         possible_profit.save()
         requested_profit = Profit.objects.create(seller=instance.seller, money=instance.money, type="requested_profit")

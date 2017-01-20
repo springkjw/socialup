@@ -22,7 +22,8 @@ from .forms import ProductForm, TagForm, SellerAccountForm
 from carts.models import WishList
 from carts.views import add_to_cart
 from billing.models import Order, ProductManage, OrderItem
-from accounts.models import MyUser, Seller, Profit, SellerAccount
+from accounts.models import MyUser, Seller, Profit, SellerAccount, Withdrawal
+from accounts.forms import WithdrawalForm
 from reviews.models import ProductReview
 
 from django.core import serializers
@@ -415,25 +416,45 @@ def product_profit_manage(request):
         if completed_profit is None:
             completed_profit = 0
 
-        instance, instance_created = SellerAccount.objects.get_or_create(seller=seller)
-
+        # SellerAccount, Withdrawal 폼
+        s_account, s_created = SellerAccount.objects.get_or_create(seller=seller)
         if request.method == 'POST':
-            form = SellerAccountForm(request.POST, instance=instance)
-            if form.is_valid():
-                form_instance = form.save(commit=False)
-                try:
-                    form_instance.seller = seller
-                except:
-                    pass
-                form_instance.save()
+            if request.POST.get('account_change'):
+                s_account_form = SellerAccountForm(request.POST, instance=s_account)
 
-                return HttpResponseRedirect('/product/profit/')
+                if s_account_form.is_valid():
+                    s_account_form_instance = s_account_form.save(commit=False)
+                    try:
+                        s_account_form_instance.seller = seller
+                    except:
+                        pass
+                    s_account_form_instance.save()
+
+                    return HttpResponseRedirect('/product/profit/')
+
+            if request.POST.get('withdraw'):
+                withdrawal = Withdrawal.objects.create(seller=seller, seller_account=s_account, status="request")
+                withdrawal_form = WithdrawalForm(request.POST, instance=withdrawal)
+
+                # 출금 요청액이 출금 가능액보다 크면 예외처리 필요
+                # 즉, request.POST.get('money')이 expected_profit를 초과하면 예외처리 필요
+                if withdrawal_form.is_valid():
+                    withdrawal_form_instance = withdrawal_form.save(commit=False)
+                    try:
+                        withdrawal_form_instance.seller = seller
+                    except:
+                        pass
+                    withdrawal_form_instance.save()
+
+                    return HttpResponseRedirect('/product/profit/')
         else:
-            form = SellerAccountForm(instance=instance)
+            s_account_form = SellerAccountForm(instance=s_account)
+            withdrawal_form = WithdrawalForm()
 
         template = 'seller/profit_manage.html'
         context = {
-            "forms" : form,
+            "seller_account_forms" : s_account_form,
+            "withdrawal_forms" : withdrawal_form,
             "expected_profit": expected_profit,
             "possible_profit": possible_profit,
             "requested_profit": requested_profit,
