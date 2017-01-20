@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block dashboard_js %}
-    <script type="text/javascript" src="{% static 'js/seller/profit.js' %}"></script>
+{#    <script type="text/javascript" src="{% static 'js/seller/profit.js' %}"></script>#}
     <script type="text/javascript">
         $(function () {
             {#            {% if messages %}#}
@@ -58,47 +58,71 @@
             </div>
             <div class="dashboard-info-summary info-order-process">
                 <div class="dashboard-info-summary-title">
-                    출금완료
+                    출금진행
+                    <div class="meta">
+                        출금 진행중인 금액
+                    </div>
                 </div>
                 <div class="dashboard-info-summary-count">
-                    <img src="{% static 'img/influe_03.png' %}">
+                    <img src="{% static 'img/influe_04.png' %}">
                 </div>
                 <div class="money" style="color: #777;">
-                    {{ completed_profit }}<span class="unit">원</span>
+                    {{ requested_profit }}<span class="unit">원</span>
                 </div>
             </div>
             <div class="dashboard-info-summary info-order-process">
                 <div class="dashboard-info-summary-title">
-                    잔고전환
+                    출금완료
                     <div class="meta">
-                        예치금으로 전환한 수익금
+                        계좌로 출금완료한 총 금액
                     </div>
                 </div>
                 <div class="dashboard-info-summary-count" style="background: #648efc;">
-                    <img src="{% static 'img/influe_04.png' %}">
+                    <img src="{% static 'img/influe_03.png' %}">
                 </div>
                 <div class="money" style="color: #648efc;">
-                    0<span class="unit">원</span>
+                    {{ completed_profit }}<span class="unit">원</span>
                 </div>
             </div>
         </div>
         <form method="POST">{% csrf_token %}
-        <div class="profit-info">
-            <div class="profit-info-left">
-                <div class="account-info">
-                        {% for form in forms %}
-                            <label for="{{form.name}}">{{ form.label }}</label>
-                            {{ form }}
-                        {% endfor %}
+            <div class="profit-info">
+                <div class="profit-info-left">
+                    <div class="account-info">
+                            {% for form in seller_account_forms %}
+                                <label for="{{form.name}}">{{ form.label }}</label>
+                                {{ form }}
+                            {% endfor %}
+                    </div>
+                    <div class="meta">
+                        출금 신청일로부터 영업일 기준 3일안에 입금해드립니다.
+                    </div>
                 </div>
-                <div class="meta">
-                    출금 신청일로부터 영업일 기준 3일안에 입금해드립니다.
+                <div class="profit-info-right">
+                    <input type="hidden" name="account_change" value="true"/>
+                    <input type="submit" value="계좌수정"/>
                 </div>
             </div>
-            <div class="profit-info-right">
-                <button type="submit">출금하기</button>
+        </form>
+
+        <form method="POST">{% csrf_token %}
+            <div class="profit-info">
+                <div class="profit-info-left">
+                    <div class="account-info">
+                            {% for form in withdrawal_forms %}
+                                <label for="{{form.name}}">{{ form.label }}</label>
+                                {{ form }}
+                            {% endfor %}
+                    </div>
+                    <div class="meta">
+                        출금 신청일로부터 영업일 기준 3일안에 입금해드립니다.
+                    </div>
+                </div>
+                <div class="profit-info-right">
+                    <input type="hidden" name="withdraw" value="true"/>
+                    <input type="submit" value="출금하기"/>
+                </div>
             </div>
-        </div>
         </form>
 
     </div>
