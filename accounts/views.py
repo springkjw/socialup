@@ -158,9 +158,11 @@ def login_cancelled(request):
     messages.error(request, "페이스북 연결이 취소 되었습니다. 다시 시도해주세요.")
     return HttpResponseRedirect(reverse('account_signup'))
 
-def account_detail(request):
+def account_detail(request, seller_id):
     template = 'account/account_detail.html'
+    seller= Seller.objects.get(id=seller_id)
+
     context={
-        "hi":"hi",
+        "seller":seller,
     }
     return render(request, template, context)

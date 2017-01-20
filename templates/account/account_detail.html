@@ -7,19 +7,34 @@
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock %}
 
+{% block js %}
+    <script type="text/javascript">
+    $(function () {
+        $('.detail_bottom_btn-talk').on('click', function () {
+            startMessage('{{ user.id }}', $(this).data('id'), $(this).data('name'), $(this).data('profile'));
+        });
+    });
+    </script>
+{% endblock %}
+
 
 {% block content %}
     <div class="detail_wrapper">
         <div class="detail_content_wrapper">
             <div class="detail_content_wrapper_top">
                 <div class="detail_content_top_left">
-                    <div class="user_image">
-                        <img src="{{ user.get_avatar }}">
+                    <div class="seller_image">
+                        <img src="{{ seller.user.get_avatar }}">
                     </div>
-                    <div class="user_name">
-                        <div style="margin-top:10px;">{{ user.name }}</div>
+                    <div class="seller_name_type">
+                        <div class="seller_name">{{ seller.user.name }}</div>
+                        <div class="seller_type"></div>
                         <div>
-                            <button>문의하기</button>
+                            <button class="detail_bottom_btn-talk" data-id="{{ user.id }}"
+                                data-name="{{  seller }}"
+                                data-profile="{{  seller.user.get_avatar }}">
+                                문의하기
+                            </button>
                         </div>
                     </div>
                 </div>

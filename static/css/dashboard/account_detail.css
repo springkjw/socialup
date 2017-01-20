@@ -28,19 +28,23 @@
     height:100%;
 }
 
-.detail_content_wrapper_top .detail_content_top_left .user_image{
+.detail_content_wrapper_top .detail_content_top_left .seller_image{
     width:100%;
     height:70%;
     text-align: center;
 }
 
-.detail_content_wrapper_top .detail_content_top_left .user_image img{
+.detail_content_wrapper_top .detail_content_top_left .seller_image img{
     width:50%;
 }
 
-.detail_content_wrapper_top .detail_content_top_left .user_name {
+.detail_content_wrapper_top .detail_content_top_left .seller_name_type {
     height:30%;
     text-align:center;
+}
+
+.detail_content_wrapper_top .detail_content_top_left .seller_name_type .seller_name{
+    margin-top:10px;
 }
 
 .detail_content_wrapper_top .detail_content_top_right {
