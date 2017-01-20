@@ -373,6 +373,7 @@ def product_order_manage(request):
         order_items_finished = order_items.filter(user=request.user, status='finished')
         order_items_wait_confirm = order_items.filter(user=request.user, status='wait_confirm')
         order_items_refunded = order_items.filter(user=request.user, status='refunded')
+        order_items_request_refund = order_items.filter(user=request.user, status='request_refund')
 
         template = 'seller/order_manage.html'
         context = {
@@ -382,6 +383,8 @@ def product_order_manage(request):
             "order_items_finished": order_items_finished,
             "order_items_wait_confirm": order_items_wait_confirm,
             "order_items_refunded": order_items_refunded,
+            "order_items_request_refund": order_items_request_refund,
+            "order_items_request_refund_length": order_items_request_refund.count(),
         }
 
         return render(request, template, context)

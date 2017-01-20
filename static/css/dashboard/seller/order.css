@@ -821,6 +821,32 @@
     font-size: 13px;
 }
 
+/* refund part */
+
+.product_item_each_wrapper .purchase-table-ul.refund{
+    width:90%;
+}
+
+.product_item_each_wrapper .purchase-table-ul.refund li:nth-child(1){
+    width:13%;
+}
+
+.product_item_each_wrapper .purchase-table-ul.refund li:nth-child(2) {
+    width:30%;
+}
+
+.product_item_each_wrapper .purchase-table-ul.refund li:nth-child(3) {
+    width:14%;
+}
+
+.product_item_each_wrapper .purchase-table-ul.refund li:nth-child(4) {
+    width:13%;
+}
+
+.product_item_each_wrapper .purchase-table-ul.refund li:nth-child(4) {
+    width:13%;
+}
+
 /* gauge part */
 /* social gauge part */
 #circle{

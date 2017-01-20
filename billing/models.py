@@ -170,6 +170,7 @@ ORDER_STATUS_CHOICES = (
     ('paid', 'Paid'),
     ('refunded', 'Refunded'),
     ('processing', 'Processing'),
+    ('request_refund','request_refund'),
     ('wait_confirm','wait_confirm'),
     ('finished', 'Finished'),
 )
