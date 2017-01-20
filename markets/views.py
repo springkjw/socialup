@@ -397,10 +397,11 @@ def product_profit_manage(request):
         seller = None
 
     if seller:
-        expected_profit = Profit.objects.filter(seller=seller, type="expect_profit").aggregate(Sum('money'))['money__sum']
-        possible_profit = Profit.objects.filter(seller=seller, type="possible_profit").aggregate(Sum('money'))['money__sum']
-        requested_profit = Profit.objects.filter(seller=seller, type="requested_profit").aggregate(Sum('money'))['money__sum']
-        completed_profit = Profit.objects.filter(seller=seller, type="completed_profit").aggregate(Sum('money'))['money__sum']
+        profits = Profit.objects.filter(seller=seller)
+        expected_profit = profits.filter(seller=seller, type="expect_profit").aggregate(Sum('money'))['money__sum']
+        possible_profit = profits.filter(seller=seller, type="possible_profit").aggregate(Sum('money'))['money__sum']
+        requested_profit = profits.filter(seller=seller, type="requested_profit").aggregate(Sum('money'))['money__sum']
+        completed_profit = profits.filter(seller=seller, type="completed_profit").aggregate(Sum('money'))['money__sum']
 
         if expected_profit is None:
             expected_profit = 0
