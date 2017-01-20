@@ -63,8 +63,8 @@
                     <li class="active status_0_menu">전체({{ order_items|length }})</li>
                     <li class="status_1_menu">작업대기({{ order_items_ready|length }})</li>
                     <li class="status_2_menu">작업진행({{ order_items_processing|length }})</li>
-                    <li class="status_3_menu">작업완료({{ order_items_finished|length }})</li>
-                    <li class="status_4_menu">거래완료({{ order_items_wait_confirm|length }})</li>
+                    <li class="status_3_menu">작업완료({{ order_items_wait_confirm|length }})</li>
+                    <li class="status_4_menu">거래완료({{ order_items_finished|length }})</li>
                     <li class="status_5_menu">취소({{ order_items_refunded|length }})</li>
                 </ul>
             </div>
@@ -266,20 +266,6 @@
                                             </div>
                                             <div class="status_table_text">
                                                 판매 취소를 요청합니다.
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="status_table_content">
-                                            <div class="status_table_title">
-                                                 <div>
-                                                    확정요청
-                                                 </div>
-                                            </div>
-                                            <div class="status_table_text">
-                                                구매자로부터 구매확정을 요청합니다.
                                             </div>
                                         </div>
                                     </td>
@@ -527,7 +513,7 @@
                                     <div class="table_product_btn change" >
                                         <form method="POST" action="{% url 'product_order_manage' %}">{% csrf_token %}
                                             <input type="hidden" name="is_status_change" value="true"/>
-                                            <input type="hidden" name="new_status" value="finished"/>
+                                            <input type="hidden" name="new_status" value="wait_confirm"/>
                                             <input type="hidden" name="order_item" value="{{ order_item }}"/>
                                             <input type="submit" value="작업완료"/>
                                         </form>
@@ -685,7 +671,7 @@
                             </table>
                         </div>
                     </div>
-                    <!-- 작업완료 -->
+                    <!-- 작업완료(확정요청) -->
                     <div class="content status_3" style="display:none;">
                         <div class="purchase-table-wrapper">
                             <ul class="purchase-table-ul">
@@ -698,7 +684,7 @@
                                 <li class="table_product empty"></li>
                             </ul>
                         </div>
-                        {% for order_item in order_items_finished %}
+                        {% for order_item in order_items_wait_confirm %}
                                 <div class="product_item_each_wrapper">
                                     <ul class="purchase-table-ul">
                                         <li class="table_product number">{{ order_item.cart_item.item.id }}</li>
@@ -712,13 +698,12 @@
                                             <img src="/static/img/downward_arrow.png"/>
                                         </button>
                                     </div>
-                                    <div class="table_product_btn change" >
-                                        <form method="POST" action="{% url 'product_order_manage' %}">{% csrf_token %}
-                                            <input type="hidden" name="is_status_change" value="true"/>
-                                            <input type="hidden" name="new_status" value="wait_confirm"/>
-                                            <input type="hidden" name="order_item" value="{{ order_item }}"/>
-                                            <input class="detail_bottom_btn" type="submit" value="확정요청"/>
-                                        </form>
+                                    <div class="table_product_btn change" style="width:75px; font-size:11px; margin-right:3px;">
+                                        <button class="detail_bottom_btn-talk" data-id="{{ order_item.cart_item.item.seller.user.id }}"
+                                            data-name="{{  order_item.cart_item.item.seller }}"
+                                            data-profile="{{  order_item.cart_item.item.seller.user.get_avatar }}">
+                                            구매자와의 대화
+                                        </button>
                                     </div>
                                     <div class="table_product_detail" data-type="{{ order_item.cart_item.item.sns_type }}" data-color="{{ order_item.cart_item.item.sns_type_color }}">
                                         <div class="table_product_detail_left">
@@ -812,44 +797,18 @@
                                         </div>
                                         <div class="table_product_detail_bottom">
                                             <ul>
-                                                <li style="margin-left:32%;">
+                                                <li style="margin-left:40%;">
                                                     <button class="detail_bottom_btn-talk" data-id="{{ order_item.cart_item.item.seller.user.id }}"
                                                         data-name="{{  order_item.cart_item.item.seller }}"
                                                         data-profile="{{  order_item.cart_item.item.seller.user.get_avatar }}">
                                                         구매자와의 대화
                                                     </button>
                                                 </li>
-                                                <li>
-                                                    <form method="POST" action="{% url 'product_order_manage' %}">{% csrf_token %}
-                                                        <input type="hidden" name="is_status_change" value="true"/>
-                                                        <input type="hidden" name="new_status" value="wait_confirm"/>
-                                                        <input type="hidden" name="order_item" value="{{ order_item }}"/>
-                                                        <input class="detail_bottom_btn" type="submit" value="확정요청"/>
-                                                    </form>
-                                                </li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                         {% endfor %}
-                        <div class="status_table">
-                            <table>
-                                <tr>
-                                    <td>
-                                        <div class="status_table_content">
-                                            <div class="status_table_title">
-                                                 <div>
-                                                    확정요청
-                                                 </div>
-                                            </div>
-                                            <div class="status_table_text">
-                                                구매자로부터 구매확정을 요청합니다.
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
                     </div>
                     <!-- 거래완료 -->
                     <div class="content status_4" style="display:none;">
@@ -864,7 +823,7 @@
                                 <li class="table_product empty"></li>
                             </ul>
                         </div>
-                        {% for order_item in order_items_wait_confirm %}
+                        {% for order_item in order_items_finished %}
                                 <div class="product_item_each_wrapper">
                                     <ul class="purchase-table-ul">
                                         <li class="table_product number">{{ order_item.cart_item.item.id }}</li>
