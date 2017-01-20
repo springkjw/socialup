@@ -395,12 +395,17 @@ class SellerAccount(models.Model):
         return self.account_number
 
 
+profit_type_list=(
+    ("possible_profit", "possible_profit"),
+    ("expect_profit", "expect_profit"),
+    ("requested_profit", "requested_profit"),
+    ("completed_profit", "completed_profit")
+)
+
 class Profit(models.Model):
     seller = models.ForeignKey(Seller)
     money = models.PositiveIntegerField(default=0)
-    is_possible_profit = models.BooleanField(default=False)
-    is_expect_profit = models.BooleanField(default=False)
-    is_complete = models.BooleanField(default=False)
+    type = models.CharField(choices=profit_type_list, max_length=20, null=True)
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
 
     def __unicode__(self):
