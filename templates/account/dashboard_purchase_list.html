@@ -56,6 +56,24 @@
                     }
                 });
             });
+
+            // 재구매하기
+            $('.repurchase').on('click', function () {
+                $.ajax({
+                    method: 'POST',
+                    url: "{% url 'purchase_list' %}",
+                    data: {
+                        csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+                        repurchase: true,
+                        order_item: $(this).attr('data-id')
+                    },
+                    success: function (data) {
+                        if (data['status'] == 'success') {
+                            window.location.href = '/dashboard/purchase/' + data['cart_id'];
+                        }
+                    }
+                });
+            });
         });
 
     </script>
@@ -1054,7 +1072,7 @@
                                                 </button>
                                             </li>
                                             <li>
-                                                <button class="repurchase">
+                                                <button class="repurchase" data-id="{{ order_item }}">
                                                     재구매하기
                                                 </button>
                                             </li>
@@ -1178,7 +1196,7 @@
                                                 </button>
                                             </li>
                                             <li>
-                                                <button class="repurchase">
+                                                <button class="repurchase" data-id="{{ order_item }}">
                                                     재구매하기
                                                 </button>
                                             </li>

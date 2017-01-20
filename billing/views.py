@@ -2,7 +2,7 @@
 import requests
 import json
 
-from django.shortcuts import render, Http404
+from django.shortcuts import render, Http404, HttpResponse
 from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -12,6 +12,7 @@ from carts.models import Cart
 from .iamport import validation_prepare
 from datetime import datetime, timedelta
 from markets.models import Product
+
 
 class PointCheckoutAjaxView(AjaxRequireMixin, View):
     def post(self, request, *args, **kwargs):
@@ -318,6 +319,31 @@ def purchase_list(request):
             order_item.save()
         except:
             pass
+
+    if request.POST.get('repurchase'):
+        order_item_id = request.POST.get('order_item')
+        try:
+            order_item = OrderItem.objects.get(id=order_item_id)
+        except:
+            pass
+        if order_item is not None:
+            new_cart = Cart.objects.create(user=request.user)
+            request.session['cart_id'] = new_cart.id
+
+            new_cart_item = order_item.cart_item
+            new_cart_item.pk = None
+            new_cart_item.cart = new_cart
+            new_cart_item.save()
+
+            data = {
+                "cart_id": new_cart.id,
+                "status": "success",
+            }
+
+            if data is not None:
+                return HttpResponse(json.dumps(data), content_type='application/json')
+            else:
+                raise Http404
 
 
     order_items = OrderItem.objects.filter(user=request.user)
