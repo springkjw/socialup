@@ -30,28 +30,27 @@ class ProductReview(models.Model):
 
 
 def new_review_receiver(sender, instance, created, *args, **kwargs):
-    if created:
-        # product rating 업데이트
-        product = Product.objects.get(id=instance.product.id)
-        product_reviews = ProductReview.objects.filter(product=product)
-        sum_of_ratings = 0
-        for review in product_reviews:
-            sum_of_ratings += review.rating
+    # product rating 업데이트
+    product = Product.objects.get(id=instance.product.id)
+    product_reviews = ProductReview.objects.filter(product=product)
+    sum_of_ratings = 0
+    for review in product_reviews:
+        sum_of_ratings += review.rating
 
-        avg_of_rating = sum_of_ratings / len(product_reviews)
-        product.rating = avg_of_rating
-        product.save()
+    avg_of_rating = sum_of_ratings / len(product_reviews)
+    product.rating = avg_of_rating
+    product.save()
 
-        # seller rating 업데이트
-        seller = Seller.objects.get(id=product.seller.id)
-        products = Product.objects.filter(seller=seller)
-        sum_of_seller_ratings = 0
-        for each_product in products:
-            sum_of_seller_ratings += each_product.rating
+    # seller rating 업데이트
+    seller = Seller.objects.get(id=product.seller.id)
+    products = Product.objects.filter(seller=seller)
+    sum_of_seller_ratings = 0
+    for each_product in products:
+        sum_of_seller_ratings += each_product.rating
 
-        avg_of_seller_rating = sum_of_seller_ratings / len(products)
-        seller.rating = avg_of_seller_rating
-        seller.save()
+    avg_of_seller_rating = sum_of_seller_ratings / len(products)
+    seller.rating = avg_of_seller_rating
+    seller.save()
 
 
 post_save.connect(new_review_receiver, sender=ProductReview)
