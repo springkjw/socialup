@@ -7,6 +7,7 @@ from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .models import PointTransaction, PointHistory, Order, OrderItem, Point
+from reviews.models import ProductReview
 from socialup.mixins import AjaxRequireMixin
 from carts.models import Cart
 from .iamport import validation_prepare
@@ -312,9 +313,6 @@ class ImpAjaxView(AjaxRequireMixin, View):
 
 @login_required
 def purchase_list(request):
-    review_form = ReviewForm()
-    if request.POST.get('kind_satisfy'):
-        print 'he'
     if request.POST.get('is_status_change'):
         order_item_id = request.POST.get('order_item')
         try:
@@ -358,6 +356,13 @@ def purchase_list(request):
         }
         return render(request, template, context)
 
+    review_form = ReviewForm()
+    if request.POST.get('is_review_upload'):
+        product = Product.objects.get(id=request.POST.get('product_id'))
+        review, review_created = ProductReview.objects.get_or_create(product=product, user=request.user)
+        review_form = ReviewForm(request.POST, instance=review)
+        if review_form.is_valid():
+            review_form.save(commit=True)
 
     order_items = OrderItem.objects.filter(user=request.user)
     order_items_ready = order_items.filter(user=request.user, status='paid')
