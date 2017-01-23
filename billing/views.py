@@ -356,10 +356,11 @@ def purchase_list(request):
         }
         return render(request, template, context)
 
-    review_form = ReviewForm()
     if request.POST.get('is_review_upload'):
-        product = Product.objects.get(id=request.POST.get('product_id'))
-        review, review_created = ProductReview.objects.get_or_create(product=product, user=request.user)
+
+        order_item = OrderItem.objects.get(id=request.POST.get('order_item_id'))
+        product = order_item.cart_item.item
+        review, review_created = ProductReview.objects.get_or_create(order_item=order_item, product=product, user=request.user)
         review_form = ReviewForm(request.POST, instance=review)
         if review_form.is_valid():
             review_form.save(commit=True)
@@ -372,6 +373,15 @@ def purchase_list(request):
     order_items_refunded = order_items.filter(user=request.user, status='refunded')
     order_items_request_refund = order_items.filter(user=request.user, status='request_refund')
 
+    review_forms = []
+    for order_item in order_items:
+        try:
+            review = ProductReview.objects.get(order_item=order_item)
+            review_form = ReviewForm(instance=review)
+        except:
+            review_form = ReviewForm()
+        review_forms.append(review_form)
+
 
     template = 'account/dashboard_purchase_list.html'
     context = {
@@ -383,7 +393,7 @@ def purchase_list(request):
         "order_items_refunded": order_items_refunded,
         "order_items_request_refund": order_items_request_refund,
         "order_items_request_refund_length": order_items_request_refund.count(),
-        "review_form": review_form,
+        "review_forms": review_forms,
     }
 
     return render(request, template, context)
