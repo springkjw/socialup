@@ -439,9 +439,11 @@ def product_profit_manage(request):
                 withdrawal = Withdrawal.objects.create(seller=seller, seller_account=s_account, status="request")
                 withdrawal_form = WithdrawalForm(request.POST, instance=withdrawal)
 
-                # 출금 요청액이 출금 가능액보다 크면 예외처리 필요
-                # 즉, request.POST.get('money')이 expected_profit를 초과하면 예외처리 필요
                 if withdrawal_form.is_valid():
+                    # 출금 요청액이 출금 가능액을 초과한 경우
+                    if int(request.POST.get('money')) > int(possible_profit):
+                        raise Http404
+
                     withdrawal_form_instance = withdrawal_form.save(commit=False)
                     try:
                         withdrawal_form_instance.seller = seller
