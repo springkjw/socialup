@@ -709,3 +709,192 @@ li:nth-child(5) .circle-text {
   border-radius:15px;
   text-align:center;
 }
+
+/* rating part */
+
+.review_modal{
+    display: none;
+    float:left;
+    position:absolute;
+    left:36%;
+    top:15%;
+    background: white;
+    border: 1px solid black;
+    width:34%;
+    height:500px;
+    text-align:center;
+}
+
+.review_modal .review_form{
+    height:100%;
+    width:100%;
+}
+
+.review_modal .review_form_title{
+    width:100%;
+    background-color: #648efc;
+    color:white;
+    height:8%;
+    padding-top:6%;
+}
+
+.review_modal .review_form_notice {
+    width:90%;
+    background-color: #e8e8e8;
+    text-align:left;
+    height:5%;
+    margin-top:3%;
+    margin-left:5%;
+}
+
+.review_modal .review_form_notice span{
+    font-size: 12px;
+    margin-left:10px;
+}
+
+.review_form .review_form_content{
+    width:90%;
+    margin-left:5%;
+    border-bottom:1px solid black;
+    margin-top:2%;
+    font-size: 14px;
+}
+
+
+.review_form .review_form_content .review_form_content_title {
+    width:29%;
+    display: inline-block;
+    margin-top:2%;
+}
+
+.review_form .review_form_content .review_form_content_input {
+    width:69%;
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    text-align:left;
+}
+
+.review_form .review_form_content.product{
+    height:11%;
+}
+
+.review_form .review_form_content.product .review_form_content_title{
+    margin-top:3%;
+}
+
+.review_form .review_form_content.product .review_product_title{
+    font-size:16px;
+    font-weight:bold;
+}
+
+.review_form_content.product .review_product_detail{
+    color:#648efc;
+    display: inline-block;
+    font-size:11px;
+}
+
+.review_form_content.product .review_product_detail.option {
+    margin-right:10px;
+}
+
+.review_form .review_form_content.rating{
+    height:16%;
+}
+
+.review_form .review_form_content.rating .review_form_content_title{
+    margin-top:6%;
+}
+
+.review_form .review_form_content.rating .rating_notice {
+    clear:both;
+    font-size:11px;
+
+}
+
+.review_form .review_form_content.satisfy{
+    height:20%;
+}
+
+.review_form .review_form_content.satisfy .review_form_content_title{
+    margin-top:10%;
+}
+
+.review_form .review_form_content.satisfy li{
+    float:left
+}
+
+.review_form .review_form_content.satisfy .satisfy_title_each {
+    float:left;
+    width:25%;
+    margin-right:3%;
+    text-align: center;
+}
+
+.review_form .review_form_content.review{
+    height:17%;
+    border-bottom: none;
+}
+
+.review_form .review_form_content.review .review_form_content_input {
+    text-align:left;
+}
+
+/* btns */
+
+.review_btn.submit{
+    width:80px;
+    height: 30px;
+    background-color: #648efc;
+    border: 1px solid #648efc;
+    color:white;
+}
+
+.review_btn.close{
+    width:50px;
+    height: 30px;
+    background-color: white;
+    border: 1px solid black;
+    color:black;
+}
+
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+fieldset, label { margin: 0; padding: 0; }
+
+/****** Style Star Rating Widget *****/
+
+.rating {
+  border: none;
+  float: left;
+}
+
+.rating > input { display: none; }
+.rating > label:before {
+  margin: 5px;
+  font-size: 1.25em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
+}
+
+.rating > .half:before {
+  content: "\f089";
+  position: absolute;
+}
+
+.rating > label {
+  color: #ddd;
+ float: right;
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+
+.rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
