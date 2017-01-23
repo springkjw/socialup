@@ -723,6 +723,7 @@ li:nth-child(5) .circle-text {
     width:34%;
     height:500px;
     text-align:center;
+    z-index:10;
 }
 
 .review_modal .review_form{
@@ -848,6 +849,9 @@ li:nth-child(5) .circle-text {
     background-color: #648efc;
     border: 1px solid #648efc;
     color:white;
+    font-size:12px;
+
+
 }
 
 .review_btn.close{
@@ -856,6 +860,7 @@ li:nth-child(5) .circle-text {
     background-color: white;
     border: 1px solid black;
     color:black;
+    font-size:12px;
 }
 
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
