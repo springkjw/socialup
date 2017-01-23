@@ -10,6 +10,7 @@
     <script type="text/javascript">
         $(function () {
             $('#id_money').prop('max',{{ possible_profit }});
+            $('#id_money').prop('min',0);
             {#            {% if messages %}#}
             {#                {% for message in messages %}#}
             {#                    alert('{{ message }}');#}

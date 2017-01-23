@@ -47,3 +47,24 @@ $('.show_detail_btn.second').on('click', function () {
         $(this).attr('aria-hidden', true);
     }
 });
+
+$('.show_detail_btn.third').on('click', function () {
+    if($(this).attr('aria-hidden')=='true'){
+        $(this).parent().next().next().next().show();
+        $(this).attr('aria-hidden', false);
+    }
+    else{
+        $(this).parent().next().next().next().hide();
+        $(this).attr('aria-hidden', true);
+    }
+});
+
+/* wish-list-modal part */
+$('.review').on('click', function () {
+    $(this).parent().next().show();
+});
+
+
+$('.review_btn.close').on('click', function () {
+    $(this).parent().parent().hide();
+});
