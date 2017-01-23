@@ -43,7 +43,7 @@ def new_review_receiver(sender, instance, created, *args, **kwargs):
         product.save()
 
         # seller rating 업데이트
-        seller = Seller.objects.get(id=product.seller)
+        seller = Seller.objects.get(id=product.seller.id)
         products = Product.objects.filter(seller=seller)
         sum_of_seller_ratings = 0
         for each_product in products:
