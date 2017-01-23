@@ -440,8 +440,8 @@ def product_profit_manage(request):
                 withdrawal_form = WithdrawalForm(request.POST, instance=withdrawal)
 
                 if withdrawal_form.is_valid():
-                    # 출금 요청액이 출금 가능액을 초과한 경우
-                    if int(request.POST.get('money')) > int(possible_profit):
+                    # 출금 요청액이 출금 가능액을 초과하거나 음수인 경우
+                    if int(request.POST.get('money')) > int(possible_profit) or int(request.POST.get('money')) < 0:
                         raise Http404
 
                     withdrawal_form_instance = withdrawal_form.save(commit=False)
