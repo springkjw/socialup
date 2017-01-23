@@ -1,0 +1,90 @@
+{% load staticfiles %}
+{% load producttags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/transaction_details.css' %}">
+</head>
+<body>
+    <div class="transaction_detail_wrapper">
+        <table>
+            <tr>
+                <td colspan="2" class="transaction_title">
+                    거래명세서
+                </td>
+            </tr>
+            <tr>
+                <td class="transaction_detail_content left">
+                    주문번호
+                </td>
+                <td class="transaction_detail_content right">
+                    {{ order_item.order_id }}
+                </td>
+            </tr>
+            <tr>
+                <td class="transaction_detail_content left">
+                    거래회사
+                </td>
+                <td class="transaction_detail_content right">
+                    소셜업
+                </td>
+            </tr>
+            <tr>
+                <td class="transaction_detail_content left">
+                    사업자 번호
+                </td>
+                <td class="transaction_detail_content right">
+                    483-15-00403
+                </td>
+            </tr>
+            <tr>
+                <td class="transaction_detail_content left">
+                    대표자
+                </td>
+                <td class="transaction_detail_content right">
+                    이수지 (인)
+                </td>
+            </tr>
+            <tr>
+                <td class="transaction_detail_content left">
+                    회사주소
+                </td>
+                <td class="transaction_detail_content right">
+                    서울특별시 서초구 나루터로 15길 30-2 103호
+                </td>
+            </tr>
+            <tr>
+                <td class="transaction_detail_content left">
+                    서비스명
+                </td>
+                <td class="transaction_detail_content right">
+                    {{ order_item.cart_item.item.oneline_intro }}, 포스팅 업로드
+                </td>
+            </tr>
+            <tr>
+                <td class="transaction_detail_content left">
+                    합계
+                </td>
+                <td class="transaction_detail_content right">
+                    {{ order_item.cart_item.line_item_total }}
+                </td>
+            </tr>
+            <tr>
+                <td class="transaction_detail_content left">
+                    거래일시
+                </td>
+                <td class="transaction_detail_content right">
+
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    hi
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

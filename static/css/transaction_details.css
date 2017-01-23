@@ -1,0 +1,39 @@
+.transaction_detail_wrapper{
+    width:80%;
+    height:500px;
+    background-color: white;
+}
+
+.transaction_detail_wrapper table {
+    position:relative;
+    left:5%;
+    border:1px solid black;
+    width:80%;
+    border-collapse: collapse;
+    height:90%;
+}
+
+.transaction_detail_wrapper table td{
+    border:1px solid black;
+    border-collapse: collapse;
+}
+
+.transaction_detail_wrapper .transaction_title{
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
+    vertical-align: middle;
+}
+
+.transaction_detail_wrapper .transaction_detail_content.left{
+    text-align: center;
+    font-size:15px;
+    font-weight:bold;
+    width:30%;
+}
+
+.transaction_detail_wrapper .transaction_detail_content.right {
+    text-align: center;
+    font-size:15px;
+    font-weight:bold;
+}
