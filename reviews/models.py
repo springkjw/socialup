@@ -5,7 +5,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from markets.models import Product
 from accounts.models import MyUser, Seller
-
+from billing.models import OrderItem
 
 SATISFY_CHOICES = (
     ('good','good'),
@@ -15,6 +15,7 @@ SATISFY_CHOICES = (
 
 class ProductReview(models.Model):
     product = models.ForeignKey(Product)
+    order_item = models.ForeignKey(OrderItem)
     user = models.ForeignKey(MyUser)
     review = models.TextField(null=True, blank=True)
     rating = models.DecimalField(default=0.00, decimal_places=2, max_digits=3)
