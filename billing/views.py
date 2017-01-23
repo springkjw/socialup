@@ -12,6 +12,7 @@ from carts.models import Cart
 from .iamport import validation_prepare
 from datetime import datetime, timedelta
 from markets.models import Product
+from .forms import ReviewForm
 
 
 class PointCheckoutAjaxView(AjaxRequireMixin, View):
@@ -311,6 +312,9 @@ class ImpAjaxView(AjaxRequireMixin, View):
 
 @login_required
 def purchase_list(request):
+    review_form = ReviewForm()
+    if request.POST.get('kind_satisfy'):
+        print 'he'
     if request.POST.get('is_status_change'):
         order_item_id = request.POST.get('order_item')
         try:
@@ -374,6 +378,7 @@ def purchase_list(request):
         "order_items_refunded": order_items_refunded,
         "order_items_request_refund": order_items_request_refund,
         "order_items_request_refund_length": order_items_request_refund.count(),
+        "review_form": review_form,
     }
 
     return render(request, template, context)

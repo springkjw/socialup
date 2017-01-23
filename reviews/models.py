@@ -6,11 +6,20 @@ from markets.models import Product
 from accounts.models import MyUser
 
 
+SATISFY_CHOICES = (
+    ('good','good'),
+    ('neutral','neutral'),
+    ('bad','bad'),
+)
+
 class ProductReview(models.Model):
     product = models.ForeignKey(Product)
     user = models.ForeignKey(MyUser)
     review = models.TextField(null=True, blank=True)
     rating = models.DecimalField(default=0.00, decimal_places=2, max_digits=3)
+    contents_satisfy = models.CharField(max_length=10, choices=SATISFY_CHOICES, default='good')
+    ad_satisfy = models.CharField(max_length=10, choices=SATISFY_CHOICES, default='good')
+    kind_satisfy = models.CharField(max_length=10, choices=SATISFY_CHOICES, default='good')
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
