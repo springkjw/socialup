@@ -70,19 +70,17 @@
     border-top: none;
     width: 561px;
     height: 150px;
-    text-align: center;
     position: relative;
 }
 
 .profit-info .profit-info-left {
-    width: 311px;
-    float: left;
-    padding: 10px 30px 10px 60px;
+    width: 70%;
+    display: inline-block;
 }
 
 .profit-info .profit-info-right {
-    float: left;
-    width: 160px;
+    width: 29%;
+    display: inline-block;
 }
 
 .profit-info .profit-info-right button {
@@ -95,12 +93,11 @@
 }
 
 .profit-info .profit-info-left label {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     color: #648efc;
     text-align: left;
     margin-right: 5px;
-    position: absolute;
 }
 
 .profit-info .profit-info-left label[for='account_name'] {
@@ -123,7 +120,11 @@
     color: #777;
     font-weight: 500;
     margin-top: 5px;
-    position: relative;
+    text-align: center;
+}
+
+.profit-info .account-info{
+    margin-left:5%;
 }
 
 .profit-info .account-info input {
@@ -136,7 +137,6 @@
 }
 
 .profit-info .account-info select {
-    position: absolute;
     left: 108px;
     top: 50px;
 }
@@ -148,3 +148,48 @@
 /*.profit-info .account-info p {
     margin-top: 10px;
 }*/
+
+/* added part */
+.withdrawal_forms_each.account_name{
+    width:27%;
+    display: inline-block;
+}
+
+.withdrawal_forms_each.account_name input{
+    width:35%;
+}
+
+.withdrawal_forms_each.bank{
+    width:36%;
+    display: inline-block;
+}
+
+.withdrawal_forms_each.bank select{
+    width: 65%;
+}
+
+.withdrawal_forms_each.account_number{
+    width:30%;
+    display: inline-block;
+}
+
+.withdrawal_forms_each.account_number label {
+    display: none;
+}
+
+.withdrawal_forms_each.account_number input{
+    width: 100%;
+}
+
+
+.profit-info .profit-info-right input[type="submit"]{
+    width:85px;
+    height:28px;
+    background-color: #648efc;
+    color:white;
+    font-size: 14px;
+}
+
+.profit-info-left.withdrawal input{
+    width:20%;
+}

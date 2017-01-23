@@ -521,6 +521,21 @@
     width:13%;
 }
 
+/* transaction_details part */
+.transaction_details_form{
+    display: inline-block;
+}
+
+.transaction_details_btn{
+    width:50px;
+    height:20px;
+    display: inline-block;
+    font-size:10px;
+    background-color: white;
+    border:1px solid grey;
+    border-radius:5px;
+}
+
 /* gauge part */
 /* social gauge part */
 #circle{

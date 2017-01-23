@@ -345,6 +345,15 @@ def purchase_list(request):
             else:
                 raise Http404
 
+    if request.POST.get('transaction_details'):
+        order_item_id = request.POST.get('order_item_id')
+        order_item = OrderItem.objects.get(id=order_item_id)
+        template='account/transaction_details.html'
+        context={
+            "order_item": order_item,
+        }
+        return render(request, template, context)
+
 
     order_items = OrderItem.objects.filter(user=request.user)
     order_items_ready = order_items.filter(user=request.user, status='paid')

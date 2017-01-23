@@ -875,7 +875,12 @@
                                             <div class="table_product_detail_right_title">
                                                 <h2>[{{ order_item.cart_item.item.id }}]{{ order_item.cart_item.item.oneline_intro }}</h2>
                                                 <p>주문번호:{{ order_item.order.order_id }} &nbsp  판매자:{{ order_item.cart_item.item.seller }} &nbsp 구매날짜:{{ order_item.order.timestamp|date:"m.d" }} </p>
-                                                <p>결제금액:{{ order_item.cart_item.line_item_total }} &nbsp 결제수단:{{ order_item.order.type }}</p>
+                                                <p style="display: inline-block;">결제금액:{{ order_item.cart_item.line_item_total }} &nbsp 결제수단:{{ order_item.order.type }}</p>
+                                                <form target="_blank" action="{% url 'purchase_list' %}" method="post" class="transaction_details_form">{% csrf_token %}
+                                                    <input type="hidden" name="transaction_details" value="true"/>
+                                                    <input type="hidden" name="order_item_id" value="{{ order_item.id }}"/>
+                                                    <button type="submit" class="transaction_details_btn">거래명세서</button>
+                                                </form>
                                             </div>
                                             <div class="table_product_detail_right_tbl">
                                                 <table>
