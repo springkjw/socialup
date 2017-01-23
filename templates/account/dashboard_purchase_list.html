@@ -1216,6 +1216,11 @@
                         아직 주문이 없습니다.
                     </div>
                 {% endif %}
+
+                <form id="product-upload-form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                    {{ review_form.as_p }}
+                    <input type="submit"/>
+                </form>
             </div>
         </div>
         {#                <div class="dashboard-info">#}

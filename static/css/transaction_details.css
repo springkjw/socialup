@@ -1,6 +1,6 @@
 .transaction_detail_wrapper{
-    width:80%;
-    height:500px;
+    width:100%;
+    height:550px;
     background-color: white;
 }
 
@@ -23,6 +23,7 @@
     font-size:20px;
     font-weight:bold;
     vertical-align: middle;
+    height:75px;
 }
 
 .transaction_detail_wrapper .transaction_detail_content.left{
@@ -36,4 +37,41 @@
     text-align: center;
     font-size:15px;
     font-weight:bold;
+}
+
+.transaction_detail_wrapper .transaction_explanation_td {
+    height:120px;
+    vertical-align: top;
+    padding-top:25px;
+}
+
+.transaction_detail_wrapper .transaction_explanation{
+    font-weight:normal;
+    margin-left:3%;
+    margin-top:10px;
+}
+
+.transaction_detail_wrapper .transaction_explanation_td .transaction_detail_btns_wrapper {
+    position: relative;
+    left:39%;
+    top:20%;
+}
+
+.transaction_detail_btns_wrapper .transaction_detail_btn{
+    background: none;
+    width:70px;
+    height: 30px;
+    font-size: 15px;
+}
+
+.transaction_detail_btns_wrapper .transaction_detail_btn.print {
+    background-color: #648efc;
+    color:white;
+    border: 1px solid #648efc;
+}
+
+.transaction_detail_btns_wrapper .transaction_detail_btn.close {
+    background-color: white;
+    color:black;
+    border: 1px solid black;
 }
