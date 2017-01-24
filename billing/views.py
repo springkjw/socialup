@@ -227,6 +227,7 @@ def purchase(request, cart_id):
         user_mileage_val = getattr(user_mileage, 'mileage')
     except:
         user_point_val = 0
+        user_mileage_val = 0
 
     template = 'account/dashboard_purchase.html'
     context = {
