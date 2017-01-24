@@ -217,6 +217,7 @@ class Order(models.Model):
     seller = models.ForeignKey(Seller, null=True)
     order_total = models.PositiveIntegerField(default=0)
     point = models.PositiveIntegerField(default=0)
+    mileage = models.PositiveIntegerField(default=0)
     order_id = models.CharField(max_length=120, unique=True)
     transaction_id = models.CharField(max_length=120, null=True, blank=True)
     type = models.CharField(max_length=120, null=True, blank=True)
