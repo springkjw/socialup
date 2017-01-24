@@ -26,6 +26,7 @@ from billing.views import charge_point, history_point, PointCheckoutAjaxView, Po
 from carts.views import CartView, WishListView
 from messages.views import message_lounge, message_room
 from contact.views import contact, contact_history
+from django.views.generic import TemplateView
 
 urlpatterns = [
     url(r'^$', home, name='home'),
@@ -37,6 +38,7 @@ urlpatterns = [
 
     url(r'^dashboard/$', dashboard, name='dashboard'),
     url(r'^dashboard/change/$', change_info, name='change_info'),
+    url(r'^dashboard/seller/(?P<seller_id>\d+)/$', account_detail, name='account_detail'),
     url(r'^dashboard/seller/(?P<seller_id>\d+)/$', account_detail, name='account_detail'),
 
     url(r'^dashboard/points/charge/$', charge_point, name='point_charge'),
@@ -56,6 +58,8 @@ urlpatterns = [
     url(r'^dashboard/purchase/fail/$', pay_fail, name='pay_fail'),
 
     url(r'^dashboard/seller/manage/$', product_manage, name='product_manage'),
+    url(r'^dashboard/guide/$', TemplateView.as_view(template_name='account/dashboard_guide.html'), name='dashboard_guide'),
+    url(r'^dashboard/question/$', TemplateView.as_view(template_name='account/dashboard_question.html'), name='dashboard_question'),
 
     url(r'^product/(?P<product_id>\d+)/$', product_detail, name='product_detail'),
     url(r'^product/change/(?P<product_id>\d+)/$', product_change, name='product_change'),
