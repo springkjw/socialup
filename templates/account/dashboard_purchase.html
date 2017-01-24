@@ -242,7 +242,11 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                         </div>
                         <div class="button">
                             <button>전액사용</button>
-                            <span>(사용가능 적립금 {{ user.mileage }}원)</span>
+                            {% if user_mileage_val > order.order_total %}
+                                <span>(사용가능 적립금 {{ order.order_total }}원)</span>
+                            {% else %}
+                                <span>(사용가능 적립금 {{ user.mileage }}원)</span>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="point">

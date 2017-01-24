@@ -6,7 +6,7 @@ from django.shortcuts import render, Http404, HttpResponse
 from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from .models import PointTransaction, PointHistory, Order, OrderItem, Point
+from .models import PointTransaction, PointHistory, Order, OrderItem, Point, Mileage
 from reviews.models import ProductReview
 from socialup.mixins import AjaxRequireMixin
 from carts.models import Cart
@@ -223,6 +223,8 @@ def purchase(request, cart_id):
     try:
         user_point = Point.objects.get(user=request.user)
         user_point_val = getattr(user_point, 'point')
+        user_mileage = Mileage.objects.get(user=request.user)
+        user_mileage_val = getattr(user_mileage, 'mileage')
     except:
         user_point_val = 0
 
@@ -230,7 +232,8 @@ def purchase(request, cart_id):
     context = {
         "order": order,
         "cart": cart_list,
-        "user_point_val": user_point_val
+        "user_point_val": user_point_val,
+        "user_mileage_val": user_mileage_val
     }
 
     return render(request, template, context)
