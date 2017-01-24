@@ -61,7 +61,7 @@ urlpatterns = [
     url(r'^product/change/(?P<product_id>\d+)/$', product_change, name='product_change'),
     url(r'^product/order/$', product_order_manage, name='product_order_manage'),
     url(r'^product/profit/$', product_profit_manage, name='product_profit_manage'),
-    url(r'^product/delete/$', product_delete, name='product_delete'),
+    url(r'^product/delete/(?P<product_id>\d+)/$', product_delete, name='product_delete'),
     url(r'^product/upload/$', product_upload, name="product_upload"),
 
     url(r'^summernote/', include('django_summernote.urls')),
