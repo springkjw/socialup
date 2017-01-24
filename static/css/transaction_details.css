@@ -39,6 +39,13 @@
     font-weight:bold;
 }
 
+.transaction_detail_wrapper .transaction_detail_content.right img{
+    width:17px;
+    position: relative;
+    left:-24px;
+    top:3px;
+}
+
 .transaction_detail_wrapper .transaction_explanation_td {
     height:120px;
     vertical-align: top;
