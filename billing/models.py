@@ -23,7 +23,7 @@ class Mileage(models.Model):
     timestamp = models.DateTimeField(auto_now_add=False, auto_now=True)
 
     def __unicode__(self):
-        return str(self.point)
+        return str(self.mileage)
 
 
 class MileageHistory(models.Model):
