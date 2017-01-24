@@ -46,7 +46,7 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                 var point = $('.point-input input').autoNumeric('get');
                 if (point > sub_total) {
                     $('.point-input input').val(sub_total);
-                    mileage = $('.point-input input').autoNumeric('get');
+                    point = $('.point-input input').autoNumeric('get');
                 }
                 var total = parseInt({{ order.order_total }}) - parseInt(mileage) - parseInt(point);
                 var _total = total + '<span>원</span>';
