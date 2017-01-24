@@ -14,6 +14,24 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
     <script type="text/javascript" src="{% static 'js/mask.js' %}"></script>
     <script type="text/javascript">
         $(function () {
+            // 적립금 전액 사용
+            $('.mileage .button button').on('click', function () {
+                if (parseInt('{{ user.mileage }}') > parseInt('{{ order.order_total }}')) {
+                    $('.mileage-input input').autoNumeric('set', '{{ order.order_total }}');
+                } else {
+                    $('.mileage-input input').autoNumeric('set', '{{ user.mileage }}');
+                }
+
+                var total = parseInt({{ order.order_total }}) - parseInt({{ user.mileage }});
+                if (total < 0) {
+                    total = 0;
+                }
+                var _total = total + '<span>원</span>';
+
+                $('.billing-info .total h1').html(_total).digits();
+            });
+
+            // 포인트 전액 사용
             $('.point .button button').on('click', function () {
                 if (parseInt('{{ user.point }}') > parseInt('{{ order.order_total }}')) {
                     $('.point-input input').autoNumeric('set', '{{ order.order_total }}');
@@ -30,14 +48,19 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                 $('.billing-info .total h1').html(_total).digits();
             });
 
-            $('.pay-info .discount #point').on('keyup', function () {
-                var point = $(this).autoNumeric('get');
+            // 결제금액에 사용 적립금/포인트 적용
+            $(document).ready(function () {
+                $('.pay-info .discount').on('keyup', function () {
+                    var mileage = $('.pay-info .discount #mileage').val();
+                    var point = $('.pay-info .discount #point').val();
 
-                var total = parseInt({{ order.order_total }}) - parseInt(point);
-                var _total = total + '<span>원</span>';
+                    var total = parseInt({{ order.order_total }}) - parseInt(mileage) - parseInt(point);
+                    var _total = total + '<span>원</span>';
 
-                $('.billing-info .total h1').html(_total).digits();
+                    $('.billing-info .total h1').html(_total).digits();
+                });
             });
+
 
             $('.dashboard-purchase-bill .dashboard-charge-button').on('click', function (e) {
                 var is_checked = $('.pay-info .pay-option input[type="radio"]').is(':checked');
@@ -237,7 +260,11 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                     <div class="mileage">
                         <div class="mileage-input">
                             <h3>적립금</h3>
-                            <input type="tel" id="mileage" name="mileage" value="0" data-max="{{ user.mileage }}">
+                            {% if user_mileage_val > order.order_total %}
+                                <input type="tel" id="mileage" name="mileage" value="0" data-max="{{ order.order_total }}">
+                            {% else %}
+                                <input type="tel" id="mileage" name="mileage" value="0" data-max="{{ user.mileage }}">
+                            {% endif %}
                             <h3 class="unit">원</h3>
                         </div>
                         <div class="button">
@@ -252,7 +279,11 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                     <div class="point">
                         <div class="point-input">
                             <h3>포인트</h3>
-                            <input type="tel" id="point" name="point" value="0" data-max="{{ user.point }}">
+                            {% if user_point_val > order.order_total %}
+                                <input type="tel" id="point" name="point" value="0" data-max="{{ order.order_total }}">
+                            {% else %}
+                                <input type="tel" id="point" name="point" value="0" data-max="{{ user.point }}">
+                            {% endif %}
                             <h3 class="unit">원</h3>
                         </div>
                         <div class="button">
