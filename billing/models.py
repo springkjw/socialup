@@ -16,6 +16,27 @@ from markets.models import Product
 from carts.models import Cart, CartItem
 from .iamport import validation_prepare, get_transaction
 
+class Mileage(models.Model):
+    user = models.OneToOneField(MyUser)
+    mileage = models.PositiveIntegerField(default=0)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    timestamp = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    def __unicode__(self):
+        return str(self.point)
+
+
+class MileageHistory(models.Model):
+    user = models.ForeignKey(MyUser)
+    amount = models.IntegerField(default=0)
+    type = models.CharField(max_length=20, null=True, blank=True)
+    detail = models.CharField(max_length=255, null=True, blank=True)
+    status = models.CharField(max_length=20, null=True, blank=True)
+    timestamp = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return str(self.amount)
+
 
 class Point(models.Model):
     user = models.OneToOneField(MyUser)
@@ -49,6 +70,10 @@ def new_user_receiver(sender, instance, created, *args, **kwargs):
             )
             point.save()
 
+            mileage = Mileage(
+                user=instance
+            )
+            mileage.save()
 
 post_save.connect(new_user_receiver, sender=MyUser)
 
