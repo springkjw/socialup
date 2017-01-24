@@ -100,10 +100,11 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                     });
 
                     if (buyer_name !== '' && buyer_phone !== '') {
+                        var mileage_info = $('.pay-info .discount #mileage').autoNumeric('get');
                         var point_info = $('.pay-info .discount #point').autoNumeric('get');
                         var order_info = "{{ order.order_id }}";
 
-                        var total_info = AjaxGetTransaction(e, order_info, point_info, buyer_type);
+                        var total_info = AjaxGetTransaction(e, order_info, mileage_info, point_info, buyer_type);
                         var purchase_name = '';
                         if ($('.item').length == 1) {
                             purchase_name = $.trim($('.item .item-title').text());
@@ -155,7 +156,7 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
             });
         });
 
-        function AjaxGetTransaction(e, order, point, type) {
+        function AjaxGetTransaction(e, order, mileage, point, type) {
             e.preventDefault();
             var pay_total = '';
 
@@ -165,6 +166,7 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                 async: false,
                 data: {
                     order: order,
+                    mileage: mileage,
                     point: point,
                     type: type
                 }
