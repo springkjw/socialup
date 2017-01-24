@@ -29,9 +29,7 @@ class Mileage(models.Model):
 class MileageHistory(models.Model):
     user = models.ForeignKey(MyUser)
     amount = models.IntegerField(default=0)
-    type = models.CharField(max_length=20, null=True, blank=True)
     detail = models.CharField(max_length=255, null=True, blank=True)
-    status = models.CharField(max_length=20, null=True, blank=True)
     timestamp = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
