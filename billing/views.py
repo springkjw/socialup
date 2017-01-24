@@ -246,6 +246,7 @@ class CheckoutAjaxView(AjaxRequireMixin, View):
 
         user = request.user
         order = request.POST.get('order')
+        mileage = request.POST.get('mileage')
         point = request.POST.get('point')
         type = request.POST.get('type')
 
@@ -255,6 +256,7 @@ class CheckoutAjaxView(AjaxRequireMixin, View):
                 order_id=order
             )
 
+            trans.mileage = mileage
             trans.point = point
             trans.type = type
             trans.save()
@@ -262,7 +264,7 @@ class CheckoutAjaxView(AjaxRequireMixin, View):
             trans = None
 
         if trans is not None:
-            pay_total = int(trans.order_total) - int(trans.point)
+            pay_total = int(trans.order_total) - int(trans.point) - int(trans.mileage)
             if not pay_total < 0:
 
                 # 아임포트 결제 사전 검증 단계
