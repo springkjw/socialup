@@ -237,12 +237,12 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                     <div class="mileage">
                         <div class="mileage-input">
                             <h3>적립금</h3>
-                            <input type="tel" id="mileage" name="mileage" value="0" data-max="0">
+                            <input type="tel" id="mileage" name="mileage" value="0" data-max="{{ user.mileage }}">
                             <h3 class="unit">원</h3>
                         </div>
                         <div class="button">
                             <button>전액사용</button>
-                            <span>(사용가능 적립금 0원)</span>
+                            <span>(사용가능 적립금 {{ user.mileage }}원)</span>
                         </div>
                     </div>
                     <div class="point">
