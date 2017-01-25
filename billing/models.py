@@ -370,7 +370,7 @@ def new_order_receiver(sender, instance, created, *args, **kwargs):
                     h = PointHistory(
                         user=instance.user,
                         amount=-int(instance.point),
-                        # status=v_trans['status'],
+                        status='paid',
                         detail=detail
                     )
                     h.save()
