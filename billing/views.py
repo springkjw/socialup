@@ -266,11 +266,19 @@ class CheckoutAjaxView(AjaxRequireMixin, View):
 
         if trans is not None:
             pay_total = int(trans.order_total) - int(trans.point) - int(trans.mileage)
-            if not pay_total < 0:
+            if pay_total > 0:
 
                 # 아임포트 결제 사전 검증 단계
                 validation_prepare(order, pay_total)
 
+                data = {
+                    "works": True,
+                    "total": pay_total
+                }
+                return JsonResponse(data)
+
+            # 0원 결제
+            elif pay_total == 0 and type == 'point':
                 data = {
                     "works": True,
                     "total": pay_total
