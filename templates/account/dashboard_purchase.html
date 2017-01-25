@@ -29,6 +29,11 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                     mileage = $('.mileage-input input').autoNumeric('get');
                 }
                 var total = parseInt({{ order.order_total }}) - parseInt(mileage) - parseInt(point);
+                $('.pay-info .pay-option input[type="radio"]').attr("disabled",false);
+                if (total == 0 ) {
+                    $('.pay-info .pay-option input[type="radio"]').attr("disabled",true);
+                    $('.buyer-info').show();
+                }
                 var _total = total + '<span>원</span>';
 
                 $('.billing-info .total h1').html(_total).digits();
@@ -49,6 +54,11 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                     point = $('.point-input input').autoNumeric('get');
                 }
                 var total = parseInt({{ order.order_total }}) - parseInt(mileage) - parseInt(point);
+                $('.pay-info .pay-option input[type="radio"]').attr("disabled",false);
+                if (total == 0 ) {
+                    $('.pay-info .pay-option input[type="radio"]').attr("disabled",true);
+                    $('.buyer-info').show();
+                }
                 var _total = total + '<span>원</span>';
 
                 $('.billing-info .total h1').html(_total).digits();
@@ -64,6 +74,11 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                     mileage = $(this).autoNumeric('get');
                 }
                 var total = parseInt({{ order.order_total }}) - parseInt(mileage) - parseInt(point);
+                $('.pay-info .pay-option input[type="radio"]').attr("disabled",false);
+                if (total == 0 ) {
+                    $('.pay-info .pay-option input[type="radio"]').attr("disabled",true);
+                    $('.buyer-info').show();
+                }
                 var _total = total + '<span>원</span>';
 
                 $('.billing-info .total h1').html(_total).digits();
@@ -79,17 +94,29 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                     point = $(this).autoNumeric('get');
                 }
                 var total = parseInt({{ order.order_total }}) - parseInt(mileage) - parseInt(point);
+                $('.pay-info .pay-option input[type="radio"]').attr("disabled",false);
+                if (total == 0 ) {
+                    $('.pay-info .pay-option input[type="radio"]').attr("disabled",true);
+                    $('.buyer-info').show();
+                }
                 var _total = total + '<span>원</span>';
 
                 $('.billing-info .total h1').html(_total).digits();
             });
 
+            // 결제하기 버튼
             $('.dashboard-purchase-bill .dashboard-charge-button').on('click', function (e) {
                 var is_checked = $('.pay-info .pay-option input[type="radio"]').is(':checked');
-                if (is_checked === true) {
+                var mileage = $('.pay-info .discount #mileage').val();
+                var point = $('.pay-info .discount #point').val();
+                var total = parseInt({{ order.order_total }}) - parseInt(mileage) - parseInt(point);
+                if (is_checked === true || total === 0) {
                     var buyer_name = $('.buyer-info input[name="name"]').val();
                     var buyer_phone = $('.buyer-info input[name="phone"]').val();
                     var buyer_type = $('.pay-info .pay-option input:checked').val();
+                    if (total === 0) {
+                        buyer_type = 'point';
+                    }
 
                     $.ajax({
                         type: 'get',
@@ -141,7 +168,12 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                                         post_to_url('/dashboard/purchase/fail/', {"order_id":order_info, "csrfmiddlewaretoken":"{{ csrf_token }}"});
                                     }
                                 });
-                            } else {
+                            }
+                            else if (total_info === 0){
+                                alert("결제가 완료되었습니다.");
+                                window.location.href='/dashboard/purchase/success'
+                            }
+                            else {
 
                             }
                         }

@@ -338,6 +338,70 @@ def new_order_receiver(sender, instance, created, *args, **kwargs):
                 instance.status = 'paid'
                 instance.save()
 
+        # 0원 결제
+        elif instance.type == 'point' and instance.status == 'created':
+            try:
+                # 유저 포인트 감소
+                p = Point.objects.get(user=instance.user)
+                point = p.point
+                # 결제 금액의 90%만 충전(부가세 고려)
+                new_point = point - int(instance.point)
+                p.point = new_point
+                p.save()
+
+                # 유저 적립금 감소
+                m = Mileage.objects.get(user=instance.user)
+                mileage = m.mileage
+                new_mileage = mileage - int(instance.mileage)
+                m.mileage = new_mileage
+                m.save()
+            except:
+                raise ValueError('거래에 문제가 발생했습니다.')
+
+            if instance.point > 0:
+                try:
+                    cart_items = CartItem.objects.filter(cart=instance.cart)
+                    if len(cart_items) == 1:
+                        detail = cart_items[0].item.oneline_intro
+                    else:
+                        detail = cart_items[0].item.oneline_intro + " 외 " + str(len(cart_items) - 1) + "개"
+
+                    # 포인트 history 추가
+                    h = PointHistory(
+                        user=instance.user,
+                        amount=-int(instance.point),
+                        status='paid',
+                        detail=detail
+                    )
+                    h.save()
+                except:
+                    raise ValueError('거래에 문제가 발생했습니다.')
+
+            if instance.mileage > 0:
+                try:
+                    cart_items = CartItem.objects.filter(cart=instance.cart)
+                    if len(cart_items) == 1:
+                        detail = cart_items[0].item.oneline_intro
+                    else:
+                        detail = cart_items[0].item.oneline_intro + " 외 " + str(len(cart_items) - 1) + "개"
+
+                    # 적립금 history 추가
+                    h = MileageHistory(
+                        user=instance.user,
+                        amount=-int(instance.mileage),
+                        # status=v_trans['status'],
+                        detail=detail
+                    )
+                    h.save()
+                except:
+                    raise ValueError('거래에 문제가 발생했습니다.')
+
+            for cart_item in CartItem.objects.filter(cart=instance.cart):
+                new_order_item = OrderItem.objects.create(user=instance.user, order=instance, cart_item=cart_item, status="paid")
+                new_order_item.save()
+
+            instance.status = 'paid'
+            instance.save()
 
 
 post_save.connect(new_order_receiver, sender=Order)

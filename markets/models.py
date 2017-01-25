@@ -142,6 +142,12 @@ class Product(models.Model):
     # 승인 거절 사유
     reject_reason = models.CharField(max_length=255, null=True, blank=True)
 
+    # 단가
+    unit_price = models.PositiveIntegerField(default=0)
+
+    # 소셜업 게이지
+    socialup_gauge = models.PositiveIntegerField(default=0)
+
     objects = ProductManager()
 
     # 필드 업데이트 감지를 위한 트래커
