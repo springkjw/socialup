@@ -2,8 +2,8 @@
     font-family: NotoSans-light, sans-serif;
     line-height: 44px;
     font-weight: 200;
-    background: #fff;
-    height: 88px;
+    background: #648efc;
+    height: 60px;
     box-sizing: border-box;
     z-index: 99;
     width: 100%;
@@ -13,6 +13,8 @@
 }
 
 #header .inner {
+    width:90%;
+    height:100%;
     position: relative;
     margin: 0 auto;
     zoom: 1;
@@ -21,17 +23,15 @@
 }
 
 #header #logo {
-    width: 100%;
-    height: auto;
-    padding-top: 18px;
+    width: 20%;
+    height: 100%;
     float: left;
 }
 
 #header #logo img {
-    width: 140px;
-    height: 40px;
+    width:60%;
     vertical-align: middle;
-    margin-top: 3px;
+    margin-top: 11px;
 }
 
 #header #gnb {
@@ -60,8 +60,10 @@
 }
 
 #header_tnb {
-    position: absolute;
-    right: 15px;
+    width:20%;
+    display: inline-block;
+    float:right;
+    height:100%;
     font-size: 16px;
     letter-spacing: .05em;
     top: 0;
@@ -71,15 +73,28 @@
 #header_tnb > a {
     padding: 0 10px;
     display: inline-block;
-    height: 100%;
     vertical-align: middle;
-    font-size: 12px;
+    font-size: 15px;
     cursor: pointer;
+    color:white;
+    margin-top:5%;
+    font-weight:400;
 }
 
 #header_tnb > a#signup, #login {
-    margin-top: 22px;
     margin-right: 15px;
+}
+
+#header_tnb > a#cart{
+    margin-top:3%;
+}
+
+#header_tnb > a#message {
+    margin-top:3%;
+}
+
+#header_tnb > a#notification{
+    margin-top:3%;
 }
 
 #header_tnb > a > i {
@@ -92,24 +107,24 @@
     font-weight: bold;
 }
 
-#header-tnb #header-profile {
+#header_tnb > #header-profile {
     display: inline-block;
     height: 100%;
     vertical-align: middle;
+    margin-top:4%;
 }
 
 #header_tnb .profile-image {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    margin-top: 20px;
 }
 
 .header-dropdown {
     position: absolute;
     z-index: 20;
     width: 190px;
-    top: 75px;
+    top: 55px;
     right: 25px;
     background: white;
     border: 1px solid #DEDEDE;
@@ -187,3 +202,63 @@
     }
 }
 
+
+/* search */
+#header .header_search{
+    width:40%;
+    display: inline-block;
+    margin-left:3%;
+}
+
+#header .header_search input[type="text"]{
+    width:80%;
+    margin-top:3%;
+    height:30px;
+    vertical-align: top;
+    text-indent: 10px;
+}
+
+::-webkit-input-placeholder{
+    font-size:12px;
+    margin-left:5px;
+}
+
+#header .header_search .header_search_btn{
+    display: inline-block;
+    width:30px;
+    height:30px;
+    margin-top:3%;
+    background-color: #cecece;
+    margin-left:-5px;
+}
+
+#header .header_search .header_search_btn input[type="image"]{
+    width:73%;
+    margin-left:15%;
+}
+
+/* navigation part */
+.header_navigation{
+    height:60px;
+    border-bottom:1px solid #cecece;
+}
+
+.header_navigation ul{
+    list-style: none;
+    width:40%;
+    height:100%;
+    margin-left:30%;
+}
+
+.header_navigation ul li{
+    float:left;
+    width:24%;
+    margin-top:24px;
+    font-size: 13px;
+    font-weight:400;
+    text-align: center;
+}
+
+.header_navigation ul li button {
+    background: none;
+}

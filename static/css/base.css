@@ -42,7 +42,7 @@ section {
 
 .jumbotron {
     width: 100%;
-    background: #999999;
+    /*background: #999999;*/
     max-height: 422px;
 }
 
