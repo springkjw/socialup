@@ -50,28 +50,23 @@
                 <li><a href="{% url 'product_upload' %}">- 상품등록</a></li>
                 <li><a href="{% url 'product_manage' %}">- 상품관리</a></li>
                 <li><a href="{% url 'product_order_manage' %}">- 판매관리</a></li>
-                <li><a href="{% url 'product_profit_manage' %}">- 정산 / 수익관리</a></li>
+                <li><a href="{% url 'product_profit_manage' %}">- 수익관리</a></li>
             </ul>
         </div>
     </div>
     <div class="user-question">
         <div class="side-menu-title">
-            문의 <i class="fa fa-angle-up" aria-hidden="true"></i>
+            이용안내 <i class="fa fa-angle-up" aria-hidden="true"></i>
         </div>
         <div class="side-menu-content">
             <ul>
-                <li><a href="{% url 'contact_history' %}">- 문의내역</a></li>
+                <li><a href="{% url 'dashboard_guide' %}">- 이용가이드</a></li>
             </ul>
-        </div>
-    </div>
-    <div class="user-using">
-        <div class="side-menu-title">
-            입찰내역 <i class="fa fa-angle-up" aria-hidden="true"></i>
-        </div>
-        <div class="side-menu-content">
             <ul>
-                <li><a href="#">- 입찰관리</a></li>
-                <li><a href="#">- 입찰 상품 안내</a></li>
+                <li><a href="{% url 'dashboard_question' %}">- 고객센터</a></li>
+            </ul>
+            <ul>
+                <li><a href="{% url 'contact' %}">- 신고</a></li>
             </ul>
         </div>
     </div>
