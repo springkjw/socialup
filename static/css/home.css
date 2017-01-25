@@ -163,31 +163,28 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
+    width:50%;
+    height:50%;
+    box-shadow: 0 0 0 1px grey inset;
 }
 
 .new_jumbotron .jumbotron_right .jumbotron_right_content.first{
-    width:50%;
-    height:50%;
     float:left;
 }
 
 .new_jumbotron .jumbotron_right .jumbotron_right_content.second {
-    width:50%;
-    height:50%;
     display: inline-block;
+    float:right
 }
 
 .new_jumbotron .jumbotron_right .jumbotron_right_content.third {
-    width:50%;
-    height:50%;
     float:left;
     display: inline-block;
 }
 
 .new_jumbotron .jumbotron_right .jumbotron_right_content.fourth {
-    width:50%;
-    height:50%;
     display: inline-block;
+    float:right
 }
 
 .special-service {
