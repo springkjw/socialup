@@ -1,0 +1,60 @@
+{% extends 'account/dashboard_base.html' %}
+{% load staticfiles %}
+
+{% block dashboard_css %}
+    <link rel="stylesheet" href="{% static 'css/dashboard/guide.css' %}">
+{% endblock %}
+
+{% block dashboard_js %}
+    <script type="text/javascript" src="{% static 'js/dashboard/guide.js' %}"></script>
+{% endblock %}
+
+
+{% block dashboard_content %}
+    <div class="dashboard-content">
+        <div class="dashboard-info">
+            <div class="dashboard-nav">자주하는 질문</div>
+        </div>
+        <div class="guide-nav">
+            <ul>
+                <li><a href="{% url 'dashboard_guide' %}">이용방법</a></li>
+                <li class="active"><a href="{% url 'dashboard_question' %}">자주하는 질문</a></li>
+            </ul>
+        </div>
+        <div class="question_wrapper">
+            <div class="question_nav">
+                <ul>
+                    <li><button>전체</button></li>
+                    <li><button>이용</button></li>
+                    <li><button>판매자</button></li>
+                    <li><button>구매자</button></li>
+                    <li><button>신고</button></li>
+                    <li><button>기타</button></li>
+                </ul>
+            </div>
+            <div class="question_content">
+                <div class="question_content_each">
+                    <div class="question-content-title-wrapper">
+                        <img src="/static/img/search.png">
+                        <div class="question-content-title">판매 수익금은 언제 포인트로 들어오나요?</div>
+                        <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="question_content_text">
+                        {% include 'account/auth/auth_paper_3.html' %}
+                    </div>
+                </div>
+                <div class="question_content_each">
+                    <div class="question-content-title-wrapper">
+                        <img src="/static/img/search.png">
+                        <div class="question-content-title">판매 수익금은 언제 포인트로 들어오나요?</div>
+                        <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="question_content_text">
+                        {% include 'account/auth/auth_paper_3.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

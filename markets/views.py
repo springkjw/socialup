@@ -19,12 +19,14 @@ from .models import (
     ProductTag,
 )
 from .forms import ProductForm, TagForm, SellerAccountForm
-from carts.models import WishList
+from carts.models import WishList, CartItem
 from carts.views import add_to_cart
 from billing.models import Order, ProductManage, OrderItem
 from accounts.models import MyUser, Seller, Profit, SellerAccount, Withdrawal
 from accounts.forms import WithdrawalForm
 from reviews.models import ProductReview
+from billing.models import OrderItem
+
 
 from django.core import serializers
 
@@ -228,11 +230,22 @@ def product_manage(request):
         messages.warning(request, '판매자가 아닙니다. 상품 등록 시 자동으로 판매자 등록이 됩니다.')
         product_list = None
     else:
-        product_list = Product.objects.filter(seller=seller).active()
+        product_list = Product.objects.filter(seller=seller).exclude(product_status='terminated')
+
+    order_item_status_list = []
+
+    for product in product_list:
+        if product.product_status == 'ready':
+            order_item_status_list.append('x')
+        else:
+            temp_cart_item = CartItem.objects.filter(item=product)
+            temp_order_item = OrderItem.objects.filter(cart_item=temp_cart_item)
+            order_item_status_list.append(temp_order_item)
 
     template = 'seller/product_manage.html'
     context = {
-        "product_list": product_list
+        "product_list": product_list,
+        "order_item_status_list": order_item_status_list
     }
 
     return render(request, template, context)
@@ -336,8 +349,10 @@ def product_change(request, product_id):
 
 
 @login_required
-def product_delete(request):
-    product_id = request.GET.get('delete_product')
+def product_delete(request, product_id):
+    print('product_delete')
+    #product_id = request.GET.get('delete_product')
+    product_id = product_id
     # checking delete validation
     product = get_object_or_404(Product, id=product_id)
 
