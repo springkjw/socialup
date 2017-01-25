@@ -38,17 +38,31 @@
                 }
             });
 
-            var owl = $("#owl");
-
-            owl.owlCarousel({
+            var jumbo_left = $(".jumbotron_left");
+            var count = 0;
+            jumbo_left.owlCarousel({
                 slideSpeed: 300,
                 paginationSpeed: 400,
                 singleItem: true,
                 autoPlay: true,
                 stopOnHover: true,
-                loop: true
+                pagination:false,
+                loop: true,
+                afterMove: function () {
+                    count++;
+                    if(count%5==1){
+                        right_first();
+                    }else if(count%5==2){
+                        right_second();
+                    }else if(count%5==3){
+                        right_third();
+                    }else if(count%5==4){
+                        right_fourth();
+                    }else{
+                        right_fifth();
+                    }
+                }
             });
-
 
             $('.allow-left').on('click', function () {
                 owl.trigger('owl.prev');
@@ -72,32 +86,68 @@
             </div>
         </div>
     {% else %}
-        <div class="jumbotron" style='background: white;'>
-            <div class="jumbotron-header">
-                <ul>
-                    <li><a href="{% url 'category' category='blog' %}">블로그</a></li>
-                    <li><a href="{% url 'category' category='facebook' %}">페이스북</a></li>
-                    <li><a href="{% url 'category' category='instagram' %}">인스타그램</a></li>
-                    <li><a href="{% url 'category' category='kakaostroy' %}">카카오스토리</a></li>
-                </ul>
-            </div>
-            <div class="jumbotron-allow">
-                <div class="allow allow-left">
-                    <img src="{% static 'img/arrow.png' %}">
-                </div>
-                <div class="allow allow-right">
-                    <img src="{% static 'img/arrow_02.png' %}">
-                </div>
-            </div>
-            <div id="owl" class="owl-carousel">
+        <div class="new_jumbotron">
+            <div class="jumbotron_left">
                 <div class="owl-slide banner-1"
-                     style='background-image: url("{% static 'img/banner-01.png' %}");'></div>
+                     style='background-image: url("{% static 'img/ver1.5/banner_01.png' %}");'></div>
                 <div class="owl-slide banner-2"
-                     style='background-image: url("{% static 'img/banner-02.png' %}");'></div>
+                     style='background-image: url("{% static 'img/ver1.5/banner_02.png' %}");'></div>
                 <div class="owl-slide banner-3"
-                     style='background-image: url("{% static 'img/banner-03.png' %}");'></div>
+                     style='background-image: url("{% static 'img/ver1.5/banner_03.png' %}");'></div>
                 <div class="owl-slide banner-4"
-                     style='background-image: url("{% static 'img/banner-04.png' %}");'></div>
+                     style='background-image: url("{% static 'img/ver1.5/banner_04.png' %}");'></div>
+                <div class="owl-slide banner-5"
+                     style='background-image: url("{% static 'img/ver1.5/banner_05.png' %}");'></div>
+            </div>
+            <div class="jumbotron_right first">
+                <div class="jumbotron_right_content first"
+                    style='background-image: url("{% static 'img/ver1.5/side_02.png' %}");'></div>
+                <div class="jumbotron_right_content second"
+                    style='background-image: url("{% static 'img/ver1.5/side_03.png' %}");'></div>
+                <div class="jumbotron_right_content third"
+                    style='background-image: url("{% static 'img/ver1.5/side_04.png' %}");'></div>
+                <div class="jumbotron_right_content fourth"
+                    style='background-image: url("{% static 'img/ver1.5/side_05.png' %}");'></div>
+            </div>
+            <div class="jumbotron_right second">
+                <div class="jumbotron_right_content first"
+                    style='background-image: url("{% static 'img/ver1.5/side_01.png' %}");'></div>
+                <div class="jumbotron_right_content second"
+                    style='background-image: url("{% static 'img/ver1.5/side_03.png' %}");'></div>
+                <div class="jumbotron_right_content third"
+                    style='background-image: url("{% static 'img/ver1.5/side_04.png' %}");'></div>
+                <div class="jumbotron_right_content fourth"
+                    style='background-image: url("{% static 'img/ver1.5/side_05.png' %}");'></div>
+            </div>
+            <div class="jumbotron_right third">
+                <div class="jumbotron_right_content first"
+                    style='background-image: url("{% static 'img/ver1.5/side_01.png' %}");'></div>
+                <div class="jumbotron_right_content second"
+                    style='background-image: url("{% static 'img/ver1.5/side_02.png' %}");'></div>
+                <div class="jumbotron_right_content third"
+                    style='background-image: url("{% static 'img/ver1.5/side_03.png' %}");'></div>
+                <div class="jumbotron_right_content fourth"
+                    style='background-image: url("{% static 'img/ver1.5/side_05.png' %}");'></div>
+            </div>
+            <div class="jumbotron_right fourth">
+                <div class="jumbotron_right_content first"
+                    style='background-image: url("{% static 'img/ver1.5/side_01.png' %}");'></div>
+                <div class="jumbotron_right_content second"
+                    style='background-image: url("{% static 'img/ver1.5/side_02.png' %}");'></div>
+                <div class="jumbotron_right_content third"
+                    style='background-image: url("{% static 'img/ver1.5/side_03.png' %}");'></div>
+                <div class="jumbotron_right_content fourth"
+                    style='background-image: url("{% static 'img/ver1.5/side_05.png' %}");'></div>
+            </div>
+            <div class="jumbotron_right fifth">
+                <div class="jumbotron_right_content first"
+                    style='background-image: url("{% static 'img/ver1.5/side_01.png' %}");'></div>
+                <div class="jumbotron_right_content second"
+                    style='background-image: url("{% static 'img/ver1.5/side_02.png' %}");'></div>
+                <div class="jumbotron_right_content third"
+                    style='background-image: url("{% static 'img/ver1.5/side_03.png' %}");'></div>
+                <div class="jumbotron_right_content fourth"
+                    style='background-image: url("{% static 'img/ver1.5/side_04.png' %}");'></div>
             </div>
         </div>
     {% endif %}

@@ -127,13 +127,13 @@
 .question_wrapper{
     width:99%;
     margin-top:5%;
-    height:400px;
+    height:600px;
     border:1px solid #cecece;
 }
 
 .question_wrapper .question_nav{
     width:100%;
-    height:10%;
+    height:8%;
     margin-top:4%;
     margin-left:5%;
 }
@@ -184,19 +184,25 @@
     font-size: 12px;
 }
 
+
+.question_wrapper .question_nav li .active {
+    background-color:#648efc;
+    border: 1px solid #648efc;
+    color:white;
+}
+
 /* auth-agreement part */
 .question_content .question_content_each {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .question_content .question_content_each .question-content-title-wrapper {
     width: 94%;
     margin-left:3%;
-    height: 50px;
+    height: 40px;
     background: #F2F2F2;
-    line-height: 50px;
-    font-size: 18px;
+    line-height: 40px;
     font-weight: 600;
     color: #555555;
 }
@@ -214,39 +220,8 @@
 }
 
 .question_content .question_content_each .question-content-title-wrapper .question-content-title{
-    font-size: 14px;
+    font-size: 12px;
     display: inline-block;
-}
-
-.question_content .question_content_each input[type=checkbox] {
-    display: none;
-}
-
-.question_content .question_content_each label {
-    cursor: pointer;
-}
-
-.question_content .question_content_each label:before {
-    content: "\2713";
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background-color: transparent;
-    line-height: 25px;
-    font-size: 14px;
-    color: transparent;
-    border: 1px solid rgba(0, 0, 0, .2);
-    margin-right: 10px;
-    cursor: pointer;
-}
-
-.question_content .question_content_each input[type=checkbox]:checked + label:before {
-    content: "\2713";
-    font-size: 22px;
-    color: #333;
-    text-align: center;
-    line-height: 22px;
-    cursor: pointer;
 }
 
 .question_content .question_content_each .question_content_text {
@@ -255,11 +230,14 @@
     border-left: 1px solid #DADADA;
     border-bottom: 1px solid #DADADA;
     height: 120px;
-    width: 93.5%;
+    width: 87.5%;
+    padding: 3%;
     margin-left:3%;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 400;
     line-height: 1.5;
     color: #555555;
     overflow: scroll;
 }
+
+/* entrie part */

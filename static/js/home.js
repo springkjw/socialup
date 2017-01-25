@@ -166,6 +166,36 @@ $.fn.digits = function() {
     })
 };
 
+/* home jumbotron_right func */
+function right_first(){
+    $('.jumbotron_right.first').hide();
+    $('.jumbotron_right.second').css('display','inline-block');
+};
+
+function right_second(){
+    $('.jumbotron_right.second').hide();
+    $('.jumbotron_right.third').css('display','inline-block');
+};
+
+function right_third(){
+    $('.jumbotron_right.third').hide();
+    $('.jumbotron_right.fourth').css('display','inline-block');
+};
+
+function right_fourth(){
+    $('.jumbotron_right.fourth').hide();
+    $('.jumbotron_right.fifth').css('display','inline-block');
+};
+
+function right_fifth(){
+    $('.jumbotron_right.fifth').hide();
+    $('.jumbotron_right.first').css('display','inline-block');
+};
+
+
+
+
+
 function step1Check() {
     if ($(this).attr('id') === 'survey-all') {
         if ($(this).is(":checked") === true) {

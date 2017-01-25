@@ -1,11 +1,7 @@
-$('.guide-nav li #guide_btn').click(function () {
-    $(this).parent().addClass( "active" );
-    $(this).parent().next().removeClass( "active" );
-});
+$('.question_nav li button').click(function () {
+    $(this).parent().parent().find('button').removeClass("active");
+    $(this).addClass("active");
 
-$('.guide-nav li #question_btn').click(function () {
-    $(this).parent().addClass( "active" );
-    $(this).parent().prev().removeClass( "active" );
 });
 
 $(function () {
@@ -17,19 +13,5 @@ $(function () {
     $('.question_content_each').on('click', '.fa-caret-up', function () {
         $(this).parent().parent().parent().find('.question_content_text').hide();
         $(this).removeClass('fa-caret-up').addClass('fa-caret-down');
-    });
-
-    $('#product-upload-form').submit(function () {
-        if($('#agreenment1').length==0){
-            return true;
-        }
-        else{
-            if (!$('#agreenment1').is(":checked")) {
-               alert('약관에 동의해주세요.');
-               return false;
-            }else{
-                return true;
-            }
-        }
     });
 });
