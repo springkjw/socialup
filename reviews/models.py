@@ -5,7 +5,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from markets.models import Product
 from accounts.models import MyUser, Seller
-from billing.models import OrderItem
+from billing.models import OrderItem, Mileage, MileageHistory
 
 SATISFY_CHOICES = (
     ('good','good'),
@@ -31,6 +31,20 @@ class ProductReview(models.Model):
 
 
 def new_review_receiver(sender, instance, created, *args, **kwargs):
+    # 서비스 평가시 0.5% 적립
+    if created:
+        try:
+            mileage = Mileage.objects.get(user=instance.user)
+            amount = int(instance.order_item.cart_item.line_item_total / 200)
+            mileage.mileage += amount
+            mileage.save()
+            mileage_history = MileageHistory.objects.create(user=instance.user,
+                                                            amount=amount,
+                                                            detail=instance.order_item.cart_item.item.oneline_intro+" 서비스평가"
+                                                            )
+        except:
+            pass
+
     # product rating 업데이트
     product = Product.objects.get(id=instance.product.id)
     product_reviews = ProductReview.objects.filter(product=product)

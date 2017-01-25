@@ -16,6 +16,25 @@ from markets.models import Product
 from carts.models import Cart, CartItem
 from .iamport import validation_prepare, get_transaction
 
+class Mileage(models.Model):
+    user = models.OneToOneField(MyUser)
+    mileage = models.PositiveIntegerField(default=0)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    timestamp = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    def __unicode__(self):
+        return str(self.mileage)
+
+
+class MileageHistory(models.Model):
+    user = models.ForeignKey(MyUser)
+    amount = models.IntegerField(default=0)
+    detail = models.CharField(max_length=255, null=True, blank=True)
+    timestamp = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return str(self.amount)
+
 
 class Point(models.Model):
     user = models.OneToOneField(MyUser)
@@ -49,6 +68,10 @@ def new_user_receiver(sender, instance, created, *args, **kwargs):
             )
             point.save()
 
+            mileage = Mileage(
+                user=instance
+            )
+            mileage.save()
 
 post_save.connect(new_user_receiver, sender=MyUser)
 
@@ -194,6 +217,7 @@ class Order(models.Model):
     seller = models.ForeignKey(Seller, null=True)
     order_total = models.PositiveIntegerField(default=0)
     point = models.PositiveIntegerField(default=0)
+    mileage = models.PositiveIntegerField(default=0)
     order_id = models.CharField(max_length=120, unique=True)
     transaction_id = models.CharField(max_length=120, null=True, blank=True)
     type = models.CharField(max_length=120, null=True, blank=True)
@@ -238,7 +262,7 @@ def new_order_receiver(sender, instance, created, *args, **kwargs):
 
             res_merchant_id = v_trans['merchant_id']
             res_imp_id = v_trans['imp_id']
-            res_amount = int(v_trans['amount']) + int(instance.point)
+            res_amount = int(v_trans['amount']) + int(instance.point) + int(instance.mileage)
 
             # 데이터베이스에 실제 결제된 정보가 있는지 체크
             r_trans = Order.objects.filter(
@@ -258,6 +282,13 @@ def new_order_receiver(sender, instance, created, *args, **kwargs):
                     new_point = point - int(instance.point)
                     p.point = new_point
                     p.save()
+
+                    # 유저 적립금 감소
+                    m = Mileage.objects.get(user=instance.user)
+                    mileage = m.mileage
+                    new_mileage = mileage - int(instance.mileage)
+                    m.mileage = new_mileage
+                    m.save()
                 except:
                     raise ValueError('거래에 문제가 발생했습니다.')
 
@@ -274,6 +305,25 @@ def new_order_receiver(sender, instance, created, *args, **kwargs):
                             user=instance.user,
                             amount=-int(instance.point),
                             status=v_trans['status'],
+                            detail=detail
+                        )
+                        h.save()
+                    except:
+                        raise ValueError('거래에 문제가 발생했습니다.')
+
+                if instance.mileage > 0:
+                    try:
+                        cart_items = CartItem.objects.filter(cart=instance.cart)
+                        if len(cart_items) == 1 :
+                            detail = cart_items[0].item.oneline_intro
+                        else:
+                            detail = cart_items[0].item.oneline_intro + " 외 " + str(len(cart_items)-1) + "개"
+
+                        # 적립금 history 추가
+                        h = MileageHistory(
+                            user=instance.user,
+                            amount=-int(instance.mileage),
+                            # status=v_trans['status'],
                             detail=detail
                         )
                         h.save()

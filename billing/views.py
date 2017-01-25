@@ -6,7 +6,7 @@ from django.shortcuts import render, Http404, HttpResponse
 from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from .models import PointTransaction, PointHistory, Order, OrderItem, Point
+from .models import PointTransaction, PointHistory, Order, OrderItem, Point, Mileage
 from reviews.models import ProductReview
 from socialup.mixins import AjaxRequireMixin
 from carts.models import Cart
@@ -223,14 +223,18 @@ def purchase(request, cart_id):
     try:
         user_point = Point.objects.get(user=request.user)
         user_point_val = getattr(user_point, 'point')
+        user_mileage = Mileage.objects.get(user=request.user)
+        user_mileage_val = getattr(user_mileage, 'mileage')
     except:
         user_point_val = 0
+        user_mileage_val = 0
 
     template = 'account/dashboard_purchase.html'
     context = {
         "order": order,
         "cart": cart_list,
-        "user_point_val": user_point_val
+        "user_point_val": user_point_val,
+        "user_mileage_val": user_mileage_val
     }
 
     return render(request, template, context)
@@ -243,6 +247,7 @@ class CheckoutAjaxView(AjaxRequireMixin, View):
 
         user = request.user
         order = request.POST.get('order')
+        mileage = request.POST.get('mileage')
         point = request.POST.get('point')
         type = request.POST.get('type')
 
@@ -252,6 +257,7 @@ class CheckoutAjaxView(AjaxRequireMixin, View):
                 order_id=order
             )
 
+            trans.mileage = mileage
             trans.point = point
             trans.type = type
             trans.save()
@@ -259,7 +265,7 @@ class CheckoutAjaxView(AjaxRequireMixin, View):
             trans = None
 
         if trans is not None:
-            pay_total = int(trans.order_total) - int(trans.point)
+            pay_total = int(trans.order_total) - int(trans.point) - int(trans.mileage)
             if not pay_total < 0:
 
                 # 아임포트 결제 사전 검증 단계
@@ -357,7 +363,6 @@ def purchase_list(request):
         return render(request, template, context)
 
     if request.POST.get('is_review_upload'):
-
         order_item = OrderItem.objects.get(id=request.POST.get('order_item_id'))
         product = order_item.cart_item.item
         review, review_created = ProductReview.objects.get_or_create(order_item=order_item, product=product, user=request.user)
@@ -373,15 +378,17 @@ def purchase_list(request):
     order_items_refunded = order_items.filter(user=request.user, status='refunded')
     order_items_request_refund = order_items.filter(user=request.user, status='request_refund')
 
-    review_forms = []
-    for order_item in order_items:
-        try:
-            review = ProductReview.objects.get(order_item=order_item)
-            review_form = ReviewForm(instance=review)
-        except:
-            review_form = ReviewForm()
-        review_forms.append(review_form)
-
+    # 주석 처리된 부분은 review_forms를 던져서 유저가 이전에 작성했던 리뷰들을 볼 수 있게 하기 위함임
+    # 현재는 이미 서비스 평가했던걸 다시 평가하면 빈 폼이 뜨지만 제출하면 수정되도록 해둠
+    review_form = ReviewForm()
+    # review_forms = []
+    # for order_item in order_items:
+    #     try:
+    #         review = ProductReview.objects.get(order_item=order_item)
+    #         review_form = ReviewForm(instance=review)
+    #     except:
+    #         review_form = ReviewForm()
+    #     review_forms.append(review_form)
 
     template = 'account/dashboard_purchase_list.html'
     context = {
@@ -393,7 +400,8 @@ def purchase_list(request):
         "order_items_refunded": order_items_refunded,
         "order_items_request_refund": order_items_request_refund,
         "order_items_request_refund_length": order_items_request_refund.count(),
-        "review_forms": review_forms,
+        "review_form": review_form,
+        # "review_forms": review_forms,
     }
 
     return render(request, template, context)
