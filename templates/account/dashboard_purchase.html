@@ -29,6 +29,10 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                     mileage = $('.mileage-input input').autoNumeric('get');
                 }
                 var total = parseInt({{ order.order_total }}) - parseInt(mileage) - parseInt(point);
+                if (total == 0 ) {
+                    $("#pay_by_point").attr("checked", true);
+                    $('.buyer-info').show();
+                }
                 var _total = total + '<span>원</span>';
 
                 $('.billing-info .total h1').html(_total).digits();
@@ -47,8 +51,13 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                 if (point > sub_total) {
                     $('.point-input input').val(sub_total);
                     point = $('.point-input input').autoNumeric('get');
+                    $("#pay_by_point").prop("checked", true);
                 }
                 var total = parseInt({{ order.order_total }}) - parseInt(mileage) - parseInt(point);
+                if (total == 0 ) {
+                    $("#pay_by_point").attr("checked", true);
+                    $('.buyer-info').show();
+                }
                 var _total = total + '<span>원</span>';
 
                 $('.billing-info .total h1').html(_total).digits();
@@ -64,6 +73,10 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                     mileage = $(this).autoNumeric('get');
                 }
                 var total = parseInt({{ order.order_total }}) - parseInt(mileage) - parseInt(point);
+                if (total == 0 ) {
+                    $("#pay_by_point").attr("checked", true);
+                    $('.buyer-info').show();
+                }
                 var _total = total + '<span>원</span>';
 
                 $('.billing-info .total h1').html(_total).digits();
@@ -79,6 +92,10 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                     point = $(this).autoNumeric('get');
                 }
                 var total = parseInt({{ order.order_total }}) - parseInt(mileage) - parseInt(point);
+                if (total == 0 ) {
+                    $("#pay_by_point").attr("checked", true);
+                    $('.buyer-info').show();
+                }
                 var _total = total + '<span>원</span>';
 
                 $('.billing-info .total h1').html(_total).digits();
@@ -338,6 +355,10 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                         <label>
                             <input type="radio" class="radio" name="type" value="vbank" id="">
                             가상계좌 입금
+                        </label>
+                        <label>
+                            <input type="radio" class="radio" name="type" value="point" id="pay_by_point">
+                            전액 포인트
                         </label>
                     </div>
                 </div>
