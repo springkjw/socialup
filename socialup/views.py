@@ -28,7 +28,7 @@ def home(request):
 
 
 def product_category(request, category):
-    products = Product.objects.filter(type__type=category)
+    products = Product.objects.filter(sns_type=category)
 
     category_name = [type_[1] for type_ in sns_type_list if type_[0] == category][0]
 
