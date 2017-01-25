@@ -1,0 +1,87 @@
+{% extends 'account/dashboard_base.html' %}
+{% load staticfiles %}
+
+{% block dashboard_css %}
+    <link rel="stylesheet" href="{% static 'css/dashboard/guide.css' %}">
+{% endblock %}
+
+{% block dashboard_js %}
+    <script type="text/javascript" src="{% static 'js/dashboard/guide.js' %}"></script>
+{% endblock %}
+
+
+{% block dashboard_content %}
+    <div class="dashboard-content">
+        <div class="dashboard-info">
+            <div class="dashboard-nav">이용가이드</div>
+        </div>
+        <div class="guide-nav">
+            <ul>
+                <li class="active"><a href="{% url 'dashboard_guide' %}">이용방법</a></li>
+                <li><a href="{% url 'dashboard_question' %}">자주하는 질문</a></li>
+            </ul>
+        </div>
+        <div class="guide_wrapper">
+            <div class="guide_content_top">소셜업은 어떤 서비스인가요?</div>
+            <div class="guide_content_second">'광고주-SNS운영자'가 SNS포스팅 서비스를 판매, 구매 할 수 있는 중개 플랫폼입니다.</div>
+            <div class="guide_content_box">
+                <div class="guide_content_box_wrapper">
+                    <div class="content_box_title">
+                        <div style="margin-top:10%;">광고주</div>
+                    </div>
+                    <div class="content_box_text">제품에 적합한 SNS를 추천받고 가성비 좋은 SNS광고를 진행하세요!</div>
+                </div>
+            </div>
+            <div class="guide_content_box">
+                <div class="guide_content_box_wrapper">
+                    <div class="content_box_title">
+                        <div style="margin-top:10%;">SNS운영자</div>
+                    </div>
+                    <div class="content_box_text">직접 광고주를 찾아 부가 수익을 창출하세요!</div>
+                </div>
+            </div>
+            <div class="guide_progress">
+                <div class="guide_progress_title">
+                    소셜업 진행과정
+                </div>
+                <div class="guide_progress_content">
+                    <div class="tab-content">
+                        <img id="caution-image" src="/static/img/guide.png">
+                        <ul id="caution-ul" >
+                            <li>
+                                <div class="caution-div-each">
+                                    <span class="caution-div-num">01</span><br>
+                                    광고에 적합한 SNS의 종류와 테마 선택
+                                </div>
+                            </li>
+                            <li>
+                                <div class="caution-div-each">
+                                    <span class="caution-div-num">02</span><br>
+                                    1회 포스팅 비용과 영향력 비교
+                                </div>
+                            </li>
+                            <li>
+                                <div class="caution-div-each">
+                                    <span class="caution-div-num">03</span><br>
+                                    인플루언서에게 포스팅 견적 문의
+                                </div>
+                            </li>
+                            <li>
+                                <div class="caution-div-each">
+                                    <span class="caution-div-num">04</span><br>
+                                    포스팅 서비스 구매 및 자료 전달
+                                </div>
+                            </li>
+                            <li>
+                                <div class="caution-div-each">
+                                    <span class="caution-div-num">05</span><br>
+                                    업로드 확인 후 구매 결정
+                                </div>
+                            </li>
+                        </ul>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
