@@ -50,6 +50,28 @@ $(document).ready(function() {
     add_highrank_price_to_total_init();
     highrank_price_change_for_total();
     manuscript_price_change_for_total();
+
+    /* seller rating part */
+    $('.seller-rating').each(function() {
+        var rating = Math.round($(this).attr('data-rating'));
+        for (var i = 0; i < rating; i++) {
+            $($(this).find('i')).each(function(j) {
+                if (i == j) {
+                    $(this).addClass('active');
+                }
+            });
+        }
+    });
+
+    /* total_rating part */
+    var total_rating = Math.round($('.total-rating').attr('data-rating'));
+    for (var i = 0; i < total_rating; i++) {
+        $($('.total-rating').find('i')).each(function(j) {
+            if (i == j) {
+                $(this).addClass('active');
+            }
+        });
+    }
 });
 
 

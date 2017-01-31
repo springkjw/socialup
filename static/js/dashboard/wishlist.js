@@ -1,6 +1,5 @@
 $(function() {
-    var rating_ele = $('.dashboard-wishlist-item-rating');
-
+    var rating_ele = $('.card-author-info-rating');
     rating_ele.each(function() {
         var rating = Math.round($(this).attr('data-rating'));
         for(var i=0; i<rating; i++) {
@@ -34,7 +33,6 @@ $.fn.digits = function(){
 /* gauge part */
 $('.card-main-info').each(function(){
     var color = $(this).attr('data-color');
-    //$(this).find('.circle-wrapper .circle-list').eq(0).find('.circle-text').css({'background-color': color, 'color': 'white'});
     var num = $(this).find('.circle-wrapper .circle').attr('gauge-data');
     if(num == 1){
         $(this).find('.circle-wrapper .circle-list').eq(0).find('.circle-text').css({'background-color': color, 'color': 'white'});

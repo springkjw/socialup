@@ -73,7 +73,7 @@
             </div>
             <div class="detail_content_wrapper_mid">
                 <div class="detail_content_mid_left">
-                    <div class="seller-rating" data-rating="{{ product.rating }}">
+                    <div class="seller-rating" data-rating="{{ seller.rating }}">
                         <i class="fa fa-star" aria-hidden="true"></i>
                         <i class="fa fa-star" aria-hidden="true"></i>
                         <i class="fa fa-star" aria-hidden="true"></i>
@@ -81,7 +81,7 @@
                         <i class="fa fa-star" aria-hidden="true"></i>
                     </div>
                     <div style="text-align:center;">
-                        4.5/5 (345개)
+                        {{ seller.rating }}/5 (345개)
                     </div>
                 </div>
                 <div class="detail_content_mid_right">
@@ -137,7 +137,7 @@
                                         </div>
                                         <div class="circle-wrapper">
                                             <img class="circle-arrow" src="/static/img/arrow_gauge.png" >
-                                            <ul class="circle">
+                                            <ul class="circle" gauge-data="{{ product.socialup_gauge }}">
                                                 <li class="circle-list">
                                                     <div class="circle-text">1</div>
                                                 </li>
@@ -155,7 +155,7 @@
                                                 </li>
                                                 <div class="circle-mask2">
                                                     <div class="circle-mask2-text">
-                                                        <span style="font-size:1.3em;">50</span>
+                                                        <span style="font-size:1.3em;">{{ product.unit_price }}</span>
                                                         <span style="font-size:1em;">원</span>
                                                     </div>
                                                 </div>

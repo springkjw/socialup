@@ -67,6 +67,12 @@ body {
     color: rgba(249, 77, 80, 1);
 }
 
+
+.sub-content .seller-rating i {
+    color: gray;
+    font-size: 14px;
+}
+
 .seller-rating i {
     font-size: 20px;
     color: #b1c6fc;
@@ -691,10 +697,6 @@ body {
     font-weight: 600;
 }
 
-.sub-content .seller-rating i {
-    color: gray;
-    font-size: 14px;
-}
 
 .sub-content .ask-seller {
     background: rgba(0, 0, 0, .6);
