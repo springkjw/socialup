@@ -118,24 +118,51 @@
                     <div class="product-rating" style="display:block;">
                         {% for product in products_rating %}
                             {% cycle '<div class="row">' '' '' '' %}
-
                             <a href="{{ product.get_absolute_url }}"
                                class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}">
-                                <div class="card-image">
-                                    <div class="card-price">
-                                        {{ product.price }}&#8361;~
+                                <div class="card-main-info" data-type="{{ product.sns_type }}" data-color="{{ product.sns_type_color }}">
+                                  <div class="card-type">
+                                    <img class="product-type-image" src="{{ product.sns_type_image_url }}" alt="{{ product.sns_type }}" />
+                                  </div>
+                                  <div class="card-title">
+                                        {{product.oneline_intro}}
                                     </div>
-                                    <div class="card-price-back"></div>
-                                    {% if product.get_thumb_sd_url %}
-                                        <img src="{{ product.get_thumb_sd_url }}">
-                                    {% else %}
-                                        <img src="{{ product.get_image_url }}">
-                                    {% endif %}
+                                    <div class="circle-wrapper">
+                                        <img class="circle-arrow" src="/static/img/arrow_gauge.png" >
+                                        <ul class="circle">
+                                            <li class="circle-list">
+                                                <div class="circle-text">1</div>
+                                            </li>
+                                            <li class="circle-list">
+                                                <div class="circle-text">2</div>
+                                            </li>
+                                            <li class="circle-list">
+                                                <div class="circle-text">3</div>
+                                            </li>
+                                            <li class="circle-list">
+                                                <div class="circle-text">4</div>
+                                            </li>
+                                            <li class="circle-list">
+                                                <div class="circle-text">5</div>
+                                            </li>
+                                            <div class="circle-mask2">
+                                                <div class="circle-mask2-text">
+                                                    <span style="font-size:2em;">50</span>
+                                                    <span style="font-size:1em;">원</span>
+                                                </div>
+                                            </div>
+                                        </ul>
+                                        <div class="cash">
+                                            <span class="cash-price" style="font-size:1.2em; color:grey;" data-price="{{ product.price }}">
+                                               {{ product.price }}원
+                                                {% if product.manuscript_price > 0 or product.highrank_price > 0 %}
+                                                    ~
+                                                {% endif %}
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="card-info">
-                                    <div class="card-title">
-                                        {{ product.title }}
-                                    </div>
                                     <div class="card-subtitle">
                                         {% for sns in product.sns_set.all %}
                                             {% for item in sns.analytics.all %}
@@ -145,7 +172,8 @@
                                     </div>
                                     <div class="card-author">
                                         <div class="card-author-info">
-                                            {{ product.seller }}
+                                            <img src="{{ product.seller.user.get_avatar }}" >
+                                            <span>{{ product.seller }}</span>
                                         </div>
                                         <div class="card-author-info-rating" data-rating="{{ product.rating }}">
                                             <i class="fa fa-star" aria-hidden="true"></i>
@@ -171,21 +199,49 @@
                             {% cycle '<div class="row">' '' '' '' %}
                             <a href="{{ product.get_absolute_url }}"
                                class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}">
-                                <div class="card-image">
-                                    <div class="card-price">
-                                        {{ product.price }}&#8361;~
+                                <div class="card-main-info" data-type="{{ product.sns_type }}" data-color="{{ product.sns_type_color }}">
+                                  <div class="card-type">
+                                    <img class="product-type-image" src="{{ product.sns_type_image_url }}" alt="{{ product.sns_type }}" />
+                                  </div>
+                                  <div class="card-title">
+                                        {{product.oneline_intro}}
                                     </div>
-                                    <div class="card-price-back"></div>
-                                    {% if product.get_thumb_sd_url %}
-                                        <img src="{{ product.get_thumb_sd_url }}">
-                                    {% else %}
-                                        <img src="{{ product.get_image_url }}">
-                                    {% endif %}
+                                    <div class="circle-wrapper">
+                                        <img class="circle-arrow" src="/static/img/arrow_gauge.png" >
+                                        <ul class="circle">
+                                            <li class="circle-list">
+                                                <div class="circle-text">1</div>
+                                            </li>
+                                            <li class="circle-list">
+                                                <div class="circle-text">2</div>
+                                            </li>
+                                            <li class="circle-list">
+                                                <div class="circle-text">3</div>
+                                            </li>
+                                            <li class="circle-list">
+                                                <div class="circle-text">4</div>
+                                            </li>
+                                            <li class="circle-list">
+                                                <div class="circle-text">5</div>
+                                            </li>
+                                            <div class="circle-mask2">
+                                                <div class="circle-mask2-text">
+                                                    <span style="font-size:2em;">50</span>
+                                                    <span style="font-size:1em;">원</span>
+                                                </div>
+                                            </div>
+                                        </ul>
+                                        <div class="cash">
+                                            <span class="cash-price" style="font-size:1.2em; color:grey;" data-price="{{ product.price }}">
+                                               {{ product.price }}원
+                                                {% if product.manuscript_price > 0 or product.highrank_price > 0 %}
+                                                    ~
+                                                {% endif %}
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="card-info">
-                                    <div class="card-title">
-                                        {{ product.title }}
-                                    </div>
                                     <div class="card-subtitle">
                                         {% for sns in product.sns_set.all %}
                                             {% for item in sns.analytics.all %}
@@ -195,7 +251,8 @@
                                     </div>
                                     <div class="card-author">
                                         <div class="card-author-info">
-                                            {{ product.seller }}
+                                            <img src="{{ product.seller.user.get_avatar }}" >
+                                            <span>{{ product.seller }}</span>
                                         </div>
                                         <div class="card-author-info-rating" data-rating="{{ product.rating }}">
                                             <i class="fa fa-star" aria-hidden="true"></i>
@@ -207,6 +264,7 @@
                                     </div>
                                 </div>
                             </a>
+
                             {% if products|length == forloop.counter %}
                                 </div>
                             {% else %}
