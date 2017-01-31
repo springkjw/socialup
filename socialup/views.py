@@ -3,6 +3,7 @@
 from django.shortcuts import (
     render,
     render_to_response,
+    HttpResponse,
 )
 from django.template import RequestContext
 from django.contrib.contenttypes.models import ContentType
@@ -10,6 +11,9 @@ from django.contrib.contenttypes.models import ContentType
 
 # app import
 from markets.models import Product, sns_type_list
+
+import json
+
 
 def home(request):
     template = 'home.html'
@@ -31,6 +35,27 @@ def home(request):
 def product_category(request, category):
     products = Product.objects.filter(sns_type=category)
 
+    if request.is_ajax():
+        checked_tags = json.loads(request.GET['checked_tags'])
+
+        products_by_tags = []
+        for tag in checked_tags:
+            products_by_tags.extend(products.filter(product_tag__tag=tag))
+
+        # 중복된 아이템 제거
+        products_by_tags = list(set(products_by_tags))
+
+        product_ids_by_tags = []
+        for product in products_by_tags:
+            product_ids_by_tags.append(product.id)
+
+        data = {
+            "product_ids_by_tags": product_ids_by_tags,
+        }
+
+        return HttpResponse(json.dumps(data), content_type='application/json')
+
+
     category_name = [type_[1] for type_ in sns_type_list if type_[0] == category][0]
 
     # 처음 상품
@@ -38,12 +63,15 @@ def product_category(request, category):
     products_by_rating = products.order_by('-rating')
     # 최신순
     products_by_created = products.order_by('-created')
+    # 가격순
+    products_by_price = products.order_by('-price')
 
     template = 'category.html'
     context = {
         "category": category_name,
         "products_rating": products_by_rating,
         "products_created": products_by_created,
+        "products_price": products_by_price,
     }
 
     return render(request, template, context)

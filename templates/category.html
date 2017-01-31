@@ -23,6 +23,22 @@
                     $('.product-created').show();
                 }
             });
+
+            // tag 클릭 때마다 ajax호출로 수정필요
+            $('.special-subtitle').on('click', function () {
+                // checked_tags 수정필요
+                var checked_tags = ["it", "etc"];
+
+                $.ajax({
+                    url: window.location.pathname,
+                    data: {
+                        checked_tags: JSON.stringify(checked_tags)
+                    },
+                    success: function (data) {
+                        console.log(data['product_ids_by_tags']);
+                    }
+                })
+            });
         });
     </script>
 {% endblock %}
