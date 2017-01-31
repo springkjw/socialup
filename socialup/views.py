@@ -60,7 +60,6 @@ def product_search(request):
 
     template = 'search.html'
     context = {
-        "products": products,
         "keyword": keyword,
         "products_rating": products_by_rating,
         "products_created": products_by_created,
