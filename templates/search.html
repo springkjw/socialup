@@ -52,7 +52,7 @@
                     </div>
                 {% else %}
                     <div class="special-title">
-                        인기 {{ category }} 포스팅
+                        "{{ keyword }}" 검색 결과
                         <div class="special-subtitle">
                             * 소셜업 게이지란? 소셜업만의 알고리즘을 통해 SNS의 다양한 요소를 분석해 수치화 시킨 광고비 대비 효과 지수입니다.
                         </div>
@@ -192,6 +192,7 @@
                                 {% cycle '' '' '' '</div>' %}
                             {% endif %}
                         {% endfor %}
+                       </div>
                     </div>
                     </div>
                     <div class="product-created" style="display:none;">
@@ -273,8 +274,8 @@
                         {% endfor %}
                     </div>
                 {% endif %}
-    </div>
-    </div>
-    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

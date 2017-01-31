@@ -7,6 +7,7 @@ from django.shortcuts import (
 from django.template import RequestContext
 from django.contrib.contenttypes.models import ContentType
 
+
 # app import
 from markets.models import Product, sns_type_list
 
@@ -41,6 +42,25 @@ def product_category(request, category):
     template = 'category.html'
     context = {
         "category": category_name,
+        "products_rating": products_by_rating,
+        "products_created": products_by_created,
+    }
+
+    return render(request, template, context)
+
+
+def product_search(request):
+    keyword = request.GET['keyword']
+    products = Product.objects.filter(oneline_intro__contains=keyword)
+
+    # 평점순
+    products_by_rating = products.order_by('-rating')
+    # 최신순
+    products_by_created = products.order_by('-created')
+
+    template = 'search.html'
+    context = {
+        "keyword": keyword,
         "products_rating": products_by_rating,
         "products_created": products_by_created,
     }

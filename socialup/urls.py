@@ -13,6 +13,7 @@ from django.contrib import admin
 from .views import (
     home,
     product_category,
+    product_search,
     bad_request,
     permission_denied,
     page_not_found,
@@ -31,6 +32,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     url(r'^$', home, name='home'),
     url(r'category/(?P<category>\w+)/$', product_category, name='category'),
+    url(r'search/$', product_search, name='search'),
     # admin app urls
     url(r'^admin/', admin.site.urls),
     # accounts app urls

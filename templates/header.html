@@ -7,11 +7,11 @@
             </a>
         </div>
         <div class="header_search">
-            <form>
-                <input type="text" placeholder="원하는 SNS 정보를 입력해주세요. 예) 맛집, 뷰티"/>
-                <div class="header_search_btn">
-                    <input type="image" src="/static/img/search.png">
-                </div>
+            <form method="GET" id="search-form" action="{% url 'search' %}" >
+                <input type="text" name="keyword" placeholder="원하는 SNS 정보를 입력해주세요. 예) 맛집, 뷰티"/>
+                <button class="header_search_btn" type="submit">
+                    <img src="/static/img/search.png">
+                </button>
             </form>
         </div>
         <div id="header_tnb">
@@ -62,24 +62,24 @@
 <div class="header_navigation">
     <ul>
         <li>
-            <button>
+            <a href="{% url 'category' 'blog' %}">
                 블로그
-            </button>
+            </a>
         </li>
         <li>
-            <button>
+            <a href="{% url 'category' 'facebook' %}">
                 페이스북
-            </button>
+            </a>
         </li>
         <li>
-            <button>
+            <a href="{% url 'category' 'instagram' %}">
                 인스타그램
-            </button>
+            </a>
         </li>
         <li>
-            <button>
+            <a href="{% url 'category' 'kakaostory' %}">
                 카카오스토리
-            </button>
+            </a>
         </li>
     </ul>
 </div>
