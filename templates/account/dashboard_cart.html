@@ -96,7 +96,7 @@
                         <div class="dashboard-cart-item-image">
                             <div class="circle-wrapper">
                                 <img class="circle-arrow" src="/static/img/arrow_gauge.png" >
-                                <ul class="circle">
+                                <ul class="circle" gauge-data="{{ cartitem.0.item.socialup_gauge }}">
                                     <li class="circle-list">
                                         <div class="circle-text">1</div>
                                     </li>
@@ -114,7 +114,7 @@
                                     </li>
                                     <div class="circle-mask2">
                                         <div class="circle-mask2-text">
-                                            <span style="font-size:1.3em;">50</span>
+                                            <span style="font-size:1.3em;">{{ cartitem.0.item.unit_price }}</span>
                                             <span style="font-size:1em;">원</span>
                                         </div>
                                     </div>

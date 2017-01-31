@@ -216,6 +216,7 @@
     height:30px;
     vertical-align: top;
     text-indent: 10px;
+    font-size: 13px;
 }
 
 ::-webkit-input-placeholder{

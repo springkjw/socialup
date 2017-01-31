@@ -13,16 +13,25 @@ $(function () {
 /* gauge part */
 $('.item_top_image').each(function(){
     var color = $(this).attr('data-color');
-    $(this).find('.circle-wrapper .circle-list').eq(0).find('.circle-text').css({'background-color': color, 'color': 'white'});
-    var num = 1;
+    var num = $(this).find('.circle-wrapper .circle').attr('gauge-data');
     if(num == 1){
-        $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'5px', 'top':'36px', 'transform': 'rotate(18deg)'});
+        $(this).find('.circle-wrapper .circle-list').eq(0).find('.circle-text').css({'background-color': color, 'color': 'white'});
+        $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'3px', 'top':'37px', 'transform': 'rotate(18deg)'});
+    }
+    else if (num==2){
+        $(this).find('.circle-wrapper .circle-list').eq(1).find('.circle-text').css({'background-color': color, 'color': 'white'});
+        $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'29px', 'top':'6px', 'transform': 'rotate(45deg)'});
     }
     else if (num == 3){
-        $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'26%', 'top':'-7px', 'transform': 'rotate(90deg)'});
+        $(this).find('.circle-wrapper .circle-list').eq(2).find('.circle-text').css({'background-color': color, 'color': 'white'});
+        $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'64px', 'top':'-6px', 'transform': 'rotate(90deg)'});
+    }
+    else if (num == 4){
+        $(this).find('.circle-wrapper .circle-list').eq(3).find('.circle-text').css({'background-color': color, 'color': 'white'});
+        $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'102px', 'top':'7px', 'transform': 'rotate(135deg)'});
+    }
+    else{
+        $(this).find('.circle-wrapper .circle-list').eq(4).find('.circle-text').css({'background-color': color, 'color': 'white'});
+        $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'124px', 'top':'35px', 'transform': 'rotate(155deg)'});
     }
 });
-
-function order_item_count(){
-
-}

@@ -23,12 +23,25 @@ $.fn.digits = function(){
 /* gauge part */
 $('.dashboard-cart-item').each(function(){
     var color = $(this).attr('data-color');
-    $(this).find('.circle-wrapper .circle-list').eq(0).find('.circle-text').css({'background-color': color, 'color': 'white'});
-    var num = 1;
+    var num = $(this).find('.circle-wrapper .circle').attr('gauge-data');
     if(num == 1){
-        $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'-15px', 'top':'38px', 'transform': 'rotate(18deg)'});
+        $(this).find('.circle-wrapper .circle-list').eq(0).find('.circle-text').css({'background-color': color, 'color': 'white'});
+        $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'-12px', 'top':'38px', 'transform': 'rotate(18deg)'});
+    }
+    else if (num==2){
+        $(this).find('.circle-wrapper .circle-list').eq(1).find('.circle-text').css({'background-color': color, 'color': 'white'});
+        $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'12px', 'top':'8px', 'transform': 'rotate(45deg)'});
     }
     else if (num == 3){
-        $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'26%', 'top':'-7px', 'transform': 'rotate(90deg)'});
+        $(this).find('.circle-wrapper .circle-list').eq(2).find('.circle-text').css({'background-color': color, 'color': 'white'});
+        $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'47px', 'top':'-6px', 'transform': 'rotate(90deg)'});
+    }
+    else if (num == 4){
+        $(this).find('.circle-wrapper .circle-list').eq(3).find('.circle-text').css({'background-color': color, 'color': 'white'});
+        $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'84px', 'top':'9px', 'transform': 'rotate(135deg)'});
+    }
+    else{
+        $(this).find('.circle-wrapper .circle-list').eq(4).find('.circle-text').css({'background-color': color, 'color': 'white'});
+        $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'105px', 'top':'38px', 'transform': 'rotate(155deg)'});
     }
 });

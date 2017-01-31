@@ -118,7 +118,7 @@
                     <div class="product-gauge" data-color="{{ product.sns_type_color }}">
                         <div class="circle-wrapper">
                             <img class="circle-arrow" src="/static/img/arrow_gauge.png" >
-                            <ul class="circle">
+                            <ul class="circle" gauge-data="{{ product.socialup_gauge }}">
                                 <li class="circle-list">
                                     <div class="circle-text">1</div>
                                 </li>
@@ -136,7 +136,7 @@
                                 </li>
                                 <div class="circle-mask2">
                                     <div class="circle-mask2-text">
-                                        <span style="font-size:2em;">50</span>
+                                        <span style="font-size:2em;">{{ product.unit_price }}</span>
                                         <span style="font-size:1em;">원</span>
                                     </div>
                                 </div>
@@ -439,56 +439,65 @@
                                   <span style="width:13%" class="bar-3"></span>
                                 </div>
                             </div>
-                            {% if True %}
-                                <div class="tab-review">
-                                    <div class="user-img">
-                                        <img id="user" src="{{ product.seller.user.get_avatar }}">
-                                    </div>
-                                    <div class="review-wrapper">
-                                        <div class="review-user">
-                                            <span class="review-user-name">ohlee*****</span>
-                                            <span class="review-created">2017.01.13 23:11</span>
-                                        </div>
-                                        <div class="seller-rating" data-rating="{{ review.rating }}">
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                        </div>
-                                        <div class="review-satisfiy">
-                                            <div class="review-satisfiy-sub contents">
-                                                콘텐츠
-                                                <div class="review-satisfiy-sub-box">불만족</div>
-                                            </div>
-                                            <div class="review-satisfiy-sub ads">
-                                                광고효과
-                                                <div class="review-satisfiy-sub-box">보통</div>
-                                            </div>
-                                            <div class="review-satisfiy-sub kindness">
-                                                친절도
-                                                <div class="review-satisfiy-sub-box">만족</div>
-                                            </div>
-                                        </div>
-                                        <div class="review-content">
-                                            광고효과도 좋고 인플루언서님이 굉장히 친절해서 만족스럽습니다.
-                                        </div>
-                                    </div>
-                                </div>
+                            {% if reviews %}
                                 {% for review in reviews %}
                                     <div class="tab-review">
-                                        <div class="review-content">
-                                            {{ review.review }}
+                                        <div class="user-img">
+                                        <img id="user" src="{{ review.user.get_avatar }}">
                                         </div>
-                                        <div class="review-timestamp">
-                                            {{ review.updated|date:'Y.m.d' }}
-                                        </div>
-                                        <div class="seller-rating" data-rating="{{ review.rating }}">
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                        <div class="review-wrapper">
+                                            <div class="review-user">
+                                                <span class="review-user-name">{{ review.user.name }}</span>
+                                                <span class="review-created">{{ review.created|date:"Y.m.d h:i" }}</span>
+                                            </div>
+                                            <div class="seller-rating" data-rating="{{ review.rating }}">
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                            </div>
+                                            <div class="review-satisfiy">
+                                                <div class="review-satisfiy-sub contents">
+                                                    콘텐츠
+                                                    <div class="review-satisfiy-sub-box">
+                                                        {% if review.contents_satisfy == 'good' %}
+                                                            만족
+                                                        {% elif review.contents_satisfy == 'neutral' %}
+                                                            보통
+                                                        {% else %}
+                                                            불만족
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="review-satisfiy-sub ads">
+                                                    광고효과
+                                                    <div class="review-satisfiy-sub-box">
+                                                        {% if review.ad_satisfy == 'good' %}
+                                                            만족
+                                                        {% elif review.ad_satisfy == 'neutral' %}
+                                                            보통
+                                                        {% else %}
+                                                            불만족
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="review-satisfiy-sub kindness">
+                                                    친절도
+                                                    <div class="review-satisfiy-sub-box">
+                                                    {% if review.kind_satisfy == 'good' %}
+                                                        만족
+                                                    {% elif review.kind_satisfy == 'neutral' %}
+                                                        보통
+                                                    {% else %}
+                                                        불만족
+                                                    {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="review-content">
+                                                {{ review.review }}
+                                            </div>
                                         </div>
                                     </div>
                                 {% endfor %}
