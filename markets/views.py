@@ -220,35 +220,34 @@ def product_upload_complete(request):
 
 @login_required
 def product_manage(request):
-    # 판매자가 아닐 경우
     try:
         seller = Seller.objects.get(user=request.user)
     except:
         seller = None
 
-    if seller is None:
-        messages.warning(request, '판매자가 아닙니다. 상품 등록 시 자동으로 판매자 등록이 됩니다.')
-        product_list = None
-    else:
+    if seller:
         product_list = Product.objects.filter(seller=seller).exclude(product_status='terminated')
 
-    order_item_status_list = []
+        order_item_status_list = []
 
-    for product in product_list:
-        if product.product_status == 'ready':
-            order_item_status_list.append('x')
-        else:
-            temp_cart_item = CartItem.objects.filter(item=product)
-            temp_order_item = OrderItem.objects.filter(cart_item=temp_cart_item)
-            order_item_status_list.append(temp_order_item)
+        for product in product_list:
+            if product.product_status == 'ready':
+                order_item_status_list.append('x')
+            else:
+                temp_cart_item = CartItem.objects.filter(item=product)
+                temp_order_item = OrderItem.objects.filter(cart_item=temp_cart_item)
+                order_item_status_list.append(temp_order_item)
 
-    template = 'seller/product_manage.html'
-    context = {
-        "product_list": product_list,
-        "order_item_status_list": order_item_status_list
-    }
+        template = 'seller/product_manage.html'
+        context = {
+            "product_list": product_list,
+            "order_item_status_list": order_item_status_list
+        }
 
-    return render(request, template, context)
+        return render(request, template, context)
+
+    else:
+        return HttpResponseRedirect('/dashboard/')
 
 
 @login_required
