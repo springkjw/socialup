@@ -104,13 +104,27 @@ $(document).ready(function(){
     /* gauge part */
     $('.card-main-info').each(function(){
         var color = $(this).attr('data-color');
-        $(this).find('.circle-wrapper .circle-list').eq(0).find('.circle-text').css({'background-color': color, 'color': 'white'});
-        var num = 1;
+        var num = $(this).find('.circle-wrapper .circle').attr('gauge-data');
+
         if(num == 1){
+            $(this).find('.circle-wrapper .circle-list').eq(0).find('.circle-text').css({'background-color': color, 'color': 'white'});
             $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'-10px', 'top':'60px', 'transform': 'rotate(18deg)'});
         }
+        else if (num==2){
+            $(this).find('.circle-wrapper .circle-list').eq(1).find('.circle-text').css({'background-color': color, 'color': 'white'});
+            $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'24px', 'top':'13px', 'transform': 'rotate(45deg)'});
+        }
         else if (num == 3){
-            $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'26%', 'top':'-7px', 'transform': 'rotate(90deg)'});
+            $(this).find('.circle-wrapper .circle-list').eq(2).find('.circle-text').css({'background-color': color, 'color': 'white'});
+            $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'79px', 'top':'-7px', 'transform': 'rotate(90deg)'});
+        }
+        else if (num == 4){
+            $(this).find('.circle-wrapper .circle-list').eq(3).find('.circle-text').css({'background-color': color, 'color': 'white'});
+            $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'136px', 'top':'12px', 'transform': 'rotate(135deg)'});
+        }
+        else{
+            $(this).find('.circle-wrapper .circle-list').eq(4).find('.circle-text').css({'background-color': color, 'color': 'white'});
+            $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'167px', 'top':'56px', 'transform': 'rotate(155deg)'});
         }
     });
     $('.cash .cash-price').digits();

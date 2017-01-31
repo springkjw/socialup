@@ -118,7 +118,7 @@
                     <div class="product-gauge" data-color="{{ product.sns_type_color }}">
                         <div class="circle-wrapper">
                             <img class="circle-arrow" src="/static/img/arrow_gauge.png" >
-                            <ul class="circle">
+                            <ul class="circle" gauge-data="{{ product.socialup_gauge }}">
                                 <li class="circle-list">
                                     <div class="circle-text">1</div>
                                 </li>
@@ -136,7 +136,7 @@
                                 </li>
                                 <div class="circle-mask2">
                                     <div class="circle-mask2-text">
-                                        <span style="font-size:2em;">50</span>
+                                        <span style="font-size:2em;">{{ product.unit_price }}</span>
                                         <span style="font-size:1em;">원</span>
                                     </div>
                                 </div>

@@ -188,7 +188,7 @@
 }
 
 .dashboard-product-manage .product-item .item_top{
-    height:72%;
+    height:75%;
     width:100%;
 }
 
@@ -214,6 +214,7 @@
 .item_top_image .circle-wrapper{
 	width:110%;
 	height:100%;
+    margin-top:7%;
 	/*background-color:grey;*/
 }
 /* arrow for 1 */

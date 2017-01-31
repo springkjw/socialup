@@ -18,28 +18,31 @@ function removeComma(str){
 
 $(document).ready(function() {
     /* gauge part */
-    var count = 0;
     var color  = $('.product-gauge').attr('data-color');
-    $('.circle-wrapper .circle-list').eq(0).find('.circle-text').css({
-            'background-color': color,
-            'color': 'white'
-        });
-    var num = 1;
-    if (num == 1) {
-        $('.circle-wrapper .circle-arrow').css({
-            'position': 'relative',
-            'left': '-10px',
-            'top': '78px',
-            'transform': 'rotate(18deg)'
-        });
+    // $('.circle-wrapper .circle-list').eq(0).find('.circle-text').css({
+    //         'background-color': color,
+    //         'color': 'white'
+    //     });
+    var num = $('.circle-wrapper .circle').attr('gauge-data');
+    if(num == 1){
+        $('.circle-wrapper .circle-list').eq(0).find('.circle-text').css({'background-color': color, 'color': 'white'});
+        $('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'-10px', 'top':'78px', 'transform': 'rotate(18deg)'});
     }
-    else if (num == 3) {
-        $('.circle-wrapper .circle-arrow').css({
-            'position': 'relative',
-            'left': '33%',
-            'top': '-7px',
-            'transform': 'rotate(90deg)'
-        });
+    else if (num==2){
+        $('.circle-wrapper .circle-list').eq(1).find('.circle-text').css({'background-color': color, 'color': 'white'});
+        $('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'31px', 'top':'17px', 'transform': 'rotate(45deg)'});
+    }
+    else if (num == 3){
+        $('.circle-wrapper .circle-list').eq(2).find('.circle-text').css({'background-color': color, 'color': 'white'});
+        $('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'100px', 'top':'-10px', 'transform': 'rotate(90deg)'});
+    }
+    else if (num == 4){
+        $('.circle-wrapper .circle-list').eq(3).find('.circle-text').css({'background-color': color, 'color': 'white'});
+        $('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'176px', 'top':'14px', 'transform': 'rotate(135deg)'});
+    }
+    else{
+        $('.circle-wrapper .circle-list').eq(4).find('.circle-text').css({'background-color': color, 'color': 'white'});
+        $('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'218px', 'top':'72px', 'transform': 'rotate(155deg)'});
     }
     /* Adding comma */
     $('.cash .cash-price').digits();
