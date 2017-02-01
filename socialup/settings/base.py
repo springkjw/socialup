@@ -4,7 +4,7 @@ BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../')
 
 SECRET_KEY = '_f^=by$nf^gjb2+o*e)nz+&%_^ykb&ro(rd$fh#o_8443z7!cv'
 
-DEFAULT_SITE_ID = 2
+DEFAULT_SITE_ID = 1
 
 # send email setting
 EMAIL_USE_TLS = True
