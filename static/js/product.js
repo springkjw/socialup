@@ -206,16 +206,18 @@ $(function () {
         $(this).removeClass('fa-caret-up').addClass('fa-caret-down');
     });
 
-    $('#product-upload-form').submit(function () {
+    /* upload with modal */
+    $('.final').on('click', function () {
         if($('#agreenment1').length==0){
-            return true;
         }
         else{
             if (!$('#agreenment1').is(":checked")) {
                alert('약관에 동의해주세요.');
-               return false;
             }else{
-                return true;
+                $('.upload-confirm-modal').show();
+                $('.upload-confirm-modal-btn.no').on('click', function () {
+                    $('.upload-confirm-modal').hide();
+                });
             }
         }
     });
