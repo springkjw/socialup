@@ -40,7 +40,7 @@
                     },
                     success: function (data) {
                         console.log(data['product_ids_by_tags']);
-                        if(data['product_ids_by_tags'].length ==0){
+                        if(data['checked_tags'].length ==0){
                             $('.list-card').each(function () {
                                 $(this).show();
                             });
