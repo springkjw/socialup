@@ -149,6 +149,8 @@ $(document).ready(function(){
         $("#first_span_val").text(0+"만원").css("margin-left", -10);
         $("#second_span_val").text(30+"만원").css("margin-left", 100);
     });
+    /* tag part start */
+    tag_func();
 });
 
 function filter_ajax(min, max){
@@ -330,4 +332,55 @@ function prevStep() {
 
         survey_count--;
     }
+}
+
+
+/* This is for tag */
+
+function tag_func(){
+    $('#tag_navigation input[name=tag]').on('change', function() {
+        check_tags_for_hover();
+    });
+}
+
+function check_tags_for_hover(){
+    var checked_clicked = $('input[name=tag]:checked').next().find('.tag_image_clicked').get();
+    var checked_before_clicked = $('input[name=tag]:checked').next().find('.tag_image_before_click').get();
+    var unchecked_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_clicked').get();
+    var unchecked_before_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_before_click').get();
+
+    if(checked_clicked.length>6) {
+        var clicked_input = jQuery(event.target);
+        clicked_input.prop('checked',false);
+        // 변경한 사항 다시 array에 저장
+        checked_clicked = $('input[name=tag]:checked').next().find('.tag_image_clicked').get();
+        checked_before_clicked = $('input[name=tag]:checked').next().find('.tag_image_before_click').get();
+        unchecked_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_clicked').get();
+        unchecked_before_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_before_click').get();
+        alert('포스팅가능 분야는 최대 6개까지 선택 가능합니다.');
+    }
+
+    var clicked_input = jQuery(event.target);
+    if(clicked_input.prop('value')=='all' && !(clicked_input.is(':not(:checked)'))){
+        $('input[name=tag]').prop('checked', false);
+        $('input[value=all]').prop('checked', true);
+        checked_clicked = $('input[name=tag]:checked').next().find('.tag_image_clicked').get();
+        checked_before_clicked = $('input[name=tag]:checked').next().find('.tag_image_before_click').get();
+        unchecked_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_clicked').get();
+        unchecked_before_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_before_click').get();
+    }
+
+    // display attr 조정해서 이미지 바꿔주기
+    unchecked_clicked.forEach(function(val){
+        jQuery(val).css({'display':'none'});
+    });
+    unchecked_before_clicked.forEach(function(val){
+        jQuery(val).css({'display':'inline-block'});
+    });
+    checked_before_clicked.forEach(function(val){
+        jQuery(val).css({'display':'none'});
+    });
+    checked_clicked.forEach(function(val){
+        jQuery(val).css({'display': 'inline-block'});
+    });
 }

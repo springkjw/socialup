@@ -215,8 +215,15 @@ $(function () {
                alert('약관에 동의해주세요.');
             }else{
                 $('.upload-confirm-modal').show();
+                $('.upload-confirm-modal').center();
+                $('#product-upload-form input, textarea').each(function(){
+                    $(this).prop( "disabled", true );
+                });
                 $('.upload-confirm-modal-btn.no').on('click', function () {
                     $('.upload-confirm-modal').hide();
+                    $('#product-upload-form input, textarea').each(function(){
+                    $(this).prop( "disabled", false );
+                });
                 });
             }
         }
@@ -225,4 +232,13 @@ $(function () {
 
 function set_input_value(selector, new_val){
     $(selector).val(new_val);
+}
+
+jQuery.fn.center = function () {
+    this.css("position","absolute");
+    this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
+                                                $(window).scrollTop()) + "px");
+    this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
+                                                $(window).scrollLeft()) + "px");
+    return this;
 }
