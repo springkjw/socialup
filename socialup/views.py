@@ -23,6 +23,8 @@ def home(request):
     products_by_rating = Product.objects.all().active().order_by('-rating')[:20]
     # 최신순
     products_by_created = Product.objects.all().active().order_by('-created')[:20]
+    # 가격순
+    products_by_created = Product.objects.all().active().order_by('-price')[:20]
 
     context = {
         "products_rating": products_by_rating,
@@ -33,14 +35,14 @@ def home(request):
 
 
 def product_category(request, category):
-    products = Product.objects.filter(sns_type=category)
+    products = Product.objects.active().filter(sns_type=category)
 
     if request.is_ajax():
         checked_tags = json.loads(request.GET['checked_tags'])
 
         products_by_tags = []
         for tag in checked_tags:
-            products_by_tags.extend(products.filter(product_tag__tag=tag))
+            products_by_tags.extend(products.active().filter(product_tag__tag=tag))
 
         # 중복된 아이템 제거
         products_by_tags = list(set(products_by_tags))
@@ -60,11 +62,11 @@ def product_category(request, category):
 
     # 처음 상품
     # 평점순
-    products_by_rating = products.order_by('-rating')
+    products_by_rating = products.active().order_by('-rating')
     # 최신순
-    products_by_created = products.order_by('-created')
+    products_by_created = products.active().order_by('-created')
     # 가격순
-    products_by_price = products.order_by('-price')
+    products_by_price = products.active().order_by('-price')
 
     template = 'category.html'
     context = {
@@ -79,12 +81,14 @@ def product_category(request, category):
 
 def product_search(request):
     keyword = request.GET['keyword']
-    products = Product.objects.filter(oneline_intro__contains=keyword)
+    products = Product.objects.active().filter(oneline_intro__contains=keyword)
 
     # 평점순
     products_by_rating = products.order_by('-rating')
     # 최신순
     products_by_created = products.order_by('-created')
+    # 가격순
+    products_by_price = products.active().order_by('-price')
 
     template = 'search.html'
     context = {
