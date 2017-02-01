@@ -24,11 +24,12 @@ def home(request):
     # 최신순
     products_by_created = Product.objects.all().active().order_by('-created')[:20]
     # 가격순
-    products_by_created = Product.objects.all().active().order_by('-price')[:20]
+    products_by_price = Product.objects.all().active().order_by('-price')[:20]
 
     context = {
         "products_rating": products_by_rating,
         "products_created": products_by_created,
+        "products_price": products_by_price,
     }
 
     return render(request, template, context)
