@@ -35,7 +35,10 @@ def home(request):
 
 
 def product_category(request, category):
-    products = Product.objects.active().filter(sns_type=category)
+    if category=="all":
+        products = Product.objects.active().all()
+    else:
+        products = Product.objects.active().filter(sns_type=category)
 
     if request.is_ajax():
         checked_tags = json.loads(request.GET['checked_tags'])
@@ -60,7 +63,6 @@ def product_category(request, category):
 
     category_name = [type_[1] for type_ in sns_type_list if type_[0] == category][0]
 
-    # 처음 상품
     # 평점순
     products_by_rating = products.active().order_by('-rating')
     # 최신순
@@ -84,9 +86,9 @@ def product_search(request):
     products = Product.objects.active().filter(oneline_intro__contains=keyword)
 
     # 평점순
-    products_by_rating = products.order_by('-rating')
+    products_by_rating = products.active().order_by('-rating')
     # 최신순
-    products_by_created = products.order_by('-created')
+    products_by_created = products.active().order_by('-created')
     # 가격순
     products_by_price = products.active().order_by('-price')
 
