@@ -45,10 +45,15 @@ def product_category(request, category):
 
     if request.is_ajax():
         checked_tags = json.loads(request.GET['checked_tags'])
+        
+        if 'all' in checked_tags:
+            products_by_tags = []
+            products_by_tags.extend(products)
+        else:
+            products_by_tags = []
+            for tag in checked_tags:
+                products_by_tags.extend(products.active().filter(product_tag__tag=tag))
 
-        products_by_tags = []
-        for tag in checked_tags:
-            products_by_tags.extend(products.active().filter(product_tag__tag=tag))
 
         # 중복된 아이템 제거
         products_by_tags = list(set(products_by_tags))
