@@ -47,7 +47,7 @@ sns_additional_info_list = (
 )
 
 product_tag_list = (
-    #('all', "전체"),
+    ('all', "전체"),
     ("it", "IT/인터넷"),
     ("food", "식품/맛집"),
     ("fashion", "패션/뷰티"),
