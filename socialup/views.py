@@ -97,6 +97,7 @@ def product_search(request):
         "keyword": keyword,
         "products_rating": products_by_rating,
         "products_created": products_by_created,
+        "products_price": products_by_price,
     }
 
     return render(request, template, context)
