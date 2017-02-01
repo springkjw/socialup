@@ -5,28 +5,28 @@ import raven
 DEBUG = False
 ALLOWED_HOSTS = ['*']
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'ebdb',
-#         'USER': 'ebroot',
-#         'PASSWORD': 'wodnjs2010Dbwls1804',
-#         'HOST': 'aa82r04ezpe9o4.chhv3epwywiz.ap-northeast-2.rds.amazonaws.com',
-#         'PORT': 3306,
-#     }
-# }
-
-if 'RDS_DB_NAME' in os.environ:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.environ['RDS_DB_NAME'],
-            'USER': os.environ['RDS_USERNAME'],
-            'PASSWORD': os.environ['RDS_PASSWORD'],
-            'HOST': os.environ['RDS_HOSTNAME'],
-            'PORT': os.environ['RDS_PORT'],
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ebdb',
+        'USER': 'ebroot',
+        'PASSWORD': 'wodnjs2010Dbwls1804',
+        'HOST': 'aa82r04ezpe9o4.chhv3epwywiz.ap-northeast-2.rds.amazonaws.com',
+        'PORT': 3306,
     }
+}
+
+# if 'RDS_DB_NAME' in os.environ:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.mysql',
+#             'NAME': os.environ['RDS_DB_NAME'],
+#             'USER': os.environ['RDS_USERNAME'],
+#             'PASSWORD': os.environ['RDS_PASSWORD'],
+#             'HOST': os.environ['RDS_HOSTNAME'],
+#             'PORT': os.environ['RDS_PORT'],
+#         }
+#     }
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
