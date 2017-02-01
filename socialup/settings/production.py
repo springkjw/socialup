@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from .base import os, BASE_DIR
+from .base import os, BASE_DIR, INSTALLED_APPS
+import raven
 
 DEBUG = False
 ALLOWED_HOSTS = ['*']
@@ -85,4 +86,55 @@ SUMMERNOTE_CONFIG = {
         static_url('django_summernote/jquery.fileupload.js'),
         static_url('django_summernote/summernote.min.js'),
     ),
+}
+
+INSTALLED_APPS += ['raven.contrib.django.raven_compat', ]
+
+# sentry settings
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'root': {
+        'level': 'INFO',
+        'handlers': ['sentry'],
+    },
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s '
+                      '%(process)d %(thread)d %(message)s'
+        },
+    },
+    'handlers': {
+        'sentry': {
+            'level': 'INFO',
+            'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+            'tags': {'custom-tag': 'x'},
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        }
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'ERROR',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+        'raven': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+        'sentry.errors': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+    },
+}
+
+RAVEN_CONFIG = {
+    'dsn': 'https://39c4c5642dae45a9a7bb5ade5234bda7:cd3ea0be19f64a8a917692d16d305a39@sentry.io/134317',
 }
