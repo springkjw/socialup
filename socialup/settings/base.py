@@ -79,13 +79,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'socialup.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
 # all-auth setting
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
@@ -99,7 +92,7 @@ ACCOUNT_FORMS = {
     'signup': 'accounts.forms.SignupForm',
     'login': 'accounts.forms.LoginForm',
     'reset_password': 'accounts.forms.ResetPasswordForm',
-    'reset_password_from_key' : 'accounts.forms.ResetPasswordKeyForm',
+    'reset_password_from_key': 'accounts.forms.ResetPasswordKeyForm',
 }
 
 # all-auth social account setting
