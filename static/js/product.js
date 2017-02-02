@@ -194,6 +194,8 @@ $('#product-upload-form input').on('change', function() {
 
 
 $(function () {
+    $("form").on("submit", function(event) { event.stopPropagation(); });
+
     $('.auth-agreement').on('click', '.fa-caret-down', function () {
         jQuery($(this).parent().prev().get(0)).text('다음사항에 동의합니다.');
         $(this).parent().parent().parent().find('.auth-agreement-content').show();
@@ -206,29 +208,42 @@ $(function () {
         $(this).removeClass('fa-caret-up').addClass('fa-caret-down');
     });
 
-    /* upload with modal */
-    $('.final').on('click', function () {
-        if($('#agreenment1').length==0){
-        }
-        else{
-            if (!$('#agreenment1').is(":checked")) {
-               alert('약관에 동의해주세요.');
-            }else{
-                $('.upload-confirm-modal').show();
-                $('.upload-confirm-modal').center();
-                $('#product-upload-form input, textarea').each(function(){
-                    $(this).prop( "disabled", true );
-                });
-                $('.upload-confirm-modal-btn.no').on('click', function () {
-                    $('.upload-confirm-modal').hide();
-                    $('#product-upload-form input, textarea').each(function(){
-                    $(this).prop( "disabled", false );
-                });
-                });
+    var submit = false;
+    $("#dialog-confirm").dialog({
+        resizable: false,
+        height:190,
+        autoOpen: false,
+        width: 330,
+        modal: true,
+        buttons: [
+            {
+                text: "닫기",
+                click: function() {
+                    $(this).dialog("close");
+                }
+            },
+            {
+                text: "확인",
+                click: function() {
+                    submit=true;
+                }
             }
+        ]
+    });
+
+    $('#product-upload-form').submit(function() {
+        if (!submit) {
+            $("#dialog-confirm").dialog('open');
+            return true;
         }
     });
 });
+
+function submit_form(){
+    console.log('submit_form');
+    $('#product-upload-form').submit();
+    console.log('submit_form done');
+}
 
 function set_input_value(selector, new_val){
     $(selector).val(new_val);

@@ -484,6 +484,10 @@ body {
     cursor: pointer;
 }
 
+.content .product-info-bottom .product-menu li a{
+    cursor: pointer;
+}
+
 .content .product-info-bottom .top {
     position: absolute;
     right: 90px;

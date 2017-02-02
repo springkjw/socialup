@@ -1275,7 +1275,7 @@ input::-webkit-input-placeholder {
     margin-top:6%;
 }
 
-.upload-confirm-modal .upload-confirm-modal-btns .upload-confirm-modal-btn{
+.ui-dialog .ui-dialog-buttonpane button{
     width:85px;
     height:33px;
     background-color:white;
@@ -1283,8 +1283,36 @@ input::-webkit-input-placeholder {
     border:1px solid #cecece;
 }
 
-.upload-confirm-modal .upload-confirm-modal-btns .upload-confirm-modal-btn.yes{
+.ui-dialog .ui-dialog-buttonpane button:nth-child(2){
     background-color:#648efc;
     border:1px solid #648efc;
     color:white;
+}
+
+/* dialog customize */
+#dialog-confirm{
+    text-align: center;
+}
+
+.ui-widget-header{
+    width:80%;
+    margin-left:5%;
+    margin-top:3%;
+    background: none;
+    border:none;
+    border-bottom:1px solid black;
+    border-radius:0px;
+}
+
+.ui-dialog .ui-dialog-titlebar-close{
+    display: none;
+}
+
+.ui-dialog-buttonpane.ui-widget-content.ui-helper-clearfix{
+    border:none;
+    text-align: center;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset{
+    float:none;
 }

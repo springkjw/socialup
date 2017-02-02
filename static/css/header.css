@@ -67,7 +67,7 @@
     font-size: 16px;
     letter-spacing: .05em;
     top: 0;
-    line-height: 45px;
+    line-height: 50px;
 }
 
 #header_tnb > a {
@@ -82,8 +82,13 @@
     text-align: center;
 }
 
-#header_tnb > a#signup, #login {
+_:-ms-lang(x), #header_tnb > a#signup{
     margin-right: 15px;
+    height:80%;
+}
+
+_:-ms-lang(x), #header_tnb > a#login{
+    height:80%;
 }
 
 

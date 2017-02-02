@@ -361,16 +361,24 @@
                 <div class="product-menu">
                     <ul>
                         <li id="detail-info">
-                            서비스 상세 설명
+                            <a href="#product-detail-info">
+                                서비스 상세 설명
+                            </a>
                         </li>
                         <li id="use-info">
-                            유의사항
+                            <a href="#product-detail-use">
+                                유의사항
+                            </a>
                         </li>
                         <li id="review-info">
-                            고객 리뷰
+                            <a href="#product-detail-review">
+                                고객 리뷰
+                            </a>
                         </li>
                         <li id="caution-info">
-                            이용방법
+                            <a href="#product-detail-caution">
+                                이용방법
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -380,7 +388,7 @@
             </div>
             <div class="product-bottom">
                 <div class="tab product-info">
-                    <div class="product-content product-detail-info">
+                    <div class="product-content product-detail-info" id="product-detail-info">
                         <div class="tab-title">
                             서비스 상세 설명
                         </div>
@@ -388,7 +396,7 @@
                             {{ product.description|safe }}
                         </div>
                     </div>
-                    <div class="product-content product-detail-use">
+                    <div class="product-content product-detail-use" id="product-detail-use">
                         <div class="tab-title">
                             유의사항
                         </div>
@@ -402,7 +410,7 @@
                             {% endif %}
                         </div>
                     </div>
-                    <div class="product-content product-detail-review">
+                    <div class="product-content product-detail-review" id="product-detail-review">
                         <div class="tab-title">
                             고객 리뷰
                         </div>
@@ -508,7 +516,7 @@
                             {% endif %}
                         </div>
                     </div>
-                    <div class="product-content product-detail-caution">
+                    <div class="product-content product-detail-caution" id="product-detail-caution">
                         <div class="tab-title">
                             이용방법
                         </div>
