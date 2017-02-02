@@ -31,7 +31,7 @@
 #header #logo img {
     width:60%;
     vertical-align: middle;
-    margin-top: 11px;
+    margin-top: 13px;
 }
 
 #header #gnb {
@@ -60,7 +60,7 @@
 }
 
 #header_tnb {
-    width:20%;
+    width:28%;
     display: inline-block;
     float:right;
     height:100%;
@@ -71,31 +71,21 @@
 }
 
 #header_tnb > a {
-    padding: 0 10px;
+    width:18%;
+    height:62%;
     display: inline-block;
     vertical-align: middle;
     font-size: 15px;
     cursor: pointer;
     color:white;
-    margin-top:5%;
     font-weight:400;
+    text-align: center;
 }
 
 #header_tnb > a#signup, #login {
     margin-right: 15px;
 }
 
-#header_tnb > a#cart{
-    margin-top:3%;
-}
-
-#header_tnb > a#message {
-    margin-top:3%;
-}
-
-#header_tnb > a#notification{
-    margin-top:3%;
-}
 
 #header_tnb > a > i {
     color: #648efc;
@@ -111,7 +101,7 @@
     display: inline-block;
     height: 100%;
     vertical-align: middle;
-    margin-top:4%;
+    margin-top:9px;
 }
 
 #header_tnb .profile-image {
@@ -212,7 +202,7 @@
 
 #header .header_search input[type="text"]{
     width:80%;
-    margin-top:3%;
+    margin-top:1.2em;
     height:30px;
     vertical-align: top;
     line-height: normal;
@@ -229,7 +219,7 @@
     display: inline-block;
     width:30px;
     height:30px;
-    margin-top:3%;
+    margin-top:1em;
     background-color: #cecece;
     margin-left:-5px;
 }
