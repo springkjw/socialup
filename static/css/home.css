@@ -710,15 +710,22 @@ li:nth-child(5) .circle-text {
     display: none;
 }
 
+#tag_navigation_wrapper #tag_navigation .tags_wrapper{
+    width:80%;
+    margin:0 auto;
+}
+
 #tag_navigation_wrapper #tag_navigation .tag_wrapper{
     margin-bottom:20px;
     display: inline-block;
     position:relative;
+    font-size: 13px;
+    width:18%;
+    text-align: center;
 }
 
 #tag_navigation_wrapper #tag_navigation .tag_wrapper:nth-child(1) {
-    margin-top:5%;
-    margin-left:24%;
+    margin-top:50px;
     left:0%;
 }
 
@@ -740,7 +747,6 @@ li:nth-child(5) .circle-text {
 
 
 #tag_navigation_wrapper #tag_navigation .tag_wrapper:nth-child(7) {
-    margin-left:24%;
     left:0%;
 }
 
@@ -758,4 +764,12 @@ li:nth-child(5) .circle-text {
 
 #tag_navigation_wrapper #tag_navigation .tag_wrapper:nth-child(11) {
     left:8%;
+}
+
+#tag_navigation_wrapper #tag_navigation .tag_wrapper label img{
+    vertical-align: middle;
+}
+
+#tag_navigation_wrapper #tag_navigation .tag_wrapper label span{
+    margin-left:5px;
 }
