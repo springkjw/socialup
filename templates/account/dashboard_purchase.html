@@ -22,13 +22,13 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                     $('.mileage-input input').autoNumeric('set', '{{ user.mileage }}');
                 }
                 var point = $('.pay-info .discount #point').val();
-                var sub_total = parseInt({{ order.order_total }}) - parseInt(point);
+                var sub_total = parseInt({{ order.order_total }}) - parseInt(point.replace(/,/g, ''));
                 var mileage = $('.mileage-input input').autoNumeric('get');
                 if (mileage > sub_total) {
                     $('.mileage-input input').val(sub_total);
                     mileage = $('.mileage-input input').autoNumeric('get');
                 }
-                var total = parseInt({{ order.order_total }}) - parseInt(mileage) - parseInt(point);
+                var total = parseInt({{ order.order_total }}) - parseInt(mileage.replace(/,/g, '')) - parseInt(point.replace(/,/g, ''));
                 $('.pay-info .pay-option input[type="radio"]').attr("disabled",false);
                 if (total == 0 ) {
                     $('.pay-info .pay-option input[type="radio"]').attr("disabled",true);
@@ -47,13 +47,13 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                     $('.point-input input').autoNumeric('set', '{{ user.point }}');
                 }
                 var mileage = $('.pay-info .discount #mileage').val();
-                var sub_total = parseInt({{ order.order_total }}) - parseInt(mileage);
+                var sub_total = parseInt({{ order.order_total }}) - parseInt(mileage.replace(/,/g, ''));
                 var point = $('.point-input input').autoNumeric('get');
                 if (point > sub_total) {
                     $('.point-input input').val(sub_total);
                     point = $('.point-input input').autoNumeric('get');
                 }
-                var total = parseInt({{ order.order_total }}) - parseInt(mileage) - parseInt(point);
+                var total = parseInt({{ order.order_total }}) - parseInt(mileage.replace(/,/g, '')) - parseInt(point.replace(/,/g, ''));
                 $('.pay-info .pay-option input[type="radio"]').attr("disabled",false);
                 if (total == 0 ) {
                     $('.pay-info .pay-option input[type="radio"]').attr("disabled",true);
@@ -67,13 +67,13 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
             // 결제금액에 사용 적립금 적용
             $('.pay-info .discount #mileage').on('keyup', function () {
                 var point = $('.pay-info .discount #point').val();
-                var sub_total = parseInt({{ order.order_total }}) - parseInt(point);
+                var sub_total = parseInt({{ order.order_total }}) - parseInt(point.replace(/,/g, ''));
                 var mileage = $(this).autoNumeric('get');
                 if (mileage > sub_total) {
                     $(this).val(sub_total);
                     mileage = $(this).autoNumeric('get');
                 }
-                var total = parseInt({{ order.order_total }}) - parseInt(mileage) - parseInt(point);
+                var total = parseInt({{ order.order_total }}) - parseInt(mileage.replace(/,/g, '')) - parseInt(point.replace(/,/g, ''));
                 $('.pay-info .pay-option input[type="radio"]').attr("disabled",false);
                 if (total == 0 ) {
                     $('.pay-info .pay-option input[type="radio"]').attr("disabled",true);
@@ -87,13 +87,13 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
             // 결제금액에 사용 포인트 적용
             $('.pay-info .discount #point').on('keyup', function () {
                 var mileage = $('.pay-info .discount #mileage').val();
-                var sub_total = parseInt({{ order.order_total }}) - parseInt(mileage);
+                var sub_total = parseInt({{ order.order_total }}) - parseInt(mileage.replace(/,/g, ''));
                 var point = $(this).autoNumeric('get');
                 if (point > sub_total) {
                     $(this).val(sub_total);
                     point = $(this).autoNumeric('get');
                 }
-                var total = parseInt({{ order.order_total }}) - parseInt(mileage) - parseInt(point);
+                var total = parseInt({{ order.order_total }}) - parseInt(mileage.replace(/,/g, '')) - parseInt(point.replace(/,/g, ''));
                 $('.pay-info .pay-option input[type="radio"]').attr("disabled",false);
                 if (total == 0 ) {
                     $('.pay-info .pay-option input[type="radio"]').attr("disabled",true);
@@ -109,7 +109,7 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                 var is_checked = $('.pay-info .pay-option input[type="radio"]').is(':checked');
                 var mileage = $('.pay-info .discount #mileage').val();
                 var point = $('.pay-info .discount #point').val();
-                var total = parseInt({{ order.order_total }}) - parseInt(mileage) - parseInt(point);
+                var total = parseInt({{ order.order_total }}) - parseInt(mileage.replace(/,/g, '')) - parseInt(point.replace(/,/g, ''));
                 if (is_checked === true || total === 0) {
                     var buyer_name = $('.buyer-info input[name="name"]').val();
                     var buyer_phone = $('.buyer-info input[name="phone"]').val();
