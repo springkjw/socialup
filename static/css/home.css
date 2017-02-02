@@ -773,3 +773,24 @@ li:nth-child(5) .circle-text {
 #tag_navigation_wrapper #tag_navigation .tag_wrapper label span{
     margin-left:5px;
 }
+
+/* owl control part */
+.new_jumbotron .owl-theme .owl-controls{
+    float: none;
+    position: absolute;
+    right:0;
+    top:0px;
+    margin-top:0px;
+}
+
+.new_jumbotron .owl-theme .owl-controls .owl-buttons div{
+    opacity: 1;
+    padding: 7px 1.5em;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+    margin:0px;
+    background: #c7c7c9;
+}
+.new_jumbotron .owl-theme .owl-controls .owl-buttons div i{
+    font-size: 1.5em;
+}
