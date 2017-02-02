@@ -165,8 +165,8 @@ def new_point_trans_validation(sender, instance, created, *args, **kwargs):
                 # 유저 포인트 추가
                 p = Point.objects.get(user=instance.user)
                 point = p.point
-                # 결제 금액의 90%만 충전(부가세 고려)
-                new_point = point + int(round(v_trans['amount'] / 1.1))
+                # 기존 : 결제 금액의 90%만 충전(부가세 고려) => 현재 : 결제 금액만큼 충전
+                new_point = point + int(v_trans['amount'])
                 p.point = new_point
                 p.save()
             except:
@@ -176,7 +176,7 @@ def new_point_trans_validation(sender, instance, created, *args, **kwargs):
                 # 포인트 history 추가
                 h = PointHistory(
                     user=instance.user,
-                    amount=int(round(v_trans['amount'] / 1.1)),
+                    amount=int(v_trans['amount']),
                     type=v_trans['type'],
                     status=v_trans['status'],
                     receipt=v_trans['receipt_url']
