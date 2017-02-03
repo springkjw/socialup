@@ -68,6 +68,36 @@ $(document).ready(function(){
         // 추출한 파일명 삽입
         $(this).siblings('.file_name.account_copy').val(filename2);
     });
+
+
+    $("#dialog-confirm").dialog({
+        resizable: false,
+        height:190,
+        autoOpen: false,
+        width: 330,
+        modal: true,
+        buttons: [
+            {
+                text: "예",
+                click: function() {
+                    $('#go_main').val('True');
+                    $('#change_form_user').submit();
+                }
+            },
+            {
+                text: "아니오",
+                click: function() {
+                    $('#go_main').val('False');
+                    $('#change_form_user').submit();
+                }
+            }
+        ]
+    });
+
+    $('.change_button').on('click', function() {
+        $("#dialog-confirm").dialog('open');
+    });
+
 });
 
 

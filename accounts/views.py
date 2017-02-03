@@ -140,8 +140,10 @@ def change_info(request):
                 login(request, user)
             user.save()
 
-            return HttpResponseRedirect('/dashboard/change/')
-
+            if request.POST['go_main']=='True':
+                return HttpResponseRedirect('/')
+            else:
+                return HttpResponseRedirect('/dashboard/change/')
 
 
     context = {
