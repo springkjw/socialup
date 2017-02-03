@@ -64,5 +64,5 @@ img {
 .dashboard_container {
     width: 807px;
     margin: 0 auto;
-    overflow:auto;
+    overflow:hidden;
 }

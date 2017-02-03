@@ -828,6 +828,7 @@
     color:black;
 }*/
 
+
 /* upload-price part */
 .product-upload-info.upload-price{
     height:100px;
@@ -1033,7 +1034,8 @@ input::-webkit-input-placeholder {
 
 /* tags part */
 .product-upload-sub.tags {
-    display: grid;
+    display: inline-block;
+    width:80%;
 }
 
 .product-upload-sub.tags .tag_image_clicked{
@@ -1062,52 +1064,57 @@ input::-webkit-input-placeholder {
 .product-upload-sub.tags .tag_wrapper:nth-child(1){
     display: inline-block;
     position:relative;
-    left:0%;
+    left:3%;
 }
 
 .product-upload-sub.tags .tag_wrapper:nth-child(2){
     display: inline-block;
     position:relative;
-    left:2%;
+    left:7%;
 }
 
 .product-upload-sub.tags .tag_wrapper:nth-child(3){
     display: inline-block;
     position:relative;
-    left:4%;
+    left:8%;
 }
 
 .product-upload-sub.tags .tag_wrapper:nth-child(4){
     display: inline-block;
     position:relative;
-    left:6%;
+    left:8%;
 }
 
 .product-upload-sub.tags .tag_wrapper:nth-child(5){
     display: inline-block;
     position:relative;
-    left:8%;
+    left:9%;
 }
 
 .product-upload-sub.tags .tag_wrapper:nth-child(6){
     display: inline-block;
     position:relative;
-    margin-left:16%;
 }
 .product-upload-sub.tags .tag_wrapper:nth-child(7){
     display: inline-block;
     position:relative;
-    left:3%;
+    left:2%;
 }
 .product-upload-sub.tags .tag_wrapper:nth-child(8){
     display: inline-block;
     position:relative;
-    left:6%;
+    left:4%;
 }
 .product-upload-sub.tags .tag_wrapper:nth-child(9){
     display: inline-block;
     position:relative;
-    left:9%;
+    left:6%;
+}
+
+.product-upload-sub.tags .tag_wrapper:nth-child(10){
+    display: inline-block;
+    position:relative;
+    left:8%;
 }
 
 .product-upload-sub.tags label{
@@ -1201,6 +1208,9 @@ input::-webkit-input-placeholder {
     overflow: scroll;
 }
 
+#product-upload-form textarea{
+    border: 1px solid #ccc;
+}
 
 /* previous record */
 .previous_record{
@@ -1208,6 +1218,7 @@ input::-webkit-input-placeholder {
     top:0;
     left:77%;
     margin-bottom: 20px;
+    margin-top:25px;
     padding: 0;
     border: 1px solid #ccc;
     width: 170px;
