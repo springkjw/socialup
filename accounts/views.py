@@ -99,6 +99,11 @@ def change_info(request):
             seller_account.bank= seller_account_form.cleaned_data['bank']
             seller_account.save()
 
+            if request.POST['go_main']=='True':
+                return HttpResponseRedirect('/')
+            else:
+                return HttpResponseRedirect('/dashboard/change/')
+
             return HttpResponseRedirect('/dashboard/change/')
 
         if form.is_valid():

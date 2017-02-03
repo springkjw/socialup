@@ -650,6 +650,16 @@ body {
     float:left;
 }
 
+/* account_number part */
+
+.seller_form_content.account_number .seller_form_input.account_number select{
+    width:40%;
+}
+
+.seller_form_content.account_number .seller_form_input.account_number input{
+    width:40%;
+}
+
 /* company_name part */
 .dashboard-change-form.seller .seller_form_content.company_name{
     width:50%;
@@ -791,6 +801,10 @@ body {
 
 /* dialog customize */
 #dialog-confirm{
+    text-align: center;
+}
+
+#dialog-confirm2{
     text-align: center;
 }
 

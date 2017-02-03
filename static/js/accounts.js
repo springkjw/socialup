@@ -98,6 +98,34 @@ $(document).ready(function(){
         $("#dialog-confirm").dialog('open');
     });
 
+    $("#dialog-confirm2").dialog({
+        resizable: false,
+        height:190,
+        autoOpen: false,
+        width: 330,
+        modal: true,
+        buttons: [
+            {
+                text: "예",
+                click: function() {
+                    $('#go_main2').val('True');
+                    $('#change_form_seller').submit();
+                }
+            },
+            {
+                text: "아니오",
+                click: function() {
+                    $('#go_main2').val('False');
+                    $('#change_form_seller').submit();
+                }
+            }
+        ]
+    });
+
+    $('.change_button_seller').on('click', function() {
+        $("#dialog-confirm2").dialog('open');
+    });
+
 });
 
 
