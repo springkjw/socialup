@@ -153,7 +153,23 @@ input[type=number]::-webkit-outer-spin-button {
 
 .dashboard-purchase .pay .pay-option label {
     font-size: 11px;
-    margin-right: 10px;
+    display: inline-block;
+}
+
+.dashboard-purchase .pay .pay-option label:nth-child(1) {
+    width:18%;
+}
+
+.dashboard-purchase .pay .pay-option label:nth-child(2) {
+    width:21%;
+}
+
+.dashboard-purchase .pay .pay-option label:nth-child(3) {
+    width:27%;
+}
+
+.dashboard-purchase .pay .pay-option label:nth-child(4) {
+    width:25%;
 }
 
 .dashboard-purchase .pay-info {
