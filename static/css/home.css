@@ -621,7 +621,11 @@ li:nth-child(5) .circle-text {
 	z-index:3;
 }
 .circle-mask2-text{
-  padding-top:1em;
+  padding-top:20px;
+}
+
+_:-ms-lang(x), .circle-mask2-text {
+  padding-top:15px;
 }
 
 .cash{
@@ -636,7 +640,6 @@ li:nth-child(5) .circle-text {
 }
 .cash span{
     display: inline-block;
-    margin-top:7px;
 }
 
 /* range part */

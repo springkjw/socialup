@@ -91,7 +91,7 @@ def change_info(request):
             seller.account_copy=seller_form.cleaned_data['account_copy']
             seller.save()
 
-        if seller_account_form.is_valid():
+        if seller_account_form.is_valid() and 'type' in request.POST:
             seller.type = request.POST['type']
             seller.save()
             seller_account.account_number= seller_account_form.cleaned_data['account_number']

@@ -25,7 +25,7 @@
             {% if seller_account %}
                 $(".seller_form_input.account_name input").val('{{ seller_account.account_name }}');
                 $(".seller_form_input.account_number select option[value='{{ seller_account.bank }}']").prop('selected', true);
-                $(".seller_form_input.account_number #id_account_number").val({{ seller_account.account_number }});
+                $(".seller_form_input.account_number #id_account_number").val('{{ seller_account.account_number }}');
             {% endif %}
 
         });
@@ -148,9 +148,7 @@
                         자기소개
                     </div>
                     <div class="description_text_wrapper">
-                        <textarea id="id_description" name="description" rows="7" cols="40">
-                            {{ request.user.description }}
-                        </textarea>
+                        <textarea id="id_description" name="description" rows="7" cols="40">{{ request.user.description }}</textarea>
                     </div>
                 </div>
                 <!-- 비밀번호 변경 -->
