@@ -104,6 +104,10 @@ body {
     border-radius: 50%;
 }
 
+_:-ms-lang(x), .content .product-top .seller-info .seller-img img {
+    margin-bottom: 5px;
+}
+
 .content .product-top .seller-info .seller-right-info {
     float:left;
 }
@@ -985,6 +989,10 @@ li:nth-child(5) .circle-text {
     margin-bottom:10px;
     font-weight:bold;
     color:#5a5a5a;
+}
+
+_:-ms-lang(x), .product-seller-name{
+    margin-bottom:5px;
 }
 
 /* graph part */
