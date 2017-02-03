@@ -1068,9 +1068,6 @@ _:-ms-lang(x), .product-seller-name{
     display: none;
     width:50%;
     height:25%;
-    position:absolute;
-    left:25%;
-    top:25%;
     border:1px solid black;
     z-index: 3;
     background-color: white;
@@ -1108,7 +1105,6 @@ _:-ms-lang(x), .product-seller-name{
     width:85px;
     height:33px;
     background-color:white;
-    border-radius:3px;
     border:1px solid #cecece;
 }
 

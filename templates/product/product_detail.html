@@ -48,6 +48,7 @@
                     success: function (data) {
                         if (data['status'] == 'success') {
                             $('.cart-confirm-modal').show();
+                            $('.cart-confirm-modal').center();
                             $('.cart-confirm-modal-btn.yes').on('click', function () {
                                 window.location.href = '/dashboard/purchase/cart';
                             })
