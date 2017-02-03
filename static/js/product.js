@@ -208,7 +208,6 @@ $(function () {
         $(this).removeClass('fa-caret-up').addClass('fa-caret-down');
     });
 
-    var submit = false;
     $("#dialog-confirm").dialog({
         resizable: false,
         height:190,
@@ -225,16 +224,17 @@ $(function () {
             {
                 text: "확인",
                 click: function() {
-                    submit=true;
+                    $('#product-upload-form').submit();
                 }
             }
         ]
     });
 
-    $('#product-upload-form').submit(function() {
-        if (!submit) {
+    $('.final').on('click', function() {
+        if ($('#agreenment1').is(':checked')) {
             $("#dialog-confirm").dialog('open');
-            return true;
+        }else{
+            alert('이용약관에 동의해주세요.');
         }
     });
 });
