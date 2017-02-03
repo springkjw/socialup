@@ -121,6 +121,25 @@ function check_tags_for_hover(){
         unchecked_before_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_before_click').get();
         alert('포스팅가능 분야는 최대 6개까지 선택 가능합니다.');
     }
+
+    var clicked_input = jQuery(event.target);
+    if(clicked_input.prop('value')=='all' && !(clicked_input.is(':not(:checked)'))){
+        $('input[name=tag]').prop('checked', false);
+        $('input[value=all]').prop('checked', true);
+        checked_clicked = $('input[name=tag]:checked').next().find('.tag_image_clicked').get();
+        checked_before_clicked = $('input[name=tag]:checked').next().find('.tag_image_before_click').get();
+        unchecked_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_clicked').get();
+        unchecked_before_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_before_click').get();
+    }
+    else if($('input[name=tag]:not([value=all]):checked').length){
+        $('input[value=all]').prop('checked', false);
+        checked_clicked = $('input[name=tag]:checked').next().find('.tag_image_clicked').get();
+        checked_before_clicked = $('input[name=tag]:checked').next().find('.tag_image_before_click').get();
+        unchecked_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_clicked').get();
+        unchecked_before_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_before_click').get();
+    }
+
+
     // display attr 조정해서 이미지 바꿔주기
     unchecked_clicked.forEach(function(val){
         jQuery(val).css({'display':'none'});
