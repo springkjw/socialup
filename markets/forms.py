@@ -43,7 +43,7 @@ class ProductForm(forms.ModelForm):
         self.fields['sex'] = forms.ChoiceField(widget=forms.RadioSelect, choices=(('male','남자'),('female','여자')), initial='female')
         #self.fields['is_url_open'] = forms.BooleanField(label='',default=True)
         self.fields['message_to_buyer'] = forms.CharField(widget=forms.Textarea(
-                attrs={'placeholder':'포스팅불가능 업종, A/S규정, 진행방법등','cols':'100'
+                attrs={'placeholder':'포스팅불가능 업종, A/S규정, 진행방법등','cols':'95'
                 }
             ), required=False
         )
@@ -51,7 +51,7 @@ class ProductForm(forms.ModelForm):
             attrs={'placeholder':'SNS특징을 30자 이내로 써주세요.'
         }))
         self.fields['message_to_admin'] = forms.CharField(widget=forms.Textarea(
-            attrs={'placeholder': '구매자에겐 보이지 않습니다.','cols':'105'
+            attrs={'placeholder': '구매자에겐 보이지 않습니다.','cols':'95'
                    }
             ), required=False
         )
