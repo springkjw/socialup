@@ -154,8 +154,12 @@ _:-ms-lang(x), .content .product-top .seller-info .seller-img img {
     margin-left:4%;
 }
 
-.seller-info-item.seller-detail-intro .seller-detail-intro-title{
-    font-weight:bold;
+.seller-info-item.seller-detail-intro .seller-detail-intro-title {
+    font-weight: bold;
+}
+
+.seller-info-item.seller-detail-intro .seller-detail-intro-content {
+    font-weight: lighter;
 }
 
 .content .product-top .seller-info .seller-detail-info .seller-detail-info-each.bottom {
@@ -176,6 +180,7 @@ _:-ms-lang(x), .content .product-top .seller-info .seller-img img {
 .seller-detail-info-each.bottom .seller-detail-session-sub{
     margin-top:4%;
     text-align: center;
+    font-weight: lighter;
 }
 
 
