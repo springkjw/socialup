@@ -461,3 +461,14 @@ class OrderItem(models.Model):
 
     def __unicode__(self):
         return str(self.id)
+
+    def status_in_korean(self):
+        print 'status_in_korean called'
+        statuses = {'created': '결제진행중',
+                    'paid': '작업대기',
+                    'refunded': '취소',
+                    'processing': '작업진행',
+                    'request_refund': '환불요청',
+                    'wait_confirm': '작업완료',
+                    'finished': '거래완료', }
+        return statuses[self.status]
