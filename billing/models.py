@@ -331,7 +331,7 @@ def new_order_receiver(sender, instance, created, *args, **kwargs):
                         raise ValueError('거래에 문제가 발생했습니다.')
 
                 for cart_item in CartItem.objects.filter(cart = instance.cart):
-                    new_order_item = OrderItem.objects.create(user=instance.user, order=instance, cart_item=cart_item, status="paid")
+                    new_order_item = OrderItem.objects.create(user=instance.user, seller=cart_item.item.seller, order=instance, cart_item=cart_item, status="paid")
                     new_order_item.save()
 
                 instance.receipt = v_trans['receipt_url']
@@ -397,7 +397,7 @@ def new_order_receiver(sender, instance, created, *args, **kwargs):
                     raise ValueError('거래에 문제가 발생했습니다.')
 
             for cart_item in CartItem.objects.filter(cart=instance.cart):
-                new_order_item = OrderItem.objects.create(user=instance.user, order=instance, cart_item=cart_item, status="paid")
+                new_order_item = OrderItem.objects.create(user=instance.user, order=instance, seller=cart_item.item.seller, cart_item=cart_item, status="paid")
                 new_order_item.save()
 
             instance.status = 'paid'
@@ -454,6 +454,7 @@ post_save.connect(product_receiver, sender=ProductManage)
 
 class OrderItem(models.Model):
     user = models.ForeignKey(MyUser, null=True)
+    seller = models.ForeignKey(Seller, null=True)
     order = models.ForeignKey(Order)
     cart_item = models.ForeignKey(CartItem)
     status = models.CharField(max_length=120, choices=ORDER_STATUS_CHOICES, default='created')
