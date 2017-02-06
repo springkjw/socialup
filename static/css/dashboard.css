@@ -637,6 +637,10 @@ body {
     width:70%;
 }
 
+.dashboard-change-form.seller .seller_form_input.account_name input {
+    width:33.5%;
+}
+
 /* type part */
 
 .seller_form_content.type .seller_form_input.type {
@@ -662,27 +666,31 @@ body {
 
 /* company_name part */
 .dashboard-change-form.seller .seller_form_content.company_name{
-    width:50%;
+    width:55%;
     display: inline-block;
 }
 
 .dashboard-change-form.seller .seller_form_content.company_name .seller_form_title.company_name{
-    width:50%;
+    width:45.5%;
 }
 
 .dashboard-change-form.seller .seller_form_content.company_name .seller_form_input.company_name{
-    width:48%;
+    width:53%;
 }
 
 .seller_form_content.company_name #id_company_name{
-    width:80%;
+    width:81%;
 }
 
 /* representative_name part */
 
 .dashboard-change-form.seller .seller_form_content.representative_name {
-    width:45%;
+    width:40%;
     display: inline-block;
+}
+
+.dashboard-change-form.seller .seller_form_content.representative_name input{
+    width:100%;
 }
 
 
@@ -694,27 +702,31 @@ body {
 
 /* business_field part */
 .dashboard-change-form.seller .seller_form_content.business_field{
-    width:50%;
+    width:55%;
     display: inline-block;
 }
 
 .dashboard-change-form.seller .seller_form_content.business_field .seller_form_title.business_field{
-    width:50%;
+    width:45.5%;
 }
 
 .dashboard-change-form.seller .seller_form_content.business_field .seller_form_input.business_field{
-    width:48%;
+    width:49.5%;
 }
 
 .seller_form_content.business_field #id_business_field{
-    width:80%;
+    width:87%;
 }
 
 /* company_type part */
 
 .dashboard-change-form.seller .seller_form_content.company_type {
-    width:45%;
+    width:40%;
     display: inline-block;
+}
+
+.dashboard-change-form.seller .seller_form_content.company_type input{
+    width:100%;
 }
 
 /* business_license part */
