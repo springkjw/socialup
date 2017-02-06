@@ -104,6 +104,10 @@ body {
     border-radius: 50%;
 }
 
+_:-ms-lang(x), .content .product-top .seller-info .seller-img img {
+    margin-bottom: 5px;
+}
+
 .content .product-top .seller-info .seller-right-info {
     float:left;
 }
@@ -148,7 +152,7 @@ body {
     margin-left:4%;
 }
 
-.seller-info-item.seller-detail-intro .seller-detail-intro-content{
+.seller-info-item.seller-detail-intro .seller-detail-intro-title{
     font-weight:bold;
 }
 
@@ -164,12 +168,12 @@ body {
     margin-left:1%;
     width:24%;
     text-align: center;
+    font-weight: bold;
 }
 
 .seller-detail-info-each.bottom .seller-detail-session-sub{
     margin-top:4%;
     text-align: center;
-    font-weight: bold;
 }
 
 
@@ -183,6 +187,10 @@ body {
     float: left;
     margin-top:4%;
     margin-left:4%;
+}
+
+.content .product-top .seller-info .seller-detail-info .seller-info-rating .seller-rating-title{
+    font-weight: bold;
 }
 
 .content .product-top .seller-info .seller-detail-info .seller-info-like {
@@ -987,6 +995,10 @@ li:nth-child(5) .circle-text {
     color:#5a5a5a;
 }
 
+_:-ms-lang(x), .product-seller-name{
+    margin-bottom:5px;
+}
+
 /* graph part */
 .tab-content .graph-part{
     width:100%;
@@ -1060,9 +1072,6 @@ li:nth-child(5) .circle-text {
     display: none;
     width:50%;
     height:25%;
-    position:absolute;
-    left:25%;
-    top:25%;
     border:1px solid black;
     z-index: 3;
     background-color: white;
@@ -1100,7 +1109,6 @@ li:nth-child(5) .circle-text {
     width:85px;
     height:33px;
     background-color:white;
-    border-radius:3px;
     border:1px solid #cecece;
 }
 

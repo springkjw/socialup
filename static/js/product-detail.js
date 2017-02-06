@@ -138,3 +138,13 @@ $('.wish-list-modal-btn-close').on('click', function () {
 $('.cart-confirm-modal-btn-close').on('click', function () {
     $('.cart-confirm-modal').hide();
 })
+
+jQuery.fn.center = function () {
+    $(this).css({
+        'position' : 'absolute',
+        'left' : '50%',
+        'top' : '50%',
+        'margin-left' : function() {return -$(this).outerWidth()/2},
+        'margin-top' : function() {return -$(this).outerHeight()/2}
+    });
+};

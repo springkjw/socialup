@@ -650,6 +650,16 @@ body {
     float:left;
 }
 
+/* account_number part */
+
+.seller_form_content.account_number .seller_form_input.account_number select{
+    width:40%;
+}
+
+.seller_form_content.account_number .seller_form_input.account_number input{
+    width:40%;
+}
+
 /* company_name part */
 .dashboard-change-form.seller .seller_form_content.company_name{
     width:50%;
@@ -786,4 +796,58 @@ body {
     margin-top:10%;
     background-color: #648efc;
     color:white;
+}
+
+
+/* dialog customize */
+#dialog-confirm{
+    text-align: center;
+}
+
+#dialog-confirm2{
+    text-align: center;
+}
+
+.ui-widget-header{
+    width:80%;
+    margin-left:5%;
+    margin-top:3%;
+    margin-bottom: 6%;
+    background: none;
+    border:none;
+    border-bottom:1px solid black;
+    border-radius:0px;
+}
+
+.ui-dialog .ui-dialog-titlebar-close{
+    background: none;
+    border: none;
+    background-image: url("/static/img/cancle.png");
+}
+
+.ui-dialog-buttonpane.ui-widget-content.ui-helper-clearfix{
+    border:none;
+    text-align: center;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset{
+    float:none;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button{
+    width:28%;
+    background-color: white;
+    border: 1px solid black;
+    border-radius:3px;
+    color: #000;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button:nth-child(1){
+    background-color: #648efc;
+    border: 1px solid #648efc;
+    color: white;
+}
+
+.ui-widget-overlay{
+    background: white;
 }

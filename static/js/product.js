@@ -121,6 +121,25 @@ function check_tags_for_hover(){
         unchecked_before_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_before_click').get();
         alert('포스팅가능 분야는 최대 6개까지 선택 가능합니다.');
     }
+
+    var clicked_input = jQuery(event.target);
+    if(clicked_input.prop('value')=='all' && !(clicked_input.is(':not(:checked)'))){
+        $('input[name=tag]').prop('checked', false);
+        $('input[value=all]').prop('checked', true);
+        checked_clicked = $('input[name=tag]:checked').next().find('.tag_image_clicked').get();
+        checked_before_clicked = $('input[name=tag]:checked').next().find('.tag_image_before_click').get();
+        unchecked_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_clicked').get();
+        unchecked_before_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_before_click').get();
+    }
+    else if($('input[name=tag]:not([value=all]):checked').length){
+        $('input[value=all]').prop('checked', false);
+        checked_clicked = $('input[name=tag]:checked').next().find('.tag_image_clicked').get();
+        checked_before_clicked = $('input[name=tag]:checked').next().find('.tag_image_before_click').get();
+        unchecked_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_clicked').get();
+        unchecked_before_clicked = $('input[name=tag]:not(:checked)').next().find('.tag_image_before_click').get();
+    }
+
+
     // display attr 조정해서 이미지 바꿔주기
     unchecked_clicked.forEach(function(val){
         jQuery(val).css({'display':'none'});
@@ -208,7 +227,6 @@ $(function () {
         $(this).removeClass('fa-caret-up').addClass('fa-caret-down');
     });
 
-    var submit = false;
     $("#dialog-confirm").dialog({
         resizable: false,
         height:190,
@@ -225,16 +243,17 @@ $(function () {
             {
                 text: "확인",
                 click: function() {
-                    submit=true;
+                    $('#product-upload-form').submit();
                 }
             }
         ]
     });
 
-    $('#product-upload-form').submit(function() {
-        if (!submit) {
+    $('.final').on('click', function() {
+        if ($('#agreenment1').is(':checked')) {
             $("#dialog-confirm").dialog('open');
-            return true;
+        }else{
+            alert('이용약관에 동의해주세요.');
         }
     });
 });
@@ -247,13 +266,4 @@ function submit_form(){
 
 function set_input_value(selector, new_val){
     $(selector).val(new_val);
-}
-
-jQuery.fn.center = function () {
-    this.css("position","absolute");
-    this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
-                                                $(window).scrollTop()) + "px");
-    this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
-                                                $(window).scrollLeft()) + "px");
-    return this;
 }

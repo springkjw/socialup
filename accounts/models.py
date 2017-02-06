@@ -67,12 +67,12 @@ class MyUser(AbstractBaseUser):
         blank=True,
         upload_to=download_profile_location
     )
-    description = models.TextField(null=True, blank=True)
-    name = models.CharField(max_length=10, null=True, blank=True)
-    phone = models.CharField(max_length=12, null=True, blank=True)
+    description = models.TextField(null=True, blank=True, default="")
+    name = models.CharField(max_length=10, null=True, blank=True, default="")
+    phone = models.CharField(max_length=12, null=True, blank=True, default="")
     sex = models.CharField(choices=(("male","남자"),("female","여자")), max_length=15, null=True)
-    address = models.CharField(max_length=15, null=True)
-    job = models.CharField(max_length=15, null=True)
+    address = models.CharField(max_length=15, null=True, default="")
+    job = models.CharField(max_length=15, null=True, default="")
     birth_year = models.PositiveIntegerField(null=True)
 
     agree_purchase_info_email = models.BooleanField(default=True)
@@ -310,12 +310,12 @@ class Seller(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     total_num_heart = models.PositiveIntegerField(default=0)
 
-    type = models.CharField(choices=seller_type_list, max_length=20, null=True, blank=False)
-    company_name = models.CharField(max_length=12, null=True, blank=True)
-    representative_name = models.CharField(max_length=12, null=True, blank=True)
-    corporate_number = models.CharField(max_length=12, null=True, blank=False)
-    business_field = models.CharField(max_length=12, null=True, blank=True)
-    company_type = models.CharField(max_length=12, null=True, blank=True)
+    type = models.CharField(choices=seller_type_list, max_length=20, null=True, blank=False, default="individual")
+    company_name = models.CharField(max_length=12, null=True, blank=True, default="")
+    representative_name = models.CharField(max_length=12, null=True, blank=True, default="")
+    corporate_number = models.CharField(max_length=12, null=True, blank=False, default="")
+    business_field = models.CharField(max_length=12, null=True, blank=True, default="")
+    company_type = models.CharField(max_length=12, null=True, blank=True, default="")
     business_license = models.ImageField(
         blank=True,
         null=True,
@@ -391,9 +391,9 @@ BANK_TYPE = (
 
 class SellerAccount(models.Model):
     seller = models.OneToOneField(Seller)
-    account_number = models.CharField(max_length=120, null=True, blank=True)
-    account_name = models.CharField(max_length=50, null=True, blank=True)
-    bank = models.CharField(max_length=120, null=True, blank=True, choices=BANK_TYPE)
+    account_number = models.CharField(max_length=120, null=True, blank=True, default="")
+    account_name = models.CharField(max_length=50, null=True, blank=True, default="")
+    bank = models.CharField(max_length=120, null=True, blank=True, choices=BANK_TYPE, default="")
     timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
 
     def __unicode__(self):

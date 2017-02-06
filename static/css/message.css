@@ -100,13 +100,13 @@ table.channels tr td {
 	width:565px;
     margin-top: 20px;
     display:none;
-    height: 510px;
+    height: 350px;
 }
 #chat-messages{
 	position: absolute;
-	margin-top:300px;
+	margin-top:315px;
     top:0;
-	height: 500px;
+	height: 373px;
 	width:545px;
 	overflow-y:auto;
 	overflow-x:hidden;

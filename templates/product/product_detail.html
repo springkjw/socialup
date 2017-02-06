@@ -48,6 +48,7 @@
                     success: function (data) {
                         if (data['status'] == 'success') {
                             $('.cart-confirm-modal').show();
+                            $('.cart-confirm-modal').center();
                             $('.cart-confirm-modal-btn.yes').on('click', function () {
                                 window.location.href = '/dashboard/purchase/cart';
                             })
@@ -167,7 +168,7 @@
                         <div class="seller-detail-info">
                             <div class="seller-detail-info-each top">
                                 <div class="seller-info-rating seller-rating">
-                                    판매자 평가
+                                    <span class="seller-rating-title">판매자 평가</span>
                                     <div class="seller-rating" data-rating="{{ product.rating }}">
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                         <i class="fa fa-star" aria-hidden="true"></i>
@@ -186,7 +187,7 @@
                             </div>
                             <div class="seller-detail-info-each mid">
                                 <div class="seller-info-item seller-detail-intro">
-                                    <div>자기소개</div>
+                                    <div class="seller-detail-intro-title">자기소개</div>
                                     <div class="seller-detail-intro-content">
                                         {% if product.seller.description %}
                                             {{ product.seller.description }}
@@ -238,7 +239,7 @@
                     </div>
                     <div class="product-sns">
                         {% if product.is_url_open %}
-                            <a href="{{ product.sns_url }}">
+                            <a href="{{ product.sns_url }}" target="_blank">
                                 <img class="product-sns-image open" src="{% static 'img/house.png'%}">
                                 <button class="product-sns-text open">판매자 SNS 바로가기</button>
                             </a>
