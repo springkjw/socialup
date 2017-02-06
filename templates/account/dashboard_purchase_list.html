@@ -117,7 +117,7 @@
                                         <li class="table_product name">{{ order_item.cart_item.item.oneline_intro }}</li>
                                         <li class="table_product seller_id">{{ order_item.cart_item.item.seller }}</li>
                                         <li class="table_product when_purchase">{{ order_item.order.timestamp|date:"m.d" }}</li>
-                                        <li class="table_product working_status">{{ order_item.status }}</li>
+                                        <li class="table_product working_status">{{ order_item.status_in_korean }}</li>
                                         <li class="table_product price">{{ order_item.cart_item.line_item_total }}</li>
                                     </ul>
                                     <div class="table_product btn" >
@@ -1061,7 +1061,7 @@
                                     <li class="table_product seller_id">{{ order_item.cart_item.item.seller }}</li>
                                     <li class="table_product when_purchase">{{ order_item.order.timestamp|date:"m.d" }}</li>
                                     <li class="table_product price">{{ order_item.cart_item.line_item_total }}</li>
-                                    <li class="table_product refund_status">{{ order_item.status }}</li>
+                                    <li class="table_product refund_status">{{ order_item.status_in_korean }}</li>
                                 </ul>
                                 <div class="table_product btn detail" >
                                     <button class="show_detail_btn first" aria-hidden="true">
@@ -1185,7 +1185,7 @@
                                     <li class="table_product seller_id">{{ order_item.cart_item.item.seller }}</li>
                                     <li class="table_product when_purchase">{{ order_item.order.timestamp|date:"m.d" }}</li>
                                     <li class="table_product price">{{ order_item.cart_item.line_item_total }}</li>
-                                    <li class="table_product refund_status">{{ order_item.status }}</li>
+                                    <li class="table_product refund_status">{{ order_item.status_in_korean }}</li>
                                 </ul>
                                 <div class="table_product btn detail" >
                                     <button class="show_detail_btn first" aria-hidden="true">

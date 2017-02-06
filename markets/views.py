@@ -370,8 +370,13 @@ def product_order_manage(request):
         order_item_id = request.POST.get('order_item')
         try:
             order_item = OrderItem.objects.get(id=order_item_id)
-            order_item.status = request.POST.get('new_status')
-            order_item.save()
+            new_status = request.POST.get('new_status')
+
+            if order_item.status == 'paid' or \
+            order_item.status == 'processing' or \
+            order_item.status == 'wait_confirm' and new_status == 'refunded':
+                order_item.status = new_status
+                order_item.save()
         except:
             pass
 
