@@ -121,7 +121,9 @@ _:-ms-lang(x), .content .product-top .seller-info .seller-img img {
 }
 .content .product-top .seller-info .seller-right-info .show-seller-detail #btn-show-seller-detail {
     background: none;
-    padding:6px;
+    padding:8px;
+    font-size: 13px;
+    font-weight: 500;
 }
 
 .content .product-top .seller-info .seller-detail-info {
@@ -1136,7 +1138,7 @@ _:-ms-lang(x), .product-seller-name{
 
 .caution-div-each{
     text-align:center;
-    font-weight:bold;
+    font-weight:500;
     color:#5a5a5a;
 }
 

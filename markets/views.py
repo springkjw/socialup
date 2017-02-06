@@ -44,7 +44,7 @@ def product_detail(request, product_id):
     seller = product.seller
     # product 판매자 평점 조회
     seller_rating = int(round(seller.rating * 20))
-    seller_count = Product.objects.filter(seller=seller).count()
+    seller_count = OrderItem.objects.filter(seller=seller, status='finished').count()
 
     reviews = ProductReview.objects.filter(product=product)
     reviews_count = reviews.count()
@@ -349,7 +349,6 @@ def product_change(request, product_id):
 
 @login_required
 def product_delete(request, product_id):
-    print('product_delete')
     #product_id = request.GET.get('delete_product')
     product_id = product_id
     # checking delete validation
@@ -382,13 +381,13 @@ def product_order_manage(request):
         seller = None
 
     if seller:
-        order_items = OrderItem.objects.filter(user=request.user)
-        order_items_ready = order_items.filter(user=request.user, status='paid')
-        order_items_processing = order_items.filter(user=request.user, status='processing')
-        order_items_finished = order_items.filter(user=request.user, status='finished')
-        order_items_wait_confirm = order_items.filter(user=request.user, status='wait_confirm')
-        order_items_refunded = order_items.filter(user=request.user, status='refunded')
-        order_items_request_refund = order_items.filter(user=request.user, status='request_refund')
+        order_items = OrderItem.objects.filter(seller=seller)
+        order_items_ready = order_items.filter(status='paid')
+        order_items_processing = order_items.filter(status='processing')
+        order_items_finished = order_items.filter(status='finished')
+        order_items_wait_confirm = order_items.filter(status='wait_confirm')
+        order_items_refunded = order_items.filter(status='refunded')
+        order_items_request_refund = order_items.filter(status='request_refund')
 
         template = 'seller/order_manage.html'
         context = {

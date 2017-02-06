@@ -171,6 +171,10 @@
 .purchase-table-ul li{
     float:left;
     text-align:center;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    list-style-position: inside;
+    white-space: nowrap;
 }
 
 .purchase-table-ul li:nth-child(1){
