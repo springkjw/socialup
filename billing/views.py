@@ -331,8 +331,12 @@ def purchase_list(request):
         order_item_id = request.POST.get('order_item')
         try:
             order_item = OrderItem.objects.get(id=order_item_id)
-            order_item.status = request.POST.get('new_status')
-            order_item.save()
+            new_status = request.POST.get('new_status')
+            if order_item.status == 'paid' and new_status == 'request_refund' or \
+            order_item.status != 'request_refund' and new_status == 'finished' or \
+            order_item.status != 'refunded' and new_status == 'finished' :
+                order_item.status = new_status
+                order_item.save()
         except:
             pass
 

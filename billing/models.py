@@ -463,7 +463,6 @@ class OrderItem(models.Model):
         return str(self.id)
 
     def status_in_korean(self):
-        print 'status_in_korean called'
         statuses = {'created': '결제진행중',
                     'paid': '작업대기',
                     'refunded': '취소',
