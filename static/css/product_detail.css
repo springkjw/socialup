@@ -121,7 +121,9 @@ _:-ms-lang(x), .content .product-top .seller-info .seller-img img {
 }
 .content .product-top .seller-info .seller-right-info .show-seller-detail #btn-show-seller-detail {
     background: none;
-    padding:6px;
+    padding:8px;
+    font-size: 13px;
+    font-weight: 500;
 }
 
 .content .product-top .seller-info .seller-detail-info {
