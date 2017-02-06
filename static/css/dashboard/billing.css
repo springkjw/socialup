@@ -18,12 +18,13 @@
     padding-top: 25px;
     padding-bottom: 25px;
     padding-left: 120px;
-    padding-right: 130px;
     border-top: 1px solid rgba(0, 0, 0, .15);
     border-bottom: 1px solid rgba(0, 0, 0, .15);
 }
 
 .dashboard-charge-info label {
+    width:30%;
+    display: inline-block;
     font-size: 12px;
     font-weight: 400;
     margin-right: 5px;
@@ -31,6 +32,8 @@
 }
 
 .dashboard-charge-info input {
+    width:50%;
+    display: inline-block;
     border: 1px solid rgba(0, 0, 0, .15);
     font-size: 12px;
     font-weight: 300;
@@ -38,6 +41,10 @@
     margin-top: 5px;
     margin-left: 15px;
     float: right;
+}
+
+.dashboard-charge-info .charge-form {
+    width:70%;
 }
 
 .dashboard-charge-info .charge-form span {

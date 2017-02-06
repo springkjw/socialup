@@ -25,7 +25,7 @@
             {% if seller_account %}
                 $(".seller_form_input.account_name input").val('{{ seller_account.account_name }}');
                 $(".seller_form_input.account_number select option[value='{{ seller_account.bank }}']").prop('selected', true);
-                $(".seller_form_input.account_number #id_account_number").val({{ seller_account.account_number }});
+                $(".seller_form_input.account_number #id_account_number").val('{{ seller_account.account_number }}');
             {% endif %}
 
         });
@@ -148,9 +148,7 @@
                         자기소개
                     </div>
                     <div class="description_text_wrapper">
-                        <textarea id="id_description" name="description" rows="7" cols="40">
-                            {{ request.user.description }}
-                        </textarea>
+                        <textarea id="id_description" name="description" rows="7" cols="40">{{ request.user.description }}</textarea>
                     </div>
                 </div>
                 <!-- 비밀번호 변경 -->
@@ -233,8 +231,12 @@
                         </div>
                     </div>
                 </div>
-
-                <button class="change_button" type="submit">변경하기</button>
+                <div id="dialog-confirm" title="정보수정 완료">
+                정보수정을 완료하였습니다.<br>
+                메인 페이지로 가시겠습니까?
+                </div>
+                <input type="hidden" id="go_main" name="go_main" value="True"/>
+                <button class="change_button" type="button">변경하기</button>
             </form>
         </div>
         <div class="dashboard-change-form seller">
@@ -326,7 +328,12 @@
                         </div>
                     </div>
                 </div>
-                <button class="change_button_seller" type="submit">변경하기</button>
+                <div id="dialog-confirm2" title="정보수정 완료">
+                정보수정을 완료하였습니다.<br>
+                메인 페이지로 가시겠습니까?
+                </div>
+                <input type="hidden" id="go_main2" name="go_main" value="True"/>
+                <button class="change_button_seller" type="button">변경하기</button>
             </form>
         </div>
 

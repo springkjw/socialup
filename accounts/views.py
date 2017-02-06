@@ -91,13 +91,18 @@ def change_info(request):
             seller.account_copy=seller_form.cleaned_data['account_copy']
             seller.save()
 
-        if seller_account_form.is_valid():
+        if seller_account_form.is_valid() and 'type' in request.POST:
             seller.type = request.POST['type']
             seller.save()
             seller_account.account_number= seller_account_form.cleaned_data['account_number']
             seller_account.account_name= seller_account_form.cleaned_data['account_name']
             seller_account.bank= seller_account_form.cleaned_data['bank']
             seller_account.save()
+
+            if request.POST['go_main']=='True':
+                return HttpResponseRedirect('/')
+            else:
+                return HttpResponseRedirect('/dashboard/change/')
 
             return HttpResponseRedirect('/dashboard/change/')
 
@@ -140,8 +145,10 @@ def change_info(request):
                 login(request, user)
             user.save()
 
-            return HttpResponseRedirect('/dashboard/change/')
-
+            if request.POST['go_main']=='True':
+                return HttpResponseRedirect('/')
+            else:
+                return HttpResponseRedirect('/dashboard/change/')
 
 
     context = {
