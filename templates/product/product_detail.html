@@ -249,12 +249,30 @@
                         {% endif %}
                     </div>
                     <div class="product-sub-info">
-                        <div class="title">
-                            팔로워
-                        </div>
-                        <div class="sub-content">
-                            <span>{{ product.follower_num }}</span>
-                        </div>
+                        {% if product.sns_type == "blog" %}
+                            <div class="title">
+                                일평균 방문자수 / 팔로워
+                            </div>
+                            <div class="sub-content">
+                                <span>{{ product.follower_num }} </span>/
+                                <span>{{ product.follower_visit_num }}</span>
+                            </div>
+                        {% elif product.sns_type == "facebook" %}
+                            <div class="title">
+                                팔로워 / 친구수
+                            </div>
+                            <div class="sub-content">
+                                <span>{{ product.follower_num }} </span>/
+                                <span>{{ product.follower_friends_num }}</span>
+                            </div>
+                        {% else %}
+                            <div class="title">
+                                팔로워
+                            </div>
+                            <div class="sub-content">
+                                <span>{{ product.follower_num }}</span>
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="product-sub-info">
                         <div class="title">

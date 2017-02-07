@@ -688,7 +688,8 @@ _:-ms-lang(x), .content .product-top .seller-info .seller-img img {
 }
 
 .info-right .product-sub-info .title {
-    width: 120px;
+    width: 40%;
+    text-align: center;
     line-height: 45px;
     float: left;
     font-size: 13px;
