@@ -227,35 +227,7 @@ $(function () {
         $(this).removeClass('fa-caret-up').addClass('fa-caret-down');
     });
 
-    $("#dialog-confirm").dialog({
-        resizable: false,
-        height:190,
-        autoOpen: false,
-        width: 330,
-        modal: true,
-        buttons: [
-            {
-                text: "닫기",
-                click: function() {
-                    $(this).dialog("close");
-                }
-            },
-            {
-                text: "확인",
-                click: function() {
-                    $('#product-upload-form').submit();
-                }
-            }
-        ]
-    });
 
-    $('.final').on('click', function() {
-        if ($('#agreenment1').is(':checked')) {
-            $("#dialog-confirm").dialog('open');
-        }else{
-            alert('이용약관에 동의해주세요.');
-        }
-    });
 });
 
 function submit_form(){
@@ -267,3 +239,29 @@ function submit_form(){
 function set_input_value(selector, new_val){
     $(selector).val(new_val);
 }
+
+$("#dialog-confirm2").dialog({
+    resizable: false,
+    height:190,
+    autoOpen: false,
+    width: 330,
+    modal: true,
+    buttons: [
+        {
+            text: "닫기",
+            click: function() {
+                $(this).dialog("close");
+            }
+        },
+        {
+            text: "확인",
+            click: function() {
+                $('#product-upload-form').submit();
+            }
+        }
+        ]
+    });
+
+$('.final_edit').on('click', function() {
+    $("#dialog-confirm2").dialog('open');
+});

@@ -328,7 +328,7 @@ def product_change(request, product_id):
                         object_id=instance.id
                     )
 
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/dashboard/seller/manage')
 
         else:
             pass
