@@ -139,8 +139,18 @@
                                 <form action="{% url 'product_change' item.id %}">
                                     <input class="product_btn edit" type="image" src="/static/img/edit.png">
                                 </form>
-                                <form action="{% url 'product_delete' item.id %}">
-                                    <input class="product_btn delete" type="image" src="/static/img/cancle.png">
+                                <div class="delete-confirm-modal">
+                                        <div class="delete-confirm-modal-title">상품삭제</div>
+                                        <div class="delete-confirm-modal-content">
+                                            상품을 삭제하시겠습니까?
+                                        </div>
+                                        <div class="delete-confirm-modal-btns">
+                                            <button class="delete-confirm-modal-btn yes">삭제</button>
+                                            <button class="delete-confirm-modal-btn no">취소</button>
+                                        </div>
+                                    </div>
+                                <form id="product_delete_form" action="{% url 'product_delete' item.id %}">
+                                    <img class="product_btn delete" src="/static/img/cancle.png">
                                 </form>
                             </div>
                             <div class="item_top_btns_content status">

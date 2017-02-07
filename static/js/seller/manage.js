@@ -35,3 +35,27 @@ $('.item_top_image').each(function(){
         $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'124px', 'top':'35px', 'transform': 'rotate(155deg)'});
     }
 });
+
+/* prodcut_delete modal */
+$('.product_btn.delete').on('click', function(){
+    $(this).parent().prev().show();
+    $(this).parent().prev().center();
+});
+
+$('.delete-confirm-modal-btn.yes').on('click',function(){
+    $(this).parent().parent().next().submit();
+});
+
+$('.delete-confirm-modal-btn.no').on('click',function() {
+    $(this).parent().parent().hide();
+});
+
+jQuery.fn.center = function () {
+    $(this).css({
+        'position' : 'fixed',
+        'left' : '50%',
+        'top' : '40%',
+        'margin-left' : function() {return -$(this).outerWidth()/2},
+        'margin-top' : function() {return -$(this).outerHeight()/2}
+    });
+};

@@ -91,6 +91,39 @@
                 $('#id_message_to_admin').val(json_selected_product["message_to_admin"]);
             }});
         });
+        {% if form.errors %}
+            alert('{{ form.errors }}');
+        {% else %}
+            $("#dialog-confirm").dialog({
+            resizable: false,
+            height:190,
+            autoOpen: false,
+            width: 330,
+            modal: true,
+            buttons: [
+                {
+                    text: "닫기",
+                    click: function() {
+                        $(this).dialog("close");
+                    }
+                },
+                {
+                    text: "확인",
+                    click: function() {
+                        $('#product-upload-form').submit();
+                    }
+                }
+                ]
+            });
+
+            $('.final').on('click', function() {
+                if ($('#agreenment1').is(':checked')) {
+                    $("#dialog-confirm").dialog('open');
+                }else{
+                    alert('이용약관에 동의해주세요.');
+                }
+            });
+        {% endif %}
     </script>
 {% endblock %}
 
@@ -152,13 +185,13 @@
                      <label class="product-upload-title-label">팔로워수</label>
                 </div>
                 <div class="product-upload-sub follower_visit_num">
-                    {{ form.follower_visit_num }}
+                    {{ form.follower_visit_num }} 명
                 </div>
                 <div class="product-upload-sub follower_num">
-                    {{ form.follower_num }}
+                    {{ form.follower_num }} 명
                 </div>
                 <div class="product-upload-sub follower_friends_num">
-                    {{ form.follower_friends_num }}
+                    {{ form.follower_friends_num }} 명
                 </div>
             </div>
 

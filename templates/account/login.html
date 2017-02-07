@@ -35,6 +35,9 @@
                 $('.messages').slideDown().delay(3000).slideUp();
             {% endif %}
         });
+        {% if form.errors %}
+            alert('이메일과 비밀번호가 일치하지 않습니다.');
+        {% endif %}
     </script>
 {% endblock %}
 
