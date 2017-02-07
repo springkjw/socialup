@@ -233,9 +233,12 @@ def product_manage(request):
             if product.product_status == 'ready':
                 order_item_status_list.append('x')
             else:
-                temp_cart_item = CartItem.objects.filter(item=product)
-                temp_order_item = OrderItem.objects.filter(cart_item=temp_cart_item)
-                order_item_status_list.append(temp_order_item)
+                temp_cart_items = CartItem.objects.filter(item=product)
+                temp_order_item_status = []
+                for temp_cart_item in temp_cart_items:
+                    temp_order_items = OrderItem.objects.filter(cart_item=temp_cart_item)
+                    temp_order_item_status.extend(temp_order_items)
+                order_item_status_list.append(temp_order_item_status)
 
         template = 'seller/product_manage.html'
         context = {
