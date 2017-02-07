@@ -406,6 +406,11 @@
 
 .dashboard-product-manage .product-item .item_top .item_top_btns .product_btn.edit {
     margin-right:2px;
+    cursor:pointer;
+}
+
+.dashboard-product-manage .product-item .item_top .item_top_btns .product_btn.delete {
+    cursor:pointer;
 }
 
 .dashboard-product-manage .product-item .item_top .item_top_btns .approval_status{
@@ -444,4 +449,59 @@
 .dashboard-product-manage .product-item .item_bottom ul li{
     float:left;
     margin-right:5%;
+}
+
+/* confirm part */
+
+.delete-confirm-modal{
+    display: none;
+    position:fixed;
+    top:40%;
+    left:41%;
+    width:24%;
+    height:240px;
+    border:1px solid black;
+    z-index: 100;
+    background-color: white;
+    text-align:center;
+}
+
+.delete-confirm-modal .delete-confirm-modal-btn-close{
+    float:right;
+    width:5%;
+    background: none;
+    margin-top:5%;
+    margin-right:8%;
+}
+
+.delete-confirm-modal .delete-confirm-modal-title{
+    padding-top:6%;
+    width:86%;
+    border-bottom:1px solid black;
+    margin-left:7%;
+    text-align:left;
+    height:13%;
+    font-weight:bold;
+}
+
+.delete-confirm-modal .delete-confirm-modal-content{
+    margin-top:15%;
+    font-size:18px;
+}
+
+.delete-confirm-modal .delete-confirm-modal-btns{
+    margin-top:15%;
+}
+
+.delete-confirm-modal .delete-confirm-modal-btns .delete-confirm-modal-btn{
+    width:85px;
+    height:33px;
+    background-color:white;
+    border:1px solid #cecece;
+}
+
+.delete-confirm-modal .delete-confirm-modal-btns .delete-confirm-modal-btn.yes{
+    background-color:#648efc;
+    border:1px solid #648efc;
+    color:white;
 }

@@ -227,35 +227,7 @@ $(function () {
         $(this).removeClass('fa-caret-up').addClass('fa-caret-down');
     });
 
-    $("#dialog-confirm").dialog({
-        resizable: false,
-        height:190,
-        autoOpen: false,
-        width: 330,
-        modal: true,
-        buttons: [
-            {
-                text: "닫기",
-                click: function() {
-                    $(this).dialog("close");
-                }
-            },
-            {
-                text: "확인",
-                click: function() {
-                    $('#product-upload-form').submit();
-                }
-            }
-        ]
-    });
 
-    $('.final').on('click', function() {
-        if ($('#agreenment1').is(':checked')) {
-            $("#dialog-confirm").dialog('open');
-        }else{
-            alert('이용약관에 동의해주세요.');
-        }
-    });
 });
 
 function submit_form(){
@@ -267,3 +239,37 @@ function submit_form(){
 function set_input_value(selector, new_val){
     $(selector).val(new_val);
 }
+
+$("#dialog-confirm2").dialog({
+    resizable: false,
+    height:190,
+    autoOpen: false,
+    width: 330,
+    modal: true,
+    buttons: [
+        {
+            text: "닫기",
+            click: function() {
+                $(this).dialog("close");
+            }
+        },
+        {
+            text: "확인",
+            click: function() {
+                $('#product-upload-form').submit();
+            }
+        }
+        ]
+    });
+
+$('.final_edit').on('click', function() {
+    $("#dialog-confirm2").dialog('open');
+});
+
+/* product_upload len check */
+$('#id_oneline_intro').on('keyup', function() {
+    if($(this).val().length > 60) {
+        alert('한줄소개는 30자이내로 입력해주세요.')
+        $(this).val($(this).val().substring(0, 60));
+    }
+});
