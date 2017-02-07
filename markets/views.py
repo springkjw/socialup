@@ -188,8 +188,7 @@ def product_upload(request, product_id=None):
                         object_id=instance.id
                     )
 
-            #return HttpResponseRedirect('/dashboard/')
-            return HttpResponseRedirect('/')
+            return redirect(reverse('product_manage'))
 
         else:
             pass
