@@ -288,10 +288,10 @@ def product_change(request, product_id):
     # 태그 리스트, oneline_intro 리스트 만들기
     seller_tag_list = []
     products_intro_list = []
-    for product in seller_products:
-        temp_tag = ProductTag.objects.filter(object_id=product.id,
-        content_type=ContentType.objects.get_for_model(product))
-        products_intro_list.append(product.oneline_intro)
+    for p in seller_products:
+        temp_tag = ProductTag.objects.filter(object_id=p.id,
+        content_type=ContentType.objects.get_for_model(p))
+        products_intro_list.append(p.oneline_intro)
         if not temp_tag:
             seller_tag_list.append(temp_tag)
             pass
@@ -312,6 +312,7 @@ def product_change(request, product_id):
         if form.is_valid():
             instance = form.save(commit=False)
             instance.seller = seller
+            instance.product_status = 'ready'
             instance.save()
             if tag_form.is_valid():
                 old_tags = ProductTag.objects.filter(object_id=instance.id)
