@@ -329,7 +329,7 @@ def product_change(request, product_id):
                         object_id=instance.id
                     )
 
-            return HttpResponseRedirect('/')
+            return redirect(reverse('product_manage'))
 
         else:
             pass
