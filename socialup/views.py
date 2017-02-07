@@ -39,6 +39,18 @@ def product_category(request, category):
     if category=="all":
         products = Product.objects.active().all()
         category_name = "전체"
+
+        try:
+            tag = request.GET['tag']
+            products = products.filter(product_tag__tag=tag)
+            banner_tag_list = {'it': 'IT',
+                               'food': '맛집',
+                               'fashion': '뷰티',
+                               'pet': '애완',
+                               'travel': '여행'}
+            category_name = banner_tag_list[tag]
+        except:
+            pass
     else:
         products = Product.objects.active().filter(sns_type=category)
         category_name = [type_[1] for type_ in sns_type_list if type_[0] == category][0]
