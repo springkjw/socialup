@@ -21,31 +21,42 @@
                     <tr>
                         <td>
                             <a href="{% url 'wish_list' %}">
-                                구매<i class="fa fa-angle-right"></i>
-                                <div class="sub-info">0</div>
+                                <div style="height:100%;width:100%">
+                                    구매<i class="fa fa-angle-right"></i>
+                                    <div class="sub-info">0</div>
+                                </div>
                             </a>
                         </td>
                         <td>
-                            <a href="#">
-                                판매<i class="fa fa-angle-right"></i>
+                            <a href="{% url 'product_order_manage' %}">
+                                <div style="height:100%;width:100%">
+                                    판매<i class="fa fa-angle-right"></i>
+                                    <div class="sub-info">0</div>
+                                </div>
                             </a>
                         </td>
                         <td>
                             <a href="{% url 'message_lounge' %}">
-                                메시지<i class="fa fa-angle-right"></i>
-                                <div class="sub-info unread-message"></div>
+                                <div style="height:100%;width:100%">
+                                    메시지<i class="fa fa-angle-right"></i>
+                                    <div class="sub-info unread-message"></div>
+                                </div>
                             </a>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <a href="#">
-                                잔고<i class="fa fa-angle-right"></i>
+                            <a href="{% url 'point_history' %}">
+                                <div style="height:100%;width:100%">
+                                    포인트<i class="fa fa-angle-right"></i>
+                                </div>
                             </a>
                         </td>
                         <td>
                             <a href="{% url 'change_info' %}">
-                                내 정보<i class="fa fa-angle-right"></i>
+                                <div style="height:100%;width:100%">
+                                    내 정보<i class="fa fa-angle-right"></i>
+                                </div>
                             </a>
                         </td>
                         <td>

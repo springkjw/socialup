@@ -549,7 +549,6 @@
     width: 112px;
     height: 42px;
     background: #648efc;
-    border-radius: 5px;
     color: white;
     font-size: 14px;
     font-weight: 600;
@@ -1290,7 +1289,7 @@ input::-webkit-input-placeholder {
     width:85px;
     height:33px;
     background-color:white;
-    border-radius:3px;
+    border-radius:0px;
     border:1px solid #cecece;
 }
 

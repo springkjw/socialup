@@ -269,9 +269,11 @@ input[type=number]::-webkit-outer-spin-button {
     margin-top: 20px;
     padding: 25px;
     display: none;
+    text-align: center;
 }
 
 .dashboard-purchase .buyer-info label {
+    width:40%;
     font-size: 12px;
     font-weight: 400;
     color: rgba(0, 0, 0, .7);
@@ -280,9 +282,8 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .dashboard-purchase .buyer-info input {
+    width:50%;
     border: 1px solid rgba(0, 0, 0, .15);
-    margin-left: 5px;
-    margin-right: 15px;
     font-size: 12px;
     padding: 5px 10px 5px 10px;
     float: right;
@@ -304,8 +305,9 @@ input[type=number]::-webkit-outer-spin-button {
 .buyer-form {
     margin: 0 auto;
     margin-top: 15px;
-    width: 240px;
+    width:50%;
 }
+
 
 .buyer-form:first-child {
     margin-top: 0;

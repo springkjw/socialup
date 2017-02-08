@@ -77,6 +77,7 @@ def product_category(request, category):
         data = {
             "product_ids_by_tags": product_ids_by_tags,
             "checked_tags": checked_tags,
+            "category_type":category
         }
 
         return HttpResponse(json.dumps(data), content_type='application/json')
