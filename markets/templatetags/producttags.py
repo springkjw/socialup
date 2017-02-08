@@ -2,6 +2,7 @@
 from django import template
 from carts.models import Cart, WishList, CartItem
 from billing.models import Order
+from accounts.models import MyUser
 from django.contrib.contenttypes.models import ContentType
 import datetime, pytz
 
@@ -75,3 +76,35 @@ def user_purchase_count(user_id):
 @register.filter(name='multi_minus')
 def multi_minus(amount):
     return amount * -1
+
+
+# @register.simple_tag 를 쓰려 했으나 작동 안되어서 @register.filter 장식자를 붙이고 불필요한 user_id 파라메터를 받고 세개의 메소드로 나눠서 작성. 작동엔 문제없지만 수정되면 좋겠음.
+# 고객센터, 1:1 문의 부분. 메세지 받을 계정이 바뀌면 email부분을 수정하면 됨.
+@register.filter(name='cs_admin_user_id')
+def cs_admin_user_id(user_id):
+    try:
+        cs_admin_user = MyUser.objects.get(email='social_up@naver.com')
+        cs_admin_user_id = cs_admin_user.id
+    except:
+        cs_admin_user_id = None
+    return cs_admin_user_id
+
+
+@register.filter(name='cs_admin_user_short_name')
+def cs_admin_user_short_name(user_id):
+    try:
+        cs_admin_user = MyUser.objects.get(email='social_up@naver.com')
+        cs_admin_user_short_name = cs_admin_user.get_short_name()
+    except:
+        cs_admin_user_short_name = None
+    return cs_admin_user_short_name
+
+
+@register.filter(name='cs_admin_user_avatar')
+def cs_admin_user_avatar(user_id):
+    try:
+        cs_admin_user = MyUser.objects.get(email='social_up@naver.com')
+        cs_admin_user_avatar = cs_admin_user.get_avatar()
+    except:
+        cs_admin_user_avatar = None
+    return cs_admin_user_avatar
