@@ -83,7 +83,10 @@
                 $('#id_sns_url').val(json_selected_product["sns_url"]);
                 $('#id_message_to_buyer').val(json_selected_product["message_to_buyer"]);
                 $('#id_oneline_intro').val(json_selected_product["oneline_intro"]);
-                $($($('iframe').get(0).contentDocument).find('.note-editable p')[0]).html(json_selected_product["description"]);
+                $($($('iframe').get(0).contentDocument).find('.note-editable p')[0]).contents().unwrap();
+                $($($('iframe').get(0).contentDocument).find('.note-editable')[0]).focus();
+                $($($('iframe').get(0).contentDocument).find('.note-editable')[0]).html(json_selected_product["description"]);
+                $($($('iframe').get(0).contentDocument).find('.note-editable')[0]).blur();
                 $('#id_price').val(json_selected_product["price"]);
                 $('#id_manuscript_price').val(json_selected_product["manuscript_price"]);
                 $('#id_highrank_price').val(json_selected_product["highrank_price"]);
