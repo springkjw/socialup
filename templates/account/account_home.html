@@ -1,5 +1,14 @@
 {% extends 'account/dashboard_base.html' %}
 {% load staticfiles %}
+{% load producttags %}
+<script type="text/javascript">
+    $(function () {
+        $('#contact_button').on('click', function () {
+            // 관리자 계정(또는 1:1상담 받을 계정)으로 연결. 2번째, 3번째, 4번째 파라미터를 관리자 계정 정보로 넣고 주석 해제하기
+            startMessage('{{ user.id }}', '{{ user.id|cs_admin_user_id }}', '{{ user.id|cs_admin_user_short_name }}', '{{ user.id|cs_admin_user_avatar }}');
+        });
+    });
+</script>
 
 {% block dashboard_content %}
     <div class="dashboard-content">
@@ -60,9 +69,9 @@
                             </a>
                         </td>
                         <td>
-                            <a href="#">
+                            <div id="contact_button" style="height:100%;width:100%">
                                 고객센터<i class="fa fa-angle-right"></i>
-                            </a>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
