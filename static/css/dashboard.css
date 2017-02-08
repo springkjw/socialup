@@ -632,9 +632,25 @@ body {
     text-align:center;
 }
 
+.dashboard-change-form.seller .seller_form_title.representative_name{
+    width:40%;
+}
+
+.dashboard-change-form.seller .seller_form_title.company_type{
+    width:40%;
+}
+
 .dashboard-change-form.seller .seller_form_input {
     display:inline-block;
     width:70%;
+}
+
+.dashboard-change-form.seller .seller_form_input.representative_name{
+    width:55%;
+}
+
+.dashboard-change-form.seller .seller_form_input.company_type {
+    width:55%;
 }
 
 .dashboard-change-form.seller .seller_form_input.account_name input {
@@ -661,7 +677,8 @@ body {
 }
 
 .seller_form_content.account_number .seller_form_input.account_number input{
-    width:40%;
+    width:43%;
+    margin-left:5%;
 }
 
 /* company_name part */
@@ -690,7 +707,7 @@ body {
 }
 
 .dashboard-change-form.seller .seller_form_content.representative_name input{
-    width:100%;
+    width:70%;
 }
 
 
@@ -726,7 +743,7 @@ body {
 }
 
 .dashboard-change-form.seller .seller_form_content.company_type input{
-    width:100%;
+    width:70%;
 }
 
 /* business_license part */
