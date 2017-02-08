@@ -83,7 +83,10 @@
                 $('#id_sns_url').val(json_selected_product["sns_url"]);
                 $('#id_message_to_buyer').val(json_selected_product["message_to_buyer"]);
                 $('#id_oneline_intro').val(json_selected_product["oneline_intro"]);
-                $($($('iframe').get(0).contentDocument).find('.note-editable p')[0]).html(json_selected_product["description"]);
+                $($($('iframe').get(0).contentDocument).find('.note-editable p')[0]).contents().unwrap();
+                $($($('iframe').get(0).contentDocument).find('.note-editable')[0]).focus();
+                $($($('iframe').get(0).contentDocument).find('.note-editable')[0]).html(json_selected_product["description"]);
+                $($($('iframe').get(0).contentDocument).find('.note-editable')[0]).blur();
                 $('#id_price').val(json_selected_product["price"]);
                 $('#id_manuscript_price').val(json_selected_product["manuscript_price"]);
                 $('#id_highrank_price').val(json_selected_product["highrank_price"]);
@@ -117,11 +120,20 @@
             });
 
             $('.final').on('click', function() {
-                if ($('#agreenment1').is(':checked')) {
-                    $("#dialog-confirm").dialog('open');
+                if(!$('#product-upload-form')[0].checkValidity()){
+                    if(!$('#id_sns_url')[0].checkValidity()){
+                        alert('SNS 주소 양식을 확인해주세요.');
+                    }
+                    else{
+                        alert('입력을 잘못했습니다.');
+                    }
                 }else{
-                    alert('이용약관에 동의해주세요.');
-                }
+                    if ($('#agreenment1').is(':checked')) {
+                        $("#dialog-confirm").dialog('open');
+                    }else{
+                        alert('이용약관에 동의해주세요.');
+                    }
+                };
             });
         {% endif %}
     </script>
