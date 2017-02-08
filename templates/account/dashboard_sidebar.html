@@ -1,3 +1,13 @@
+{% load producttags %}
+<script type="text/javascript">
+    $(function () {
+        $('#contact_button').on('click', function () {
+            // 관리자 계정(또는 1:1상담 받을 계정)으로 연결. 2번째, 3번째, 4번째 파라미터를 관리자 계정 정보로 넣고 주석 해제하기
+            startMessage('{{ user.id }}', '{{ user.id|cs_admin_user_id }}', '{{ user.id|cs_admin_user_short_name }}', '{{ user.id|cs_admin_user_avatar }}');
+        });
+    });
+</script>
+
 <div class="dashboard-side">
     <div class="user-profile">
         <div class="image">
@@ -65,7 +75,7 @@
                 <li><a href="{% url 'dashboard_guide' %}">- 이용가이드</a></li>
             </ul>
             <ul>
-                <li><a href="{% url 'dashboard_question' %}">- 고객센터</a></li>
+                <li id="contact_button"><a>- 고객센터</a></li>
             </ul>
             <ul>
                 <li><a href="{% url 'contact' %}">- 신고</a></li>
