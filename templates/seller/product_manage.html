@@ -108,8 +108,8 @@
                                     </li>
                                     <div class="circle-mask2">
                                         <div class="circle-mask2-text">
-                                            <span style="font-size:1.3em;">{{ item.unit_price }}</span>
-                                            <span style="font-size:1em;">원</span>
+                                            <span style="font-size:1em;">{{ item.unit_price }}</span>
+                                            <span style="font-size:0.8em;">원</span>
                                         </div>
                                     </div>
                                 </ul>
@@ -156,6 +156,8 @@
                                 <div class="approval_status">
                                     {% if item.product_status == 'ready' %}
                                         승인중
+                                    {% elif item.product_status == 'rejected' %}
+                                        승인거절
                                     {% else %}
                                         승인완료
                                     {% endif %}
