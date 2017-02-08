@@ -24,6 +24,29 @@
     <script type="text/javascript" src="{% static 'js/highcharts/solid-gauge.src.js' %}"></script>
     <script type="text/javascript">
         $(function () {
+            $( "#slider-range" ).slider({
+            range: true,
+            min: {{ high_low.1 }},
+            max: {{ high_low.0 }},
+            values: [ {{ high_low.1 }}, {{ high_low.0 }} ],
+            slide: function( event, ui ) {
+                $( "#amount" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
+                var first_span  = parseInt($(this).find('span').eq(0).css("left"))-10;
+                var second_span  = parseInt($(this).find('span').eq(1).css("left"))-50-first_span;
+                first_span = first_span+"px";
+                second_span = second_span+"px";
+                $("#first_span_val").text(ui.values[0]).css("margin-left", first_span);
+                $("#first_span_val").digits();
+                $("#second_span_val").text(ui.values[1]).css("margin-left", second_span);
+                $("#second_span_val").digits();
+                filter_ajax(ui.values[0],ui.values[1]);
+                }
+            });
+            $("#first_span_val").text({{ high_low.1 }}).css("margin-left", -10);
+            $("#first_span_val").digits();
+            $("#second_span_val").text({{ high_low.0 }}).css("margin-left", 100);
+            $("#second_span_val").digits();
+
             $('.sort').on('click', function () {
                 $('.sort').removeClass('active');
                 $(this).addClass('active');

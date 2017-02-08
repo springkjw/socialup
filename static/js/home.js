@@ -130,32 +130,15 @@ $(document).ready(function(){
     $('.cash .cash-price').digits();
     /* range part */
     $( function() {
-        $( "#slider-range" ).slider({
-            range: true,
-            min: 0,
-            max: 30,
-            values: [ 0, 30 ],
-            slide: function( event, ui ) {
-                $( "#amount" ).val(ui.values[ 0 ] + "만원" + " - " + ui.values[ 1 ] +"만원");
-                var first_span  = parseInt($(this).find('span').eq(0).css("left"))-10;
-                var second_span  = parseInt($(this).find('span').eq(1).css("left"))-50-first_span;
-                first_span = first_span+"px";
-                second_span = second_span+"px";
-                $("#first_span_val").text(ui.values[0]+"만원").css("margin-left", first_span);
-                $("#second_span_val").text(ui.values[1]+"만원").css("margin-left", second_span);
-                filter_ajax(ui.values[0],ui.values[1]);
-            }
-        });
-        $("#first_span_val").text(0+"만원").css("margin-left", -10);
-        $("#second_span_val").text(30+"만원").css("margin-left", 100);
+
     });
     /* tag part start */
     tag_func();
 });
 
 function filter_ajax(min, max){
-    var real_min = min*10000;
-    var real_max = max*10000;
+    var real_min = min;
+    var real_max = max;
     $('#loading').css("display", "block");
     setTimeout(function() {
         $.ajax({url: "/", success: function(result){
