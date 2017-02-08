@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from .models import MyUser, Seller, SellerAccount
 from .forms import ChangeForm, ChangeSellerForm, ChangeSellerAccountForm
@@ -10,7 +11,7 @@ from billing.models import OrderItem, Order
 from markets.models import Product
 
 
-
+@login_required
 def dashboard(request):
     user = MyUser.objects.get(id=request.user.id)
 
@@ -50,6 +51,7 @@ address_list=(
 address_list=[ "서울", "경기", "인천", "강원", "경남", "경북", "전북",
                "전남", "제주", "충북", "충남", "기타"]
 
+@login_required
 def change_info(request):
     user = MyUser.objects.get(id=request.user.id)
     form = ChangeForm()

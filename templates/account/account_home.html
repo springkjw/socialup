@@ -3,7 +3,7 @@
 {% load producttags %}
 <script type="text/javascript">
     $(function () {
-        $('#contact_button').on('click', function () {
+        $('.contact_button').on('click', function () {
             // 관리자 계정(또는 1:1상담 받을 계정)으로 연결. 2번째, 3번째, 4번째 파라미터를 관리자 계정 정보로 넣고 주석 해제하기
             startMessage('{{ user.id }}', '{{ user.id|cs_admin_user_id }}', '{{ user.id|cs_admin_user_short_name }}', '{{ user.id|cs_admin_user_avatar }}');
         });
@@ -21,7 +21,7 @@
                     <p>SNS 운영자라면 판매자로 등록할 수 있습니다.</p>
                     <p>적합한 포스팅 구매자와 빠르고 간편하게 거래할 수 있습니다.</p>
                 </div>
-                <a href="{% url 'product_upload' %}" class="dashboard-register-seller-button">상품 등록</a>
+                  <a href="{% url 'product_upload' %}" class="dashboard-register-seller-button">상품 등록</a>
             </div>
         {% endif %}
         <div class="dashboard-menu">
@@ -68,10 +68,10 @@
                                 </div>
                             </a>
                         </td>
-                        <td>
-                            <div id="contact_button" style="height:100%;width:100%">
+                        <td class="contact_button">
+                            <a>
                                 고객센터<i class="fa fa-angle-right"></i>
-                            </div>
+                            </a>
                         </td>
                     </tr>
                 </tbody>
