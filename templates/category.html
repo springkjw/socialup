@@ -30,14 +30,12 @@
                 }
             });
 
-            // tag 클릭 때마다 ajax호출로 수정필요
             $('#tag_navigation').on('change', function () {
                 var checked_tags = [];
                 var checked_clicked = $('input[name=tag]:checked').next().find('.tag_image_clicked').get();
                 checked_clicked.forEach(function(val){
                     checked_tags.push(jQuery(val).parent().prev().attr('value'));
                 });
-                // checked_tags 수정필요
 
                 $.ajax({
                     url: window.location.pathname,
@@ -45,7 +43,6 @@
                         checked_tags: JSON.stringify(checked_tags)
                     },
                     success: function (data) {
-                        console.log(data['product_ids_by_tags']);
                         if(data['checked_tags'].length ==0){
                             $('.list-card').each(function () {
                                 $(this).show();

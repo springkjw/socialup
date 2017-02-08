@@ -25,7 +25,6 @@
                 {% autoescape off %}
                 var counts = [0,0,0,0,0,0];
                 {% for order_item in order_items  %}
-                    var counts = [0,0,0,0,0,0];
                     var temp = '{{ order_item.status }}'
                     if(temp=='paid'){
                         counts[0]++;
