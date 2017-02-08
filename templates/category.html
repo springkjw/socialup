@@ -30,6 +30,12 @@
                 }
             });
 
+            $('.header_navigation li a').each(function(){
+                if($(this).text().trim()=='{{ category }}'){
+                    $(this).parent().addClass('active');
+                }
+            });
+
             $('#tag_navigation').on('change', function () {
                 var checked_tags = [];
                 var checked_clicked = $('input[name=tag]:checked').next().find('.tag_image_clicked').get();
@@ -146,7 +152,7 @@
                     <label for="etc_checkbox">
                         <img class="tag_image_before_click" src="/static/img/new_tags/etc.png">
                         <img class="tag_image_clicked" src="/static/img/new_tags/etc_click.png">
-                        <span>여행,취미</span>
+                        <span>기타</span>
                     </label>
                 </div>
             </div>

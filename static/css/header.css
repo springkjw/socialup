@@ -250,10 +250,15 @@ _:-ms-lang(x), #header_tnb > a#login{
 .header_navigation ul li{
     float:left;
     width:20%;
+    height:34px;
     margin-top:24px;
     font-size: 13px;
     font-weight:400;
     text-align: center;
+}
+
+.header_navigation ul .active{
+    border-bottom: 2px solid #648efc;
 }
 
 .header_navigation ul li button {
