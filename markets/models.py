@@ -143,7 +143,7 @@ class Product(models.Model):
     reject_reason = models.CharField(max_length=255, null=True, blank=True)
 
     # 단가
-    unit_price = models.PositiveIntegerField(default=0)
+    unit_price = models.DecimalField(max_digits=12, decimal_places=10, default=0)
 
     # 소셜업 게이지
     socialup_gauge = models.PositiveIntegerField(default=0)
