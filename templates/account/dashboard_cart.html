@@ -114,13 +114,13 @@
                                     </li>
                                     <div class="circle-mask2">
                                         <div class="circle-mask2-text">
-                                            <span style="font-size:1.3em;">{{ cartitem.0.item.unit_price }}</span>
-                                            <span style="font-size:1em;">원</span>
+                                            <span style="font-size:1.2em;">{{ cartitem.0.item.unit_price }}</span>
+                                            <span style="font-size:0.9em;">원</span>
                                         </div>
                                     </div>
                                 </ul>
                                 <div class="cash">
-                                    <span class="cash-price" style="font-size:1em; color:grey;" data-price="{{ cartitem_product.1.price }}">
+                                    <span class="cash-price" style="color:grey;" data-price="{{ cartitem_product.1.price }}">
                                         <span class="item-money">{{ cartitem.0.item.price }}</span>원
                                         {% if cartitem.0.item.manuscript_price > 0 or cartitem.0.item.highrank_price > 0 %}
                                             ~
