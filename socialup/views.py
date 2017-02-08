@@ -26,10 +26,15 @@ def home(request):
     # 가격순
     products_by_price = Product.objects.all().active().order_by('-price')[:20]
 
+    highest_price = products_by_price[0].price
+    lowest_price = products_by_price.reverse()[0].price
+    high_low =[highest_price, lowest_price]
+
     context = {
         "products_rating": products_by_rating,
         "products_created": products_by_created,
         "products_price": products_by_price,
+        "high_low":high_low,
     }
 
     return render(request, template, context)
@@ -87,12 +92,20 @@ def product_category(request, category):
     # 가격순
     products_by_price = products.active().order_by('-price')
 
+    highest_price = products_by_price[0].price
+    lowest_price = products_by_price.reverse()[0].price
+    if highest_price == lowest_price:
+        high_low =[highest_price, 0]
+    else:
+        high_low =[highest_price, lowest_price]
+
     template = 'category.html'
     context = {
         "category": category_name,
         "products_rating": products_by_rating,
         "products_created": products_by_created,
         "products_price": products_by_price,
+        "high_low": high_low,
     }
 
     return render(request, template, context)
