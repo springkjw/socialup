@@ -688,7 +688,7 @@ _:-ms-lang(x), .content .product-top .seller-info .seller-img img {
 }
 
 .info-right .product-sub-info .title {
-    width: 40%;
+    width: 50%;
     text-align: center;
     line-height: 45px;
     float: left;
@@ -938,6 +938,7 @@ li:nth-child(5) .circle-text {
 
 .product-category .product-category-text{
     color:#aeaace;
+    font-size:12px;
 }
 
 

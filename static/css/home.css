@@ -711,7 +711,7 @@ _:-ms-lang(x), .circle-mask2-text {
     width:80%;
     height:65%;
     margin-left:10%;
-    margin-top:1.5%;
+    margin-top:1em;
     background-color: white;
 }
 
@@ -746,7 +746,7 @@ _:-ms-lang(x), .circle-mask2-text {
 }
 
 #tag_navigation_wrapper #tag_navigation .tag_wrapper:nth-child(1) {
-    margin-top:50px;
+    margin-top:40px;
     left:0%;
 }
 
