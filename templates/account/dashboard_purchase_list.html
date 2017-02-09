@@ -224,6 +224,7 @@
                                                         판매자와의 대화
                                                     </button>
                                                 </li>
+                                                {% if order_item.status_in_korean == '작업대기' %}
                                                 <li>
                                                     <form method="POST" action="{% url 'purchase_list' %}">{% csrf_token %}
                                                         <input type="hidden" name="is_status_change" value="true"/>
@@ -232,6 +233,8 @@
                                                         <input class="detail_bottom_btn" type="submit" value="구매취소"/>
                                                     </form>
                                                 </li>
+                                                {% endif %}
+                                                {% if order_item.status_in_korean == '작업대기' or order_item.status_in_korean == '작업진행' or order_item.status_in_korean == '작업완료' %}
                                                 <li>
                                                     <form method="POST" action="{% url 'purchase_list' %}">{% csrf_token %}
                                                         <input type="hidden" name="is_status_change" value="true"/>
@@ -240,6 +243,7 @@
                                                         <input class="detail_bottom_btn" type="submit" value="구매확정"/>
                                                     </form>
                                                 </li>
+                                                {% endif %}
                                             </ul>
                                         </div>
                                     </div>

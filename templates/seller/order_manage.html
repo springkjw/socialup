@@ -194,6 +194,7 @@
                                                         구매자와의 대화
                                                     </button>
                                                 </li>
+                                                {% if order_item.status_in_korean == '작업대기' %}
                                                 <li>
                                                     <form method="POST" action="{% url 'product_order_manage' %}">{% csrf_token %}
                                                         <input type="hidden" name="is_status_change" value="true"/>
@@ -202,6 +203,8 @@
                                                         <input class="detail_bottom_btn" type="submit" value="작업진행"/>
                                                     </form>
                                                 </li>
+                                                {% endif %}
+                                                {% if order_item.status_in_korean == '작업진행' %}
                                                 <li>
                                                     <form method="POST" action="{% url 'product_order_manage' %}">{% csrf_token %}
                                                         <input type="hidden" name="is_status_change" value="true"/>
@@ -210,14 +213,17 @@
                                                         <input class="detail_bottom_btn" type="submit" value="작업완료"/>
                                                     </form>
                                                 </li>
+                                                {% endif %}
+                                                {% if order_item.status_in_korean == '작업대기' or order_item.status_in_korean == '작업진행' %}
                                                 <li>
                                                     <form method="POST" action="{% url 'product_order_manage' %}">{% csrf_token %}
                                                         <input type="hidden" name="is_status_change" value="true"/>
-                                                        <input type="hidden" name="new_status" value="refunded"/>
+                                                        <input type="hidden" name="new_status" value="request_refund"/>
                                                         <input type="hidden" name="order_item" value="{{ order_item }}"/>
                                                         <input class="detail_bottom_btn" type="submit" value="작업취소"/>
                                                     </form>
                                                 </li>
+                                                {% endif %}
                                             </ul>
                                         </div>
                                     </div>
