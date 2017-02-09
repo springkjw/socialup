@@ -706,10 +706,11 @@ li:nth-child(5) .circle-text {
 }
 
 .cash{
-  position:relative;
-  width:75%;
-    height: 7%;
-  padding-top:3%;
+    position:relative;
+    width:125px;
+    height:25px;
+    display: table-cell;
+    vertical-align: middle;
   border:1px solid grey;
   border-radius:15px;
   text-align:center;
