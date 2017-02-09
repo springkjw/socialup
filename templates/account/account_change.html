@@ -57,15 +57,15 @@
                 기본정보
                 <div class="base_info">
                     <div class="base_info_image">
-                        <img src="{{ user.get_avatar }}">
-                        <!--<div class="add_image"><i class="fa fa-plus" aria-hidden="true"></i></div>-->
+                        <img class="add_image" src="{{ user.get_avatar }}">
+                        <input type="text" name="name" value="{{ request.user.name }}"/>
                     </div>
                     <div class="base_info_basic">
                         <div class="base_info_basic_content name">
                             <div class="base_info_basic_content title">
                                 이름
                             </div>
-                            <input type="text" name="name" value="{{ request.user.name }}"/>
+                            <input id="id_media" name="media" type="file">
                         </div>
                         <div class="base_info_basic_content birth_year">
                             <div class="base_info_basic_content title">
