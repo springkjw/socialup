@@ -741,7 +741,8 @@ _:-ms-lang(x), .circle-mask2-text {
     display: inline-block;
     position:relative;
     font-size: 13px;
-    width:18%;
+    width:12%;
+    margin: 0 3%;
     text-align: center;
 }
 
@@ -769,6 +770,7 @@ _:-ms-lang(x), .circle-mask2-text {
 
 #tag_navigation_wrapper #tag_navigation .tag_wrapper:nth-child(7) {
     left:0%;
+    margin-top: 2%;
 }
 
 #tag_navigation_wrapper #tag_navigation .tag_wrapper:nth-child(8) {
@@ -789,7 +791,7 @@ _:-ms-lang(x), .circle-mask2-text {
 
 #tag_navigation_wrapper #tag_navigation .tag_wrapper label img{
     vertical-align: middle;
-    width:30%;
+    width:38%;
 }
 
 #tag_navigation_wrapper #tag_navigation .tag_wrapper label span{
@@ -815,4 +817,25 @@ _:-ms-lang(x), .circle-mask2-text {
 }
 .new_jumbotron .owl-theme .owl-controls .owl-buttons div i{
     font-size: 1.5em;
+}
+
+
+@media screen and (min-width:2000px) {
+  #tag_navigation_wrapper #tag_navigation .tag_wrapper:nth-child(1) {
+    margin-top:2%;
+    }
+    #tag_navigation_wrapper #tag_navigation .tag_wrapper:nth-child(7) {
+    margin-top: 1px;
+    }
+}
+
+@media screen and (max-width:1145px) {
+    #tag_navigation_wrapper #tag_navigation .tag_wrapper{
+        width:15%;
+        margin: 0 1%;
+    }
+
+    #tag_navigation_wrapper #tag_navigation .tag_wrapper img{
+        width:35%;
+    }
 }

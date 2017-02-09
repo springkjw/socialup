@@ -366,11 +366,13 @@ function check_tags_for_hover(){
     });
     unchecked_before_clicked.forEach(function(val){
         jQuery(val).css({'display':'inline-block'});
+        jQuery(val).parent().parent().css('border', 'none');
     });
     checked_before_clicked.forEach(function(val){
         jQuery(val).css({'display':'none'});
     });
     checked_clicked.forEach(function(val){
         jQuery(val).css({'display': 'inline-block'});
+        jQuery(val).parent().parent().css('border-bottom', '1px solid #648efc');
     });
 }
