@@ -50,7 +50,7 @@ class ProductForm(forms.ModelForm):
             ), required=False
         )
         self.fields['oneline_intro'] = forms.CharField(widget=forms.TextInput(
-            attrs={'placeholder':'SNS특징을 30자 이내로 써주세요.'
+            attrs={'placeholder':'SNS특징을 26자 이내로 써주세요.'
         }))
         self.fields['message_to_admin'] = forms.CharField(widget=forms.Textarea(
             attrs={'placeholder': '구매자에겐 보이지 않습니다.','cols':'95'

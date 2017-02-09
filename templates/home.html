@@ -44,7 +44,7 @@
             });
             $("#first_span_val").text({{ high_low.1 }}).css("margin-left", -10);
             $("#first_span_val").digits();
-            $("#second_span_val").text({{ high_low.0 }}).css("margin-left", 100);
+            $("#second_span_val").text({{ high_low.0 }}).css("margin-left", 80);
             $("#second_span_val").digits();
 
             $('.sort').on('click', function () {
@@ -233,6 +233,35 @@
                             <a href="{{ product.get_absolute_url }}"
                                class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}">
                                 <div class="card-main-info" data-type="{{ product.sns_type }}" data-color="{{ product.sns_type_color }}">
+                                    {% if product.manuscript_available %}
+                                        <span class="card_manuscript_option separate">원고료 별도</span>
+                                    {% else %}
+                                        <span class="card_manuscript_option">원고료 포함</span>
+                                    {% endif %}
+                                    {% if product.sns_type == 'facebook' %}
+                                        <div class="card_sns_option">
+                                            {% if product.sns_additional_info == 'individual' %}
+                                                개인
+                                            {% else %}
+                                                페이지
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                    {% if product.sns_type == 'instagram' %}
+                                        <div class="card_sns_option">
+                                            {% if product.sex == 'female' %}
+                                                여성
+                                            {% else %}
+                                                남성
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                    {% if product.sns_type == 'blog' and product.highrank_available %}
+                                        <div class="card_sns_option blog">
+                                            상위노출
+                                        </div>
+                                    {% endif %}
+
                                   <div class="card-type">
                                     <img class="product-type-image" src="{{ product.sns_type_image_url }}" alt="{{ product.sns_type }}" />
                                   </div>
@@ -285,14 +314,16 @@
                                     <div class="card-author">
                                         <div class="card-author-info">
                                             <img src="{{ product.seller.user.get_avatar }}" >
-                                            <span>{{ product.seller }}</span>
                                         </div>
-                                        <div class="card-author-info-rating" data-rating="{{ product.rating }}">
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                        <div class="card-author-info-seller-rating">
+                                            <div class="card-author-info-seller">{{ product.seller }}</div>
+                                            <div class="card-author-info-rating" data-rating="{{ product.rating }}">
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

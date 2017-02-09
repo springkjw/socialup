@@ -9,7 +9,7 @@ body {
 .content .product-top {
     position: relative;
     width: 830px;
-    height: 825px;
+    height: 865px;
     margin: 0 auto;
 }
 
@@ -958,10 +958,11 @@ li:nth-child(5) .circle-text {
     height:100%;
 }
 
+.product-sns .product-sns-image {
+    vertical-align: bottom;
+}
+
 .product-sns .product-sns-text{
-    /*position:relative;
-    left:16%;
-    top:20%;*/
     color:#868686;
     font-weight:bold;
 }
@@ -969,6 +970,12 @@ li:nth-child(5) .circle-text {
 .product-sns .product-sns-text.open{
     color:#648efc;
     background: none;
+}
+
+.product-sns .product-sns-text.close {
+    cursor:none;
+    background: none;
+    margin-top:15px;
 }
 
 .product-sns a{
