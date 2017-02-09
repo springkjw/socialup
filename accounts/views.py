@@ -7,6 +7,7 @@ from .models import MyUser, Seller, SellerAccount
 from .forms import ChangeForm, ChangeSellerForm, ChangeSellerAccountForm
 from django.contrib.auth import authenticate, login
 
+from reviews.models import ProductReview
 from billing.models import OrderItem, Order
 from markets.models import Product
 
@@ -176,10 +177,21 @@ def account_detail(request, seller_id):
 
     order_item_count = OrderItem.objects.filter(seller=seller, status='finished').count()
     selling_products = Product.objects.filter(seller=seller, product_status="now_selling")
+    review_count = 0
+    for product in selling_products:
+        temp = ProductReview.objects.filter(product=product)
+        if temp:
+            review_count = review_count + 1
 
+    is_seller_none = False
+    if (len(seller.description)==0) and (seller.user.sex is None) \
+            and (seller.user.birth_year is None) and (len(seller.user.address)==0) and (len(seller.user.job)==0):
+        is_seller_none = True
     context={
         "seller":seller,
         "order_item_count":order_item_count,
-        "selling_products":selling_products
+        "selling_products":selling_products,
+        "is_seller_none": is_seller_none,
+        "review_count": review_count
     }
     return render(request, template, context)

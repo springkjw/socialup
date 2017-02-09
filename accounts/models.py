@@ -101,6 +101,9 @@ class MyUser(AbstractBaseUser):
         else:
             return self.email.split('@')[0]
 
+    def get_email_id(self):
+        return self.email.split('@')[0]
+
     @property
     def is_staff(self):
         return self.is_admin
@@ -343,6 +346,11 @@ class Seller(models.Model):
     def get_absolute_url(self):
         return reverse('account_detail', kwargs={"seller_id": self.id})
 
+    def type_in_korean(self):
+        type_in_korean = {"individual": "개인",
+                          "personal_business": "개인사업자",
+                          "corporate_business": "법인사업자",}
+        return type_in_korean[self.type]
 
 # new seller created
 # def new_seller_receiver(sender, instance, created, *args, **kwargs):

@@ -28,9 +28,9 @@
                         <img src="{{ seller.user.get_avatar }}">
                     </div>
                     <div class="seller_name_type">
-                        <div class="seller_name">{{ seller.user.name }}</div>
+                        <div class="seller_name">{{ seller.user.get_email_id }}</div>
                         <div class="seller_type">
-                            {{ seller.type }}
+                            {{ seller.type_in_korean }}
                         </div>
                         <div class="ask_to_seller">
                             <button class="ask_to_seller_btn" data-id="{{ user.id }}"
@@ -43,13 +43,21 @@
                 </div>
                 <div class="detail_content_top_right">
                     <div class="seller_info">
+                        {% if is_seller_none %}
                         <div class="seller_basic_info">
-                            {{ seller.user.sex }} / {{ seller.user.birth_year }}년
-                            / {{ seller.user.address }} / {{ seller.user.job }}
+                            입력된 자기소개가 없습니다.
                         </div>
                         <div class="seller_description">
-                            {{ seller.description }}
                         </div>
+                        {% else %}
+                        <div class="seller_basic_info">
+                            {{ seller.user.sex|replace_dash }} / {{ seller.user.birth_year|replace_dash }}년
+                            / {{ seller.user.address|replace_dash }} / {{ seller.user.job|replace_dash }}
+                        </div>
+                        <div class="seller_description">
+                            {{ seller.description|replace_dash }}
+                        </div>
+                        {% endif %}
                     </div>
                     <div class="seller_category">
                         <div class="seller_category_each">
@@ -80,8 +88,8 @@
                         <i class="fa fa-star" aria-hidden="true"></i>
                         <i class="fa fa-star" aria-hidden="true"></i>
                     </div>
-                    <div style="text-align:center;">
-                        {{ seller.rating }}/5 (345개)
+                    <div class="seller_rating_ratio" data-rating={{ seller.rating }}>
+                        <span id="rating-num">{{ seller.rating }}</span>/5 ({{ review_count }}개)
                     </div>
                 </div>
                 <div class="detail_content_mid_right">

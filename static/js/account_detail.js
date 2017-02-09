@@ -3,7 +3,6 @@ $(document).ready(function() {
     /* rating part */
     var seller_rating_ele = $('.seller-rating');
     var rating = Math.round(seller_rating_ele.attr('data-rating'));
-    console.log(rating);
     for(var i=0; i<rating; i++) {
         $(seller_rating_ele.find('i')).each(function(j) {
             if(i == j) {
@@ -49,4 +48,9 @@ $(document).ready(function() {
             $(this).find('.circle-wrapper .circle-arrow').css({'position':'relative', 'left':'106px', 'top':'43px', 'transform': 'rotate(160deg)'});
         }
     });
+
+    var temp = $('.seller_rating_ratio').attr('data-rating');
+    console.log(temp);
+    temp = Math.round(temp)
+    $('#rating-num').text(temp);
 });
