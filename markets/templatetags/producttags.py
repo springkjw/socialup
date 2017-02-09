@@ -77,6 +77,13 @@ def user_purchase_count(user_id):
 def multi_minus(amount):
     return amount * -1
 
+@register.filter(name='replace_dash')
+def replace_dash(value):
+    if value is None or value=='':
+        return '-'
+    if isinstance(value, int) or isinstance(value, unicode):
+        return value
+
 
 # @register.simple_tag 를 쓰려 했으나 작동 안되어서 @register.filter 장식자를 붙이고 불필요한 user_id 파라메터를 받고 세개의 메소드로 나눠서 작성. 작동엔 문제없지만 수정되면 좋겠음.
 # 고객센터, 1:1 문의 부분. 메세지 받을 계정이 바뀌면 email부분을 수정하면 됨.

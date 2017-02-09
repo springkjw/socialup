@@ -53,6 +53,9 @@
 .detail_content_wrapper_top .detail_content_top_left .seller_name_type .seller_type{
     display: inline-block;
     border: 1px solid black;
+    padding:2px 6px;
+    font-size:12px;
+    font-weight: 500;
 }
 
 .detail_content_wrapper_top .detail_content_top_left .seller_name_type .ask_to_seller{
@@ -145,6 +148,12 @@
 
 .detail_content_wrapper_mid .detail_content_mid_left .seller-rating .fa {
     color: #FEDD43;
+}
+
+.detail_content_wrapper_mid .detail_content_mid_left .seller_rating_ratio{
+    text-align: center;
+    font-size: 15px;
+    font-weight:500;
 }
 
 .detail_content_wrapper_mid .detail_content_mid_right{
