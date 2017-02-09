@@ -301,7 +301,7 @@
 .list-card {
     float: left;
     width: 23%;
-    height: 265px;
+    height: 285px;
     background: white;
     margin-right: 18px;
     padding-bottom: 10px;
@@ -360,7 +360,36 @@
     height: 172px;
 }
 
+.list-card .card-main-info .card_manuscript_option {
+    position: absolute;
+    font-size: 10px;
+    padding:2px;
+    border:1px solid black;
+    font-weight: 300;
+    top:0;
+    right:0;
+}
+
+.list-card .card-main-info .card_manuscript_option.separate {
+    background-color: #888;
+    color:white;
+    border:1px solid #888;
+}
+.list-card .card-main-info .card_sns_option{
+    width:28px;
+    position:absolute;
+    text-align: center;
+    font-size: 10px;
+    border:1px solid #888;
+}
+
+.list-card .card-main-info .card_sns_option.blog {
+    width:40px;
+    left:8px;
+}
+
 .list-card .card-main-info .card-type {
+    margin-top: 13px;
     position: relative;
 		float: left;
 }
@@ -371,9 +400,9 @@
 }
 
 .list-card .card-main-info {
-    height: 180px;
+    height: 200px;
     /*width: 266px;*/
-    padding: 15px 15px 20px 15px;
+    padding: 20px 15px 15px 15px;
     /*text-align: center;*/
 }
 
@@ -382,6 +411,7 @@
     font-weight: 600;
     height:3em;
     text-align:center;
+    margin-top:15px;
     line-height: 20px;
     color: #333;
     z-index: 10;
@@ -414,7 +444,7 @@
 
 .list-card .card-info {
     height: 46px;
-    padding: 10px 15px 0px 15px;
+    padding: 5px 15px 5px 15px;
     margin-top: 3px;
     font-size: 12px;
     font-weight: 600;
@@ -430,12 +460,12 @@
     /*position: absolute;*/
     /*bottom: 10px;*/
     width: 100%;
-    background: #D2D2D2;
+    background: #F2F2F2;
 }
 
 .list-card .card-author img {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
 }
 
@@ -446,12 +476,22 @@
 }
 
 .list-card .card-author .card-author-info {
-    float: left;
+    width:40%;
+    float:left;
+}
+
+.list-card .card-author .card-author-info-seller-rating {
+    display: inline-block;
+    width:60%;
+    text-align: center;
+}
+
+.list-card .card-author .card-author-info-seller {
 }
 
 .list-card .card-author .card-author-info-rating {
-    float: right;
-    margin-top: 8px;
+    display: inline-block;
+    margin-top: 4px;
     /*right: 30px;*/
     /*position: absolute;*/
 }
@@ -483,7 +523,7 @@
 .circle-wrapper{
 	width:300px;
 	height:150px;
-    margin-top:5px;
+    margin-top:15px;
     margin-left:5px;
 	/*background-color:grey;*/
 }
