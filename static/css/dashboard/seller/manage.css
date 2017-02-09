@@ -485,12 +485,12 @@
 }
 
 .delete-confirm-modal .delete-confirm-modal-content{
-    margin-top:15%;
+    margin-top:45px;
     font-size:18px;
 }
 
 .delete-confirm-modal .delete-confirm-modal-btns{
-    margin-top:15%;
+    margin-top:35px;
 }
 
 .delete-confirm-modal .delete-confirm-modal-btns .delete-confirm-modal-btn{
