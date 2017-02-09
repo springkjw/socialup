@@ -210,6 +210,17 @@ $('#product-upload-form input').on('change', function() {
     check_sns_type_for_display();
 });
 
+function check_facebook_type_for_display(){
+    if($('#id_sns_additional_info_1').is(":checked")){
+        $('.product-upload-sub.follower_friends_num').css('display','none');
+    }else{
+        $('.product-upload-sub.follower_friends_num').css('display','inline');
+    }
+}
+
+$('#product-upload-form .product-upload-info.additional_info input').on('change', function() {
+    check_facebook_type_for_display();
+});
 
 
 $(function () {
