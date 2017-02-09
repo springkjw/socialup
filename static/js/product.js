@@ -268,8 +268,8 @@ $('.final_edit').on('click', function() {
 
 /* product_upload len check */
 $('#id_oneline_intro').on('keyup', function() {
-    if($(this).val().length > 60) {
-        alert('한줄소개는 30자이내로 입력해주세요.')
-        $(this).val($(this).val().substring(0, 60));
+    if($(this).val().length > 52) {
+        alert('한줄소개는 26자이내로 입력해주세요.')
+        $(this).val($(this).val().substring(0, 52));
     }
 });
