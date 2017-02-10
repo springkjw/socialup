@@ -251,6 +251,7 @@ function set_input_value(selector, new_val){
     $(selector).val(new_val);
 }
 
+/* product_edit confirm */
 $("#dialog-confirm2").dialog({
     resizable: false,
     height:190,
@@ -258,12 +259,6 @@ $("#dialog-confirm2").dialog({
     width: 330,
     modal: true,
     buttons: [
-        {
-            text: "닫기",
-            click: function() {
-                $(this).dialog("close");
-            }
-        },
         {
             text: "확인",
             click: function() {
