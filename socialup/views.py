@@ -92,8 +92,12 @@ def product_category(request, category):
     # 가격순
     products_by_price = products.active().order_by('-price')
 
-    highest_price = products_by_price[0].price
-    lowest_price = products_by_price.reverse()[0].price
+    try:
+        highest_price = products_by_price[0].price
+        lowest_price = products_by_price.reverse()[0].price
+    except IndexError:
+        highest_price = 10000
+        lowest_price = 0
     if highest_price == lowest_price:
         high_low =[highest_price, 0]
     else:

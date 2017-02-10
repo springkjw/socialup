@@ -32,10 +32,13 @@
         </div>
     </div>
     <div class="user-money">
-        <h2>포인트</h2>
-        <h3>{{ user.point }}원</h3>
+        <div class="point-wrapper">
+            <h2><span class="user-money-type">포인트</span> <span class="user-money-value"><span class="user-money-number">{{ user.point }}</span>원</span></h2>
+        </div>
         <hr>
-        <h2 class="side-mileage">{{ user.mileage }}적립금</h2>
+        <div class="mileage-wrapper">
+            <h2><span class="user-money-type">적립금</span> <span class="user-money-value"><span class="user-money-number">{{ user.mileage }}</span>원</span></h2>
+        </div>
         <div class="user-money-button">
             <a href="{% url 'point_charge' %}" class="money-charge">충전하기</a>
             <a href="{% url 'point_history' %}" class="money-history">충전내역</a>

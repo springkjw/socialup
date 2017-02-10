@@ -1,7 +1,7 @@
 $(function() {
-    $('.dashboard-side .user-money h3').digits();
+    $('.dashboard-side .user-money-number').digits();
     $('.dashboard-point').digits();
-    
+
 });
 
 $.fn.digits = function(){

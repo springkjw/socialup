@@ -10,7 +10,6 @@
     <script type="text/javascript" src="{% static 'js/home.js' %}"></script>
     <script type="text/javascript">
         $(function () {
-            console.log('{{ high_low }}');
             $( "#slider-range" ).slider({
             range: true,
             min: {{ high_low.1 }},
@@ -188,27 +187,19 @@
     <div class="container">
         <div class="special-service">
             <div class="special-info">
-                {% if message %}
-                    <div class="special-title">
-                        <div class="special-subtitle">
-                            {{ message }}
-                        </div>
+                <div class="special-title">
+                    인기 {{ category }} 포스팅
+                    <div class="special-subtitle">
+                        * 소셜업 게이지란? 소셜업만의 알고리즘을 통해 SNS의 다양한 요소를 분석해 수치화 시킨 광고비 대비 효과 지수입니다.
                     </div>
-                {% else %}
-                    <div class="special-title">
-                        인기 {{ category }} 포스팅
-                        <div class="special-subtitle">
-                            * 소셜업 게이지란? 소셜업만의 알고리즘을 통해 SNS의 다양한 요소를 분석해 수치화 시킨 광고비 대비 효과 지수입니다.
-                        </div>
-                    </div>
-                    <div class="special-sort">
-                        <ul>
-                            <li class="sort active" data-type="sort_1">평점순</li>
-                            <li class="sort" data-type="sort_2">최신순</li>
-                            <li class="sort" data-type="sort_3">가격순</li>
-                        </ul>
-                    </div>
-                {% endif %}
+                </div>
+                <div class="special-sort">
+                    <ul>
+                        <li class="sort active" data-type="sort_1">평점순</li>
+                        <li class="sort" data-type="sort_2">최신순</li>
+                        <li class="sort" data-type="sort_3">가격순</li>
+                    </ul>
+                </div>
             </div>
             <div id="range-wrapper">
                 <div id="slider-range"></div>
@@ -219,54 +210,10 @@
                 <img src="{% static 'img/ajax-loader_mid.gif' %}">
             </div>
             <div class="special-list">
-                {% if message %}
-                    {% for product in products %}
-                        {% cycle '<div class="row">' '' '' '' %}
-                        <a href="{{ product.get_absolute_url }}"
-                           class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}">
-                            <div class="card-image">
-                                <div class="card-price">
-                                    {{ product.price }}&#8361;~
-                                </div>
-                                <div class="card-price-back"></div>
-                                {% if product.get_thumb_sd_url %}
-                                    <img src="{{ product.get_thumb_sd_url }}">
-                                {% else %}
-                                    <img src="{{ product.get_image_url }}">
-                                {% endif %}
-                            </div>
-                            <div class="card-info">
-                                <div class="card-title">
-                                    {{ product.title }}
-                                </div>
-                                <div class="card-subtitle">
-                                    {% for sns in product.sns_set.all %}
-                                        {% for item in sns.analytics.all %}
-                                            {{ item }} {{ item.outcome|round_count }}
-                                        {% endfor %}
-                                    {% endfor %}
-                                </div>
-                                <div class="card-author">
-                                    <div class="card-author-info">
-                                        {{ product.seller }}
-                                    </div>
-                                    <div class="card-author-info-rating" data-rating="{{ product.rating }}">
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-
-                        {% if products|length == forloop.counter %}
-                            </div>
-                        {% else %}
-                            {% cycle '' '' '' '</div>' %}
-                        {% endif %}
-                    {% endfor %}
+                {% if not products_rating %}
+                    <div class="no-list">
+                        아직 등록된 서비스가 없습니다.
+                    </div>
                 {% else %}
                     <div class="product-rating" style="display:block;">
                         {% for product in products_rating %}

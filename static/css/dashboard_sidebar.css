@@ -74,8 +74,9 @@
 }
 
 .dashboard-side .user-money {
-    height: 185px;
+    height: 170px;
     background: #648efc;
+    padding-top: 20px;
     padding-left: 20px;
     padding-right: 20px;
     color: white;
@@ -85,15 +86,6 @@
 .dashboard-side .user-money h2 {
     font-size: 15px;
     font-weight: 300;
-    padding-top: 13px;
-}
-
-.dashboard-side .user-money h2:nth-child(1) {
-    padding-top:20px;
-}
-
-_:-ms-lang(x), .dashboard-side .user-money h2:nth-child(1) {
-    padding-top:13px;
 }
 
 .dashboard-side .user-money h3 {
@@ -106,6 +98,7 @@ _:-ms-lang(x), .dashboard-side .user-money h2:nth-child(1) {
 .dashboard-side .user-money .user-money-button {
     margin-top: 20px;
     text-align: center;
+    clear: both;
 }
 
 .dashboard-side .user-money a {
@@ -172,13 +165,34 @@ _:-ms-lang(x), .dashboard-side .user-money h2:nth-child(1) {
     color: #777777;
 }
 
-.dashboard-side .user-money .side-mileage {
-    padding-top: 10px;
-}
-
-hr {
+.dashboard-side hr {
     width: 90%;
     height: 1px;
     background-color: #83a5fd;
     border: 0 none;
+}
+
+.dashboard-side .user-money .user-money-type {
+    float: left;
+    margin-top: 8px;
+}
+
+.dashboard-side .user-money .user-money-value {
+    float: right;
+}
+
+.dashboard-side .user-money .point-wrapper {
+    height: 30px;
+    margin-top: 10px;
+}
+
+.dashboard-side .user-money .mileage-wrapper {
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+.dashboard-side .user-money .user-money-number {
+    font-size: 25px;
+    font-weight: 600;
 }
