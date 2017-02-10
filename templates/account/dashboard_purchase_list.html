@@ -81,6 +81,12 @@
 
 {% block dashboard_content %}
     <div class="dashboard-content">
+        <div class="dialog-purchase-list decide" title="구매확정">
+            구매를 확정하시겠습니까?
+        </div>
+        <div class="dialog-purchase-list cancel" title="구매취소">
+            구매를 취소하시겠습니까?
+        </div>
         <div class="dashboard-nav">
             구매관리
         </div>
@@ -226,21 +232,21 @@
                                                 </li>
                                                 {% if order_item.status_in_korean == '작업대기' %}
                                                 <li>
-                                                    <form method="POST" action="{% url 'purchase_list' %}">{% csrf_token %}
+                                                    <form method="POST" action="{% url 'purchase_list' %}" class="order-item-cancel-from">{% csrf_token %}
                                                         <input type="hidden" name="is_status_change" value="true"/>
                                                         <input type="hidden" name="new_status" value="request_refund"/>
                                                         <input type="hidden" name="order_item" value="{{ order_item }}"/>
-                                                        <input class="detail_bottom_btn" type="submit" value="구매취소"/>
+                                                        <input class="detail_bottom_btn cancel" type="button" value="구매취소"/>
                                                     </form>
                                                 </li>
                                                 {% endif %}
                                                 {% if order_item.status_in_korean == '작업대기' or order_item.status_in_korean == '작업진행' or order_item.status_in_korean == '작업완료' %}
                                                 <li>
-                                                    <form method="POST" action="{% url 'purchase_list' %}">{% csrf_token %}
+                                                    <form method="POST" action="{% url 'purchase_list' %}" class="order-item-decide-from" >{% csrf_token %}
                                                         <input type="hidden" name="is_status_change" value="true"/>
                                                         <input type="hidden" name="new_status" value="finished"/>
                                                         <input type="hidden" name="order_item" value="{{ order_item }}"/>
-                                                        <input class="detail_bottom_btn" type="submit" value="구매확정"/>
+                                                        <input class="detail_bottom_btn decide" type="button" value="구매확정"/>
                                                     </form>
                                                 </li>
                                                 {% endif %}
@@ -418,19 +424,19 @@
                                                     </button>
                                                 </li>
                                                 <li>
-                                                    <form method="POST" action="{% url 'purchase_list' %}">{% csrf_token %}
+                                                    <form method="POST" action="{% url 'purchase_list' %}" class="order-item-cancel-from">{% csrf_token %}
                                                         <input type="hidden" name="is_status_change" value="true"/>
                                                         <input type="hidden" name="new_status" value="request_refund"/>
                                                         <input type="hidden" name="order_item" value="{{ order_item }}"/>
-                                                        <input class="detail_bottom_btn" type="submit" value="구매취소"/>
+                                                        <input class="detail_bottom_btn cancel" type="button" value="구매취소"/>
                                                     </form>
                                                 </li>
                                                 <li>
-                                                    <form method="POST" action="{% url 'purchase_list' %}">{% csrf_token %}
+                                                    <form method="POST" action="{% url 'purchase_list' %}" class="order-item-decide-from">{% csrf_token %}
                                                         <input type="hidden" name="is_status_change" value="true"/>
                                                         <input type="hidden" name="new_status" value="finished"/>
                                                         <input type="hidden" name="order_item" value="{{ order_item }}"/>
-                                                        <input class="detail_bottom_btn" type="submit" value="구매확정"/>
+                                                        <input class="detail_bottom_btn decide" type="button" value="구매확정"/>
                                                     </form>
                                                 </li>
                                             </ul>
@@ -599,7 +605,7 @@
                                         </div>
                                         <div class="table_product_detail_bottom">
                                             <ul>
-                                                <li style="margin-left:31%;">
+                                                <li>
                                                     <button class="detail_bottom_btn-talk" data-id="{{ order_item.cart_item.item.seller.user.id }}"
                                                         data-name="{{  order_item.cart_item.item.seller }}"
                                                         data-profile="{{  order_item.cart_item.item.seller.user.get_avatar }}">
@@ -607,11 +613,11 @@
                                                     </button>
                                                 </li>
                                                 <li>
-                                                    <form method="POST" action="{% url 'purchase_list' %}">{% csrf_token %}
+                                                    <form method="POST" action="{% url 'purchase_list' %}" class="order-item-decide-from">{% csrf_token %}
                                                         <input type="hidden" name="is_status_change" value="true"/>
                                                         <input type="hidden" name="new_status" value="finished"/>
                                                         <input type="hidden" name="order_item" value="{{ order_item }}"/>
-                                                        <input class="detail_bottom_btn" type="submit" value="구매확정"/>
+                                                        <input class="detail_bottom_btn decide" type="button" value="구매확정"/>
                                                     </form>
                                                 </li>
                                             </ul>
@@ -766,7 +772,7 @@
                                         </div>
                                         <div class="table_product_detail_bottom">
                                             <ul>
-                                                <li style="margin-left:31%;">
+                                                <li>
                                                     <button class="detail_bottom_btn-talk" data-id="{{ order_item.cart_item.item.seller.user.id }}"
                                                         data-name="{{  order_item.cart_item.item.seller }}"
                                                         data-profile="{{  order_item.cart_item.item.seller.user.get_avatar }}">
@@ -774,11 +780,11 @@
                                                     </button>
                                                 </li>
                                                 <li>
-                                                    <form method="POST" action="{% url 'purchase_list' %}">{% csrf_token %}
+                                                    <form method="POST" action="{% url 'purchase_list' %}" class="order-item-decide-from">{% csrf_token %}
                                                         <input type="hidden" name="is_status_change" value="true"/>
                                                         <input type="hidden" name="new_status" value="finished"/>
                                                         <input type="hidden" name="order_item" value="{{ order_item }}"/>
-                                                        <input class="detail_bottom_btn" type="submit" value="구매확정"/>
+                                                        <input class="detail_bottom_btn decide" type="button" value="구매확정"/>
                                                     </form>
                                                 </li>
                                             </ul>
@@ -1026,7 +1032,7 @@
                                         </div>
                                         <div class="table_product_detail_bottom">
                                             <ul>
-                                                <li style="margin-left:31%">
+                                                <li>
                                                     <button class="detail_bottom_btn-talk" data-id="{{ order_item.cart_item.item.seller.user.id }}"
                                                         data-name="{{  order_item.cart_item.item.seller }}"
                                                         data-profile="{{  order_item.cart_item.item.seller.user.get_avatar }}">
@@ -1164,7 +1170,7 @@
                                     </div>
                                     <div class="table_product_detail_bottom">
                                         <ul>
-                                            <li style="margin-left:31%">
+                                            <li>
                                                 <button class="detail_bottom_btn-talk" data-id="{{ order_item.cart_item.item.seller.user.id }}"
                                                     data-name="{{  order_item.cart_item.item.seller }}"
                                                     data-profile="{{  order_item.cart_item.item.seller.user.get_avatar }}">
@@ -1288,7 +1294,7 @@
                                     </div>
                                     <div class="table_product_detail_bottom">
                                         <ul>
-                                            <li style="margin-left:31%">
+                                            <li>
                                                 <button class="detail_bottom_btn-talk" data-id="{{ order_item.cart_item.item.seller.user.id }}"
                                                     data-name="{{  order_item.cart_item.item.seller }}"
                                                     data-profile="{{  order_item.cart_item.item.seller.user.get_avatar }}">

@@ -732,26 +732,24 @@
     height:15%;
     display: inline-block;
     background-color: #e8e8e8;
-
+    text-align: center;
 }
 
 .table_product_detail_bottom ul{
     list-style: none;
-    width:100%;
-    height:100%;
+    display: inline-block;
     padding-top:8px;
 }
 
 .table_product_detail_bottom ul li{
     float:left;
-    width:13%;
-    margin-left:5%;
+    width:80px;
     font-size:13px;
+    margin-left:15px;
 }
 
 .table_product_detail_bottom ul li:nth-child(1) {
-    width:20%;
-    margin-left:13%;
+    width:100px;
 }
 
 .table_product_detail_bottom ul li button{
@@ -762,7 +760,7 @@
 
 .table_product_detail_bottom ul li .detail_bottom_btn-talk{
     background-color: #648efc;
-    width:100%;
+    width:100px;
     height:30px;
     color:white;
     border:1px solid #648efc;
@@ -770,7 +768,7 @@
 
 .table_product_detail_bottom ul li .detail_bottom_btn {
     background-color: white;
-    width:100%;
+    width:80px;
     height:30px;
     color:grey;
     border:1px solid grey;
@@ -1009,15 +1007,20 @@ li:nth-child(5) .circle-text {
 	z-index:3;
 }
 .circle-mask2-text{
+  padding-top:15px;
+}
+
+_:-ms-lang(x), .circle-mask2-text{
   padding-top:10px;
 }
 
 .cash{
-  position:relative;
-  width:75%;
-    height: 7%;
-  padding-top:3%;
-  border:1px solid grey;
-  border-radius:15px;
-  text-align:center;
+    position:relative;
+    width:125px;
+    height:25px;
+    display:table-cell;
+    vertical-align: middle;
+    border:1px solid grey;
+    border-radius:15px;
+    text-align:center;
 }

@@ -251,6 +251,7 @@ function set_input_value(selector, new_val){
     $(selector).val(new_val);
 }
 
+/* product_edit confirm */
 $("#dialog-confirm2").dialog({
     resizable: false,
     height:190,
@@ -258,12 +259,6 @@ $("#dialog-confirm2").dialog({
     width: 330,
     modal: true,
     buttons: [
-        {
-            text: "닫기",
-            click: function() {
-                $(this).dialog("close");
-            }
-        },
         {
             text: "확인",
             click: function() {
@@ -279,8 +274,8 @@ $('.final_edit').on('click', function() {
 
 /* product_upload len check */
 $('#id_oneline_intro').on('keyup', function() {
-    if($(this).val().length > 52) {
+    if($(this).val().length > 26) {
         alert('한줄소개는 26자이내로 입력해주세요.')
-        $(this).val($(this).val().substring(0, 52));
+        $(this).val($(this).val().substring(0, 26));
     }
 });

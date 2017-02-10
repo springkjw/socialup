@@ -81,3 +81,63 @@ $('.review').on('click', function () {
 $('.review_btn.close').on('click', function () {
     $(this).parent().parent().hide();
 });
+
+$(".dialog-purchase-list.decide").dialog({
+    resizable: false,
+    height:190,
+    autoOpen: false,
+    width: 330,
+    modal: true,
+    buttons: [
+        {
+            text: "확인",
+            click: function() {
+                $('.order-item-decide-from.active').submit();
+            }
+        },
+        {
+            text: "취소",
+            click: function() {
+                $('.order-item-decide-from').each(function(){
+                    $(this).removeClass('active');
+                });
+                $(this).dialog('close');
+            }
+        }
+        ]
+    });
+
+$(".dialog-purchase-list.cancel").dialog({
+    resizable: false,
+    height:190,
+    autoOpen: false,
+    width: 330,
+    modal: true,
+    buttons: [
+        {
+            text: "확인",
+            click: function() {
+                $('.order-item-cancel-from.active').submit();
+            }
+        },
+        {
+            text: "취소",
+            click: function() {
+                $('.order-item-cancel-from').each(function(){
+                    $(this).removeClass('active');
+                });
+                $(this).dialog('close');
+            }
+        }
+        ]
+    });
+
+$('.detail_bottom_btn.decide').on('click', function() {
+    $(this).parent().addClass('active');
+    $(".dialog-purchase-list.decide").dialog('open');
+});
+
+$('.detail_bottom_btn.cancel').on('click', function() {
+    $(this).parent().addClass('active');
+    $(".dialog-purchase-list.cancel").dialog('open');
+});

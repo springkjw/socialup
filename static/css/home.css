@@ -379,13 +379,20 @@
 }
 
 .list-card .card-main-info .card_manuscript_option.separate {
-    background-color: #888;
+    background-color: #909090;
     color:white;
-    border:1px solid #888;
+    border:1px solid #909090;
 }
+.list-card .card-main-info .card_manuscript_option.disable {
+    background-color: #5c5c5c;
+    color:white;
+    border:1px solid #5c5c5c;
+}
+
 .list-card .card-main-info .card_sns_option{
-    width:28px;
+    width:30px;
     position:absolute;
+    left:14px;
     text-align: center;
     font-size: 10px;
     border:1px solid #888;

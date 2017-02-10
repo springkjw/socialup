@@ -184,7 +184,7 @@ def account_detail(request, seller_id):
             review_count = review_count + 1
 
     is_seller_none = False
-    if (len(seller.description)==0) and (seller.user.sex is None) \
+    if (seller.description is None) and (seller.user.sex is None) \
             and (seller.user.birth_year is None) and (len(seller.user.address)==0) and (len(seller.user.job)==0):
         is_seller_none = True
     context={
