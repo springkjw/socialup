@@ -12,6 +12,9 @@ class TaggedItemInline(GenericTabularInline):
 class ProductAdmin(admin.ModelAdmin):
     inlines = [TaggedItemInline, ]
 
+    list_display = ('__unicode__', 'product_status',)
+    list_filter = ('product_status',)
+
     class Meta:
         model = Product
 

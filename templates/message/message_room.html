@@ -1,9 +1,15 @@
 {% extends 'account/dashboard_base.html' %}
 {% load staticfiles %}
 
+{% block meta %}
+    <META HTTP-EQUIV="Pragma" CONTENT="'no-cache">
+    <META HTTP-EQUIV="Expires" CONTENT='-1'>
+{% endblock %}
+
 {% block dashboard_css %}
     <link rel="stylesheet" href="{% static 'css/message.css' %}">
-    <link href='https://fonts.googleapis.com/css?family=Exo+2:400,900italic,900,800italic,800,700italic,700,600italic,600,500italic,500,400italic,300italic,200italic,200,100italic,100,300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Exo+2:400,900italic,900,800italic,800,700italic,700,600italic,600,500italic,500,400italic,300italic,200italic,200,100italic,100,300'
+          rel='stylesheet' type='text/css'>
 {% endblock %}
 
 {% block dashboard_content %}
