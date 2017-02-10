@@ -871,6 +871,40 @@ li:nth-child(5) .circle-text {
 
 fieldset, label { margin: 0; padding: 0; }
 
+/* modal part */
+.dialog-purchase-list.decide{
+    display: none;
+    text-align: center;
+}
+
+.dialog-purchase-list.cancel {
+    display: none;
+    text-align: center;
+}
+
+.ui-widget-header{
+    width:80%;
+    margin-left:5%;
+    margin-top:3%;
+    background: none;
+    border:none;
+    border-bottom:1px solid black;
+    border-radius:0px;
+}
+
+.ui-dialog .ui-dialog-titlebar-close{
+    display: none;
+}
+
+.ui-dialog-buttonpane.ui-widget-content.ui-helper-clearfix{
+    border:none;
+    text-align: center;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset{
+    float:none;
+}
+
 /****** Style Star Rating Widget *****/
 
 .rating {
