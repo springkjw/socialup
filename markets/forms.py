@@ -61,7 +61,7 @@ class ProductForm(forms.ModelForm):
             attrs={'width': '100%'}
             )
         )
-
+        self.fields['price'] = forms.IntegerField(widget=forms.NumberInput(attrs = {'placeholder': '5000원 이상'}))
 
     class Meta:
         model = Product

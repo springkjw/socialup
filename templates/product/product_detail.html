@@ -9,6 +9,11 @@
 {% block js %}
     <script type="text/javascript" src="{% static 'js/product-detail.js' %}"></script>
     <script type="text/javascript">
+        window.onload = function(){
+            var summernote_img = document.querySelector(".tab-content img");
+            summernote_img.style.maxWidth = "100%";
+        }
+
         $(function () {
             // 상품 상세 페이지에서 위시리스트 담기(찜하기)
             $('.product-button .wish-list').on('click', function () {

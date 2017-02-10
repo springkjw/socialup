@@ -533,18 +533,18 @@ body {
 }
 
 .dashboard-content .dashboard-change-form .add_image {
-    position: absolute;
-    z-index: 3;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    bottom: 0;
-    right: 210px;
-    color: white;
-    background: #648efc;
+    /*position: absolute;*/
+    /*z-index: 3;*/
+    /*width: 30px;*/
+    /*height: 30px;*/
+    /*border-radius: 50%;*/
+    /*bottom: 0;*/
+    /*right: 210px;*/
+    /*color: white;*/
+    /*background: #648efc;*/
     cursor: pointer;
-    text-align: center;
-    line-height: 36px;
+    /*text-align: center;*/
+    /*line-height: 36px;*/
 }
 
 

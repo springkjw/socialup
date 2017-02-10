@@ -13,7 +13,8 @@ function readImage(input) {
         var image = new FileReader();
 
         image.onload = function (e) {
-            $('.image img').attr('src', e.target.result);
+            // $('.image img').attr('src', e.target.result);
+            $('.base_info_image img').attr('src', e.target.result);
         };
 
         image.readAsDataURL(input.files[0])
