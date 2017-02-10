@@ -1,6 +1,11 @@
 {% extends 'account/dashboard_base.html' %}
 {% load staticfiles %}
 
+{% block meta %}
+    <META HTTP-EQUIV="Pragma" CONTENT="'no-cache">
+    <META HTTP-EQUIV="Expires" CONTENT='-1'>
+{% endblock %}
+
 {% block dashboard_css %}
     <link rel="stylesheet" href="{% static 'css/message.css' %}">
 {% endblock %}
@@ -28,7 +33,7 @@
         $(function () {
             //notifyMe();
             init('{{ user.id }}');
-            $('.channel-list-options ul li').click(function() {
+            $('.channel-list-options ul li').click(function () {
                 $('.channel-list-options ul li').removeClass('active');
                 $(this).addClass('active');
                 var unreadOnly = ($(this).data('option') == 'unread') ? true : false;
