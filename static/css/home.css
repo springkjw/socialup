@@ -376,8 +376,9 @@
     border:1px solid #888;
 }
 .list-card .card-main-info .card_sns_option{
-    width:28px;
+    width:30px;
     position:absolute;
+    left:14px;
     text-align: center;
     font-size: 10px;
     border:1px solid #888;
