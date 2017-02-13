@@ -41,6 +41,7 @@ def home(request):
 
 
 def product_category(request, category):
+    tag_name = ''
     if category=="all":
         products = Product.objects.active().all()
         category_name = "전체"
@@ -53,7 +54,7 @@ def product_category(request, category):
                                'fashion': '뷰티',
                                'pet': '애완',
                                'travel': '여행'}
-            category_name = banner_tag_list[tag]
+            tag_name = [tag, banner_tag_list[tag]]
         except:
             pass
     else:
@@ -102,10 +103,10 @@ def product_category(request, category):
         high_low =[highest_price, 0]
     else:
         high_low =[highest_price, lowest_price]
-
     template = 'category.html'
     context = {
-        "category": category_name,
+        "category_name": category_name,
+        "tag_name": tag_name,
         "products_rating": products_by_rating,
         "products_created": products_by_created,
         "products_price": products_by_price,
