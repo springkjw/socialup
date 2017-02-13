@@ -98,6 +98,13 @@
     clear: both;
 }
 
+_:-ms-lang(x), .user-money .user-money-button {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    clear: both;
+}
+
 .dashboard-side .user-money a {
     border: 1px solid white;
     padding: 6px 15px 6px 15px;
@@ -181,6 +188,11 @@
 .dashboard-side .user-money .point-wrapper {
     height: 30px;
     margin-top: 10px;
+
+}
+
+_:-ms-lang(x), .user-money .point-wrapper {
+    margin-bottom: 20px;
 }
 
 .dashboard-side .user-money .mileage-wrapper {
