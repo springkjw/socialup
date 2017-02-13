@@ -26,15 +26,20 @@ def home(request):
     # 가격순
     products_by_price = Product.objects.all().active().order_by('-price')[:20]
 
-    highest_price = products_by_price[0].price
-    lowest_price = products_by_price.reverse()[0].price
-    high_low =[highest_price, lowest_price]
+    try
+        highest_price = products_by_price[0].price
+        lowest_price = products_by_price.reverse()[0].price
+        high_low = [highest_price, lowest_price]
+    except IndexError:
+        highest_price = 0
+        lowest_price = 0
+        high_low = [highest_price, lowest_price]
 
     context = {
         "products_rating": products_by_rating,
         "products_created": products_by_created,
         "products_price": products_by_price,
-        "high_low":high_low,
+        "high_low": high_low,
     }
 
     return render(request, template, context)
@@ -42,7 +47,7 @@ def home(request):
 
 def product_category(request, category):
     tag_name = ''
-    if category=="all":
+    if category == "all":
         products = Product.objects.active().all()
         category_name = "전체"
 
@@ -63,7 +68,7 @@ def product_category(request, category):
 
     if request.is_ajax():
         checked_tags = json.loads(request.GET['checked_tags'])
-        
+
         if 'all' in checked_tags:
             products_by_tags = []
             products_by_tags.extend(products)
@@ -71,7 +76,6 @@ def product_category(request, category):
             products_by_tags = []
             for tag in checked_tags:
                 products_by_tags.extend(products.active().filter(product_tag__tag=tag))
-
 
         # 중복된 아이템 제거
         products_by_tags = list(set(products_by_tags))
@@ -100,9 +104,9 @@ def product_category(request, category):
         highest_price = 10000
         lowest_price = 0
     if highest_price == lowest_price:
-        high_low =[highest_price, 0]
+        high_low = [highest_price, 0]
     else:
-        high_low =[highest_price, lowest_price]
+        high_low = [highest_price, lowest_price]
     template = 'category.html'
     context = {
         "category_name": category_name,
@@ -120,7 +124,8 @@ def product_search(request):
     keyword = request.GET['keyword']
 
     # test용. 템플릿에서 request.GET['search_option']를 던져줄 수 있으면 아래 한줄을 지우고 나머지 주석을 모두 해제
-    products = Product.objects.active().filter(Q(oneline_intro__contains=keyword) | Q(seller__user__email__iregex=keyword + '@' + r'.*$'))
+    products = Product.objects.active().filter(
+        Q(oneline_intro__contains=keyword) | Q(seller__user__email__iregex=keyword + '@' + r'.*$'))
 
     # search_option = request.GET['search_option']
     #
