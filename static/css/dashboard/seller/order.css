@@ -608,6 +608,9 @@
     position: relative;
     width:15%;
     top:10px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
 }
 
 .item-list .content.status_0 .product_item_each_wrapper .purchase-table-ul li:nth-child(2) {

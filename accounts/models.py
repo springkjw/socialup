@@ -7,6 +7,7 @@ from PIL import Image
 import mimetypes
 import cStringIO
 import boto
+import random
 
 # django import
 from django.conf import settings
@@ -268,6 +269,66 @@ def create_new_thumb(image_path, instance, max_length, max_width):
 
 
 def myuser_post_save_receiver(sender, instance, created, *args, **kwargs):
+    # 새 아이디를 만들었을 경우 랜덤 토끼 프로필 이미지 저장
+    if created:
+        # 원본 이미지 파일 이름
+        random_img_path = random.choice(['static/img/no_profile_1.png', 'static/img/no_profile_2.png', 'static/img/no_profile_3.png'])
+        filename = os.path.basename(random_img_path)
+        thumb = Image.open(random_img_path)
+
+        # 저장할 디렉토리 위치
+        temp_loc = "%s/" % (random_img_path.split(filename)[0])
+
+        if settings.DEBUG:
+            temp_loc = os.path.join(settings.MEDIA_ROOT, temp_loc)
+
+        # 폴더 생성
+        if not os.path.exists(temp_loc):
+            os.makedirs(temp_loc)
+
+        file_name, extends = os.path.splitext(filename)
+        temp_file_loc = os.path.join(temp_loc, '%s_%s' % (
+            filename, extends))
+        new_thumbnail_name = "%s_%s" % (file_name, extends)
+
+
+        # 저장
+        if settings.DEBUG:
+            temp_image = open(temp_file_loc, "w")
+            thumb.save(temp_image, "JPEG", optimize=True, progressive=True)
+
+        else:
+            try:
+                memory_file = cStringIO.StringIO()
+
+                mime = mimetypes.guess_type(new_thumbnail_name)[0]
+                plain_ext = mime.split('/')[1]
+                thumb.save(memory_file, plain_ext, optimize=True, progressive=True)
+
+                # S3에 이미지 업로드
+                conn = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY,
+                                       host=settings.AWS_S3_HOST)
+                bucket = conn.get_bucket(
+                    settings.AWS_STORAGE_BUCKET_NAME, validate=False)
+                k = bucket.new_key('media/' + temp_file_loc)
+                k.set_metadata('Content-Type', mime)
+                k.set_contents_from_string(memory_file.getvalue())
+                k.set_acl("public-read")
+                memory_file.close()
+            except:
+                pass
+
+        # 저장된 파일 이미지 필드에 넣기
+        try:
+            thumb_data = storage.open(temp_file_loc, "r")
+            thumb_file = File(thumb_data)
+
+            instance.media.save(new_thumbnail_name, thumb_file)
+            shutil.rmtree(temp_loc, ignore_errors=True)
+        except:
+            pass
+
+    # 썸네일 3가지 크기로 저장
     if instance.media:
         hd, hd_created = MyUserThumbnail.objects.get_or_create(
             myuser=instance, thumb_type="hd")

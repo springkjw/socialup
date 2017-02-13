@@ -74,11 +74,8 @@
 }
 
 .dashboard-side .user-money {
-    height: 170px;
     background: #648efc;
-    padding-top: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 20px;
     color: white;
     text-align: center;
 }
@@ -97,6 +94,13 @@
 
 .dashboard-side .user-money .user-money-button {
     margin-top: 20px;
+    text-align: center;
+    clear: both;
+}
+
+_:-ms-lang(x), .user-money .user-money-button {
+    margin-top: 20px;
+    margin-bottom: 20px;
     text-align: center;
     clear: both;
 }
@@ -184,6 +188,11 @@
 .dashboard-side .user-money .point-wrapper {
     height: 30px;
     margin-top: 10px;
+
+}
+
+_:-ms-lang(x), .user-money .point-wrapper {
+    margin-bottom: 20px;
 }
 
 .dashboard-side .user-money .mileage-wrapper {
