@@ -26,7 +26,7 @@ def home(request):
     # 가격순
     products_by_price = Product.objects.all().active().order_by('-price')[:20]
 
-    try
+    try:
         highest_price = products_by_price[0].price
         lowest_price = products_by_price.reverse()[0].price
         high_low = [highest_price, lowest_price]
