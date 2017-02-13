@@ -142,11 +142,11 @@ function filter_ajax(min, max){
     $('#loading').css("display", "block");
     setTimeout(function() {
         $.ajax({url: "/", success: function(result){
-            $(".row .list-card").each(function (){
+            $(".list-card").each(function (){
                 var temp_text = $(this).find('.cash span').attr("data-price");
                 temp_text = parseInt(temp_text);
                 if(real_min <= temp_text && temp_text <= real_max) {
-                    $(this).css("display", "block");
+                    $(this).css("display", "inline-block");
                 }else{
                     $(this).css("display", "none");
                 }

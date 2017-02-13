@@ -311,7 +311,8 @@
     width: 23%;
     height: 285px;
     background: white;
-    margin-right: 18px;
+    margin-right: 1%;
+    margin-bottom:1%;
     padding-bottom: 10px;
     cursor: pointer;
     position: relative;
