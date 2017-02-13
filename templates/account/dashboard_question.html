@@ -24,10 +24,10 @@
         <div class="question_wrapper">
             <div class="question_nav">
                 <ul>
-                    <li><button class="active" id="btn_entire">전체</button></li>
-                    <li><button id="btn_usage">이용</button></li>
-                    <li><button id="btn_seller">판매자</button></li>
-                    <li><button id="btn_buyer">구매자</button></li>
+                    <li><button class="active" id="btn_entire" question-type="entire">전체</button></li>
+                    <li><button id="btn_usage" question-type="usage">이용</button></li>
+                    <li><button id="btn_seller" question-type="seller">판매자</button></li>
+                    <li><button id="btn_purchase" question-type="purchase">구매자</button></li>
                     <li><button id="btn_report">신고</button></li>
                     <li><button id="btn_etc">기타</button></li>
                 </ul>
@@ -101,6 +101,150 @@
                     </div>
                     <div class="question_content_text">
                         {% include 'question/question_seller_7.html' %}
+                    </div>
+                </div>
+            </div>
+            <div class="question_content purchase">
+                <div class="question_content_each">
+                    <div class="question-content-title-wrapper">
+                        <img src="/static/img/search.png">
+                        <div class="question-content-title">소셜업 게이지는 무엇인가요?</div>
+                        <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="question_content_text">
+                        {% include 'question/question_purchase_1.html' %}
+                    </div>
+                </div>
+                <div class="question_content_each">
+                    <div class="question-content-title-wrapper">
+                        <img src="/static/img/search.png">
+                        <div class="question-content-title">구매를 하면 판매자가 즉시 알 수 있나요?</div>
+                        <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="question_content_text">
+                        {% include 'question/question_purchase_2.html' %}
+                    </div>
+                </div>
+                <div class="question_content_each">
+                    <div class="question-content-title-wrapper">
+                        <img src="/static/img/search.png">
+                        <div class="question-content-title">주문취소는 언제까지 할 수 있나요?</div>
+                        <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="question_content_text">
+                        {% include 'question/question_purchase_3.html' %}
+                    </div>
+                </div>
+                <div class="question_content_each">
+                    <div class="question-content-title-wrapper">
+                        <img src="/static/img/search.png">
+                        <div class="question-content-title">구매 전에 판매자의 SNS를 볼 수 없나요?</div>
+                        <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="question_content_text">
+                        {% include 'question/question_purchase_4.html' %}
+                    </div>
+                </div>
+                <div class="question_content_each">
+                    <div class="question-content-title-wrapper">
+                        <img src="/static/img/search.png">
+                        <div class="question-content-title">포인트 충전에 대해 세금계산서 발급이 가능한가요?</div>
+                        <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="question_content_text">
+                        {% include 'question/question_purchase_5.html' %}
+                    </div>
+                </div>
+                <div class="question_content_each">
+                    <div class="question-content-title-wrapper">
+                        <img src="/static/img/search.png">
+                        <div class="question-content-title">소셜업이 서비스에 대한 세금계산서를 발행해주나요?</div>
+                        <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="question_content_text">
+                        {% include 'question/question_purchase_6.html' %}
+                    </div>
+                </div>
+                <div class="question_content_each">
+                    <div class="question-content-title-wrapper">
+                        <img src="/static/img/search.png">
+                        <div class="question-content-title">판매자가 직거래를 원할 땐 어떻게 해야 하나요?</div>
+                        <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="question_content_text">
+                        {% include 'question/question_purchase_7.html' %}
+                    </div>
+                </div>
+                <div class="question_content_each">
+                    <div class="question-content-title-wrapper">
+                        <img src="/static/img/search.png">
+                        <div class="question-content-title">구매확정이란 무엇인가요?</div>
+                        <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="question_content_text">
+                        {% include 'question/question_purchase_8.html' %}
+                    </div>
+                </div>
+            </div>
+            <div class="question_content usage">
+                <div class="question_content_each">
+                    <div class="question-content-title-wrapper">
+                        <img src="/static/img/search.png">
+                        <div class="question-content-title">소셜업이란 어떤 서비스인가요?</div>
+                        <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="question_content_text">
+                        {% include 'question/question_usage_1.html' %}
+                    </div>
+                </div>
+                <div class="question_content_each small">
+                    <div class="question-content-title-wrapper">
+                        <img src="/static/img/search.png">
+                        <div class="question-content-title">고객 상담 시간은 언제인가요?</div>
+                        <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="question_content_text">
+                        {% include 'question/question_usage_2.html' %}
+                    </div>
+                </div>
+                <div class="question_content_each small">
+                    <div class="question-content-title-wrapper">
+                        <img src="/static/img/search.png">
+                        <div class="question-content-title">탈퇴는 어디서 하나요?</div>
+                        <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="question_content_text">
+                        {% include 'question/question_usage_3.html' %}
+                    </div>
+                </div>
+                <div class="question_content_each small">
+                    <div class="question-content-title-wrapper">
+                        <img src="/static/img/search.png">
+                        <div class="question-content-title">구매, 판매 관련된 알림 이메일, 문자가 안와요.</div>
+                        <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="question_content_text">
+                        {% include 'question/question_usage_4.html' %}
+                    </div>
+                </div>
+                <div class="question_content_each small">
+                    <div class="question-content-title-wrapper">
+                        <img src="/static/img/search.png">
+                        <div class="question-content-title">비밀번호가 기억이 안나요.</div>
+                        <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="question_content_text">
+                        {% include 'question/question_usage_5.html' %}
+                    </div>
+                </div>
+                <div class="question_content_each large">
+                    <div class="question-content-title-wrapper">
+                        <img src="/static/img/search.png">
+                        <div class="question-content-title">휴대폰 인증번호가 오질 않아요.</div>
+                        <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="question_content_text">
+                        {% include 'question/question_usage_6.html' %}
                     </div>
                 </div>
             </div>

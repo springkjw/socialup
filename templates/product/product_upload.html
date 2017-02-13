@@ -94,42 +94,45 @@
                 $('#id_message_to_admin').val(json_selected_product["message_to_admin"]);
             }});
         });
-        {% if form.errors %}
-            alert('{{ form.errors }}');
-        {% else %}
-            $("#dialog-confirm").dialog({
-            resizable: false,
-            height:190,
-            autoOpen: false,
-            width: 330,
-            modal: true,
-            buttons: [
-                {
-                    text: "확인",
-                    click: function() {
-                        $('#product-upload-form').submit();
-                    }
-                }
-                ]
-            });
 
-            $('.final').on('click', function() {
-                if(!$('#product-upload-form')[0].checkValidity()){
-                    if(!$('#id_sns_url')[0].checkValidity()){
-                        alert('SNS 주소 양식을 확인해주세요.');
-                    }
-                    else{
-                        alert('입력을 잘못했습니다.');
-                    }
+        $("#dialog-confirm").dialog({
+        resizable: false,
+        height:190,
+        autoOpen: false,
+        width: 330,
+        modal: true,
+        buttons: [
+            {
+                text: "확인",
+                click: function() {
+                    $('#product-upload-form').submit();
+                }
+            }
+            ]
+        });
+
+        $('.final').on('click', function() {
+            if(!$('#product-upload-form')[0].checkValidity()){
+                if(!$('#id_sns_url')[0].checkValidity()){
+                    alert('SNS 주소 양식을 확인해주세요.');
+                }else if(!$('#id_price')[0].checkValidity()){
+                    alert('가격부분에는 5000원 이상의 숫자를 입력해주세요.')
+                }else if(!$('#id_working_period')[0].checkValidity()){
+                    alert('작업기간은 1 이상의 숫자를 입력해주세요.')
+                }else if(!$('#id_description')[0].checkValidity()){
+                    alert('상품소개를 입력해주세요.')
+                }
+                else{
+                    alert('입력을 잘못했습니다.');
+                }
+            }else{
+                if ($('#agreenment1').is(':checked')) {
+                    $("#dialog-confirm").dialog('open');
                 }else{
-                    if ($('#agreenment1').is(':checked')) {
-                        $("#dialog-confirm").dialog('open');
-                    }else{
-                        alert('이용약관에 동의해주세요.');
-                    }
-                };
-            });
-        {% endif %}
+                    alert('이용약관에 동의해주세요.');
+                }
+            };
+        });
     </script>
 {% endblock %}
 

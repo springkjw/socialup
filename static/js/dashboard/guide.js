@@ -1,7 +1,17 @@
 $('.question_nav li button').click(function () {
     $(this).parent().parent().find('button').removeClass("active");
     $(this).addClass("active");
-
+    var question_type = $(this).attr('question-type');
+    if(question_type=='entire'){
+        $('.question_content').each(function(){
+            $(this).show();
+        });
+    }else{
+        $('.question_content').each(function(){
+            $(this).hide();
+        });
+        $('.question_content.'+question_type).show();
+    }
 });
 
 $(function () {
