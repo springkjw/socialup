@@ -1024,3 +1024,19 @@ _:-ms-lang(x), .circle-mask2-text{
     border-radius:15px;
     text-align:center;
 }
+
+/* popups */
+.dialog-order-list.process{
+    display: none;
+    text-align: center;
+}
+
+.dialog-order-list.wait_confirm {
+    display: none;
+    text-align: center;
+}
+
+.dialog-order-list.cancel{
+    display: none;
+    text-align: center;
+}

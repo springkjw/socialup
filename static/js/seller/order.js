@@ -86,3 +86,95 @@ $('.show_detail_btn.second').on('click', function () {
         $(this).attr('aria-hidden', true);
     }
 });
+
+/* popups */
+
+$(".dialog-order-list.process").dialog({
+    resizable: false,
+    height:190,
+    autoOpen: false,
+    width: 330,
+    modal: true,
+    buttons: [
+        {
+            text: "확인",
+            click: function() {
+                $('.order-mange-form-process.active').submit();
+            }
+        },
+        {
+            text: "취소",
+            click: function() {
+                $('.order-mange-form-process').each(function(){
+                    $(this).removeClass('active');
+                });
+                $(this).dialog('close');
+            }
+        }
+        ]
+    });
+
+$(".dialog-order-list.wait_confirm").dialog({
+    resizable: false,
+    height:190,
+    autoOpen: false,
+    width: 330,
+    modal: true,
+    buttons: [
+        {
+            text: "확인",
+            click: function() {
+                $('.order-mange-form-wait_confirm.active').submit();
+            }
+        },
+        {
+            text: "취소",
+            click: function() {
+                $('.order-mange-form-wait_confirm').each(function(){
+                    $(this).removeClass('active');
+                });
+                $(this).dialog('close');
+            }
+        }
+        ]
+    });
+
+$(".dialog-order-list.cancel").dialog({
+    resizable: false,
+    height:190,
+    autoOpen: false,
+    width: 330,
+    modal: true,
+    buttons: [
+        {
+            text: "확인",
+            click: function() {
+                $('.order-mange-form-cancel.active').submit();
+            }
+        },
+        {
+            text: "취소",
+            click: function() {
+                $('.order-mange-form-cancel').each(function(){
+                    $(this).removeClass('active');
+                });
+                $(this).dialog('close');
+            }
+        }
+        ]
+    });
+
+$('.detail_bottom_btn.process').on('click', function() {
+    $(this).parent().addClass('active');
+    $(".dialog-order-list.process").dialog('open');
+});
+
+$('.detail_bottom_btn.wait_confirm').on('click', function() {
+    $(this).parent().addClass('active');
+    $(".dialog-order-list.wait_confirm").dialog('open');
+});
+
+$('.detail_bottom_btn.cancel').on('click', function() {
+    $(this).parent().addClass('active');
+    $(".dialog-order-list.cancel").dialog('open');
+});
