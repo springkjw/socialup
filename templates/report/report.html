@@ -1,0 +1,42 @@
+{% extends 'account/dashboard_base.html' %}
+{% load staticfiles %}
+
+{% block dashboard_css %}
+    <link rel="stylesheet" href="{% static 'css/dashboard/report.css' %}">
+{% endblock %}
+
+{% block dashboard_js %}
+    <script type="text/javascript">
+    </script>
+{% endblock %}
+
+{% block dashboard_content %}
+    <div class="dashboard-content">
+        <div class="dashboard-nav">
+            신고
+        </div>
+        <div class="contact-nav">
+            <ul>
+                <li class="active"><a href="{% url 'report' %}">신고하기</a></li>
+                <li><a href="{% url 'report_history' %}">신고한 내역</a></li>
+                <li><a href="{% url 'report_received' %}">신고받은 내역</a></li>
+            </ul>
+        </div>
+        <div class="dashboard-contact">
+            <div class="meta">
+                <p>고객님의 원활한 소셜업 사용에 불편을 주는 셀러가 있다면 이야기해주세요</p>
+            </div>
+            <div class="contact-form">
+                <form method="POST">{% csrf_token %}
+                    {% for form in forms %}
+                        <div class="contact-input">
+                            <label for="{{ form.name }}">{{ form.label }}</label>
+                            {{ form }}
+                        </div>
+                    {% endfor %}
+                    <button type="submit">신고하기</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
