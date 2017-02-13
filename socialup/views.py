@@ -26,11 +26,11 @@ def home(request):
     # 가격순
     products_by_price = Product.objects.all().active().order_by('-price')[:20]
 
-    try:
-        highest_price = products_by_price[0].price
-        lowest_price = products_by_price.reverse()[0].price
+    if products_by_price.exists():
+        highest_price = products_by_price.first.price
+        lowest_price = products_by_price.reverse().first.price
         high_low = [highest_price, lowest_price]
-    except IndexError:
+    else:
         highest_price = 0
         lowest_price = 0
         high_low = [highest_price, lowest_price]
