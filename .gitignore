@@ -173,6 +173,7 @@ socialup/settings/local.py
 
 db.sqlite3
 .elasticbeanstalk/
+.ebextensions/
 
 # Migrate files
 */migrations/
