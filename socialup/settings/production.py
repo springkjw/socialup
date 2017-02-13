@@ -9,9 +9,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ebdb',
-        'USER': 'ebroot',
-        'PASSWORD': 'wodnjs2010Dbwls1804',
-        'HOST': 'aa82r04ezpe9o4.chhv3epwywiz.ap-northeast-2.rds.amazonaws.com',
+        'USER': 'socialup',
+        'PASSWORD': 'wodnjs2010',
+        'HOST': 'aaa7kviarh8zvw.chhv3epwywiz.ap-northeast-2.rds.amazonaws.com',
         'PORT': 3306,
     }
 }

@@ -170,10 +170,10 @@ assets/*
 media/*
 socialup/.idea/
 socialup/settings/local.py
+.vscode
 
 db.sqlite3
 .elasticbeanstalk/
-.ebextensions/
 
 # Migrate files
 */migrations/
