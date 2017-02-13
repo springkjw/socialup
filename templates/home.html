@@ -229,7 +229,6 @@
                 {% else %}
                     <div class="product-rating" style="display:block;">
                         {% for product in products_rating %}
-                            {% cycle '<div class="row">' '' '' '' %}
                             <a href="{{ product.get_absolute_url }}"
                                class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}">
                                 <div class="card-main-info" data-type="{{ product.sns_type }}" data-color="{{ product.sns_type_color }}">
@@ -333,15 +332,12 @@
 
                             {% if products|length == forloop.counter %}
                                 </div>
-                            {% else %}
-                                {% cycle '' '' '' '</div>' %}
                             {% endif %}
                         {% endfor %}
                        </div>
                     </div>
                     <div class="product-created" style="display:none;">
                     {% for product in products_created %}
-                            {% cycle '<div class="row">' '' '' '' %}
                             <a href="{{ product.get_absolute_url }}"
                                class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}">
                                 <div class="card-main-info" data-type="{{ product.sns_type }}" data-color="{{ product.sns_type_color }}">
@@ -446,8 +442,6 @@
 
                             {% if products|length == forloop.counter %}
                                 </div>
-                            {% else %}
-                                {% cycle '' '' '' '</div>' %}
                             {% endif %}
                         {% endfor %}
                        </div>

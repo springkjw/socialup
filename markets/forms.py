@@ -56,10 +56,12 @@ class ProductForm(forms.ModelForm):
             ), required=False
         )
         self.fields['description'] = forms.CharField(widget=SummernoteWidget(
-            attrs={'width': '100%'}
+            attrs={'width': '100%', 'required':'true'}
             )
         )
-        self.fields['price'] = forms.IntegerField(widget=forms.NumberInput(attrs = {'placeholder': '5000원 이상'}))
+        self.fields['price'] = forms.IntegerField(widget=forms.NumberInput(attrs = {'placeholder': '5000원 이상', 'required':'true', 'min':'5000'}),required=True)
+        self.fields['working_period'] = forms.IntegerField(widget=forms.NumberInput(attrs = {'min':'1', 'value':'0', 'required':'true'}))
+
 
     class Meta:
         model = Product

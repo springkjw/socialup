@@ -53,12 +53,19 @@
                 }
             });
 
+
+            // selected category color
             $('.header_navigation li a').each(function(){
-                if($(this).text().trim()=='{{ category }}'){
+                if($(this).text().trim()=='{{ category_name }}'){
                     $(this).parent().addClass('active');
                 }
             });
 
+            // selected tag color
+            if('{{ tag_name.0 }}'){
+                ($('.tags_wrapper').find("input[value={{ tag_name.0 }}]")).attr('checked',true);
+                check_tags_for_hover();
+            }
             $('#tag_navigation').on('change', function () {
                 var checked_tags = [];
                 var checked_clicked = $('input[name=tag]:checked').next().find('.tag_image_clicked').get();
@@ -188,7 +195,13 @@
         <div class="special-service">
             <div class="special-info">
                 <div class="special-title">
-                    인기 {{ category }} 포스팅
+                    인기
+                    {% if tag_name.1 %}
+                        {{ tag_name.1 }}
+                    {% else %}
+                        {{ category_name }}
+                    {% endif %}
+                    포스팅
                     <div class="special-subtitle">
                         * 소셜업 게이지란? 소셜업만의 알고리즘을 통해 SNS의 다양한 요소를 분석해 수치화 시킨 광고비 대비 효과 지수입니다.
                     </div>
@@ -217,7 +230,6 @@
                 {% else %}
                     <div class="product-rating" style="display:block;">
                         {% for product in products_rating %}
-                            {% cycle '<div class="row">' '' '' '' %}
                             <a href="{{ product.get_absolute_url }}"
                                class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}" data-id="{{ product.id }}">
                                 <div class="card-main-info" data-type="{{ product.sns_type }}" data-color="{{ product.sns_type_color }}">
@@ -320,15 +332,12 @@
 
                             {% if products|length == forloop.counter %}
                                 </div>
-                            {% else %}
-                                {% cycle '' '' '' '</div>' %}
                             {% endif %}
                         {% endfor %}
                     </div>
                     </div>
                     <div class="product-created" style="display:none;">
                         {% for product in products_created %}
-                            {% cycle '<div class="row">' '' '' '' %}
                             <a href="{{ product.get_absolute_url }}"
                                class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}" data-id="{{ product.id }}">
                                 <div class="card-main-info" data-type="{{ product.sns_type }}" data-color="{{ product.sns_type_color }}">
@@ -429,15 +438,12 @@
 
                             {% if products|length == forloop.counter %}
                                 </div>
-                            {% else %}
-                                {% cycle '' '' '' '</div>' %}
                             {% endif %}
                         {% endfor %}
                     </div>
                     </div>
                     <div class="product-price" style="display:none;">
                         {% for product in products_price %}
-                            {% cycle '<div class="row">' '' '' '' %}
                             <a href="{{ product.get_absolute_url }}"
                                class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}" data-id="{{ product.id }}">
                                 <div class="card-main-info" data-type="{{ product.sns_type }}" data-color="{{ product.sns_type_color }}">
@@ -540,8 +546,6 @@
 
                             {% if products|length == forloop.counter %}
                                 </div>
-                            {% else %}
-                                {% cycle '' '' '' '</div>' %}
                             {% endif %}
                         {% endfor %}
                     </div>

@@ -50,6 +50,15 @@
 {% endblock %}
 
 {% block dashboard_content %}
+    <div class="dialog-order-list process" title="작업진행">
+        작업진행으로 바꾸시겠습니까?
+    </div>
+    <div class="dialog-order-list wait_confirm" title="작업완료">
+        작업완료로 바꾸시겠습니까?
+    </div>
+    <div class="dialog-order-list cancel" title="작업취소">
+        작업을 취소하시겠습니까?
+    </div>
     <div class="dashboard-content">
         <div class="dashboard-nav">
             판매관리
@@ -196,31 +205,31 @@
                                                 </li>
                                                 {% if order_item.status_in_korean == '작업대기' %}
                                                 <li>
-                                                    <form method="POST" action="{% url 'product_order_manage' %}">{% csrf_token %}
+                                                    <form method="POST" action="{% url 'product_order_manage' %}" class="order-mange-form-process">{% csrf_token %}
                                                         <input type="hidden" name="is_status_change" value="true"/>
                                                         <input type="hidden" name="new_status" value="processing"/>
                                                         <input type="hidden" name="order_item" value="{{ order_item }}"/>
-                                                        <input class="detail_bottom_btn" type="submit" value="작업진행"/>
+                                                        <input class="detail_bottom_btn process" type="button" value="작업진행"/>
                                                     </form>
                                                 </li>
                                                 {% endif %}
                                                 {% if order_item.status_in_korean == '작업진행' %}
                                                 <li>
-                                                    <form method="POST" action="{% url 'product_order_manage' %}">{% csrf_token %}
+                                                    <form method="POST" action="{% url 'product_order_manage' %}" class="order-mange-form-wait_confirm">{% csrf_token %}
                                                         <input type="hidden" name="is_status_change" value="true"/>
                                                         <input type="hidden" name="new_status" value="wait_confirm"/>
                                                         <input type="hidden" name="order_item" value="{{ order_item }}"/>
-                                                        <input class="detail_bottom_btn" type="submit" value="작업완료"/>
+                                                        <input class="detail_bottom_btn wait_confirm" type="button" value="작업완료"/>
                                                     </form>
                                                 </li>
                                                 {% endif %}
                                                 {% if order_item.status_in_korean == '작업대기' or order_item.status_in_korean == '작업진행' %}
                                                 <li>
-                                                    <form method="POST" action="{% url 'product_order_manage' %}">{% csrf_token %}
+                                                    <form method="POST" action="{% url 'product_order_manage' %}" class="order-mange-form-cancel">{% csrf_token %}
                                                         <input type="hidden" name="is_status_change" value="true"/>
                                                         <input type="hidden" name="new_status" value="request_refund"/>
                                                         <input type="hidden" name="order_item" value="{{ order_item }}"/>
-                                                        <input class="detail_bottom_btn" type="submit" value="작업취소"/>
+                                                        <input class="detail_bottom_btn cancel" type="button" value="작업취소"/>
                                                     </form>
                                                 </li>
                                                 {% endif %}
@@ -304,11 +313,11 @@
                                         </button>
                                     </div>
                                     <div class="table_product_btn change" >
-                                        <form method="POST" action="{% url 'product_order_manage' %}">{% csrf_token %}
+                                        <form method="POST" action="{% url 'product_order_manage' %}"  class="order-mange-form-process">{% csrf_token %}
                                             <input type="hidden" name="is_status_change" value="true"/>
                                             <input type="hidden" name="new_status" value="processing"/>
                                             <input type="hidden" name="order_item" value="{{ order_item }}"/>
-                                            <input type="submit" value="작업진행"/>
+                                            <input type="button" class="detail_bottom_btn process" value="작업진행"/>
                                         </form>
                                     </div>
                                     <div class="table_product_detail" data-type="{{ order_item.cart_item.item.sns_type }}" data-color="{{ order_item.cart_item.item.sns_type_color }}">
@@ -411,27 +420,27 @@
                                                     </button>
                                                 </li>
                                                 <li>
-                                                    <form method="POST" action="{% url 'product_order_manage' %}">{% csrf_token %}
+                                                    <form method="POST" action="{% url 'product_order_manage' %}" class="order-mange-form-process">{% csrf_token %}
                                                         <input type="hidden" name="is_status_change" value="true"/>
                                                         <input type="hidden" name="new_status" value="processing"/>
                                                         <input type="hidden" name="order_item" value="{{ order_item }}"/>
-                                                        <input class="detail_bottom_btn" type="submit" value="작업진행"/>
+                                                        <input class="detail_bottom_btn process" type="button" value="작업진행"/>
                                                     </form>
                                                 </li>
                                                 <li>
-                                                    <form method="POST" action="{% url 'product_order_manage' %}">{% csrf_token %}
+                                                    <form method="POST" action="{% url 'product_order_manage' %}" class="order-mange-form-wait_confirm">{% csrf_token %}
                                                         <input type="hidden" name="is_status_change" value="true"/>
                                                         <input type="hidden" name="new_status" value="wait_confirm"/>
                                                         <input type="hidden" name="order_item" value="{{ order_item }}"/>
-                                                        <input class="detail_bottom_btn" type="submit" value="작업완료"/>
+                                                        <input class="detail_bottom_btn wait_confirm" type="button" value="작업완료"/>
                                                     </form>
                                                 </li>
                                                 <li>
-                                                    <form method="POST" action="{% url 'product_order_manage' %}">{% csrf_token %}
+                                                    <form method="POST" action="{% url 'product_order_manage' %}" class="order-mange-form-cancel">{% csrf_token %}
                                                         <input type="hidden" name="is_status_change" value="true"/>
                                                         <input type="hidden" name="new_status" value="refunded"/>
                                                         <input type="hidden" name="order_item" value="{{ order_item }}"/>
-                                                        <input class="detail_bottom_btn" type="submit" value="작업취소"/>
+                                                        <input class="detail_bottom_btn cancel" type="button" value="작업취소"/>
                                                     </form>
                                                 </li>
                                             </ul>
@@ -514,11 +523,11 @@
                                         </button>
                                     </div>
                                     <div class="table_product_btn change" >
-                                        <form method="POST" action="{% url 'product_order_manage' %}">{% csrf_token %}
+                                        <form method="POST" action="{% url 'product_order_manage' %}" class="order-mange-form-wait_confirm">{% csrf_token %}
                                             <input type="hidden" name="is_status_change" value="true"/>
                                             <input type="hidden" name="new_status" value="wait_confirm"/>
                                             <input type="hidden" name="order_item" value="{{ order_item }}"/>
-                                            <input type="submit" value="작업완료"/>
+                                            <input type="button" class="detail_bottom_btn wait_confirm" value="작업완료"/>
                                         </form>
                                     </div>
                                     <div class="table_product_detail" data-type="{{ order_item.cart_item.item.sns_type }}" data-color="{{ order_item.cart_item.item.sns_type_color }}">
@@ -621,19 +630,19 @@
                                                     </button>
                                                 </li>
                                                 <li>
-                                                    <form method="POST" action="{% url 'product_order_manage' %}">{% csrf_token %}
+                                                    <form method="POST" action="{% url 'product_order_manage' %}" class="order-mange-form-wait_confirm">{% csrf_token %}
                                                         <input type="hidden" name="is_status_change" value="true"/>
                                                         <input type="hidden" name="new_status" value="wait_confirm"/>
                                                         <input type="hidden" name="order_item" value="{{ order_item }}"/>
-                                                        <input class="detail_bottom_btn" type="submit" value="작업완료"/>
+                                                        <input class="detail_bottom_btn wait_confirm" type="button" value="작업완료"/>
                                                     </form>
                                                 </li>
                                                 <li>
-                                                    <form method="POST" action="{% url 'product_order_manage' %}">{% csrf_token %}
+                                                    <form method="POST" action="{% url 'product_order_manage' %}" class="order-mange-form-cancel">{% csrf_token %}
                                                         <input type="hidden" name="is_status_change" value="true"/>
                                                         <input type="hidden" name="new_status" value="refunded"/>
                                                         <input type="hidden" name="order_item" value="{{ order_item }}"/>
-                                                        <input class="detail_bottom_btn" type="submit" value="작업취소"/>
+                                                        <input class="detail_bottom_btn cancel" type="button" value="작업취소"/>
                                                     </form>
                                                 </li>
                                             </ul>
