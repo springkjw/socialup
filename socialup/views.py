@@ -27,8 +27,8 @@ def home(request):
     products_by_price = Product.objects.active().order_by('-price')[:20]
 
     if products_by_price.exists():
-        highest_price = products_by_price.first.price
-        lowest_price = products_by_price.reverse().first.price
+        highest_price = products_by_price.first().price
+        lowest_price = products_by_price.reverse().first().price
         high_low = [highest_price, lowest_price]
     else:
         highest_price = 0
