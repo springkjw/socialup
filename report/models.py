@@ -20,14 +20,23 @@ report_status_list = (
     ("completed","처리완료")
 )
 
+def download_file_location(instance, filename):
+    return "report/%s/%s" % (instance, filename)
+
 class Report(models.Model):
     writer = models.ForeignKey(MyUser, related_name='report_writer')
-    bad_user = models.ForeignKey(MyUser, related_name='report_bad_user')
+    bad_user = models.ForeignKey(MyUser, related_name='report_bad_user', null=True, blank=True)
+    bad_user_description = models.CharField(max_length=30)
     type = models.CharField(choices=report_type_list, max_length=20, null=False)
     detail = models.TextField(null=True, blank=True)
     reply = models.TextField(null=True, blank=True)
+    file = models.FileField(
+        null=True,
+        blank=True,
+        upload_to=download_file_location
+    )
     status = models.CharField(choices=report_status_list, max_length=15, default="accept")
     created = models.DateTimeField(auto_now_add=True, auto_now=False, null=True)
 
     def __unicode__(self):
-        return str(self.detail)
+        return u'%s' % (self.detail)

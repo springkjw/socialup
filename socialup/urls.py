@@ -27,6 +27,7 @@ from billing.views import charge_point, history_point, PointCheckoutAjaxView, Po
 from carts.views import CartView, WishListView
 from messages.views import message_lounge, message_room
 from contact.views import contact, contact_history
+from report.views import report, report_history, report_received
 from django.views.generic import TemplateView
 
 urlpatterns = [
@@ -76,6 +77,10 @@ urlpatterns = [
 
     url(r'^contact/$', contact, name="contact"),
     url(r'^contact/history/$', contact_history, name="contact_history"),
+
+    url(r'^dashboard/report/$', report, name="report"),
+    url(r'^dashboard/report/history/$', report_history, name="report_history"),
+    url(r'^dashboard/report/received/$', report_received, name="report_received"),
 ]
 
 handler400 = bad_request
