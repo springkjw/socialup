@@ -8,12 +8,12 @@
     border-bottom: 1px solid #DEDEDE;
 }
 
-.contact-nav {
+.report-nav {
     margin-top: 25px;
     margin-left: 25px;
 }
 
-.contact-nav ul li {
+.report-nav ul li {
     display: inline-block;
     font-size: 12px;
     color: rgba(0, 0, 0, .6);
@@ -23,37 +23,36 @@
     margin-right: 30px;
 }
 
-.contact-nav ul li:first-child {
+.report-nav ul li:first-child {
     margin-left: 10px;
 }
 
-.contact-nav ul li:last-child {
+.report-nav ul li:last-child {
     margin-right: 0;
 }
 
-.contact-nav .active {
+.report-nav .active {
     color: #648efc;
 }
 
-.dashboard-contact {
-    border: 2px solid #DADADA;
+.dashboard-report {
+    /*border: 2px solid #DADADA;*/
     width: 480px;
     margin-top: 20px;
     padding: 30px 40px 40px 40px;
-    /*text-align: right;*/
 }
 
-.dashboard-contact .meta {
+.dashboard-report .meta {
     font-size: 12px;
     font-weight: 400;
     color: #777;
 }
 
-.dashboard-contact .contact-form {
+.dashboard-report .report-form {
     margin-top: 30px;
 }
 
-.dashboard-contact label {
+.dashboard-report label {
     font-size: 14px;
     font-weight: 500;
     color: #777;
@@ -63,23 +62,29 @@
     position: absolute;
 }
 
-.dashboard-contact ul {
+.dashboard-report ul {
     height: 40px;
 }
 
-.dashboard-contact ul li {
+.dashboard-report ul li {
     width: 100px;
     height: 35px;
     display: inline-block;
     margin-left: 5px;
 }
 
-.dashboard-contact ul li input {
+.dashboard-report ul li input {
     position: relative;
     width: 15px;
 }
 
-.dashboard-contact input {
+.dashboard-report select {
+    margin-bottom: 15px;
+    margin-left: 60px;
+    font-size: 12px;
+}
+
+.dashboard-report input {
     width: 390px;
     padding: 8px 15px 8px 15px;
     margin-bottom: 15px;
@@ -87,11 +92,11 @@
     font-size: 12px;
 }
 
-.dashboard-contact input[name='user_email'] {
-    background: #DADADA;
+#id_bad_user_description {
+    border: solid 1px #DADADA;
 }
 
-.dashboard-contact textarea {
+.dashboard-report textarea {
     width: 390px;
     border: solid 1px #DADADA;
     padding: 8px 15px 8px 15px;
@@ -101,7 +106,7 @@
     resize: none;
 }
 
-.dashboard-contact button[type='submit'] {
+.dashboard-report button[type='submit'] {
     background: #648efc;
     color: white;
     padding: 10px 35px 10px 35px;
@@ -109,50 +114,4 @@
     margin-top: 30px;
     margin-left: 200px;
     font-size: 12px;
-}
-
-.dashboard-contact input[name='order'] {
-    width: 150px;
-    display: inline-block;
-}
-
-.dashboard-contact .contact-order {
-    font-size: 12px;
-    color: #777;
-    background: #DADADA;
-    width: 75px;
-    display: inline-block;
-    text-align: center;
-    cursor: pointer;
-    padding: 8px 10px 8px 10px;
-}
-
-.dashboard-contact .order-meta {
-    text-align: center;
-    padding: 5px 0 10px 0;
-}
-
-.dashboard-contact .order-meta .order-meta-button {
-    font-size: 10px;
-    color: #777;
-    background: #DADADA;
-    width: 125px;
-    display: inline-block;
-    text-align: center;
-    cursor: pointer;
-    padding: 8px 10px 8px 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.contact-input {
-    margin-bottom: 15px;
-}
-
-#id_bad_user_description {
-    border: solid 1px #DADADA;
-}
-
-#id_type {
-    margin-left: 60px;
 }

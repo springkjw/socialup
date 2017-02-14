@@ -1,10 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'account/dashboard_base.html' %}
+{% load staticfiles %}
 
-</body>
-</html>
+{% block dashboard_css %}
+    <link rel="stylesheet" href="{% static 'css/dashboard/report.css' %}">
+{% endblock %}
+
+{% block dashboard_js %}
+    <script type="text/javascript" src="{% static 'js/seller/order.js' %}"></script>
+{% endblock %}
+
+{% block dashboard_content %}
+    <div class="dashboard-content">
+        <div class="dashboard-nav">
+            1:1 문의
+        </div>
+        <div class="report-nav">
+            <ul>
+                <li><a href="{% url 'report' %}">신고하기</a></li>
+                <li><a href="{% url 'report_history' %}">신고한 내역</a></li>
+                <li class="active"><a href="{% url 'report_received' %}">신고받은 내역</a></li>
+            </ul>
+        </div>
+        <div class="dashboard-report">
+            <div class="meta">
+                <p>소셜업 이용자께서 고객님께 요청한 불편사항입니다.</p>
+            </div>
+        </div>
+        <div>
+            {% if reports %}
+                {% for report in reports %}
+                    <div>
+                        <p>{{ report.detail}}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-list">
+                    신고받은 내역이 없습니다
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
