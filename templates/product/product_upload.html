@@ -147,7 +147,6 @@
             </select>
         </div>
         <form id="product-upload-form" action="" name="product_upload" method="POST" enctype="multipart/form-data">{% csrf_token %}
-            {{ form.errors }}
             {{ form.non_field_errors }}
             <div class="product-upload-info">
                 <div class="product-upload-title">

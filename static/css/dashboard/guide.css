@@ -245,4 +245,30 @@
     overflow: scroll;
 }
 
-/* entrie part */
+/* paging */
+
+.paging_wrapper{
+    text-align: center;
+}
+
+.paging_wrapper #paging{
+    list-style: none;
+    display: inline-block;
+    padding:0;
+}
+
+.paging_wrapper #paging li{
+    margin:0 10px;
+    cursor: pointer;
+    width:20px;
+    padding:4px;
+    border: 1px solid #a3a3a3;
+    color: #a3a3a3;
+    float: left;
+}
+
+.paging_wrapper #paging li.active{
+    background-color:#648efc;
+    border: 1px solid #648efc;
+    color:white;
+}

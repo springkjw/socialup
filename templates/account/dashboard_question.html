@@ -7,6 +7,7 @@
 
 {% block dashboard_js %}
     <script type="text/javascript" src="{% static 'js/dashboard/guide.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.paging.min.js' %}"></script>
 {% endblock %}
 
 
@@ -28,7 +29,7 @@
                     <li><button id="btn_usage" question-type="usage">이용</button></li>
                     <li><button id="btn_seller" question-type="seller">판매자</button></li>
                     <li><button id="btn_purchase" question-type="purchase">구매자</button></li>
-                    <li><button id="btn_report">신고</button></li>
+                    <li><button id="btn_report" question-type="report">신고</button></li>
                     <li><button id="btn_etc">기타</button></li>
                 </ul>
             </div>
@@ -248,7 +249,35 @@
                     </div>
                 </div>
             </div>
+            <div class="question_content report">
+                <div class="question_content_each">
+                    <div class="question-content-title-wrapper">
+                        <img src="/static/img/search.png">
+                        <div class="question-content-title">판매자가 직거래를 유도하면 신고해야 하나요?</div>
+                        <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="question_content_text">
+                        {% include 'question/question_report_1.html' %}
+                    </div>
+                </div>
+                <div class="question_content_each">
+                    <div class="question-content-title-wrapper">
+                        <img src="/static/img/search.png">
+                        <div class="question-content-title">신고하기를 받으면 어떻게 되나요?</div>
+                        <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="question_content_text">
+                        {% include 'question/question_report_2.html' %}
+                    </div>
+                </div>
+            </div>
         </div>
-
+        <div class="paging_wrapper">
+            <ol id="paging">
+                <li class="paging_num">1</li>
+                <li class="paging_num">2</li>
+                <li class="paging_num">3</li>
+            </ol>
+        </div>
     </div>
 {% endblock %}

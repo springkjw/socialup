@@ -9,7 +9,7 @@ var currentUser = null;
 function updateChannelLastMessage(message) {
     if (message) {
         var lastMessage = (message.isFileMessage()) ? message.name : message.message;
-        var lastMessageDateString = getDatetimeString(message.createdAt, '<br>');
+        var lastMessageDateString = getDatetimeString(message.createdAt, ' ');
 
         $('.channel-group[data-channel-url=' + message.channelUrl + '] .channel-lastmessage').html(lastMessage);
         $('.channel-group[data-channel-url=' + message.channelUrl + '] .channel-lastmessagetime').html(lastMessageDateString);
@@ -61,11 +61,28 @@ function loadGroupChannelList(unreadOnly) {
     // 이미 한 번 읽은 경우..
     if (allChannels.length > 0) {
         if (unreadOnly) {
+            if(!unreadChannels.length){
+                $('table').remove();
+                $('.channels_wrapper').append(
+                    '<div class="no_message_wrapper">' +
+                        '<img src="/static/img/unread_message_img.png"/>' +
+                        '<div class="no_message_text">미확인 메시지가 없습니다.</div>'
+                    + '</div>'
+                );
+            }
+
             unreadChannels.forEach(function(channel) {
                 renderChannel(channel);
             });
         }
         else {
+            $('.no_message_wrapper').remove();
+            $('.channels_wrapper').append(
+                '<table class="channels">' +
+                '<tbody id="channel_list"></tbody>' +
+                '</table>'
+            );
+
             allChannels.forEach(function(channel) {
                 renderChannel(channel);
             });
