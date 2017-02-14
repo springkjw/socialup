@@ -81,7 +81,6 @@
 
 .dashboard-contact input {
     width: 390px;
-    border: solid 1px #DADADA;
     padding: 8px 15px 8px 15px;
     margin-bottom: 15px;
     margin-left: 60px;
@@ -144,4 +143,16 @@
     padding: 8px 10px 8px 10px;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.contact-input {
+    margin-bottom: 15px;
+}
+
+#id_bad_user_description {
+    border: solid 1px #DADADA;
+}
+
+#id_type {
+    margin-left: 60px;
 }
