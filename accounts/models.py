@@ -23,6 +23,7 @@ from django.core.urlresolvers import reverse
 
 # allauth import
 from allauth.socialaccount.models import SocialAccount
+from allauth.account.models import EmailAddress
 
 
 class MyUserManager(BaseUserManager):
@@ -48,13 +49,20 @@ class MyUserManager(BaseUserManager):
         user.is_admin = True
         user.save(using=self._db)
 
+        email_conform = EmailAddress.objects.create(
+            user=user,
+            email=email
+        )
+        email_conform.verified = True
+        email_conform.primary = True
+        email_conform.save()
+
         return user
 
 
 # user profile image save path
 def download_profile_location(instance, filename):
     return "avatar/%s/%s" % (instance, filename)
-
 
 
 class MyUser(AbstractBaseUser):
@@ -71,7 +79,7 @@ class MyUser(AbstractBaseUser):
     description = models.TextField(null=True, blank=True, default="")
     name = models.CharField(max_length=10, null=True, blank=True, default="")
     phone = models.CharField(max_length=12, null=True, blank=True, default="")
-    sex = models.CharField(choices=(("male","남자"),("female","여자")), max_length=15, null=True)
+    sex = models.CharField(choices=(("male", "남자"), ("female", "여자")), max_length=15, null=True)
     address = models.CharField(max_length=15, null=True, default="")
     job = models.CharField(max_length=15, null=True, default="")
     birth_year = models.PositiveIntegerField(null=True)
@@ -127,7 +135,6 @@ class MyUser(AbstractBaseUser):
                     return "http://graph.facebook.com/{}/picture?width=100&height=100".format(social_user[0].uid)
             return '/static/img/no_profile_hd.png'
 
-
     @property
     def is_seller(self):
         seller_exist = Seller.objects.filter(user=self).exists()
@@ -138,7 +145,6 @@ class MyUser(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
-
 
     @property
     def get_thumb_hd_url(self):
@@ -151,6 +157,7 @@ class MyUser(AbstractBaseUser):
     @property
     def get_thumb_micro_url(self):
         return self.myuserthumbnail_set.get(thumb_type='micro')
+
 
 # added
 def thumbnail_location(instance, filename):
@@ -165,6 +172,7 @@ THUMB_TYPE = (
     ("sd", "SD"),
     ("micro", "Micro"),
 )
+
 
 class MyUserThumbnail(models.Model):
     myuser = models.ForeignKey(MyUser)
@@ -197,12 +205,12 @@ def create_new_thumb(image_path, instance, max_length, max_width):
 
     # 원본 사진의 짧은 길이를 기준으로 리사이즈
     thumb_width, thumb_height = thumb.size
-    if thumb_width > thumb_height :
+    if thumb_width > thumb_height:
         baseheight = max_width
         hpercent = (baseheight / float(thumb.size[1]))
         wsize = int((float(thumb.size[0]) * float(hpercent)))
         thumb = thumb.resize((wsize, baseheight), Image.ANTIALIAS)
-    else :
+    else:
         basewidth = max_length
         wpercent = (basewidth / float(thumb.size[0]))
         hsize = int((float(thumb.size[1]) * float(wpercent)))
@@ -272,7 +280,8 @@ def myuser_post_save_receiver(sender, instance, created, *args, **kwargs):
     # 새 아이디를 만들었을 경우 랜덤 토끼 프로필 이미지 저장
     if created:
         # 원본 이미지 파일 이름
-        random_img_path = random.choice(['static/img/no_profile_1.png', 'static/img/no_profile_2.png', 'static/img/no_profile_3.png'])
+        random_img_path = random.choice(
+            ['static/img/no_profile_1.png', 'static/img/no_profile_2.png', 'static/img/no_profile_3.png'])
         filename = os.path.basename(random_img_path)
         thumb = Image.open(random_img_path)
 
@@ -290,7 +299,6 @@ def myuser_post_save_receiver(sender, instance, created, *args, **kwargs):
         temp_file_loc = os.path.join(temp_loc, '%s_%s' % (
             filename, extends))
         new_thumbnail_name = "%s_%s" % (file_name, extends)
-
 
         # 저장
         if settings.DEBUG:
@@ -357,12 +365,12 @@ def myuser_post_save_receiver(sender, instance, created, *args, **kwargs):
 
 post_save.connect(myuser_post_save_receiver, sender=MyUser)
 
-
-seller_type_list=(
+seller_type_list = (
     ("individual", "개인"),
     ("personal_business", "개인사업자"),
-    ("corporate_business","법인사업자")
+    ("corporate_business", "법인사업자")
 )
+
 
 class Seller(models.Model):
     user = models.OneToOneField(MyUser)
@@ -383,7 +391,7 @@ class Seller(models.Model):
     business_license = models.ImageField(
         blank=True,
         null=True,
-        upload_to=settings.MEDIA_ROOT+'/business_license/'
+        upload_to=settings.MEDIA_ROOT + '/business_license/'
     )
     account_copy = models.ImageField(
         blank=True,
@@ -392,7 +400,7 @@ class Seller(models.Model):
     )
 
     # seller_account
-    #account_number = models.CharField(max_length=120, null=True, blank=True)
+    # account_number = models.CharField(max_length=120, null=True, blank=True)
     # account_name = models.CharField(max_length=50, null=True, blank=True)
     # bank = models.CharField(max_length=120, null=True, blank=True, choices=BANK_TYPE)
     # timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
@@ -410,8 +418,9 @@ class Seller(models.Model):
     def type_in_korean(self):
         type_in_korean = {"individual": "개인",
                           "personal_business": "개인사업자",
-                          "corporate_business": "법인사업자",}
+                          "corporate_business": "법인사업자", }
         return type_in_korean[self.type]
+
 
 # new seller created
 # def new_seller_receiver(sender, instance, created, *args, **kwargs):
@@ -469,12 +478,13 @@ class SellerAccount(models.Model):
         return self.account_number
 
 
-profit_type_list=(
+profit_type_list = (
     ("possible_profit", "possible_profit"),
     ("expect_profit", "expect_profit"),
     ("requested_profit", "requested_profit"),
     ("completed_profit", "completed_profit")
 )
+
 
 class Profit(models.Model):
     seller = models.ForeignKey(Seller)
@@ -486,11 +496,12 @@ class Profit(models.Model):
         return str(self.money)
 
 
-withdrawal_status_list=(
+withdrawal_status_list = (
     ("request", "request"),
     ("completed", "completed"),
     ("rejected", "rejected")
 )
+
 
 class Withdrawal(models.Model):
     seller = models.ForeignKey(Seller)
