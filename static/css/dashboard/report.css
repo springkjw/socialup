@@ -115,3 +115,38 @@
     margin-left: 200px;
     font-size: 12px;
 }
+
+
+/* for report_received.html */
+
+.report-received-table-ul {
+    font-size: 14px;
+    color: #555555;
+    font-weight: 600;
+    margin-left: 30px;
+    /*text-align: center;*/
+}
+
+.report-received-table-ul li {
+    display: inline-block;
+}
+
+.report-received-table-ul li:nth-child(1){
+    width:10%;
+}
+
+.report-received-table-ul li:nth-child(2){
+    width:15%;
+}
+
+.report-received-table-ul li:nth-child(3){
+    width:35%;
+}
+
+.report-received-table-ul li:nth-child(4){
+    width:20%;
+}
+
+.report-received-table-ul li:nth-child(5){
+    width:15%;
+}
