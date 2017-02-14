@@ -20,11 +20,11 @@ def home(request):
 
     # 처음 상품
     # 평점순
-    products_by_rating = Product.objects.all().active().order_by('-rating')[:20]
+    products_by_rating = Product.objects.active().order_by('-rating')[:20]
     # 최신순
-    products_by_created = Product.objects.all().active().order_by('-created')[:20]
+    products_by_created = Product.objects.active().order_by('-created')[:20]
     # 가격순
-    products_by_price = Product.objects.all().active().order_by('-price')[:20]
+    products_by_price = Product.objects.active().order_by('-price')[:20]
 
     if products_by_price.exists():
         highest_price = products_by_price.first.price
