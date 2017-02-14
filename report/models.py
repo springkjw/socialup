@@ -25,7 +25,7 @@ def download_file_location(instance, filename):
 
 class Report(models.Model):
     writer = models.ForeignKey(MyUser, related_name='report_writer')
-    bad_user = models.ForeignKey(MyUser, related_name='report_bad_user', null=True)
+    bad_user = models.ForeignKey(MyUser, related_name='report_bad_user', null=True, blank=True)
     bad_user_description = models.CharField(max_length=30)
     type = models.CharField(choices=report_type_list, max_length=20, null=False)
     detail = models.TextField(null=True, blank=True)
