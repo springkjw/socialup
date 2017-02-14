@@ -42,6 +42,7 @@ def home(request):
         "high_low": high_low,
     }
 
+
     return render(request, template, context)
 
 

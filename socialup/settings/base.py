@@ -52,12 +52,12 @@ MIDDLEWARE_CLASSES = [
 ]
 
 # except urls
-# LOGIN_EXECPT_URLS = (
-#     r'^$',
-#     r'^admin/',
-#     r'^accounts/signup/',
-#     r'^/accounts/facebook/login/?process=login',
-# )
+LOGIN_EXECPT_URLS = (
+    r'^$',
+    r'^admin/',
+    r'^accounts/signup/',
+    r'^/accounts/facebook/login/?process=login',
+)
 
 ROOT_URLCONF = 'socialup.urls'
 
