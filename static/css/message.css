@@ -1,10 +1,13 @@
 .channel-list-options {
-    margin-top: 25px;
-    margin-left: 25px;
+    margin: 16px 0;
+	width:99%;
+	border:1px solid #DADADA;
+	padding:10px 0;
 }
+
 .channel-list-options ul li {
     display: inline-block;
-    font-size: 12px;
+    font-size: 13px;
     color: rgba(0, 0, 0, .6);
     font-weight: 600;
     text-align: center;
@@ -12,26 +15,28 @@
     margin-right: 30px;
 }
 .channel-list-options ul li:first-child {
-    margin-left: 10px;
+    margin-left: 16px;
 }
 .channel-list-options ul li:last-child {
     margin-right: 0;
 }
 .channel-list-options .active {
-    color: #648efc;
+    border-bottom: 3px solid #648efc;
 }
 
 table.channels {
-	margin-top: 15px;
     border: 2px solid #DADADA;
-    width: 565px;
-    background-color: #f5f5f5
+    width: 90%;
+	display: block;
+	resize: both;
+    overflow: auto;
+	margin:0 auto;
 }
 table.channels tr:hover {background-color: ghostwhite;}
 table.channels tr td {
     vertical-align: middle;
     height:50px;
-    padding: 15px;
+    padding: 10px 5px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
@@ -42,12 +47,13 @@ table.channels tr td {
 }
 .channel-lastmessage {
     width:295px;
+	font-size: 13px;
 }
-.channel-lastmessagetime {
-    font-size: 14px;
+table.channels .channel-lastmessagetime {
+    font-size: 11px;
     font-weight: 400;
     text-align: right;
-    padding-right:30px;
+	vertical-align: bottom;
 }
 .channel-profile img{
     border-radius: 50%;
@@ -345,4 +351,47 @@ label.chat-input-file.file-upload {
 #chatview, #sendmessage {
     overflow:hidden;
     border-radius:6px;
+}
+
+.channels_wrapper{
+	width:99%;
+	height:100%;
+	padding:5% 0;
+	display: block;
+	border: 2px solid #DADADA
+}
+
+.channels_search_wrapper{
+	width:60%;
+	margin-left:20%;
+	margin-bottom:16px;
+}
+
+.channels_search_wrapper form{
+	text-align: center;
+}
+
+.channels_search_wrapper form input{
+	width:50%;
+	border: 1px solid #a3a3a3;
+}
+
+.channels_search_wrapper form button{
+	background: none;
+	background-color: #dadada;
+	border: 1px solid #a3a3a3;
+	text-align: center;
+	padding:1px 10px;
+	font-size: 15px;
+	font-weight:400;
+}
+
+.no_message_wrapper{
+	width:100%;
+	padding:150px 0;
+	text-align: center;
+}
+
+.no_message_wrapper img{
+	width:15%;
 }

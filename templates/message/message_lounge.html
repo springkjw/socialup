@@ -17,13 +17,21 @@
         </div>
         <div class="channel-list-options">
             <ul>
-                <li class="active" data-option="all">전체</li>
-                <li data-option="unread">읽지 않은 메시지<span class="unread-message-counter"></span></li>
+                <li class="active" data-option="all">전체메시지</li>
+                <li data-option="unread">미확인메시지<span class="unread-message-counter"></span></li>
             </ul>
         </div>
-        <table class="channels">
-            <tbody id="channel_list"></tbody>
-        </table>
+        <div class="channels_wrapper">
+            <div class="channels_search_wrapper">
+                <form>
+                    <input type="text" placeholder="아이디 또는 검색"/>
+                    <button>검색</button>
+                </form>
+            </div>
+            <table class="channels">
+                <tbody id="channel_list"></tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}
 
