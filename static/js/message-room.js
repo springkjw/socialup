@@ -241,3 +241,16 @@ window.onfocus = function() {
       checkUnreadMessage(sb); // 상단의 메시지 숫자를 0으로 갱신..
   }
 };
+
+/* popup part */
+$('#popup_btn').on('click', function () {
+    $('.message_popup_wrapper').show();
+});
+
+$('.message_popup_btn.close').on('click', function () {
+    $('.message_popup_wrapper').hide();
+});
+
+(function(){
+    new Clipboard('#copy_button');
+})();

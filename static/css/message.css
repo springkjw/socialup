@@ -431,7 +431,9 @@ label.chat-input-file.file-upload {
 	position:absolute;
 	display: none;
 	width:500px;
-	height:200px;
+	height:220px;
+	margin-left:62px;
+	margin-top:-10px;
 	background-color: white;
 	z-index:20;
 	border:1px solid #a3a3a3;
@@ -476,7 +478,28 @@ label.chat-input-file.file-upload {
 	height:27%;
 	margin-top:10px;
 	text-align: left;
-padding-left:5px;
+	padding-left:5px;
 	border: 1px solid #a3a3a3;
-	margin-left:3%
+	margin-left:3%;
+	font-size:14px;
+}
+
+.message_popup_wrapper .message_popup_btns{
+	width:100%;
+	margin-top:10px;
+}
+
+.message_popup_wrapper .message_popup_btns .message_popup_btn{
+	width:80px;
+	height:30px;
+	padding:3px;
+	border:1px solid black;
+	border-radius: 3px;
+	background: none;
+	font-size: 14px;
+}
+
+.message_popup_wrapper .message_popup_btns .message_popup_btn.copy{
+	background-color: #cecece;
+	border-color: #cecece;
 }

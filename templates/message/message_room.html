@@ -17,6 +17,19 @@
         <div class="dashboard-nav">
             메시지
         </div>
+        <div class="message_notice_wrapper">
+            <div class="message_notice_title">
+                <img style="width:30px; vertical-align: bottom;" src="/static/img/message_notice.png"/>
+                포스팅 작성 전 주의사항
+            </div>
+            <div class="message_notice_content">
+                <div>블로그 작성시 각 포스팅 마지막에 리뷰 배너를 삽입해주세요.</div>
+                <div>
+                    <button id="popup_btn">[리뷰 배너 삽입 방법 보기]</button>
+                    <button style="margin-left:20px;">[관련 공지 보러 가기]</button>
+                </div>
+            </div>
+        </div>
         <div class="message_popup_wrapper">
             <div class="message_popup_title">인플루언서님께서 사용하고 있는 개인 배너나 문구가 없다면 소셜업 배너를 사용해주세요.</div>
             <div class="message_popup_explain">
@@ -32,19 +45,9 @@
                 <br/>
                 -> 추후 소스 수정
             </div>
-            <div class="message_popup_btns"></div>
-        </div>
-        <div class="message_notice_wrapper">
-            <div class="message_notice_title">
-                <img style="width:30px; vertical-align: bottom;" src="/static/img/message_notice.png"/>
-                포스팅 작성 전 주의사항
-            </div>
-            <div class="message_notice_content">
-                <div>블로그 작성시 각 포스팅 마지막에 리뷰 배너를 삽입해주세요.</div>
-                <div>
-                    <button>[리뷰 배너 삽입 방법 보기]</button>
-                    <button style="margin-left:20px;">[관련 공지 보러 가기]</button>
-                </div>
+            <div class="message_popup_btns">
+                <button class="message_popup_btn copy" id="copy_button" data-clipboard-text='<a href="https;//socialup.kr/81521" target="_blank">'>소스복사</button>
+                <button class="message_popup_btn close">닫기</button>
             </div>
         </div>
         <div id="message-pannel">
