@@ -14,6 +14,7 @@ from django_summernote import fields as summer_fields
 from accounts.models import Seller
 import json
 from django.core import serializers
+from django.contrib.staticfiles.templatetags.staticfiles import static
 
 
 class ProductQueryset(models.query.QuerySet):
@@ -191,13 +192,13 @@ class Product(models.Model):
         image_url = None
 
         if self.sns_type == 'blog':
-            image_url = '/static/img/naver.png'
+            image_url = static('img/naver.png')
         elif self.sns_type == 'facebook':
-            image_url = '/static/img/facebook.png'
+            image_url = static('img/facebook.png')
         elif self.sns_type == 'instagram':
-            image_url = '/static/img/insta.png'
+            image_url = static('img/insta.png')
         elif self.sns_type == 'kakaostory':
-            image_url = '/static/img/kakao.png'
+            image_url = static('img/kakao.png')
 
         return image_url
 

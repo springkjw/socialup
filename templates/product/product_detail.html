@@ -123,7 +123,7 @@
                     <img id="product-type-image" src="{{ product.sns_type_image_url }}" alt="{{ product.sns_type }}" />
                     <div class="product-gauge" data-color="{{ product.sns_type_color }}">
                         <div class="circle-wrapper">
-                            <img class="circle-arrow" src="/static/img/arrow_gauge.png" >
+                            <img class="circle-arrow" src="{% static 'img/arrow_gauge.png' %}" >
                             <ul class="circle" gauge-data="{{ product.socialup_gauge }}">
                                 <li class="circle-list">
                                     <div class="circle-text">1</div>
@@ -180,15 +180,10 @@
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                         <i class="fa fa-star" aria-hidden="true"></i>
-                                        <span class="">4/5</span>
-                                        <span class="">(28개)</span>
+                                        <span class="">{{ product.rating }}/5</span>
+                                        <span class="">({{ seller_review_count }}개)</span>
                                     </div>
                                 </div>
-                                <!--
-                                <div class="seller-info-like">
-                                    <img src="/static/img/heart.png" style="width:60%;">
-                                    <div id="seller-info-like-num">236</div>
-                                </div>-->
                             </div>
                             <div class="seller-detail-info-each mid">
                                 <div class="seller-info-item seller-detail-intro">
@@ -237,7 +232,7 @@
                     <div class="product-category">
                         {% for tag in product_tag %}
                             <div class="product-tag-each">
-                                <img class="product-category-image" src="/static/img/{{ tag }}_click.png">
+                                <img class="product-category-image" src="{% static 'img/' %}{{ tag }}_click.png">
                                 <span class="product-category-text">{{ tag.get_tag_display }}</span>
                             </div>
                         {% endfor %}
@@ -259,8 +254,8 @@
                                 일평균 방문자수 / 팔로워
                             </div>
                             <div class="sub-content">
-                                <span>{{ product.follower_num }} </span>/
-                                <span>{{ product.follower_visit_num }}</span>
+                                <span>{{ product.follower_visit_num }}</span>/
+                                <span>{{ product.follower_num }} </span>
                             </div>
                         {% elif product.sns_type == "facebook" %}
                             <div class="title">
@@ -347,25 +342,25 @@
                     <div class="product-button">
                         <div class="wish-list-modal">
                             <div class="wish-list-modal-content">
-                                <button class="wish-list-modal-btn-close" ><img src="/static/img/cancle.png" style="width:100%;"></button>
+                                <button class="wish-list-modal-btn-close" ><img src="{% static 'img/cancle.png' %}" style="width:100%;"></button>
                                 <div class="wish-list-modal-content-top"><span style="color:hotpink">찜하기</span>가 되었습니다.</div>
                                 <a href="{% url 'wish_list' %}" class="wish-list-modal-btn-list">전체 목록 보기</a>
                             </div>
                         </div>
                             <button class="wish-list">
                                 {% if is_user_wished %}
-                                    <img src="/static/img/zzim.png" style="width:7%; display:inline-block" class="wish-list-zzim on";>
-                                    <img src="/static/img/zzim_un.png" style="width:7%; display:none" class="wish-list-zzim off";>
+                                    <img src="{% static 'img/zzim.png' %}" style="width:7%; display:inline-block" class="wish-list-zzim on";>
+                                    <img src="{% static 'img/zzim_un.png' %}" style="width:7%; display:none" class="wish-list-zzim off";>
                                 {% else %}
-                                    <img src="/static/img/zzim.png" style="width:7%; display:none" class="wish-list-zzim on";>
-                                    <img src="/static/img/zzim_un.png" style="width:7%; display:inline-block" class="wish-list-zzim off";>
+                                    <img src="{% static 'img/zzim.png' %}" style="width:7%; display:none" class="wish-list-zzim on";>
+                                    <img src="{% static 'img/zzim_un.png' %}" style="width:7%; display:inline-block" class="wish-list-zzim off";>
                                 {% endif %}
 
                                 찜하기
                             </button>
                         {% csrf_token %}
                         <div class="cart-confirm-modal">
-                            <button class="cart-confirm-modal-btn-close" ><img src="/static/img/cancle.png" style="width:100%;"></button>
+                            <button class="cart-confirm-modal-btn-close" ><img src="{% static 'img/cancle.png' %}" style="width:100%;"></button>
                             <div class="cart-confirm-modal-title">장바구니 담기 완료</div>
                             <div class="cart-confirm-modal-content">
                                 상품이 장바구니에 담겼습니다.<br>바로 확인하시겠습니까?
@@ -545,7 +540,7 @@
                             이용방법
                         </div>
                         <div class="tab-content">
-                            <img id="caution-image" src="/static/img/guide.png">
+                            <img id="caution-image" src="{% static 'img/guide.png' %}">
                             <ul id="caution-ul" >
                                 <li>
                                     <div class="caution-div-each">

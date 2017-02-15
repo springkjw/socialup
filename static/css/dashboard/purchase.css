@@ -157,11 +157,11 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .dashboard-purchase .pay .pay-option label:nth-child(1) {
-    width:18%;
+    width:19%;
 }
 
 .dashboard-purchase .pay .pay-option label:nth-child(2) {
-    width:21%;
+    width:22%;
 }
 
 .dashboard-purchase .pay .pay-option label:nth-child(3) {
@@ -179,7 +179,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .dashboard-purchase .pay-option {
-    width: 95%;
+    width: 100%;
 }
 
 .dashboard-purchase .total {
