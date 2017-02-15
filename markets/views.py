@@ -46,6 +46,14 @@ def product_detail(request, product_id):
     seller_rating = int(round(seller.rating * 20))
     seller_count = OrderItem.objects.filter(seller=seller, status='finished').count()
 
+    # seller 의 product review 수
+    seller_products = Product.objects.filter(seller=seller)
+    seller_review_count = 0
+    for produc in seller_products:
+        temp_review = ProductReview.objects.filter(product=produc)
+        if temp_review:
+            seller_review_count +=len(temp_review)
+
     reviews = ProductReview.objects.filter(product=product)
     reviews_count = reviews.count()
     # 현재 product가 담긴 현재 유저의 찜목록
@@ -118,7 +126,6 @@ def product_detail(request, product_id):
                         return HttpResponse(json.dumps(data), content_type='application/json')
                     else:
                         raise Http404
-
     template = 'product/product_detail.html'
     context = {
         'product': product,
@@ -127,6 +134,7 @@ def product_detail(request, product_id):
         'rating': seller_rating,
         'reviews': reviews,
         'reviews_count': reviews_count,
+        'seller_review_count': seller_review_count,
         'is_user_wished':is_user_wished
     }
     return render(request, template, context)
