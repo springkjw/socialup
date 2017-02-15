@@ -150,26 +150,13 @@
 .new_jumbotron .jumbotron_right{
     width:34%;
     height:100%;
-    display: inline-block;
+    display: none;
     background-color: #aac1fe;
 }
 
-.new_jumbotron .jumbotron_right.second {
-    display: none;
+.new_jumbotron .jumbotron_right.zero {
+    display: inline-block;
 }
-
-.new_jumbotron .jumbotron_right.third {
-    display: none;
-}
-
-.new_jumbotron .jumbotron_right.fourth {
-    display: none;
-}
-
-.new_jumbotron .jumbotron_right.fifth {
-    display: none;
-}
-
 
 .new_jumbotron .jumbotron_right .jumbotron_right_content{
     background-repeat: no-repeat;

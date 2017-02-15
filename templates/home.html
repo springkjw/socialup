@@ -78,13 +78,15 @@
                   ],
                 afterMove: function () {
                     count++;
-                    if(count%5==1){
+                    if(count%6==1){
+                        right_zero();
+                    }else if(count%6==2){
                         right_first();
-                    }else if(count%5==2){
+                    }else if(count%6==3){
                         right_second();
-                    }else if(count%5==3){
+                    }else if(count%6==4){
                         right_third();
-                    }else if(count%5==4){
+                    }else if(count%6==5){
                         right_fourth();
                     }else{
                         right_fifth();
@@ -105,11 +107,18 @@
 {% block jumbotron %}
     <div class="new_jumbotron">
         <div class="jumbotron_left">
+            <a href='/dashboard/guide/'><div class="owl-slide banner-0" style='background-image: url("{% static 'img/ver1.5/banner_00.png' %}");'></div></a>
             <a href='/category/all?tag=pet'><div class="owl-slide banner-1" style='background-image: url("{% static 'img/ver1.5/banner_01.png' %}");'></div></a>
             <a href='/category/all?tag=travel'><div class="owl-slide banner-2" style='background-image: url("{% static 'img/ver1.5/banner_02.png' %}");'></div></a>
             <a href='/category/all?tag=food'><div class="owl-slide banner-3" style='background-image: url("{% static 'img/ver1.5/banner_03.png' %}");'></div></a>
             <a href='/category/all?tag=fashion'><div class="owl-slide banner-4" style='background-image: url("{% static 'img/ver1.5/banner_04.png' %}");'></div></a>
             <a href='/category/all?tag=it'><div class="owl-slide banner-5" style='background-image: url("{% static 'img/ver1.5/banner_05.png' %}");'></div></a>
+        </div>
+        <div class="jumbotron_right zero">
+            <a href='/category/all?tag=travel'><div class="jumbotron_right_content first" style='background-image: url("{% static 'img/ver1.5/side_02.png' %}");'></div></a>
+            <a href='/category/all?tag=food'><div class="jumbotron_right_content second" style='background-image: url("{% static 'img/ver1.5/side_03.png' %}");'></div></a>
+            <a href='/category/all?tag=fashion'><div class="jumbotron_right_content third" style='background-image: url("{% static 'img/ver1.5/side_04.png' %}");'></div></a>
+            <a href='/category/all?tag=it'><div class="jumbotron_right_content fourth" style='background-image: url("{% static 'img/ver1.5/side_05.png' %}");'></div></a>
         </div>
         <div class="jumbotron_right first">
             <a href='/category/all?tag=travel'><div class="jumbotron_right_content first" style='background-image: url("{% static 'img/ver1.5/side_02.png' %}");'></div></a>
