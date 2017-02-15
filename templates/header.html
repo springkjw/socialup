@@ -39,9 +39,7 @@
         </div>
         <div class="header-dropdown" style='display:none;'>
             <a href="{% url 'dashboard' %}">마이소셜업</a>
-            {% if user.seller %}
-                <a href="{% url 'product_upload' %}">포스팅 쓰기</a>
-            {% endif %}
+            <a href="{% url 'product_upload' %}">서비스 등록</a>
             <div class="header-menu">구매<span><i class="fa fa-caret-down" aria-hidden="true"></i></span></div>
             <div class="header-sub-menu buyer">
                 <a href="{% url 'wish_list' %}">- 찜목록</a>
