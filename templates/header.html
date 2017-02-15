@@ -10,7 +10,7 @@
             <form method="GET" id="search-form" action="{% url 'search' %}" >
                 <input type="text" name="keyword" placeholder="원하는 SNS 정보를 입력해주세요. 예) 맛집, 뷰티"/>
                 <button class="header_search_btn" type="submit">
-                    <img src="/static/img/search.png">
+                    <img src="{% static 'img/search.png' %}">
                 </button>
             </form>
         </div>
