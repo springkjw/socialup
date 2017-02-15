@@ -249,7 +249,9 @@ def product_manage(request):
         return render(request, template, context)
 
     else:
-        return HttpResponseRedirect('/dashboard/')
+        template = 'seller/product_manage.html'
+        context = {}
+        return render(request, template, context)
 
 
 @login_required
@@ -411,8 +413,11 @@ def product_order_manage(request):
 
         return render(request, template, context)
     else:
-        return HttpResponseRedirect('/dashboard/')
-
+        template = 'seller/order_manage.html'
+        context = {
+            "order_items_request_refund_length": 0,
+        }
+        return render(request, template, context)
 
 @login_required
 def product_profit_manage(request):
@@ -489,4 +494,16 @@ def product_profit_manage(request):
 
         return render(request, template, context)
     else:
-        return HttpResponseRedirect('/dashboard/')
+        template = 'seller/profit_manage.html'
+        s_account_form = SellerAccountForm()
+        withdrawal_form = WithdrawalForm()
+        context = {
+            "seller_account_forms": s_account_form,
+            "withdrawal_forms": withdrawal_form,
+            "expected_profit": 0,
+            "possible_profit": 0,
+            "requested_profit": 0,
+            "completed_profit": 0,
+        }
+
+        return render(request, template, context)
