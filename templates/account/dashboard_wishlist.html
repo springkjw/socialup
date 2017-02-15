@@ -154,7 +154,7 @@
                                 </div>
                                 <div class="card-author">
                                     <div class="card-author-info">
-                                        <span>{{ product.seller }}</span>
+                                        <span>{{ product.seller.user.get_short_name }}</span>
                                     </div>
                                     <div class="card-author-info-rating" data-rating="{{ product.rating }}">
                                         <i class="fa fa-star" aria-hidden="true"></i>
@@ -169,7 +169,7 @@
                         <div class="card-btns-wrapper">
                             <ul>
                                 <li>
-                                    <button class="ask-seller" data-id="{{ product.seller.user.id }}" data-name="{{ product.seller }}" data-profile="{{ product.seller.user.get_avatar }}" >
+                                    <button class="ask-seller" data-id="{{ product.seller.user.id }}" data-name="{{ product.seller.user.get_short_name }}" data-profile="{{ product.seller.user.get_avatar }}" >
                                         문의하기
                                     </button>
                                 </li>

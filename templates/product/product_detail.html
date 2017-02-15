@@ -162,7 +162,7 @@
                             <div class="seller-img">
                                 <img id="seller" src="{{ product.seller.user.get_avatar }}">
                                 <br>
-                                <h2 class="product-seller-name">{{ product.seller }}</h2>
+                                <h2 class="product-seller-name">{{ product.seller.user.get_short_name }}</h2>
                             </div>
                             <div class="show-seller-detail">
                                 <a href="{{ product.seller.get_absolute_url }}">
@@ -194,8 +194,8 @@
                                 <div class="seller-info-item seller-detail-intro">
                                     <div class="seller-detail-intro-title">자기소개</div>
                                     <div class="seller-detail-intro-content">
-                                        {% if product.seller.description %}
-                                            {{ product.seller.description }}
+                                        {% if product.seller.user.description %}
+                                            {{ product.seller.user.description }}
                                         {% else %}
                                         판매자에 대한 소개가 없습니다.
                                         {% endif %}
