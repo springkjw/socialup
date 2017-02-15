@@ -51,11 +51,20 @@
                         </div>
                         {% else %}
                         <div class="seller_basic_info">
-                            {{ seller.user.sex|replace_dash }} / {{ seller.user.birth_year|replace_dash }}년
-                            / {{ seller.user.address|replace_dash }} / {{ seller.user.job|replace_dash }}
+                            {{ seller.user.get_short_name|replace_dash }} /
+                            {% if seller.user.sex == 'female' %}
+                                여성
+                            {% elif seller.user.sex == 'male' %}
+                                남성
+                            {% else %}
+                                {{ seller.user.sex|replace_dash }}
+                            {% endif %}
+                            / {{ seller.user.birth_year|replace_dash }}년생
+                            / {{ seller.user.address|replace_dash }}
+                            / {{ seller.user.job|replace_dash }}
                         </div>
                         <div class="seller_description">
-                            {{ seller.description|replace_dash }}
+                            {{ seller.user.description|replace_dash }}
                         </div>
                         {% endif %}
                     </div>
