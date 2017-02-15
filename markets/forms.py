@@ -40,7 +40,7 @@ class ProductForm(forms.ModelForm):
         )
         self.fields['sns_type'] = forms.ChoiceField(widget=forms.RadioSelect(attrs={'type': 'radio'}), choices=sns_type_list)
         self.fields['sns_additional_info'] = forms.ChoiceField(widget=forms.RadioSelect, choices=sns_additional_info_list, initial='individual')
-        self.fields['sns_url'] = forms.CharField(widget=forms.URLInput(attrs={'placeholder': 'url을 입력해주세요.', 'required':'true', 'value':'http://'}))
+        self.fields['sns_url'] = forms.CharField(widget=forms.URLInput(attrs={'placeholder': 'url을 입력해주세요.', 'required':'true', 'value':'https://'}))
         self.fields['sex'] = forms.ChoiceField(widget=forms.RadioSelect, choices=(('male','남자'),('female','여자')), initial='female')
         self.fields['message_to_buyer'] = forms.CharField(widget=forms.Textarea(
                 attrs={'placeholder':'포스팅불가능 업종, A/S규정, 진행방법등','cols':'95'
