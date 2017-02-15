@@ -166,6 +166,11 @@ $.fn.digits = function() {
 };
 
 /* home jumbotron_right func */
+function right_zero(){
+    $('.jumbotron_right.zero').hide();
+    $('.jumbotron_right.first').css('display','inline-block');
+};
+
 function right_first(){
     $('.jumbotron_right.first').hide();
     $('.jumbotron_right.second').css('display','inline-block');

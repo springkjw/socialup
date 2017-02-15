@@ -404,6 +404,7 @@ label.chat-input-file.file-upload {
 	margin-left:2%;
 	margin-bottom:10px;
 	background-color: rgba(242, 242, 242, 0.49);
+	padding-bottom: 5px;
 }
 
 .message_notice_wrapper .message_notice_title{
@@ -431,7 +432,9 @@ label.chat-input-file.file-upload {
 	position:absolute;
 	display: none;
 	width:500px;
-	height:200px;
+	height:275px;
+	margin-left:62px;
+	margin-top:-10px;
 	background-color: white;
 	z-index:20;
 	border:1px solid #a3a3a3;
@@ -446,29 +449,14 @@ label.chat-input-file.file-upload {
 }
 
 .message_popup_wrapper .message_popup_explain{
-	width:94%;
-	height:27%;
-	border: 1px solid #a3a3a3;
+	width:95%;
+	height:auto;
+	margin-top:10px;
 	margin-left:3%
 }
 
-.message_popup_wrapper .message_popup_explain .message_popup_logo{
-	width:45%;
-	height:100%;
-	display: inline-block;
-	vertical-align: sub;
-	border-right: 1px solid #a3a3a3;
-}
-
-.message_popup_wrapper .message_popup_explain .message_popup_logo img{
-	width:90%;
-}
-
-.message_popup_wrapper .message_popup_explain .message_popup_detail {
-	width:53%;
-	height:100%;
-	display: inline-block;
-	font-size: 14px;
+.message_popup_wrapper .message_popup_explain img{
+	width:100%;
 }
 
 .message_popup_wrapper .message_popup_text{
@@ -476,7 +464,28 @@ label.chat-input-file.file-upload {
 	height:27%;
 	margin-top:10px;
 	text-align: left;
-padding-left:5px;
+	padding-left:5px;
 	border: 1px solid #a3a3a3;
-	margin-left:3%
+	margin-left:3%;
+	font-size:14px;
+}
+
+.message_popup_wrapper .message_popup_btns{
+	width:100%;
+	margin-top:10px;
+}
+
+.message_popup_wrapper .message_popup_btns .message_popup_btn{
+	width:80px;
+	height:30px;
+	padding:3px;
+	border:1px solid black;
+	border-radius: 3px;
+	background: none;
+	font-size: 14px;
+}
+
+.message_popup_wrapper .message_popup_btns .message_popup_btn.copy{
+	background-color: #cecece;
+	border-color: #cecece;
 }

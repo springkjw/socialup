@@ -865,7 +865,6 @@ body {
 .ui-dialog .ui-dialog-titlebar-close{
     background: none;
     border: none;
-    background-image: url("/static/img/cancle.png");
 }
 
 .ui-dialog-buttonpane.ui-widget-content.ui-helper-clearfix{

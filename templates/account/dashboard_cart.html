@@ -95,7 +95,7 @@
                     <div class="dashboard-cart-item" data-type="{{ cartitem.0.item.sns_type }}" data-color="{{ cartitem.0.item.sns_type_color }}">
                         <div class="dashboard-cart-item-image">
                             <div class="circle-wrapper">
-                                <img class="circle-arrow" src="/static/img/arrow_gauge.png" >
+                                <img class="circle-arrow" src="{% static 'img/arrow_gauge.png' %}" >
                                 <ul class="circle" gauge-data="{{ cartitem.0.item.socialup_gauge }}">
                                     <li class="circle-list">
                                         <div class="circle-text">1</div>
