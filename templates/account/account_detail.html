@@ -28,7 +28,7 @@
                         <img src="{{ seller.user.get_avatar }}">
                     </div>
                     <div class="seller_name_type">
-                        <div class="seller_name">{{ seller.user.get_email_id }}</div>
+                        <div class="seller_name">{{ seller.user.get_short_name }}</div>
                         <div class="seller_type">
                             {{ seller.type_in_korean }}
                         </div>
@@ -59,7 +59,12 @@
                             {% else %}
                                 {{ seller.user.sex|replace_dash }}
                             {% endif %}
-                            / {{ seller.user.birth_year|replace_dash }}년생
+                            /
+                            {% if seller.user.birth_year == None or seller.user.birth_year == 1930 %}
+                                -년생
+                            {% else %}
+                                {{ seller.user.birth_year|replace_dash }}년생
+                            {% endif %}
                             / {{ seller.user.address|replace_dash }}
                             / {{ seller.user.job|replace_dash }}
                         </div>

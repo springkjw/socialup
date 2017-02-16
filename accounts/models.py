@@ -16,6 +16,7 @@ from django.db.models.signals import post_save
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.core.files.storage import default_storage as storage
 from django.core.files import File
 from model_utils import FieldTracker
@@ -137,11 +138,7 @@ class MyUser(AbstractBaseUser):
             else:
                 # 유저 이메일 주소에 따라 1~3 숫자로 변환
                 pseudo_random_num = int(int(self.email.encode('hex'), 16) % 3) + 1
-                if settings.DEBUG:
-                    random_profile = '/static/img/no_profile_' + str(pseudo_random_num) + '.png'
-                # production setting
-                else:
-                    random_profile = settings.STATIC_ROOT + '/img/no_profile_' + str(pseudo_random_num) + '.png'
+                random_profile = static('img/no_profile_' + str(pseudo_random_num) + '.png')
                 return random_profile
 
     @property
