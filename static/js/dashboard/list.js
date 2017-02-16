@@ -74,7 +74,7 @@ $('.show_detail_btn.third').on('click', function () {
 
 /* wish-list-modal part */
 $('.review').on('click', function () {
-    $(this).parent().next().show();
+    $('.review_modal').show();
 });
 
 
