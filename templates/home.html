@@ -217,7 +217,7 @@
                                 </div>
                                 <div class="card-author">
                                     <div class="card-author-info">
-                                        {{ product.seller }}
+                                        {{ product.seller.user.get_short_name }}
                                     </div>
                                     <div class="card-author-info-rating" data-rating="{{ product.rating }}">
                                         <i class="fa fa-star" aria-hidden="true"></i>
@@ -326,7 +326,7 @@
                                             <img src="{{ product.seller.user.get_avatar }}" >
                                         </div>
                                         <div class="card-author-info-seller-rating">
-                                            <div class="card-author-info-seller">{{ product.seller }}</div>
+                                            <div class="card-author-info-seller">{{ product.seller.user.get_short_name }}</div>
                                             <div class="card-author-info-rating" data-rating="{{ product.rating }}">
                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                 <i class="fa fa-star" aria-hidden="true"></i>
@@ -436,7 +436,7 @@
                                             <img src="{{ product.seller.user.get_avatar }}" >
                                         </div>
                                         <div class="card-author-info-seller-rating">
-                                            <div class="card-author-info-seller">{{ product.seller }}</div>
+                                            <div class="card-author-info-seller">{{ product.seller.user.get_short_name }}</div>
                                             <div class="card-author-info-rating" data-rating="{{ product.rating }}">
                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                 <i class="fa fa-star" aria-hidden="true"></i>

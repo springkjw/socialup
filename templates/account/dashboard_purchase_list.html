@@ -121,7 +121,7 @@
                                     <ul class="purchase-table-ul">
                                         <li class="table_product number">{{ order_item.cart_item.item.id }}</li>
                                         <li class="table_product name">{{ order_item.cart_item.item.oneline_intro }}</li>
-                                        <li class="table_product seller_id">{{ order_item.cart_item.item.seller }}</li>
+                                        <li class="table_product seller_id">{{ order_item.cart_item.item.seller.user.get_short_name }}</li>
                                         <li class="table_product when_purchase">{{ order_item.order.timestamp|date:"m.d" }}</li>
                                         <li class="table_product working_status">{{ order_item.status_in_korean }}</li>
                                         <li class="table_product price">{{ order_item.cart_item.line_item_total }}</li>
@@ -171,7 +171,7 @@
                                         <div class="table_product_detail_right">
                                             <div class="table_product_detail_right_title">
                                                 <h2>[{{ order_item.cart_item.item.id }}]{{ order_item.cart_item.item.oneline_intro }}</h2>
-                                                <p>주문번호:{{ order_item.order.order_id }} &nbsp  판매자:{{ order_item.cart_item.item.seller }} &nbsp 구매날짜:{{ order_item.order.timestamp|date:"m.d" }} </p>
+                                                <p>주문번호:{{ order_item.order.order_id }} &nbsp  판매자:{{ order_item.cart_item.item.seller.user.get_short_name }} &nbsp 구매날짜:{{ order_item.order.timestamp|date:"m.d" }} </p>
                                                 <p>결제금액:{{ order_item.cart_item.line_item_total }} &nbsp 결제수단:{{ order_item.order.type }}</p>
                                             </div>
                                             <div class="table_product_detail_right_tbl">
@@ -225,7 +225,7 @@
                                             <ul>
                                                 <li>
                                                     <button class="detail_bottom_btn-talk" data-id="{{ order_item.cart_item.item.seller.user.id }}"
-                                                        data-name="{{  order_item.cart_item.item.seller }}"
+                                                        data-name="{{  order_item.cart_item.item.seller.user.get_short_name }}"
                                                         data-profile="{{  order_item.cart_item.item.seller.user.get_avatar }}">
                                                         판매자와의 대화
                                                     </button>
@@ -307,7 +307,7 @@
                                     <ul class="purchase-table-ul">
                                         <li class="table_product number">{{ order_item.cart_item.item.id }}</li>
                                         <li class="table_product name">{{ order_item.cart_item.item.oneline_intro }}</li>
-                                        <li class="table_product seller_id">{{ order_item.cart_item.item.seller }}</li>
+                                        <li class="table_product seller_id">{{ order_item.cart_item.item.seller.user.get_short_name }}</li>
                                         <li class="table_product when_purchase">{{ order_item.order.timestamp|date:"m.d" }}</li>
                                         <li class="table_product price">{{ order_item.cart_item.line_item_total }}</li>
                                     </ul>
@@ -364,7 +364,7 @@
                                         <div class="table_product_detail_right">
                                             <div class="table_product_detail_right_title">
                                                 <h2>[{{ order_item.cart_item.item.id }}]{{ order_item.cart_item.item.oneline_intro }}</h2>
-                                                <p>주문번호:{{ order_item.order.order_id }} &nbsp  판매자:{{ order_item.cart_item.item.seller }} &nbsp 구매날짜:{{ order_item.order.timestamp|date:"m.d" }} </p>
+                                                <p>주문번호:{{ order_item.order.order_id }} &nbsp  판매자:{{ order_item.cart_item.item.seller.user.get_short_name }} &nbsp 구매날짜:{{ order_item.order.timestamp|date:"m.d" }} </p>
                                                 <p>결제금액:{{ order_item.cart_item.line_item_total }} &nbsp 결제수단:{{ order_item.order.type }}</p>
                                             </div>
                                             <div class="table_product_detail_right_tbl">
@@ -418,7 +418,7 @@
                                             <ul>
                                                 <li>
                                                     <button class="detail_bottom_btn-talk" data-id="{{ order_item.cart_item.item.seller.user.id }}"
-                                                        data-name="{{  order_item.cart_item.item.seller }}"
+                                                        data-name="{{  order_item.cart_item.item.seller.user.get_short_name }}"
                                                         data-profile="{{  order_item.cart_item.item.seller.user.get_avatar }}">
                                                         판매자와의 대화
                                                     </button>
@@ -496,7 +496,7 @@
                                     <ul class="purchase-table-ul">
                                         <li class="table_product number">{{ order_item.cart_item.item.id }}</li>
                                         <li class="table_product name">{{ order_item.cart_item.item.oneline_intro }}</li>
-                                        <li class="table_product seller_id">{{ order_item.cart_item.item.seller }}</li>
+                                        <li class="table_product seller_id">{{ order_item.cart_item.item.seller.user.get_short_name }}</li>
                                         <li class="table_product when_purchase">{{ order_item.order.timestamp|date:"m.d" }}</li>
                                         <li class="table_product price">{{ order_item.cart_item.line_item_total }}</li>
                                     </ul>
@@ -553,7 +553,7 @@
                                         <div class="table_product_detail_right">
                                             <div class="table_product_detail_right_title">
                                                 <h2>[{{ order_item.cart_item.item.id }}]{{ order_item.cart_item.item.oneline_intro }}</h2>
-                                                <p>주문번호:{{ order_item.order.order_id }} &nbsp  판매자:{{ order_item.cart_item.item.seller }} &nbsp 구매날짜:{{ order_item.order.timestamp|date:"m.d" }} </p>
+                                                <p>주문번호:{{ order_item.order.order_id }} &nbsp  판매자:{{ order_item.cart_item.item.seller.user.get_short_name }} &nbsp 구매날짜:{{ order_item.order.timestamp|date:"m.d" }} </p>
                                                 <p>결제금액:{{ order_item.cart_item.line_item_total }} &nbsp 결제수단:{{ order_item.order.type }}</p>
                                             </div>
                                             <div class="table_product_detail_right_tbl">
@@ -607,7 +607,7 @@
                                             <ul>
                                                 <li>
                                                     <button class="detail_bottom_btn-talk" data-id="{{ order_item.cart_item.item.seller.user.id }}"
-                                                        data-name="{{  order_item.cart_item.item.seller }}"
+                                                        data-name="{{  order_item.cart_item.item.seller.user.get_short_name }}"
                                                         data-profile="{{  order_item.cart_item.item.seller.user.get_avatar }}">
                                                         판매자와의 대화
                                                     </button>
@@ -663,7 +663,7 @@
                                     <ul class="purchase-table-ul">
                                         <li class="table_product number">{{ order_item.cart_item.item.id }}</li>
                                         <li class="table_product name">{{ order_item.cart_item.item.oneline_intro }}</li>
-                                        <li class="table_product seller_id">{{ order_item.cart_item.item.seller }}</li>
+                                        <li class="table_product seller_id">{{ order_item.cart_item.item.seller.user.get_short_name }}</li>
                                         <li class="table_product when_purchase">{{ order_item.order.timestamp|date:"m.d" }}</li>
                                         <li class="table_product price">{{ order_item.cart_item.line_item_total }}</li>
                                     </ul>
@@ -720,7 +720,7 @@
                                         <div class="table_product_detail_right">
                                             <div class="table_product_detail_right_title">
                                                 <h2>[{{ order_item.cart_item.item.id }}]{{ order_item.cart_item.item.oneline_intro }}</h2>
-                                                <p>주문번호:{{ order_item.order.order_id }} &nbsp  판매자:{{ order_item.cart_item.item.seller }} &nbsp 구매날짜:{{ order_item.order.timestamp|date:"m.d" }} </p>
+                                                <p>주문번호:{{ order_item.order.order_id }} &nbsp  판매자:{{ order_item.cart_item.item.seller.user.get_short_name }} &nbsp 구매날짜:{{ order_item.order.timestamp|date:"m.d" }} </p>
                                                 <p>결제금액:{{ order_item.cart_item.line_item_total }} &nbsp 결제수단:{{ order_item.order.type }}</p>
                                             </div>
                                             <div class="table_product_detail_right_tbl">
@@ -774,7 +774,7 @@
                                             <ul>
                                                 <li>
                                                     <button class="detail_bottom_btn-talk" data-id="{{ order_item.cart_item.item.seller.user.id }}"
-                                                        data-name="{{  order_item.cart_item.item.seller }}"
+                                                        data-name="{{  order_item.cart_item.item.seller.user.get_short_name }}"
                                                         data-profile="{{  order_item.cart_item.item.seller.user.get_avatar }}">
                                                         판매자와의 대화
                                                     </button>
@@ -830,7 +830,7 @@
                                     <ul class="purchase-table-ul">
                                         <li class="table_product number">{{ order_item.cart_item.item.id }}</li>
                                         <li class="table_product name">{{ order_item.cart_item.item.oneline_intro }}</li>
-                                        <li class="table_product seller_id">{{ order_item.cart_item.item.seller }}</li>
+                                        <li class="table_product seller_id">{{ order_item.cart_item.item.seller.user.get_short_name }}</li>
                                         <li class="table_product when_purchase">{{ order_item.order.timestamp|date:"m.d" }}</li>
                                         <li class="table_product price">{{ order_item.cart_item.line_item_total }}</li>
                                     </ul>
@@ -975,7 +975,7 @@
                                         <div class="table_product_detail_right">
                                             <div class="table_product_detail_right_title">
                                                 <h2>[{{ order_item.cart_item.item.id }}]{{ order_item.cart_item.item.oneline_intro }}</h2>
-                                                <p>주문번호:{{ order_item.order.order_id }} &nbsp  판매자:{{ order_item.cart_item.item.seller }} &nbsp 구매날짜:{{ order_item.order.timestamp|date:"m.d" }} </p>
+                                                <p>주문번호:{{ order_item.order.order_id }} &nbsp  판매자:{{ order_item.cart_item.item.seller.user.get_short_name }} &nbsp 구매날짜:{{ order_item.order.timestamp|date:"m.d" }} </p>
                                                 <p style="display: inline-block;">결제금액:{{ order_item.cart_item.line_item_total }} &nbsp 결제수단:{{ order_item.order.type }}</p>
                                                 <form target="_blank" action="{% url 'purchase_list' %}" method="post" class="transaction_details_form">{% csrf_token %}
                                                     <input type="hidden" name="transaction_details" value="true"/>
@@ -1034,7 +1034,7 @@
                                             <ul>
                                                 <li>
                                                     <button class="detail_bottom_btn-talk" data-id="{{ order_item.cart_item.item.seller.user.id }}"
-                                                        data-name="{{  order_item.cart_item.item.seller }}"
+                                                        data-name="{{  order_item.cart_item.item.seller.user.get_short_name }}"
                                                         data-profile="{{  order_item.cart_item.item.seller.user.get_avatar }}">
                                                         판매자와의 대화
                                                     </button>
@@ -1068,7 +1068,7 @@
                                 <ul class="purchase-table-ul refund">
                                     <li class="table_product number">{{ order_item.cart_item.item.id }}</li>
                                     <li class="table_product name">{{ order_item.cart_item.item.oneline_intro }}</li>
-                                    <li class="table_product seller_id">{{ order_item.cart_item.item.seller }}</li>
+                                    <li class="table_product seller_id">{{ order_item.cart_item.item.seller.user.get_short_name }}</li>
                                     <li class="table_product when_purchase">{{ order_item.order.timestamp|date:"m.d" }}</li>
                                     <li class="table_product price">{{ order_item.cart_item.line_item_total }}</li>
                                     <li class="table_product refund_status">{{ order_item.status_in_korean }}</li>
@@ -1118,7 +1118,7 @@
                                     <div class="table_product_detail_right">
                                         <div class="table_product_detail_right_title">
                                             <h2>[{{ order_item.cart_item.item.id }}]{{ order_item.cart_item.item.oneline_intro }}</h2>
-                                            <p>주문번호:{{ order_item.order.order_id }} &nbsp  판매자:{{ order_item.cart_item.item.seller }} &nbsp 구매날짜:{{ order_item.order.timestamp|date:"m.d" }} </p>
+                                            <p>주문번호:{{ order_item.order.order_id }} &nbsp  판매자:{{ order_item.cart_item.item.seller.user.get_short_name }} &nbsp 구매날짜:{{ order_item.order.timestamp|date:"m.d" }} </p>
                                             <p>결제금액:{{ order_item.cart_item.line_item_total }} &nbsp 결제수단:{{ order_item.order.type }}</p>
                                         </div>
                                         <div class="table_product_detail_right_tbl">
@@ -1172,7 +1172,7 @@
                                         <ul>
                                             <li>
                                                 <button class="detail_bottom_btn-talk" data-id="{{ order_item.cart_item.item.seller.user.id }}"
-                                                    data-name="{{  order_item.cart_item.item.seller }}"
+                                                    data-name="{{  order_item.cart_item.item.seller.user.get_short_name }}"
                                                     data-profile="{{  order_item.cart_item.item.seller.user.get_avatar }}">
                                                     판매자와의 대화
                                                 </button>
@@ -1192,7 +1192,7 @@
                                 <ul class="purchase-table-ul refund">
                                     <li class="table_product number">{{ order_item.cart_item.item.id }}</li>
                                     <li class="table_product name">{{ order_item.cart_item.item.oneline_intro }}</li>
-                                    <li class="table_product seller_id">{{ order_item.cart_item.item.seller }}</li>
+                                    <li class="table_product seller_id">{{ order_item.cart_item.item.seller.user.get_short_name }}</li>
                                     <li class="table_product when_purchase">{{ order_item.order.timestamp|date:"m.d" }}</li>
                                     <li class="table_product price">{{ order_item.cart_item.line_item_total }}</li>
                                     <li class="table_product refund_status">{{ order_item.status_in_korean }}</li>
@@ -1242,7 +1242,7 @@
                                     <div class="table_product_detail_right">
                                         <div class="table_product_detail_right_title">
                                             <h2>[{{ order_item.cart_item.item.id }}]{{ order_item.cart_item.item.oneline_intro }}</h2>
-                                            <p>주문번호:{{ order_item.order.order_id }} &nbsp  판매자:{{ order_item.cart_item.item.seller }} &nbsp 구매날짜:{{ order_item.order.timestamp|date:"m.d" }} </p>
+                                            <p>주문번호:{{ order_item.order.order_id }} &nbsp  판매자:{{ order_item.cart_item.item.seller.user.get_short_name }} &nbsp 구매날짜:{{ order_item.order.timestamp|date:"m.d" }} </p>
                                             <p>결제금액:{{ order_item.cart_item.line_item_total }} &nbsp 결제수단:{{ order_item.order.type }}</p>
                                         </div>
                                         <div class="table_product_detail_right_tbl">
@@ -1296,7 +1296,7 @@
                                         <ul>
                                             <li>
                                                 <button class="detail_bottom_btn-talk" data-id="{{ order_item.cart_item.item.seller.user.id }}"
-                                                    data-name="{{  order_item.cart_item.item.seller }}"
+                                                    data-name="{{  order_item.cart_item.item.seller.user.get_short_name }}"
                                                     data-profile="{{  order_item.cart_item.item.seller.user.get_avatar }}">
                                                     판매자와의 대화
                                                 </button>

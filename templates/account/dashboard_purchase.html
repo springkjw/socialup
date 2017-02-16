@@ -288,7 +288,7 @@ csrfmiddlewaretoken : "{{ csrf_token }}"
                     </div>
                     <div class="item-info">
                         <div class="item-seller">
-                            {{ item.item.0.item.seller }}
+                            {{ item.item.0.item.seller.user.get_short_name }}
                         </div>
                         <div class="item-title">
                             {{ item.item.0.item }}

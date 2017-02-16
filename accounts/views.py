@@ -110,6 +110,20 @@ def change_info(request):
             return HttpResponseRedirect('/dashboard/change/')
 
         if form.is_valid():
+            if form.cleaned_data['phone'] == '':
+                error_message = "연락처를 입력해주세요"
+                context = {
+                    "error_message": error_message,
+                    "form": form,
+                    "seller_form": seller_form,
+                    "seller_account_form": seller_account_form,
+                    "year_list": year_list,
+                    "address_list": address_list,
+                    "seller": seller,
+                    "seller_account": seller_account,
+                }
+                return render(request, template, context)
+
             password_success = user.check_password(request.POST['current_passwd'])
             if not password_success:
                 error_message = "입력하신 비밀번호가 틀렸습니다."
@@ -153,6 +167,20 @@ def change_info(request):
             else:
                 return HttpResponseRedirect('/dashboard/change/')
 
+        # !form.is_valid()
+        else:
+            error_message = "필수항목을 입력해주세요"
+            context = {
+                "error_message": error_message,
+                "form": form,
+                "seller_form": seller_form,
+                "seller_account_form": seller_account_form,
+                "year_list": year_list,
+                "address_list": address_list,
+                "seller": seller,
+                "seller_account": seller_account,
+            }
+            return render(request, template, context)
 
     context = {
         "form": form,

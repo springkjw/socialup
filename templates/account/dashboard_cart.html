@@ -154,8 +154,8 @@
                             </div>
                         </div>
                         <div class="dashboard-cart-item-seller">
-                            <p>{{ cartitem.0.item.seller }}</p>
-                            <button id="ask-seller" data-id="{{ cartitem.0.item.seller.user.id }}" data-name="{{ cartitem.0.item.seller }}" data-profile="{{ cartitem.0.item.seller.user.get_avatar }}">
+                            <p>{{ cartitem.0.item.seller.user.get_short_name }}</p>
+                            <button id="ask-seller" data-id="{{ cartitem.0.item.seller.user.id }}" data-name="{{ cartitem.0.item.seller.user.get_short_name }}" data-profile="{{ cartitem.0.item.seller.user.get_avatar }}">
                                 문의하기
                             </button>
                         </div>

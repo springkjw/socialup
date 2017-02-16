@@ -34,7 +34,7 @@
                         </div>
                         <div class="ask_to_seller">
                             <button class="ask_to_seller_btn" data-id="{{ user.id }}"
-                                data-name="{{  seller }}"
+                                data-name="{{ seller.user.get_short_name }}"
                                 data-profile="{{  seller.user.get_avatar }}">
                                 문의하기
                             </button>
@@ -197,7 +197,7 @@
                                         </div>
                                         <div class="card-author">
                                             <div class="card-author-info">
-                                                <span>{{ product.seller }}</span>
+                                                <span>{{ product.seller.user.get_short_name }}</span>
                                             </div>
                                             <div class="card-author-info-rating" data-rating="{{ product.rating }}">
                                                 <i class="fa fa-star" aria-hidden="true"></i>

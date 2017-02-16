@@ -84,100 +84,105 @@
 {#        <div class="dashboard-nav advertise">#}
 {#        </div>#}
         <div class="dashboard-product-manage">
-            {% for item in product_list %}
-                <div class="product-item">
-                    <div class="item_top">
-                        <div class="item_top_image" data-color="{{ item.sns_type_color }}">
-                            <div class="circle-wrapper">
-                                <img class="circle-arrow" src="{% static 'img/arrow_gauge.png' %}" >
-                                <ul class="circle" gauge-data="{{ item.socialup_gauge }}">
-                                    <li class="circle-list">
-                                        <div class="circle-text">1</div>
-                                    </li>
-                                    <li class="circle-list">
-                                        <div class="circle-text">2</div>
-                                    </li>
-                                    <li class="circle-list">
-                                        <div class="circle-text">3</div>
-                                    </li>
-                                    <li class="circle-list">
-                                        <div class="circle-text">4</div>
-                                    </li>
-                                    <li class="circle-list">
-                                        <div class="circle-text">5</div>
-                                    </li>
-                                    <div class="circle-mask2">
-                                        <div class="circle-mask2-text">
-                                            <span style="font-size:1em;">{{ item.unit_price }}</span>
-                                            <span style="font-size:0.8em;">원</span>
+            {% if product_list %}
+                {% for item in product_list %}
+                    <div class="product-item">
+                        <div class="item_top">
+                            <div class="item_top_image" data-color="{{ item.sns_type_color }}">
+                                <div class="circle-wrapper">
+                                    <img class="circle-arrow" src="/static/img/arrow_gauge.png" >
+                                    <ul class="circle" gauge-data="{{ item.socialup_gauge }}">
+                                        <li class="circle-list">
+                                            <div class="circle-text">1</div>
+                                        </li>
+                                        <li class="circle-list">
+                                            <div class="circle-text">2</div>
+                                        </li>
+                                        <li class="circle-list">
+                                            <div class="circle-text">3</div>
+                                        </li>
+                                        <li class="circle-list">
+                                            <div class="circle-text">4</div>
+                                        </li>
+                                        <li class="circle-list">
+                                            <div class="circle-text">5</div>
+                                        </li>
+                                        <div class="circle-mask2">
+                                            <div class="circle-mask2-text">
+                                                <span style="font-size:1em;">{{ item.unit_price }}</span>
+                                                <span style="font-size:0.8em;">원</span>
+                                            </div>
                                         </div>
+                                    </ul>
+                                    <div class="cash">
+                                        <span class="cash-price" style="font-size:1em; color:grey;" data-price="{{ item.price }}">
+                                            <span class="item-money">{{ item.price }}</span>원
+                                            {% if item.manuscript_price > 0 or item.highrank_price > 0 %}
+                                                ~
+                                            {% endif %}
+                                        </span>
                                     </div>
-                                </ul>
-                                <div class="cash">
-                                    <span class="cash-price" style="font-size:1em; color:grey;" data-price="{{ item.price }}">
-                                        <span class="item-money">{{ item.price }}</span>원
-                                        {% if item.manuscript_price > 0 or item.highrank_price > 0 %}
-                                            ~
+                                </div>
+                            </div>
+                            <div class="item_top_content">
+                                <div class="content_title">
+                                    <span style="color:#888; font-weight: 400;">[{{ item.id }}]</span>
+                                    {{ item.oneline_intro }}
+                                </div>
+                                <div class="content_detail">
+                                    {{ item.price }}원
+                                    {{ item.created|date:"Y.m.d" }}
+                                </div>
+                            </div>
+                            <div class="item_top_btns">
+                                <div class="item_top_btns_content btn">
+                                    <form action="{% url 'product_change' item.id %}">
+                                        <input class="product_btn edit" type="image" src="/static/img/edit.png">
+                                    </form>
+                                    <div class="delete-confirm-modal">
+                                            <div class="delete-confirm-modal-title">상품삭제</div>
+                                            <div class="delete-confirm-modal-content">
+                                                상품을 삭제하시겠습니까?
+                                            </div>
+                                            <div class="delete-confirm-modal-btns">
+                                                <button class="delete-confirm-modal-btn yes">삭제</button>
+                                                <button class="delete-confirm-modal-btn no">취소</button>
+                                            </div>
+                                        </div>
+                                    <form id="product_delete_form" action="{% url 'product_delete' item.id %}">
+                                        <img class="product_btn delete" src="/static/img/cancle.png">
+                                    </form>
+                                </div>
+                                <div class="item_top_btns_content status">
+                                    <div class="approval_status">
+                                        {% if item.product_status == 'ready' %}
+                                            승인중
+                                        {% elif item.product_status == 'rejected' %}
+                                            승인거절
+                                        {% else %}
+                                            승인완료
                                         {% endif %}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item_top_content">
-                            <div class="content_title">
-                                <span style="color:#888; font-weight: 400;">[{{ item.id }}]</span>
-                                {{ item.oneline_intro }}
-                            </div>
-                            <div class="content_detail">
-                                {{ item.price }}원
-                                {{ item.created|date:"Y.m.d" }}
-                            </div>
-                        </div>
-                        <div class="item_top_btns">
-                            <div class="item_top_btns_content btn">
-                                <form action="{% url 'product_change' item.id %}">
-                                    <input class="product_btn edit" type="image" src="{% static 'img/edit.png' %}">
-                                </form>
-                                <div class="delete-confirm-modal">
-                                        <div class="delete-confirm-modal-title">상품삭제</div>
-                                        <div class="delete-confirm-modal-content">
-                                            상품을 삭제하시겠습니까?
-                                        </div>
-                                        <div class="delete-confirm-modal-btns">
-                                            <button class="delete-confirm-modal-btn yes">삭제</button>
-                                            <button class="delete-confirm-modal-btn no">취소</button>
-                                        </div>
                                     </div>
-                                <form id="product_delete_form" action="{% url 'product_delete' item.id %}">
-                                    <img class="product_btn delete" src="{% static 'img/cancle.png' %}">
-                                </form>
-                            </div>
-                            <div class="item_top_btns_content status">
-                                <div class="approval_status">
-                                    {% if item.product_status == 'ready' %}
-                                        승인중
-                                    {% elif item.product_status == 'rejected' %}
-                                        승인거절
-                                    {% else %}
-                                        승인완료
-                                    {% endif %}
-
                                 </div>
                             </div>
+                         </div>
+                        <div class="item_bottom">
+                            <ul class="order_item_ul">
+                                <li>전체</li>
+                                <li>작업대기</li>
+                                <li>작업진행</li>
+                                <li>작업완료</li>
+                                <li>거래완료</li>
+                                <li>취소</li>
+                            </ul>
                         </div>
-                     </div>
-                    <div class="item_bottom">
-                        <ul class="order_item_ul">
-                            <li>전체</li>
-                            <li>작업대기</li>
-                            <li>작업진행</li>
-                            <li>작업완료</li>
-                            <li>거래완료</li>
-                            <li>취소</li>
-                        </ul>
                     </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-list">
+                    등록한 서비스가 없습니다. 서비스를 등록해주세요!
                 </div>
-            {% endfor %}
+            {% endif %}
         </div>
     </div>
 {% endblock %}

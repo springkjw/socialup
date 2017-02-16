@@ -341,6 +341,14 @@ body {
 }
 */
 
+.dashboard-content .dashboard-change-form .user-info-guide {
+    margin-left: 45px;
+}
+
+.dashboard-content .password_rest_content div:nth-child(1) {
+    margin-left: -9px;
+}
+
 .dashboard-content .dashboard-change-form textarea {
     width: 365px;
     height: 215px;
