@@ -27,7 +27,6 @@
                 $(".seller_form_input.account_number select option[value='{{ seller_account.bank }}']").prop('selected', true);
                 $(".seller_form_input.account_number #id_account_number").val('{{ seller_account.account_number }}');
             {% endif %}
-
         });
      </script>
 {% endblock %}
