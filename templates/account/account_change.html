@@ -27,7 +27,39 @@
                 $(".seller_form_input.account_number select option[value='{{ seller_account.bank }}']").prop('selected', true);
                 $(".seller_form_input.account_number #id_account_number").val('{{ seller_account.account_number }}');
             {% endif %}
+        });
 
+        $('.change_button').on('click', function() {
+            var precheck_flag = true;
+            if($('input[name=sex]').val()==''){
+                alert('성별을 선택해주세요.');
+                precheck_flag = false;
+            }else if($('input[name=phone]').val()==''){
+                alert('연락처를 입력해주세요.');
+                precheck_flag = false;
+            }else if($('#current_passwd').val()==''){
+                alert('현재 비밀번호를 입력해주세요.');
+                precheck_flag = false;
+            }
+            if(precheck_flag){
+                var current_password = $('#current_passwd').val();
+                $.ajax({
+                    type: "POST",
+                    url: "/dashboard/change/",
+                    data: {current_passwd : $('#current_passwd').val()},
+                    success: function (data) {
+                        if(data['password_success']){
+                            $("#dialog-confirm").dialog('open');
+                        }
+                        else{
+                            alert('입력하신 비밀번호가 틀렸습니다.');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("에러발생");
+                    }
+                });
+            }
         });
      </script>
 {% endblock %}

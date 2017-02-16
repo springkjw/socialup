@@ -107,13 +107,27 @@
 
 /* new jumbotron */
 
-.new_jumbotron{
-    margin-top:5%;
-    border:1px solid #cecece;
-    width:80%;
-    margin-left:10%;
-    height:50%;
-    font-size: 0px;
+@media screen and (min-width: 768px) {
+    .new_jumbotron{
+        border:1px solid #cecece;
+        width:950px;
+        height:330px;
+        margin:auto;
+        margin-top:2%;
+        font-size: 0px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .new_jumbotron{
+        border:1px solid #cecece;
+        width:1000px;
+        margin-left:10%;
+        height:350px;
+        margin:auto;
+        margin-top:2%;
+        font-size: 0px;
+    }
 }
 
 .new_jumbotron .owl-wrapper-outer{
@@ -187,7 +201,7 @@
 }
 
 .special-service {
-    min-height:500px;
+    height:auto;
     margin-top: 60px;
     overflow: hidden;
 }

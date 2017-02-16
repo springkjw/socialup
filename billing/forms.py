@@ -11,7 +11,7 @@ class ReviewForm(forms.ModelForm):
         self.fields['contents_satisfy'] = forms.ChoiceField(widget=forms.RadioSelect(attrs={'type': 'radio'}), choices=SATISFY_CHOICES)
         self.fields['ad_satisfy'] = forms.ChoiceField(widget=forms.RadioSelect(attrs={'type': 'radio'}), choices=SATISFY_CHOICES)
         self.fields['kind_satisfy'] = forms.ChoiceField(widget=forms.RadioSelect(attrs={'type': 'radio'}), choices=SATISFY_CHOICES)
-        self.fields['rating'] = forms.ChoiceField(widget=forms.RadioSelect(attrs={'type': 'radio'}), choices=(('1',1),('2',2),('3',3),('4',4),('5',5),('6',6),('7',7),('8',8),('9',9),('10',10)))
+        self.fields['rating'] = forms.ChoiceField(widget=forms.RadioSelect(attrs={'type': 'radio'}), choices=(('0.5',0.5),('1',1),('1.5',1.5),('2',2),('2.5',2.5),('3',3),('3.5',3.5),('4',4),('4.5',4.5),('5',5)))
         self.fields['review'] = forms.CharField(widget=forms.Textarea(attrs={'required': True, 'rows':5, 'cols':45}))
 
     class Meta:

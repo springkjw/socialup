@@ -95,10 +95,6 @@ $(document).ready(function(){
         ]
     });
 
-    $('.change_button').on('click', function() {
-        $("#dialog-confirm").dialog('open');
-    });
-
     $("#dialog-confirm2").dialog({
         resizable: false,
         height:190,
