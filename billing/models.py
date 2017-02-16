@@ -452,6 +452,7 @@ def product_receiver(instance, sender, created, *args, **kwargs):
 
 post_save.connect(product_receiver, sender=ProductManage)
 
+
 class OrderItem(models.Model):
     user = models.ForeignKey(MyUser, null=True)
     seller = models.ForeignKey(Seller, null=True)
@@ -471,3 +472,33 @@ class OrderItem(models.Model):
                     'wait_confirm': '작업완료',
                     'finished': '거래완료', }
         return statuses[self.status]
+
+
+def order_item_receiver(instance, sender, created, *args, **kwargs):
+    if instance.status == 'finished':
+        seller_id = instance.seller.user
+        order_price = instance.cart_item.line_item_total
+
+        # 판매자 포인트 추가
+        try:
+            p = Point.objects.get(user=seller_id)
+            point = p.point
+            new_point = point + order_price
+            p.point = new_point
+            p.save()
+        except:
+            raise ValueError('판매자 포인트 적립에 문제가 발생했습니다.')
+
+        # 판매자 포인트 history 추가
+        try:
+            h = PointHistory(
+                user=seller_id,
+                amount=order_price,
+                detail=instance.cart_item.item.oneline_intro + ' 판매'
+            )
+            h.save()
+        except:
+            raise ValueError('판매자 포인트 히스토리에 문제가 발생했습니다.')
+
+
+post_save.connect(order_item_receiver, sender=OrderItem)
