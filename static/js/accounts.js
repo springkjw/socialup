@@ -95,18 +95,6 @@ $(document).ready(function(){
         ]
     });
 
-    $('.change_button').on('click', function() {
-        if($('input[name=sex]').val()==''){
-            alert('성별을 선택해주세요.');
-        }else if($('input[name=phone]').val()==''){
-            alert('연락처를 입력해주세요.');
-        }else if($('#current_passwd').val()==''){
-            alert('현재 비밀번호를 입력해주세요.');
-        }else{
-            $("#dialog-confirm").dialog('open');
-        }
-    });
-
     $("#dialog-confirm2").dialog({
         resizable: false,
         height:190,

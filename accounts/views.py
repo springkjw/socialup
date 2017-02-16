@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
@@ -10,6 +10,8 @@ from django.contrib.auth import authenticate, login
 from reviews.models import ProductReview
 from billing.models import OrderItem, Order
 from markets.models import Product
+
+import json
 
 
 @login_required
@@ -76,12 +78,17 @@ def change_info(request):
         )
         seller_account.save()
 
+    if request.is_ajax():
+        password_success = user.check_password(request.POST['current_passwd'])
+        data = {
+            "password_success": password_success
+        }
+        return HttpResponse(json.dumps(data), content_type='application/json')
+
     if request.method == "POST":
         form = ChangeForm(request.POST or None, request.FILES or None)
         seller_form = ChangeSellerForm(request.POST or None, request.FILES or None)
         seller_account_form = ChangeSellerAccountForm(request.POST or None, request.FILES or None)
-
-
 
         if seller_form.is_valid():
             seller.type=seller_form.cleaned_data['type']
