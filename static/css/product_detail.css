@@ -150,8 +150,7 @@ _:-ms-lang(x), .content .product-top .seller-info .seller-img img {
 }
 
 .seller-detail-info-each.mid .seller-info-item.seller-detail-intro{
-    float:left;
-    margin-left:4%;
+    margin-left:48%;
 }
 
 .seller-info-item.seller-detail-intro .seller-detail-intro-title {
@@ -160,6 +159,9 @@ _:-ms-lang(x), .content .product-top .seller-info .seller-img img {
 
 .seller-info-item.seller-detail-intro .seller-detail-intro-content {
     font-weight: lighter;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
 }
 
 .content .product-top .seller-info .seller-detail-info .seller-detail-info-each.bottom {
