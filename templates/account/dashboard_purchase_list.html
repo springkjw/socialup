@@ -826,6 +826,7 @@
                             </ul>
                         </div>
                         {% for order_item in order_items_finished %}
+                            {% with review_forms|get_dict_value:order_item.id as each_review_form %}
                                 <div class="product_item_each_wrapper">
                                     <ul class="purchase-table-ul">
                                         <li class="table_product number">{{ order_item.cart_item.item.id }}</li>
@@ -917,9 +918,9 @@
                                                     세부 평가
                                                 </div>
                                                 <div class="review_form_content_input">
-                                                    <span class="satisfy_title_each">콘텐츠</span>{{ review_form.contents_satisfy }}<br>
-                                                    <span class="satisfy_title_each">광고효과</span>{{ review_form.ad_satisfy }}<br>
-                                                    <span class="satisfy_title_each">친절도</span>{{ review_form.kind_satisfy }}
+                                                    <span class="satisfy_title_each">콘텐츠</span>{{ each_review_form.contents_satisfy }}<br>
+                                                    <span class="satisfy_title_each">광고효과</span>{{ each_review_form.ad_satisfy }}<br>
+                                                    <span class="satisfy_title_each">친절도</span>{{ each_review_form.kind_satisfy }}
                                                 </div>
                                             </div>
 
@@ -928,7 +929,7 @@
                                                     한줄 리뷰
                                                 </div>
                                                 <div class="review_form_content_input">
-                                                    {{ review_form.review }}
+                                                    {{ each_review_form.review }}
                                                 </div>
                                             </div>
                                             <button type="submit" class="review_btn submit">평가하기</button>
@@ -1048,6 +1049,7 @@
                                         </div>
                                     </div>
                                 </div>
+                            {% endwith %}
                         {% endfor %}
                     </div>
                     <!-- 취소 -->
