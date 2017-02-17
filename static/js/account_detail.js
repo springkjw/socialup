@@ -50,7 +50,6 @@ $(document).ready(function() {
     });
 
     var temp = $('.seller_rating_ratio').attr('data-rating');
-    console.log(temp);
     temp = Math.round(temp)
     $('#rating-num').text(temp);
 });

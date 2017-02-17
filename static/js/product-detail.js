@@ -149,7 +149,13 @@ jQuery.fn.center = function () {
     });
 };
 
+/* bar graph part */
 $(document).ready(function(){
+    /* round part */
+    var temp = $('.seller-info-rating.seller-rating .seller-rating').attr('data-rating');
+    temp = Math.round(temp);
+    $('.rating-num').text(temp + '/5');
+
     var contents_satisfy = 0;
     var contents_normal = 0;
     var contents_unsatisfy = 0;

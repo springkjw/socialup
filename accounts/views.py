@@ -214,9 +214,11 @@ def account_detail(request, seller_id):
     selling_products = Product.objects.filter(seller=seller, product_status="now_selling")
     review_count = 0
     for product in selling_products:
+        print(product)
         temp = ProductReview.objects.filter(product=product)
+        print(temp)
         if temp:
-            review_count = review_count + 1
+            review_count = review_count + len(temp)
 
     is_seller_none = False
     if (seller.description is None) and (seller.user.sex is None) \
