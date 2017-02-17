@@ -440,30 +440,56 @@
                                 <i class="fa fa-star" aria-hidden="true"></i>
                                 <i class="fa fa-star" aria-hidden="true"></i>
                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                <span>({{ reviews_count }})</span>
+                                <div class="total-rating-text">
+                                    <span style="font-size: 20px;">{{ product.rating }}/5</span>
+                                    <span>({{ reviews_count }}개)</span>
+                                </div>
                             </div>
-                            <div class="graph-part">
+                            <div class="graph_wrapper">
+                                <div class="graph-part contents">
                                 콘텐츠
-                                <div class="stacked-bar-graph">
-                                  <span style="width:20%" class="bar-1"></span>
-                                  <span style="width:20%" class="bar-2"></span>
-                                  <span style="width:10%" class="bar-3"></span>
+                                  <div class="stacked-bar-graph">
+                                      <span style="width:40%" class="bar-1"></span>
+                                      <span style="width:40%" class="bar-2"></span>
+                                      <span style="width:20%" class="bar-3"></span>
+                                  </div>
+                                    <div class="graph-text">
+                                        <ul>
+                                            <li>만족 (0%)</li><!--
+                                            --><li>보통 (0%)</li><!--
+                                            --><li>불만족 (0%)</li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="graph-part">
-                                광고효과
-                                <div class="stacked-bar-graph">
-                                  <span style="width:17%" class="bar-1"></span>
-                                  <span style="width:23%" class="bar-2"></span>
-                                  <span style="width:10%" class="bar-3"></span>
+                                <div class="graph-part ads">
+                                    광고효과
+                                    <div class="stacked-bar-graph">
+                                      <span style="width:34%" class="bar-1"></span>
+                                      <span style="width:46%" class="bar-2"></span>
+                                      <span style="width:20%" class="bar-3"></span>
+                                    </div>
+                                    <div class="graph-text">
+                                        <ul>
+                                            <li>만족 (0%)</li><!--
+                                            --><li>보통 (0%)</li><!--
+                                            --><li>불만족 (0%)</li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="graph-part">
-                                친절도
-                                <div class="stacked-bar-graph">
-                                  <span style="width:17%" class="bar-1"></span>
-                                  <span style="width:20%" class="bar-2"></span>
-                                  <span style="width:13%" class="bar-3"></span>
+                                <div class="graph-part kindness">
+                                    친절도
+                                    <div class="stacked-bar-graph">
+                                      <span style="width:34%" class="bar-1"></span>
+                                      <span style="width:40%" class="bar-2"></span>
+                                      <span style="width:26%" class="bar-3"></span>
+                                    </div>
+                                    <div class="graph-text">
+                                        <ul>
+                                            <li>만족 (0%)</li><!--
+                                            --><li>보통 (0%)</li><!--
+                                            --><li>불만족 (0%)</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                             {% if reviews %}
@@ -489,11 +515,11 @@
                                                     콘텐츠
                                                     <div class="review-satisfiy-sub-box">
                                                         {% if review.contents_satisfy == 'good' %}
-                                                            만족
+                                                            <span style="color:#394284;">만족</span>
                                                         {% elif review.contents_satisfy == 'neutral' %}
-                                                            보통
+                                                            <span style="color:#6e8e3a;">보통</span>
                                                         {% else %}
-                                                            불만족
+                                                            <span style="color:#a64949;">불만족</span>
                                                         {% endif %}
                                                     </div>
                                                 </div>
@@ -501,24 +527,24 @@
                                                     광고효과
                                                     <div class="review-satisfiy-sub-box">
                                                         {% if review.ad_satisfy == 'good' %}
-                                                            만족
+                                                            <span style="color:#394284;">만족</span>
                                                         {% elif review.ad_satisfy == 'neutral' %}
-                                                            보통
+                                                            <span style="color:#6e8e3a;">보통</span>
                                                         {% else %}
-                                                            불만족
+                                                            <span style="color:#a64949;">불만족</span>
                                                         {% endif %}
                                                     </div>
                                                 </div>
                                                 <div class="review-satisfiy-sub kindness">
                                                     친절도
                                                     <div class="review-satisfiy-sub-box">
-                                                    {% if review.kind_satisfy == 'good' %}
-                                                        만족
-                                                    {% elif review.kind_satisfy == 'neutral' %}
-                                                        보통
-                                                    {% else %}
-                                                        불만족
-                                                    {% endif %}
+                                                        {% if review.kind_satisfy == 'good' %}
+                                                            <span style="color:#394284;">만족</span>
+                                                        {% elif review.kind_satisfy == 'neutral' %}
+                                                            <span style="color:#6e8e3a;">보통</span>
+                                                        {% else %}
+                                                            <span style="color:#a64949;">불만족</span>
+                                                        {% endif %}
                                                     </div>
                                                 </div>
                                             </div>

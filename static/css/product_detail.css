@@ -552,11 +552,8 @@ _:-ms-lang(x), .content .product-top .seller-info .seller-img img {
     font-size: 24px;
 }
 
-.content .tab .total-rating span {
-    font-size: 18px;
-    font-weight: bold;
-    margin-left: 10px;
-    color: #648efc;
+.content .tab .total-rating .total-rating-text {
+    margin-top:14px;
 }
 
 .content .tab .tab-review {
@@ -569,11 +566,15 @@ _:-ms-lang(x), .content .product-top .seller-info .seller-img img {
 }
 
 .total-rating.seller-rating{
-    display: block;
-    float:left;
-    padding-top:11%;
+    display: inline-block;
+    vertical-align: text-bottom;
     width:45%;
     height:70px;
+}
+
+.tab-content .graph_wrapper {
+    width:54%;
+    display: inline-block;
 }
 
 .content .tab .tab-review {
@@ -1018,11 +1019,11 @@ _:-ms-lang(x), .product-seller-name{
 /* graph part */
 .tab-content .graph-part{
     width:100%;
-    margin-bottom:3%;
+    margin-bottom:20px;
 }
 
 .stacked-bar-graph {
-    width: 100%;
+    width: 80%;
     height: 20px;
     color: #414042;
 }
@@ -1047,6 +1048,21 @@ _:-ms-lang(x), .product-seller-name{
     background: #e8e8e8;
 }
 
+.tab-content .graph-part .graph-text{
+    width:80%;
+}
+
+.tab-content .graph-part .graph-text ul{
+    width:100%;
+    list-style: none;
+}
+
+.tab-content .graph-part .graph-text ul li{
+    display: inline-block;
+    font-size: 10px;
+    text-align: center;
+    vertical-align: top;
+}
 
 /* wish-list-modal part */
 .wish-list-modal{
@@ -1184,4 +1200,8 @@ _:-ms-lang(x), .product-seller-name{
 
 #caution-ul li:nth-child(5) div{
     width:100px;
+}
+
+.review-satisfiy-sub-box span{
+    font-weight:bold;
 }

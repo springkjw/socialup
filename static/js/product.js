@@ -241,12 +241,6 @@ $(function () {
 
 });
 
-function submit_form(){
-    console.log('submit_form');
-    $('#product-upload-form').submit();
-    console.log('submit_form done');
-}
-
 function set_input_value(selector, new_val){
     $(selector).val(new_val);
 }
