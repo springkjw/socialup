@@ -1213,9 +1213,7 @@ input::-webkit-input-placeholder {
 
 /* previous record */
 .previous_record{
-    position:relative;
-    top:0;
-    left:77%;
+    float:right;
     margin-bottom: 20px;
     margin-top:25px;
     padding: 0;
@@ -1325,4 +1323,12 @@ input::-webkit-input-placeholder {
 
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset{
     float:none;
+}
+
+/* required_inform_notice  part */
+.required_inform_notice{
+    float:left;
+    font-size: 13px;
+    margin-bottom: 17px;
+    margin-top:28px;
 }

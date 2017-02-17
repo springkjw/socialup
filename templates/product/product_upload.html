@@ -112,24 +112,77 @@
         });
 
         $('.final').on('click', function() {
-            if(!$('#product-upload-form')[0].checkValidity()){
-                if(!$('#id_sns_url')[0].checkValidity()){
-                    alert('SNS 주소 양식을 확인해주세요.');
-                }else if(!$('#id_price')[0].checkValidity()){
-                    alert('가격부분에는 5000원 이상의 숫자를 입력해주세요.')
-                }else if(!$('#id_working_period')[0].checkValidity()){
-                    alert('작업기간은 1 이상의 숫자를 입력해주세요.')
-                }else if(!$('#id_description')[0].checkValidity()){
-                    alert('상품소개를 입력해주세요.')
+            var sns_flag = false;
+            $('input[name=sns_type]').each(function(){
+                if(!sns_flag){
+                    sns_flag = $(this).prop('checked');
                 }
-                else{
-                    alert('입력을 잘못했습니다.');
+            });
+
+            var tag_flag = false;
+            $('input[name=tag]').each(function(){
+                if(!tag_flag){
+                    tag_flag = $(this).prop('checked');
                 }
-            }else{
-                if ($('#agreenment1').is(':checked')) {
-                    $("#dialog-confirm").dialog('open');
+            });
+            var follwer_flag = false;
+            if($('input[name=follower_visit_num]').val()!==''){
+                follwer_flag = true;
+            }else if($('input[name=follower_num]').val()!==''){
+                follwer_flag = true;
+            }else if($('input[name=follower_friends_num]').val()!==''){
+                follwer_flag = true;
+            }
+
+            var description_flag = false;
+            $(document.getElementById('id_description_iframe')).click(function(e) {
+                alert('hi');
+            });
+
+            var precheck_flag = true;
+            if(!sns_flag){
+                alert('SNS를 선택해주세요.');
+                precheck_flag = false;
+            }else if($('input[name=sns_url]').val()==''){
+                alert('SNS 주소를 입력해주세요.');
+                precheck_flag = false;
+            }else if(!follwer_flag){
+                alert('팔로워수를 1개 이상 입력해주세요.');
+                precheck_flag = false;
+            }else if(!tag_flag){
+                alert('태그를 1개 이상 선택해주세요.');
+                precheck_flag = false;
+            }else if($('input[name=oneline_intro]').val()==''){
+                alert('한줄소개를 입력해주세요.');
+                precheck_flag = false;
+            }else if($('input[name=price]').val()==''){
+                alert('가격을 입력해주세요.');
+                precheck_flag = false;
+            }else if(!description_flag){
+                alert('상품소개를 입력해주세요.');
+                precheck_flag = false;
+            }
+
+            if(precheck_flag) {
+                if(!$('#product-upload-form')[0].checkValidity()){
+                    if(!$('#id_sns_url')[0].checkValidity()){
+                        alert('SNS 주소 양식을 확인해주세요.');
+                    }else if(!$('#id_price')[0].checkValidity()){
+                        alert('가격부분에는 5000원 이상의 숫자를 입력해주세요.')
+                    }else if(!$('#id_working_period')[0].checkValidity()){
+                        alert('작업기간은 1 이상의 숫자를 입력해주세요.')
+                    }else if(!$('#id_description')[0].checkValidity()){
+                        alert('상품소개를 입력해주세요.')
+                    }
+                    else{
+                        alert('입력을 잘못했습니다.');
+                    }
                 }else{
-                    alert('이용약관에 동의해주세요.');
+                    if ($('#agreenment1').is(':checked')) {
+                        $("#dialog-confirm").dialog('open');
+                    } else {
+                        alert('이용약관에 동의해주세요.');
+                    }
                 }
             };
         });
@@ -146,11 +199,14 @@
                 {% endfor %}
             </select>
         </div>
+        <div class="required_inform_notice">
+            * 필수정보를 입력해주셔야 등록이 가능합니다.
+        </div>
         <form id="product-upload-form" action="" name="product_upload" method="POST" enctype="multipart/form-data">{% csrf_token %}
             {{ form.non_field_errors }}
             <div class="product-upload-info">
                 <div class="product-upload-title">
-                     <label class="product-upload-title-label">SNS 선택</label>
+                     <label class="product-upload-title-label">* SNS 선택</label>
                 </div>
                 <div class="product-upload-sub">
                     {{ form.sns_type }}
@@ -177,7 +233,7 @@
 
             <div class="product-upload-info">
                 <div class="product-upload-title">
-                     <label class="product-upload-title-label">SNS 주소</label>
+                     <label class="product-upload-title-label">* SNS 주소</label>
                 </div>
                 <div class="product-upload-sub">
                     {{ form.sns_url }}
@@ -190,7 +246,7 @@
 
             <div class="product-upload-info">
                 <div class="product-upload-title">
-                     <label class="product-upload-title-label">팔로워수</label>
+                     <label class="product-upload-title-label">* 팔로워수</label>
                 </div>
                 <div class="product-upload-sub follower_visit_num">
                     {{ form.follower_visit_num }} 명
@@ -205,7 +261,7 @@
 
             <div class="product-upload-info">
                 <div class="product-upload-title">
-                     <label class="product-upload-title-label">포스팅가능 분야</label>
+                     <label class="product-upload-title-label">* 포스팅가능 분야</label>
                 </div>
                 <div class="product-upload-sub tags">
                     {% for choice in tag_form.tag %}
@@ -232,7 +288,7 @@
 
             <div class="product-upload-info">
                 <div class="product-upload-title">
-                     <label class="product-upload-title-label">한줄소개</label>
+                     <label class="product-upload-title-label">* 한줄소개</label>
                 </div>
                 <div class="product-upload-sub oneline_intro">
                     {{ form.oneline_intro }}
@@ -241,7 +297,7 @@
 
             <div class="product-upload-info">
                 <div class="product-upload-title">
-                     <label class="product-upload-title-label">상품소개</label>
+                     <label class="product-upload-title-label">* 상품소개</label>
                 </div>
                 <div class="product-upload-sub description">
                     <span>별도의 문의없어도 의뢰가 가능하도록 상품에 대해 구체적으로
@@ -253,7 +309,7 @@
 
             <div class="product-upload-info">
                 <div class="product-upload-title">
-                     <label class="product-upload-title-label">가격</label>
+                     <label class="product-upload-title-label">* 가격</label>
                 </div>
                 <div class="product-upload-sub">
                     1회 포스팅
@@ -299,7 +355,7 @@
 
             <div class="auth-agreement">
                 <div class="auth-agreement-title">
-                    <input type="checkbox" class="" id="agreenment1"><label for="agreenment1">이용약관에 동의합니다.</label>
+                    <input type="checkbox" class="" id="agreenment1" checked><label for="agreenment1">이용약관에 동의합니다.</label>
                     <span><i class="fa fa-caret-down" aria-hidden="true"></i></span>
                 </div>
                 <div class="auth-agreement-content">
