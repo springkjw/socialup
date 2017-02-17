@@ -14,6 +14,125 @@
         $('.ask_to_seller_btn').on('click', function () {
             startMessage('{{ user.id }}', $(this).data('id'), $(this).data('name'), $(this).data('profile'));
         });
+
+        /* bar graph part */
+
+        var contents_satisfy_arr = {{ contents_satisfy }};
+        var ads_satisfy_arr = {{ ad_satisfy }};
+        var kindness_satisfy_arr = {{ kind_satisfy }};
+        var contents_satisfy_total = contents_satisfy_arr[0] + contents_satisfy_arr[1] + contents_satisfy_arr[2];
+        var ads_satisfy_total = ads_satisfy_arr[0] + ads_satisfy_arr[1] + ads_satisfy_arr[2];
+        var kindness_satisfy_total = kindness_satisfy_arr[0] + kindness_satisfy_arr[1] + kindness_satisfy_arr[2];
+
+        var contents_satisfy_satisfy = Math.round(contents_satisfy_arr[0]/contents_satisfy_total * 100);
+        var contents_satisfy_normal = Math.round(contents_satisfy_arr[1]/contents_satisfy_total* 100);
+        var contents_satisfy_unsatisfy = Math.round(contents_satisfy_arr[2]/contents_satisfy_total* 100);
+
+        var ads_satisfy_satisfy = Math.round(ads_satisfy_arr[0]/ads_satisfy_total * 100);
+        var ads_satisfy_normal = Math.round(ads_satisfy_arr[1]/ads_satisfy_total* 100);
+        var ads_satisfy_unsatisfy = Math.round(ads_satisfy_arr[2]/ads_satisfy_total* 100);
+
+        var kindness_satisfy_satisfy = Math.round(kindness_satisfy_arr[0]/kindness_satisfy_total * 100);
+        var kindness_satisfy_normal = Math.round(kindness_satisfy_arr[1]/kindness_satisfy_total* 100);
+        var kindness_satisfy_unsatisfy = Math.round(kindness_satisfy_arr[2]/kindness_satisfy_total* 100);
+
+        /* insert data */
+        $('.graph-part.contents span:nth-child(1)').css('width', contents_satisfy_satisfy + '%');
+        $('.graph-part.contents .graph-text li:nth-child(1)').css('width', contents_satisfy_satisfy -1 + '%');
+        $('.graph-part.contents .graph-text li:nth-child(1)').text('만족 (' + contents_satisfy_satisfy + '%)');
+        $('.graph-part.contents span:nth-child(2)').css('width', contents_satisfy_normal + '%');
+        $('.graph-part.contents .graph-text li:nth-child(2)').css('width', contents_satisfy_normal -1 + '%');
+        $('.graph-part.contents .graph-text li:nth-child(2)').text('보통 (' + contents_satisfy_normal + '%)');
+        $('.graph-part.contents span:nth-child(3)').css('width', contents_satisfy_unsatisfy + '%');
+        $('.graph-part.contents .graph-text li:nth-child(3)').css('width', contents_satisfy_unsatisfy -1 + '%');
+        $('.graph-part.contents .graph-text li:nth-child(3)').text('불만족 (' + contents_satisfy_unsatisfy + '%)');
+
+        $('.graph-part.ads span:nth-child(1)').css('width', ads_satisfy_satisfy + '%');
+        $('.graph-part.ads .graph-text li:nth-child(1)').css('width', ads_satisfy_satisfy -1 + '%');
+        $('.graph-part.ads .graph-text li:nth-child(1)').text('만족 (' + ads_satisfy_satisfy + '%)');
+        $('.graph-part.ads span:nth-child(2)').css('width', ads_satisfy_normal + '%');
+        $('.graph-part.ads .graph-text li:nth-child(2)').css('width', ads_satisfy_normal -1 + '%');
+        $('.graph-part.ads .graph-text li:nth-child(2)').text('보통 (' + ads_satisfy_normal + '%)');
+        $('.graph-part.ads span:nth-child(3)').css('width', ads_satisfy_unsatisfy + '%');
+        $('.graph-part.ads .graph-text li:nth-child(3)').css('width', ads_satisfy_unsatisfy -1 + '%');
+        $('.graph-part.ads .graph-text li:nth-child(3)').text('불만족 (' + ads_satisfy_unsatisfy + '%)');
+
+        $('.graph-part.kindness span:nth-child(1)').css('width', kindness_satisfy_satisfy + '%');
+        $('.graph-part.kindness .graph-text li:nth-child(1)').css('width', kindness_satisfy_satisfy -1 + '%');
+        $('.graph-part.kindness .graph-text li:nth-child(1)').text('만족 (' + kindness_satisfy_satisfy + '%)');
+        $('.graph-part.kindness span:nth-child(2)').css('width', kindness_satisfy_normal + '%');
+        $('.graph-part.kindness .graph-text li:nth-child(2)').css('width', kindness_satisfy_normal -1 + '%');
+        $('.graph-part.kindness .graph-text li:nth-child(2)').text('보통 (' + kindness_satisfy_normal + '%)');
+        $('.graph-part.kindness span:nth-child(3)').css('width', kindness_satisfy_unsatisfy + '%');
+        $('.graph-part.kindness .graph-text li:nth-child(3)').css('width', kindness_satisfy_unsatisfy -1 + '%');
+        $('.graph-part.kindness .graph-text li:nth-child(3)').text('불만족 (' + kindness_satisfy_unsatisfy + '%)');
+
+        if(contents_satisfy_satisfy<13 && contents_satisfy_satisfy>0){
+            var temp_num = (13-contents_satisfy_satisfy)/2 +1;
+            $('.graph-part.contents .graph-text li:nth-child(1)').css('width', 13 + '%');
+            $('.graph-part.contents .graph-text li:nth-child(2)').css('width', contents_satisfy_normal -1 -temp_num + '%');
+            $('.graph-part.contents .graph-text li:nth-child(3)').css('width', contents_satisfy_unsatisfy -1 -temp_num + '%');
+        }
+        if(contents_satisfy_normal<13 && contents_satisfy_normal>0){
+            var temp_num = (13-contents_satisfy_normal)/2 +1;
+            $('.graph-part.contents .graph-text li:nth-child(1)').css('width', contents_satisfy_satisfy -1 - temp_num + '%');
+            $('.graph-part.contents .graph-text li:nth-child(2)').css('width', 17 + '%');
+            $('.graph-part.contents .graph-text li:nth-child(3)').css('width', contents_satisfy_unsatisfy -1 -temp_num + '%');
+        }
+        if(contents_satisfy_unsatisfy<16 && contents_satisfy_unsatisfy>0){
+            var temp_num = (15-contents_satisfy_unsatisfy)/2 + 2;
+            $('.graph-part.contents .graph-text li:nth-child(1)').css('width', contents_satisfy_satisfy  - temp_num + '%');
+            $('.graph-part.contents .graph-text li:nth-child(2)').css('width', contents_satisfy_normal  - temp_num + '%');
+            $('.graph-part.contents .graph-text li:nth-child(3)').css('width', 15 + '%');
+            $('.graph-part.contents .graph-text li:nth-child(3)').css('float', 'right');
+        }
+
+        if(ads_satisfy_satisfy<13 && ads_satisfy_satisfy>0){
+            var temp_num = (13-ads_satisfy_satisfy)/2 +2;
+            $('.graph-part.ads .graph-text li:nth-child(1)').css('width', 13 + '%');
+            $('.graph-part.ads .graph-text li:nth-child(2)').css('width', ads_satisfy_normal -1 -temp_num + '%');
+            $('.graph-part.ads .graph-text li:nth-child(3)').css('width', ads_satisfy_unsatisfy -1 -temp_num + '%');
+        }
+        if(ads_satisfy_normal<13 && ads_satisfy_normal>0){
+            var temp_num = (13-ads_satisfy_normal)/2 +2;
+            $('.graph-part.ads .graph-text li:nth-child(1)').css('width', ads_satisfy_satisfy -1 - temp_num + '%');
+            $('.graph-part.ads .graph-text li:nth-child(2)').css('width', 17 + '%');
+            $('.graph-part.ads .graph-text li:nth-child(3)').css('width', ads_satisfy_unsatisfy -1 -temp_num + '%');
+        }
+        if(ads_satisfy_unsatisfy<16 && ads_satisfy_unsatisfy>0){
+            var temp_num = (15-ads_satisfy_unsatisfy)/2 + 3;
+            $('.graph-part.ads .graph-text li:nth-child(1)').css('width', ads_satisfy_satisfy -1 - temp_num + '%');
+            $('.graph-part.ads .graph-text li:nth-child(2)').css('width', ads_satisfy_normal -1 - temp_num + '%');
+            $('.graph-part.ads .graph-text li:nth-child(3)').css('width', 15 + '%');
+            $('.graph-part.ads .graph-text li:nth-child(3)').css('float', 'right');
+        }
+
+        if(kindness_satisfy_satisfy<13 && kindness_satisfy_satisfy>0){
+            var temp_num = (13-kindness_satisfy_satisfy)/2 +2;
+            $('.graph-part.kindness .graph-text li:nth-child(1)').css('width', 13 + '%');
+            $('.graph-part.kindness .graph-text li:nth-child(2)').css('width', kindness_satisfy_normal -1 -temp_num + '%');
+            $('.graph-part.kindness .graph-text li:nth-child(3)').css('width', kindness_satisfy_unsatisfy -1 -temp_num + '%');
+        }
+        if(kindness_satisfy_normal<13 && kindness_satisfy_normal>0){
+            var temp_num = (13-kindness_satisfy_normal)/2 +2;
+            $('.graph-part.kindness .graph-text li:nth-child(1)').css('width', kindness_satisfy_satisfy -1 - temp_num + '%');
+            $('.graph-part.kindness .graph-text li:nth-child(2)').css('width', 17 + '%');
+            $('.graph-part.kindness .graph-text li:nth-child(3)').css('width', kindness_satisfy_unsatisfy -1 -temp_num + '%');
+        }
+        if(kindness_satisfy_unsatisfy<16 && kindness_satisfy_unsatisfy>0){
+            var temp_num = (15-kindness_satisfy_unsatisfy)/2 + 3;
+            $('.graph-part.kindness .graph-text li:nth-child(1)').css('width', kindness_satisfy_satisfy -1 - temp_num + '%');
+            $('.graph-part.kindness .graph-text li:nth-child(2)').css('width', kindness_satisfy_normal -1 - temp_num + '%');
+            $('.graph-part.kindness .graph-text li:nth-child(3)').css('width', 15 + '%');
+            $('.graph-part.kindness .graph-text li:nth-child(3)').css('float', 'right');
+        }
+
+
+        $('.graph-text li').each(function(){
+        if($(this).css('width')=='0px'){
+            $(this).hide();
+        }
+    });
     });
     </script>
 {% endblock %}
@@ -107,7 +226,7 @@
                     </div>
                 </div>
                 <div class="detail_content_mid_right">
-                    <div class="graph-part">
+                    <div class="graph-part contents">
                         <div class="graph-part-title">
                             콘텐츠
                         </div>
@@ -116,8 +235,15 @@
                           <span style="width:40%" class="bar-2"></span>
                           <span style="width:20%" class="bar-3"></span>
                         </div>
+                        <div class="graph-text">
+                            <ul>
+                                <li>만족 (0%)</li><!--
+                                --><li>보통 (0%)</li><!--
+                                --><li>불만족 (0%)</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="graph-part">
+                    <div class="graph-part ads">
                         <div class="graph-part-title">
                             광고효과
                         </div>
@@ -126,8 +252,15 @@
                           <span style="width:46%" class="bar-2"></span>
                           <span style="width:20%" class="bar-3"></span>
                         </div>
+                        <div class="graph-text">
+                            <ul>
+                                <li>만족 (0%)</li><!--
+                                --><li>보통 (0%)</li><!--
+                                --><li>불만족 (0%)</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="graph-part">
+                    <div class="graph-part kindness">
                         <div class="graph-part-title">
                             친절도
                         </div>
@@ -135,6 +268,13 @@
                           <span style="width:34%" class="bar-1"></span>
                           <span style="width:40%" class="bar-2"></span>
                           <span style="width:26%" class="bar-3"></span>
+                        </div>
+                        <div class="graph-text">
+                            <ul>
+                                <li>만족 (0%)</li><!--
+                                --><li>보통 (0%)</li><!--
+                                --><li>불만족 (0%)</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
