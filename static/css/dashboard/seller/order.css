@@ -658,6 +658,7 @@
 
 .item-list .table_product_btn.change button{
     background: none;
+    font-size: 10px;
 }
 
 .item-list .table_product_btn.change input{
