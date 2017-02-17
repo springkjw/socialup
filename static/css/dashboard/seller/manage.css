@@ -178,6 +178,18 @@
     border-bottom: 1px solid #DEDEDE;
 }
 
+.no-list .dashboard-register-seller-button {
+    display: inline-block;
+    width: 120px;
+    height: 35px;
+    background: #648efc;
+    color: white;
+    font-size: 14px;
+    font-weight: 300;
+    text-align: center;
+    line-height: 35px;
+    border-radius: 0px;
+}
 
 /* added */
 .dashboard-product-manage .product-item{
