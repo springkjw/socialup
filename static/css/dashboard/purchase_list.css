@@ -725,7 +725,7 @@ li:nth-child(5) .circle-text {
     background: white;
     border: 1px solid black;
     width:34%;
-    height:500px;
+    height:550px;
     text-align:center;
     z-index:10;
 }
