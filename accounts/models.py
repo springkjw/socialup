@@ -122,6 +122,17 @@ class MyUser(AbstractBaseUser):
     def get_avatar(self):
         # checking whether profile image is exists.
         if self.media:
+            try:
+                thumbnail = MyUserThumbnail.objects.get(myuser=self, thumb_type='hd')
+                # local setting
+                if settings.DEBUG:
+                    return '/media/%s' % (thumbnail.media)
+                # production setting
+                else:
+                    return '%s%s' % (settings.MEDIA_ROOT, thumbnail.media)
+            except:
+                pass
+
             # local setting
             if settings.DEBUG:
                 return '/media/%s' % (self.media)
