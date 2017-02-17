@@ -4,10 +4,10 @@
     margin-left:5%;
     margin-top:3%;
     padding-top:10%;
-    background: -webkit-linear-gradient(#e8e8e8 21%, white 0);
-    background: -moz-linear-gradient(#e8e8e8 21%, white 0);
-    background: -ms-linear-gradient(#e8e8e8 21%, white 0);
-    background: linear-gradient(#e8e8e8 21%, white 0);
+    background: -webkit-linear-gradient(#e8e8e8 236px, white 0);
+    background: -moz-linear-gradient(#e8e8e8 236px, white 0);
+    background: -ms-linear-gradient(#e8e8e8 236px, white 0);
+    background: linear-gradient(#e8e8e8 236px, white 0);
 }
 
 .detail_content_wrapper{
