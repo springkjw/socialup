@@ -1201,3 +1201,7 @@ _:-ms-lang(x), .product-seller-name{
 #caution-ul li:nth-child(5) div{
     width:100px;
 }
+
+.review-satisfiy-sub-box span{
+    font-weight:bold;
+}

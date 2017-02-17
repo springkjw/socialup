@@ -515,11 +515,11 @@
                                                     콘텐츠
                                                     <div class="review-satisfiy-sub-box">
                                                         {% if review.contents_satisfy == 'good' %}
-                                                            만족
+                                                            <span style="color:#394284;">만족</span>
                                                         {% elif review.contents_satisfy == 'neutral' %}
-                                                            보통
+                                                            <span style="color:#6e8e3a;">보통</span>
                                                         {% else %}
-                                                            불만족
+                                                            <span style="color:#a64949;">불만족</span>
                                                         {% endif %}
                                                     </div>
                                                 </div>
@@ -527,24 +527,24 @@
                                                     광고효과
                                                     <div class="review-satisfiy-sub-box">
                                                         {% if review.ad_satisfy == 'good' %}
-                                                            만족
+                                                            <span style="color:#394284;">만족</span>
                                                         {% elif review.ad_satisfy == 'neutral' %}
-                                                            보통
+                                                            <span style="color:#6e8e3a;">보통</span>
                                                         {% else %}
-                                                            불만족
+                                                            <span style="color:#a64949;">불만족</span>
                                                         {% endif %}
                                                     </div>
                                                 </div>
                                                 <div class="review-satisfiy-sub kindness">
                                                     친절도
                                                     <div class="review-satisfiy-sub-box">
-                                                    {% if review.kind_satisfy == 'good' %}
-                                                        만족
-                                                    {% elif review.kind_satisfy == 'neutral' %}
-                                                        보통
-                                                    {% else %}
-                                                        불만족
-                                                    {% endif %}
+                                                        {% if review.kind_satisfy == 'good' %}
+                                                            <span style="color:#394284;">만족</span>
+                                                        {% elif review.kind_satisfy == 'neutral' %}
+                                                            <span style="color:#6e8e3a;">보통</span>
+                                                        {% else %}
+                                                            <span style="color:#a64949;">불만족</span>
+                                                        {% endif %}
                                                     </div>
                                                 </div>
                                             </div>
