@@ -74,9 +74,12 @@ $('.show_detail_btn.third').on('click', function () {
 
 /* wish-list-modal part */
 $('.review').on('click', function () {
-    $('.review_modal').show();
+    $(this).parent().next().show();
 });
 
+$('.table_product_detail_bottom .review').on('click', function () {
+    $(this).parent().parent().parent().parent().prev().show();
+});
 
 $('.review_btn.close').on('click', function () {
     $(this).parent().parent().hide();
