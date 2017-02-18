@@ -115,3 +115,14 @@ def cs_admin_user_avatar(user_id):
     except:
         cs_admin_user_avatar = None
     return cs_admin_user_avatar
+
+
+# dashboard_purchase_list.html의 사용자평가(review)모달에 각각의 form을 불러오기 위해 view에서 review_forms라는 딕셔너리를 보냄
+# 그 딕셔너리에 접근하기 위한 커스텀함수
+@register.filter('get_dict_value')
+def get_dict_value(dict_data, key):
+    """
+    usage example {{ your_dict|get_dict_value:your_key }}
+    """
+    if key:
+        return dict_data.get(key)
