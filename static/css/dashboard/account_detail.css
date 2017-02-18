@@ -180,7 +180,7 @@
 /* graph part */
 .detail_content_mid_right .graph-part{
     width:100%;
-    margin-bottom:7%;
+    margin-bottom:5%;
     margin-left:5%;
 }
 
@@ -193,6 +193,7 @@
 .stacked-bar-graph {
     width: 90%;
     height: 20px;
+    margin-bottom:7px;
     color: #414042;
 }
 .stacked-bar-graph span{
@@ -615,4 +616,21 @@
 
 .seller_products_each_wrapper .cash span {
     margin-top:0;
+}
+
+
+.graph-part .graph-text{
+    width:90%;
+}
+
+.graph-part .graph-text ul{
+    width:100%;
+    list-style: none;
+}
+
+.graph-part .graph-text ul li{
+    display: inline-block;
+    font-size: 11px;
+    text-align: center;
+    vertical-align: top;
 }

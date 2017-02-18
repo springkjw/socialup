@@ -213,10 +213,37 @@ def account_detail(request, seller_id):
     order_item_count = OrderItem.objects.filter(seller=seller, status='finished').count()
     selling_products = Product.objects.filter(seller=seller, product_status="now_selling")
     review_count = 0
+    contents_satisfy = [0, 0, 0]
+    ad_satisfy = [0, 0, 0]
+    kind_satisfy = [0, 0, 0]
     for product in selling_products:
         temp = ProductReview.objects.filter(product=product)
+        for review in temp:
+            # 컨텐츠 부분
+            if review.contents_satisfy == 'good':
+                contents_satisfy[0] += 1
+            elif review.contents_satisfy == 'neutral':
+                contents_satisfy[1] += 1
+            else:
+                contents_satisfy[2] += 1
+
+            # 광고부분
+            if review.ad_satisfy == 'good':
+                ad_satisfy[0] += 1
+            elif review.ad_satisfy == 'neutral':
+                ad_satisfy[1] += 1
+            else:
+                ad_satisfy[2] += 1
+
+            # 친절도부분
+            if review.kind_satisfy == 'good':
+                kind_satisfy[0] += 1
+            elif review.kind_satisfy == 'neutral':
+                kind_satisfy[1] += 1
+            else:
+                kind_satisfy[2] += 1
         if temp:
-            review_count = review_count + 1
+            review_count = review_count + len(temp)
 
     is_seller_none = False
     if (seller.description is None) and (seller.user.sex is None) \
@@ -227,6 +254,9 @@ def account_detail(request, seller_id):
         "order_item_count":order_item_count,
         "selling_products":selling_products,
         "is_seller_none": is_seller_none,
-        "review_count": review_count
+        "review_count": review_count,
+        "contents_satisfy": contents_satisfy,
+        "ad_satisfy": ad_satisfy,
+        "kind_satisfy": kind_satisfy
     }
     return render(request, template, context)

@@ -34,7 +34,7 @@ sns_type_list = (
     ("blog", "블로그"),
     ("facebook", "페이스북"),
     ("instagram", "인스타그램"),
-    ("kakaostory", "카카오스토리"),
+    ("youtube", "유투브"),
     #("twitter", "트위터"),
     #("cafe", "카페"),
     #("afreecatv", "아프리카TV"),
@@ -197,8 +197,8 @@ class Product(models.Model):
             image_url = static('img/facebook.png')
         elif self.sns_type == 'instagram':
             image_url = static('img/insta.png')
-        elif self.sns_type == 'kakaostory':
-            image_url = static('img/kakao.png')
+        elif self.sns_type == 'youtube':
+            image_url = static('img/youtube.png')
 
         return image_url
 
@@ -212,8 +212,8 @@ class Product(models.Model):
             color = '#3B579D'
         elif self.sns_type == 'instagram':
             color = '#CFAE89'
-        elif self.sns_type == 'kakaostory':
-            color = '#FEDD43'
+        elif self.sns_type == 'youtube':
+            color = '#ed2e01'
 
         return color
 

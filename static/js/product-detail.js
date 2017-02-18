@@ -149,7 +149,13 @@ jQuery.fn.center = function () {
     });
 };
 
+/* bar graph part */
 $(document).ready(function(){
+    /* round part */
+    var temp = $('.seller-info-rating.seller-rating .seller-rating').attr('data-rating');
+    temp = Math.round(temp);
+    $('.rating-num').text(temp + '/5');
+
     var contents_satisfy = 0;
     var contents_normal = 0;
     var contents_unsatisfy = 0;
@@ -237,7 +243,7 @@ $(document).ready(function(){
     $('.graph-part.ads span:nth-child(1)').css('width', calculated_ads_satisfy + '%');
     $('.graph-part.ads .graph-text li:nth-child(1)').css('width', calculated_ads_satisfy -1 + '%');
     $('.graph-part.ads .graph-text li:nth-child(1)').text('만족 (' + parseInt(calculated_ads_satisfy) + '%)');
-    $('.graph-part.ads span:nth-child(2)').css('width', calculated_ads_normal*100 + '%');
+    $('.graph-part.ads span:nth-child(2)').css('width', calculated_ads_normal + '%');
     $('.graph-part.ads .graph-text li:nth-child(2)').css('width', calculated_ads_normal -1 + '%');
     $('.graph-part.ads .graph-text li:nth-child(2)').text('보통 (' + parseInt(calculated_ads_normal) + '%)');
     $('.graph-part.ads span:nth-child(3)').css('width', calculated_ads_unsatisfy + '%');
