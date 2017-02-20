@@ -327,8 +327,6 @@ class ImpAjaxView(AjaxRequireMixin, View):
 
 @login_required
 def purchase_list(request):
-    error_message = "";
-
     if request.POST.get('is_status_change'):
         order_item_id = request.POST.get('order_item')
         try:
@@ -384,10 +382,6 @@ def purchase_list(request):
         if review_form.is_valid():
             review_form.save(commit=True)
 
-        # !review_form.is_valid()
-        else:
-            error_message = "필수 항목을 입력해주세요"
-
     order_items = OrderItem.objects.filter(user=request.user)
     order_items_ready = order_items.filter(user=request.user, status='paid')
     order_items_processing = order_items.filter(user=request.user, status='processing')
@@ -422,7 +416,6 @@ def purchase_list(request):
         "review_form": review_form,
         "review_forms": review_forms,
         "reviews": reviews,
-        "error_message": error_message,
     }
 
     return render(request, template, context)

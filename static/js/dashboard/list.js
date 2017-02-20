@@ -81,6 +81,14 @@ $('.table_product_detail_bottom .review').on('click', function () {
     $(this).parent().parent().parent().parent().prev().show();
 });
 
+$('.review_btn.submit').on('click', function () {
+    value = parseFloat($(this).parent().find("input:radio[name='rating']:checked").val()).toFixed(1);
+    if (isNaN(value))
+        alert("만족도 평가에 체크해주세요");
+    else
+        $(this).parent().find('.hidden_submit').click();
+});
+
 $('.review_btn.close').on('click', function () {
     $(this).parent().parent().hide();
 });

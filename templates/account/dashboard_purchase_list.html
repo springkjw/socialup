@@ -10,11 +10,6 @@
     <script type="text/javascript" src="{% static 'js/dashboard/list.js' %}"></script>
     <script type="text/javascript">
         $(function () {
-             /* 리뷰 필수 정보 미입력시 에러 메세지 날려주기 */
-            {% if error_message %}
-             alert("{{ error_message }}");
-            {% endif %}
-
             $('.detail_bottom_btn-talk').on('click', function () {
                 startMessage('{{ user.id }}', $(this).data('id'), $(this).data('name'), $(this).data('profile'));
             });
@@ -969,8 +964,9 @@
                                                     {{ each_review_form.review }}
                                                 </div>
                                             </div>
-                                            <button type="submit" class="review_btn submit">평가하기</button>
-                                            <button class="review_btn close" type="button">닫기</button>
+                                            <button type="button" class="review_btn submit">평가하기</button>
+                                            <button type="submit" class="review_btn hidden_submit" style="display: None;"></button>
+                                            <button type="button" class="review_btn close">닫기</button>
                                         </form>
                                     </div>
                                     <div class="table_product_detail" data-type="{{ order_item.cart_item.item.sns_type }}" data-color="{{ order_item.cart_item.item.sns_type_color }}">
