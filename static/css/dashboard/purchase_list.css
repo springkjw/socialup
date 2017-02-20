@@ -780,7 +780,7 @@ li:nth-child(5) .circle-text {
     display: inline-block;
     vertical-align: middle;
     overflow: hidden;
-    text-align:left;
+    text-align:center;
 }
 
 .review_form .review_form_content.product{
@@ -819,6 +819,12 @@ li:nth-child(5) .circle-text {
     clear:both;
     font-size:11px;
 
+}
+
+.review_form_content .rating_number {
+    font-weight: 300;
+    font-size: 32px;
+    margin-left: 11px;
 }
 
 .review_form .review_form_content.satisfy{

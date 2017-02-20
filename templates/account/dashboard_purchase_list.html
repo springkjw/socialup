@@ -80,6 +80,22 @@
                 {% for order_item in order_items_finished %}
                     {% with reviews|get_dict_value:order_item.id as each_review %}
                         $("input:radio[class='id_{{ order_item.id }}_rating']:radio[value='{{ each_review.rating }}']").attr('checked', true);
+
+                        // 별점 옆의 숫자 설정
+                        span = document.getElementById("rating_number_id_{{ order_item.id }}");
+                        value = parseFloat($("input:radio[class='id_{{ order_item.id }}_rating']:checked").val()).toFixed(1);
+                        span.innerHTML = String(value) + "/5";
+                    {% endwith %}
+                {% endfor %}
+            });
+
+            // 별점 클릭에 따라 옆의 숫자 변경
+            $('input:radio[name="rating"]').change(function() {
+                {% for order_item in order_items_finished %}
+                    {% with reviews|get_dict_value:order_item.id as each_review %}
+                        span = document.getElementById("rating_number_id_{{ order_item.id }}");
+                        value = parseFloat($("input:radio[class='id_{{ order_item.id }}_rating']:checked").val()).toFixed(1);
+                        span.innerHTML = String(value) + "/5";
                     {% endwith %}
                 {% endfor %}
             });
@@ -919,7 +935,9 @@
                                                         <label class = "full" for="id_{{ order_item.id }}_rating_2" title="Sucks big time - 1 star"></label>
                                                         <input type="radio" id="id_{{ order_item.id }}_rating_1" name="rating" class="id_{{ order_item.id }}_rating" value="0.50" />
                                                         <label class="half" for="id_{{ order_item.id }}_rating_1" title="Sucks big time - 0.5 stars"></label>
+
                                                     </fieldset>
+                                                    <span id="rating_number_id_{{ order_item.id }}" class="rating_number">0.0/5</span>
                                                     <div class="rating_notice">별을 클릭하여 서비스 만족도를 알려주세요.</div>
                                                 </div>
                                             </div>
