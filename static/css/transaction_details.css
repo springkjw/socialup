@@ -6,9 +6,9 @@
 
 .transaction_detail_wrapper table {
     position:relative;
-    left:5%;
+    left:25%;
     border:1px solid black;
-    width:80%;
+    width:50%;
     border-collapse: collapse;
     height:90%;
 }
@@ -81,4 +81,18 @@
     background-color: white;
     color:black;
     border: 1px solid black;
+}
+
+@media print {
+    * {
+    }
+    .transaction_detail_wrapper{
+        width:100%;
+        height:100%;
+    }
+    #print_section{
+        width:100%;
+        height:100%;
+        left:0;
+    }
 }

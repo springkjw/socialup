@@ -21,13 +21,6 @@ function readImage(input) {
     }
 }
 
-$('.change_button').on('click', function () {
-    if($('#new_passwd1').val() != $('#new_passwd2').val()){
-        alert('변경할 비밀번호가 다릅니다.');
-        window.location.reload();
-    }
-});
-
 
 /* transition div by button click (basic_info, seller_info) */
 $('#btn_basic_info').on('click', function(){

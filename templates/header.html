@@ -8,10 +8,25 @@
         </div>
         <div class="header_search">
             <form method="GET" id="search-form" action="{% url 'search' %}" >
-                <input type="text" name="keyword" placeholder="원하는 SNS 정보를 입력해주세요. 예) 맛집, 뷰티"/>
-                <button class="header_search_btn" type="submit">
-                    <img src="{% static 'img/search.png' %}">
-                </button>
+                <div class="dropdown">
+                    <div class="dropdown-selected">통합검색</div>
+                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    <div class="dropdown-content">
+                        <label><input type="radio" name="search_option" value="integrated_search" checked/>통합검색</label>
+                        <label><input TYPE='radio' name='search_option' value='sns_all' />SNS 전체</label>
+                        <label class="option_sub"><input TYPE='radio' name='search_option' value='sns_blog' />블로그</label>
+                        <label class="option_sub"><input TYPE='radio' name='search_option' value='sns_facebook' />페이스북</label>
+                        <label class="option_sub"><input TYPE='radio' name='search_option' value='sns_instagram' />인스타그램</label>
+                        <label class="option_sub"><input TYPE='radio' name='search_option' value='sns_youtube' />유투브</label>
+                        <label><input TYPE='radio' name='search_option' value='seller_id' />판매자 이름</label>
+                    </div>
+                </div>
+                <div style="display: inline-block; width:70%;">
+                        <input type="text" name="keyword" placeholder="원하는 SNS 정보를 입력해주세요. 예) 맛집, 뷰티"/>
+                        <button class="header_search_btn" type="submit">
+                            <img src="{% static 'img/search.png' %}">
+                        </button>
+                </div>
             </form>
         </div>
         <div id="header_tnb">

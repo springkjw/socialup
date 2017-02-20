@@ -31,22 +31,37 @@
 
         $('.change_button').on('click', function() {
             var precheck_flag = true;
-            if($('input[name=sex]').val()==''){
+            var sex_flag = true;
+            $('input[name=sex]').each(function () {
+                if($(this).prop('checked')){
+                    sex_flag=false;
+                }
+            });
+
+            if(sex_flag){
                 alert('성별을 선택해주세요.');
                 precheck_flag = false;
-            }else if($('input[name=phone]').val()==''){
+            }else if($('input[name=phone]').val()=='') {
                 alert('연락처를 입력해주세요.');
                 precheck_flag = false;
-            }else if($('#current_passwd').val()==''){
-                alert('현재 비밀번호를 입력해주세요.');
-                precheck_flag = false;
             }
+            if($('#new_passwd1').val() != $('#new_passwd2').val()){
+                alert('변경할 비밀번호가 다릅니다.');
+                precheck_flag = false;
+            }else if($('input[name=new_passwd2]').val() && $('input[name=new_passwd1]').val()){
+                if($('#current_passwd').val()==''){
+                    alert('현재 비밀번호를 입력해주세요.');
+                    precheck_flag = false;
+                }
+            }
+
             if(precheck_flag){
                 var current_password = $('#current_passwd').val();
                 $.ajax({
                     type: "POST",
                     url: "/dashboard/change/",
-                    data: {current_passwd : $('#current_passwd').val()},
+                    data: {current_passwd : $('#current_passwd').val(),
+                            new_passwd : $('#new_passwd1').val()},
                     success: function (data) {
                         if(data['password_success']){
                             $("#dialog-confirm").dialog('open');
