@@ -5,6 +5,7 @@ from billing.models import Order
 from accounts.models import MyUser
 from django.contrib.contenttypes.models import ContentType
 import datetime, pytz
+from notifications.models import Notification
 
 register = template.Library()
 
@@ -126,3 +127,8 @@ def get_dict_value(dict_data, key):
     """
     if key:
         return dict_data.get(key)
+
+@register.filter(name='get_notification')
+def get_notification(user_id):
+    user = MyUser.objects.get(id=user_id)
+    return user.notifications.unread()

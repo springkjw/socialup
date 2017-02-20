@@ -14,7 +14,7 @@ from .iamport import validation_prepare
 from datetime import datetime, timedelta
 from markets.models import Product
 from .forms import ReviewForm
-
+from notifications.signals import notify
 
 class PointCheckoutAjaxView(AjaxRequireMixin, View):
     def post(self, request, *args, **kwargs):
@@ -327,6 +327,7 @@ class ImpAjaxView(AjaxRequireMixin, View):
 
 @login_required
 def purchase_list(request):
+    curr_user = request.user
     if request.POST.get('is_status_change'):
         order_item_id = request.POST.get('order_item')
         try:
@@ -337,6 +338,7 @@ def purchase_list(request):
             order_item.status != 'refunded' and new_status == 'finished' :
                 order_item.status = new_status
                 order_item.save()
+                notify.send(curr_user, recipient=order_item.seller.user, verb='you reached level 10')
         except:
             pass
 

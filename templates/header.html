@@ -1,4 +1,25 @@
 {% load staticfiles %}
+{% load notifications_tags %}
+{% load producttags %}
+{% notifications_unread as unread_count %}
+
+<div class="notification_popup_wrapper">
+    <div class="notification_popup_title">알림({{ unread_count }})</div>
+    <div class="notification_popup_content">
+    {% if user.id|get_notification %}
+        {% for notification in user.id|get_notification %}
+            <div class="notification_each_wrapper">
+                <div class="notification_each">
+                    {{ notification.actor }}님이 작업을 진행하셨습니다.<br>
+                    {{ notification.timestamp|date:"y.m.d" }}/{{ notification.verb }}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        알림이 없습니다.
+    {% endif %}
+    </div>
+</div>
 <div id="header">
     <div class="inner">
         <div id="logo">
@@ -17,7 +38,7 @@
                         <label class="option_sub"><input TYPE='radio' name='search_option' value='sns_blog' />블로그</label>
                         <label class="option_sub"><input TYPE='radio' name='search_option' value='sns_facebook' />페이스북</label>
                         <label class="option_sub"><input TYPE='radio' name='search_option' value='sns_instagram' />인스타그램</label>
-                        <label class="option_sub"><input TYPE='radio' name='search_option' value='sns_youtube' />유투브</label>
+                        <label class="option_sub"><input TYPE='radio' name='search_option' value='sns_youtube' />유튜브</label>
                         <label><input TYPE='radio' name='search_option' value='seller_id' />판매자 이름</label>
                     </div>
                 </div>
@@ -37,7 +58,7 @@
                 <a id="message" href="{% url 'message_lounge' %}">
                     <img src="{% static 'img/ver1.5/message.png' %}">
                 </a>
-                <a id="notification" href="{% url 'message_lounge' %}">
+                <a id="notification">
                     <img src="{% static 'img/ver1.5/bell.png' %}">
                 </a>
                 <a id="header-profile" href="#">
@@ -96,8 +117,21 @@
         </li>
         <li>
             <a href="{% url 'category' 'youtube' %}">
-                유투브
+                유튜브
             </a>
         </li>
     </ul>
 </div>
+
+<script type="text/javascript">
+    var notification_flag = true;
+    $('#notification').on('click', function () {
+        if (notification_flag){
+            $('.notification_popup_wrapper').show();
+            notification_flag = false;
+        }else{
+            $('.notification_popup_wrapper').hide();
+            notification_flag = true;
+        }
+    });
+</script>

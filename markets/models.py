@@ -34,7 +34,7 @@ sns_type_list = (
     ("blog", "블로그"),
     ("facebook", "페이스북"),
     ("instagram", "인스타그램"),
-    ("youtube", "유투브"),
+    ("youtube", "유튜브"),
     #("twitter", "트위터"),
     #("cafe", "카페"),
     #("afreecatv", "아프리카TV"),
