@@ -79,7 +79,7 @@ class MyUser(AbstractBaseUser):
     )
     description = models.TextField(null=True, blank=True, default="")
     name = models.CharField(max_length=10, null=True, blank=True, default="")
-    phone = models.CharField(max_length=12, null=True, blank=True, default="")
+    phone = models.CharField(max_length=13, null=True, blank=True, default="")
     sex = models.CharField(choices=(("male", "남자"), ("female", "여자")), max_length=15, null=True)
     address = models.CharField(max_length=15, null=True, default="")
     job = models.CharField(max_length=15, null=True, blank=True, default="")

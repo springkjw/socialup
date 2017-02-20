@@ -80,6 +80,8 @@ def change_info(request):
 
     if request.is_ajax():
         password_success = user.check_password(request.POST['current_passwd'])
+        if request.POST['new_passwd']=='':
+            password_success=True
         data = {
             "password_success": password_success
         }
@@ -115,24 +117,9 @@ def change_info(request):
                 return HttpResponseRedirect('/dashboard/change/')
 
             return HttpResponseRedirect('/dashboard/change/')
-
         if form.is_valid():
-            if form.cleaned_data['phone'] == '':
-                error_message = "연락처를 입력해주세요"
-                context = {
-                    "error_message": error_message,
-                    "form": form,
-                    "seller_form": seller_form,
-                    "seller_account_form": seller_account_form,
-                    "year_list": year_list,
-                    "address_list": address_list,
-                    "seller": seller,
-                    "seller_account": seller_account,
-                }
-                return render(request, template, context)
-
             password_success = user.check_password(request.POST['current_passwd'])
-            if not password_success:
+            if not password_success and request.POST['new_passwd2']:
                 error_message = "입력하신 비밀번호가 틀렸습니다."
                 context = {
                     "error_message": error_message,

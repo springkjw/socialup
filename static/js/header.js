@@ -33,3 +33,23 @@ $.fn.digits = function(){
         $(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") );
     })
 };
+
+var arrow_flag = false;
+$('.fa.fa-caret-down').on('click', function () {
+    if (arrow_flag){
+        $('.dropdown').css('background-color','white');
+        $('.dropdown-content').hide();
+        arrow_flag= false;
+    }
+    else{
+        $('.dropdown').css('background-color','#f1f1f1');
+        $('.dropdown-content').show();
+        arrow_flag= true;
+    }
+});
+
+$('.dropdown-content label').on('click', function () {
+    $('.dropdown-selected').html($('.dropdown-content input:checked').parent().text());
+    $('.dropdown').css('background-color','white');
+    $('.dropdown-content').hide();
+});
