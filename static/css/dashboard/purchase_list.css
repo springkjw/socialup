@@ -728,6 +728,7 @@ li:nth-child(5) .circle-text {
     height:550px;
     text-align:center;
     z-index:10;
+    color:#777;
 }
 
 .review_modal .review_form{
@@ -791,6 +792,7 @@ li:nth-child(5) .circle-text {
 .review_form .review_form_content.product .review_product_title{
     font-size:16px;
     font-weight:bold;
+    color: black;
 }
 
 .review_form_content.product .review_product_detail{
