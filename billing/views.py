@@ -390,8 +390,6 @@ def purchase_list(request):
     order_items_refunded = order_items.filter(user=request.user, status='refunded')
     order_items_request_refund = order_items.filter(user=request.user, status='request_refund')
 
-    # 주석 처리된 부분은 review_forms를 던져서 유저가 이전에 작성했던 리뷰들을 볼 수 있게 하기 위함임
-    # 현재는 이미 서비스 평가했던걸 다시 평가하면 빈 폼이 뜨지만 제출하면 수정되도록 해둠
     review_form = ReviewForm()
     reviews = {}
     review_forms = {}

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime, timedelta
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -236,6 +237,12 @@ def account_detail(request, seller_id):
     if (seller.description is None) and (seller.user.sex is None) \
             and (seller.user.birth_year is None) and (len(seller.user.address)==0) and (len(seller.user.job)==0):
         is_seller_none = True
+
+    # 마지막 로그인 시간
+    last_login_to_now = datetime.utcnow().replace(tzinfo=None) - seller.user.last_login.replace(tzinfo=None)
+    days, seconds = last_login_to_now.days, last_login_to_now.seconds
+    last_login_in_hour = days * 24 + seconds // 3600
+
     context={
         "seller":seller,
         "order_item_count":order_item_count,
@@ -244,6 +251,7 @@ def account_detail(request, seller_id):
         "review_count": review_count,
         "contents_satisfy": contents_satisfy,
         "ad_satisfy": ad_satisfy,
-        "kind_satisfy": kind_satisfy
+        "kind_satisfy": kind_satisfy,
+        "last_login_in_hour": last_login_in_hour,
     }
     return render(request, template, context)

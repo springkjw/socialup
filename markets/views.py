@@ -49,8 +49,8 @@ def product_detail(request, product_id):
     # seller 의 product review 수
     seller_products = Product.objects.filter(seller=seller)
     seller_review_count = 0
-    for produc in seller_products:
-        temp_review = ProductReview.objects.filter(product=produc)
+    for p in seller_products:
+        temp_review = ProductReview.objects.filter(product=p)
         if temp_review:
             seller_review_count +=len(temp_review)
 

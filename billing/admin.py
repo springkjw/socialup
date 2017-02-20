@@ -10,6 +10,9 @@ class OrderAdmin(admin.ModelAdmin):
     class Meta:
         model = Order
 
+class OrderItemAdmin(admin.ModelAdmin):
+    list_display = ('__unicode__', 'cart_item', 'user', 'seller', 'status')
+
 class PointAdmin(admin.ModelAdmin):
     list_display = ('user', '__unicode__', 'timestamp')
 
@@ -32,5 +35,6 @@ admin.site.register(Point, PointAdmin)
 admin.site.register(PointTransaction, PointTransactionAdmin)
 admin.site.register(PointHistory, PointHistoryAdmin)
 admin.site.register(Order, OrderAdmin)
+admin.site.register(OrderItem, OrderItemAdmin)
 admin.site.register(Mileage, MileageAdmin)
 admin.site.register(MileageHistory, MileageHistoryAdmin)
