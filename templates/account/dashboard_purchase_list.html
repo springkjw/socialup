@@ -874,18 +874,18 @@
                                                     <span class="review_product_title">{{ order_item.cart_item.item.oneline_intro }}</span>
                                                     <br>
                                                     <div class="review_product_detail option">
-                                                        {% if order_item.cartitem.0.manuscript_checked or order_item.cartitem.0.haighrank_checked %}
-                                                        [옵션]
-                                                        {% if order_item.cartitem.0.item.manuscript_price != 0 %}
-                                                            원고추가 <span>{{ order_item.cartitem.0.item.manuscript_price }}원</span>
-                                                        {% endif %}
+                                                        {% if order_item.cart_item.manuscript_checked or order_item.cart_item.haighrank_checked %}
+                                                            [옵션]
+                                                            {% if order_item.cart_item.item.manuscript_price != 0 %}
+                                                                원고추가 <span>{{ order_item.cart_item.item.manuscript_price }}원</span>
+                                                            {% endif %}
 
-                                                        {% if order_item.cartitem.0.item.highrank_price != 0 %}
-                                                            ,상위노출 <span>{{ order_item.cartitem.0.item.highrank_price }}원</span>
+                                                            {% if order_item.cart_item.item.highrank_price != 0 %}
+                                                                ,상위노출 <span>{{ order_item.cart_item.item.highrank_price }}원</span>
+                                                            {% endif %}
+                                                        {% else %}
+                                                            [옵션]없음
                                                         {% endif %}
-                                                    {% else %}
-                                                        [옵션]없음
-                                                    {% endif %}
                                                     </div>
                                                     <div class="review_product_detail price">
                                                         ￦ {{ order_item.cart_item.line_item_total }}
