@@ -8,9 +8,9 @@ from accounts.models import MyUser, Seller
 from billing.models import OrderItem, Mileage, MileageHistory
 
 SATISFY_CHOICES = (
-    ('good','good'),
-    ('neutral','neutral'),
-    ('bad','bad'),
+    ('good','만족'),
+    ('neutral','보통'),
+    ('bad','불만족'),
 )
 
 class ProductReview(models.Model):
