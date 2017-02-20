@@ -199,7 +199,7 @@ _:-ms-lang(x), #header_tnb > a#login{
 
 /* search */
 #header .header_search{
-    width:40%;
+    width:45%;
     display: inline-block;
     margin-left:3%;
 }
@@ -262,4 +262,69 @@ _:-ms-lang(x), #header_tnb > a#login{
 
 .header_navigation ul li button {
     background: none;
+}
+
+
+/* search option dropbox */
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    background: white;
+    width:20%;
+    height:30px;
+    color:#648efc;
+    left:3px;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    width:100%;
+    top:30px;
+    background-color: white;
+    border:1px solid #648efc;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content label{
+    display: block;
+    cursor: pointer;
+    font-size: 13px;
+    padding-left:10px;
+}
+
+.dropdown-content label.option_sub{
+    color:black;
+    padding-left:20px;
+}
+
+.dropdown-content label:hover{
+    background-color: #f1f1f1;
+}
+
+.dropdown-content input {
+    display: none;
+}
+
+.fa.fa-caret-down{
+    float:right;
+    margin-top:7px;
+    margin-right:7px;
+}
+
+.dropdown-selected{
+    display: inline-block;
+    position: relative;
+    top: -5px;
+    left:10px;
+    font-size: 13px;
+}
+
+_:-ms-lang(x), .dropdown-selected {
+    top: -9px;
 }

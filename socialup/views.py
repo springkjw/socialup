@@ -123,29 +123,25 @@ def product_category(request, category):
 
 def product_search(request):
     keyword = request.GET['keyword']
+    search_option = request.GET['search_option']
 
-    # test용. 템플릿에서 request.GET['search_option']를 던져줄 수 있으면 아래 한줄을 지우고 나머지 주석을 모두 해제
-    products = Product.objects.active().filter(
-        Q(oneline_intro__contains=keyword) | Q(seller__user__email__iregex=keyword + '@' + r'.*$'))
-
-    # search_option = request.GET['search_option']
-    #
-    # if search_option == 'integrated_search':
-    #     products = Product.objects.active().filter(Q(oneline_intro__contains=keyword) | Q(seller__user__email__iregex=keyword + '@' + r'.*$'))
-    # elif search_option == 'sns_all':
-    #     products = Product.objects.active().filter(oneline_intro__contains=keyword)
-    # elif search_option == 'sns_facebook':
-    #     products = Product.objects.active().filter(sns_type='facebook', oneline_intro__contains=keyword)
-    # elif search_option == 'sns_facebook':
-    #     products = Product.objects.active().filter(sns_type='blog', oneline_intro__contains=keyword)
-    # elif search_option == 'sns_instagram':
-    #     products = Product.objects.active().filter(sns_type='instagram', oneline_intro__contains=keyword)
-    # elif search_option == 'sns_kakaostory':
-    #     products = Product.objects.active().filter(sns_type='kakaostory', oneline_intro__contains=keyword)
-    # elif search_option == 'seller_id':
-    #     products = Product.objects.active().filter(seller__user__email__iregex=keyword + '@' + r'.*$')
-    # else:
-    #     products = Product.objects.active().filter(oneline_intro__contains=keyword)
+    if search_option == 'integrated_search':
+        products = Product.objects.active().filter(Q(oneline_intro__contains=keyword) | Q(seller__user__email__iregex=keyword + '@' + r'.*$'))
+    elif search_option == 'sns_all':
+        products = Product.objects.active().filter(oneline_intro__contains=keyword)
+    elif search_option == 'sns_facebook':
+        products = Product.objects.active().filter(sns_type='facebook', oneline_intro__contains=keyword)
+    elif search_option == 'sns_facebook':
+        products = Product.objects.active().filter(sns_type='blog', oneline_intro__contains=keyword)
+    elif search_option == 'sns_instagram':
+        products = Product.objects.active().filter(sns_type='instagram', oneline_intro__contains=keyword)
+    elif search_option == 'sns_youtube':
+        products = Product.objects.active().filter(sns_type='youtube', oneline_intro__contains=keyword)
+    elif search_option == 'seller_id':
+        # products = Product.objects.active().filter(seller__user__email__iregex=keyword + '@' + r'.*$')
+        products = Product.objects.active().filter(seller__user__name__contains=keyword)
+    else:
+        products = Product.objects.active().filter(oneline_intro__contains=keyword)
 
     # 평점순
     products_by_rating = products.active().order_by('-rating')
