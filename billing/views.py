@@ -327,6 +327,8 @@ class ImpAjaxView(AjaxRequireMixin, View):
 
 @login_required
 def purchase_list(request):
+    error_message = "";
+
     if request.POST.get('is_status_change'):
         order_item_id = request.POST.get('order_item')
         try:
@@ -382,6 +384,10 @@ def purchase_list(request):
         if review_form.is_valid():
             review_form.save(commit=True)
 
+        # !review_form.is_valid()
+        else:
+            error_message = "필수 항목을 입력해주세요"
+
     order_items = OrderItem.objects.filter(user=request.user)
     order_items_ready = order_items.filter(user=request.user, status='paid')
     order_items_processing = order_items.filter(user=request.user, status='processing')
@@ -390,8 +396,6 @@ def purchase_list(request):
     order_items_refunded = order_items.filter(user=request.user, status='refunded')
     order_items_request_refund = order_items.filter(user=request.user, status='request_refund')
 
-    # 주석 처리된 부분은 review_forms를 던져서 유저가 이전에 작성했던 리뷰들을 볼 수 있게 하기 위함임
-    # 현재는 이미 서비스 평가했던걸 다시 평가하면 빈 폼이 뜨지만 제출하면 수정되도록 해둠
     review_form = ReviewForm()
     reviews = {}
     review_forms = {}
@@ -418,6 +422,7 @@ def purchase_list(request):
         "review_form": review_form,
         "review_forms": review_forms,
         "reviews": reviews,
+        "error_message": error_message,
     }
 
     return render(request, template, context)
