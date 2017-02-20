@@ -233,6 +233,13 @@ class Product(models.Model):
     def get_highrank_price(self):
         return self.highrank_price
 
+    @property
+    def get_num_reviews(self):
+        # import here to avoid circular import
+        from reviews.models import ProductReview
+        reviews_count = len(ProductReview.objects.filter(product=self))
+        return reviews_count
+
 
 class ProductTag(models.Model):
     tag = models.CharField(choices=product_tag_list, max_length=15, null=False, )

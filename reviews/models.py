@@ -60,10 +60,15 @@ def new_review_receiver(sender, instance, created, *args, **kwargs):
     seller = Seller.objects.get(id=product.seller.id)
     products = Product.objects.filter(seller=seller)
     sum_of_seller_ratings = 0
+    num_seller_reviews = 0
     for each_product in products:
         sum_of_seller_ratings += each_product.rating
+        num_seller_reviews += each_product.get_num_reviews
 
-    avg_of_seller_rating = sum_of_seller_ratings / len(products)
+    if num_seller_reviews :
+        avg_of_seller_rating = sum_of_seller_ratings / num_seller_reviews
+    else :
+        avg_of_seller_rating = 0
     seller.rating = avg_of_seller_rating
     seller.save()
 
