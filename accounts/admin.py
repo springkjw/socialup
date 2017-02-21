@@ -20,7 +20,11 @@ class UserAdmin(admin.ModelAdmin):
 	ordering = ('email',)
 	filter_horizontal = ()
 
+class WithdrawalAdmin(admin.ModelAdmin):
+	list_display = ('__unicode__', 'seller', 'status',)
+
+
 admin.site.register(MyUser, UserAdmin)
 admin.site.register(Seller)
 admin.site.register(SellerAccount)
-admin.site.register(Withdrawal)
+admin.site.register(Withdrawal, WithdrawalAdmin)
