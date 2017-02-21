@@ -35,7 +35,7 @@ $.fn.digits = function(){
 };
 
 var arrow_flag = false;
-$('.fa.fa-caret-down').on('click', function () {
+$('.dropdown').on('click', function () {
     if (arrow_flag){
         $('.dropdown').css('background-color','white');
         $('.dropdown-content').hide();
