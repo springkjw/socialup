@@ -131,4 +131,11 @@ def get_dict_value(dict_data, key):
 @register.filter(name='get_notification')
 def get_notification(user_id):
     user = MyUser.objects.get(id=user_id)
-    return user.notifications.unread()
+    return user.notifications.all()
+
+@register.filter(name='read_notification')
+def read_notification(notification_id):
+    noti = Notification.objects.get(id=notification_id)
+    noti.unread=False
+    noti.save()
+    return ''
