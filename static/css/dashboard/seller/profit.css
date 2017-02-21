@@ -60,6 +60,13 @@
     letter-spacing: -.03em;
 }
 
+.account-info .money {
+    font-size: 18px;
+    margin-right: 5px;
+    font-weight: normal;
+    letter-spacing: -.03em;
+}
+
 .money .unit {
     font-size: 12px;
     margin-left: 2px;
