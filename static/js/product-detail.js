@@ -296,6 +296,30 @@ $(document).ready(function(){
         $('.graph-part.kindness .graph-text li:nth-child(3)').css('width', 21 + '%');
         $('.graph-part.kindness .graph-text li:nth-child(3)').css('float', 'right');
     }
+    if (contents_total==0){
+        $('.graph-part.contents .graph-text li:nth-child(1)').css('width', 33 + '%');
+        $('.graph-part.contents .graph-text li:nth-child(2)').css('width', 33 + '%');
+        $('.graph-part.contents .graph-text li:nth-child(3)').css('width', 33 + '%');
+        $('.graph-part.contents .graph-text li:nth-child(1)').text('만족 (' + 0 + '%)');
+        $('.graph-part.contents .graph-text li:nth-child(2)').text('보통 (' + 0 + '%)');
+        $('.graph-part.contents .graph-text li:nth-child(3)').text('불만족 (' + 0 + '%)');
+    }
+    if (ads_total==0){
+        $('.graph-part.ads .graph-text li:nth-child(1)').css('width', 33 + '%');
+        $('.graph-part.ads .graph-text li:nth-child(2)').css('width', 33 + '%');
+        $('.graph-part.ads .graph-text li:nth-child(3)').css('width', 33 + '%');
+        $('.graph-part.ads .graph-text li:nth-child(1)').text('만족 (' + 0 + '%)');
+        $('.graph-part.ads .graph-text li:nth-child(2)').text('보통 (' + 0 + '%)');
+        $('.graph-part.ads .graph-text li:nth-child(3)').text('불만족 (' + 0 + '%)');
+    }
+    if (kindness_total==0){
+        $('.graph-part.kindness .graph-text li:nth-child(1)').css('width', 33 + '%');
+        $('.graph-part.kindness .graph-text li:nth-child(2)').css('width', 33 + '%');
+        $('.graph-part.kindness .graph-text li:nth-child(3)').css('width', 33 + '%');
+        $('.graph-part.kindness .graph-text li:nth-child(1)').text('만족 (' + 0 + '%)');
+        $('.graph-part.kindness .graph-text li:nth-child(2)').text('보통 (' + 0 + '%)');
+        $('.graph-part.kindness .graph-text li:nth-child(3)').text('불만족 (' + 0 + '%)');
+    }
     $('.graph-text li').each(function(){
         if($(this).css('width')=='0px'){
             $(this).hide();
