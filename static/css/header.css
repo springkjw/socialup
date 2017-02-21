@@ -378,10 +378,18 @@ _:-ms-lang(x), .notification_popup_wrapper .notification_popup_title {
     margin-bottom: 10px;
 }
 
-.fa.fa-circle{
+#header_tnb .fa.fa-circle.bell{
     position: absolute;
     top:10px;
     margin-left:50px;
+    font-size: 10px;
+    color:darkslategrey;
+}
+
+#header_tnb > a > .fa.fa-circle.message{
+    position: absolute;
+    top:10px;
+    margin-left:5px;
     font-size: 10px;
     color:darkslategrey;
 }

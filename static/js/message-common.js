@@ -179,8 +179,12 @@ function checkUnreadMessage(sb) {
                 unreadCount += channel.unreadMessageCount;
             });
             $('.unread-message-counter').html('<strong>(' + unreadCount + ')</strong>');
-            if ($('.unread-message'))
+            if ($('.unread-message')){
                 $('.unread-message').html('' + unreadCount);
+            }
+            if (unreadCount){
+                $('#message').append("<i class='fa fa-circle message' aria-hidden='true'></i>");
+            }
         });
     }
 }
