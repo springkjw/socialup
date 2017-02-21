@@ -311,10 +311,11 @@ _:-ms-lang(x), #header_tnb > a#login{
     display: none;
 }
 
-.fa.fa-caret-down{
+#dropdown_arrow{
     float:right;
     margin-top:7px;
     margin-right:7px;
+    background-color: transparent;
 }
 
 .dropdown-selected{

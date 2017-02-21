@@ -35,7 +35,7 @@ $.fn.digits = function(){
 };
 
 var arrow_flag = false;
-$('.dropdown').on('click', function () {
+$('.dropdown').click(function () {
     if (arrow_flag){
         $('.dropdown').css('background-color','white');
         $('.dropdown-content').hide();
@@ -45,6 +45,15 @@ $('.dropdown').on('click', function () {
         $('.dropdown').css('background-color','#f1f1f1');
         $('.dropdown-content').show();
         arrow_flag= true;
+    }
+});
+
+$('html').click(function(e) {
+    if(!$(e.target).hasClass('dropdown') && $('.dropdown-content').css('display')=='block')
+    {
+        $('.dropdown').css('background-color','white');
+        $('.dropdown-content').hide();
+        arrow_flag= false;
     }
 });
 

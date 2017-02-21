@@ -37,7 +37,7 @@
             <form method="GET" id="search-form" action="{% url 'search' %}" >
                 <div class="dropdown">
                     <div class="dropdown-selected">통합검색</div>
-                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    <i class="fa fa-caret-down" id="dropdown_arrow" aria-hidden="true"></i>
                     <div class="dropdown-content">
                         <label><input type="radio" name="search_option" value="integrated_search" checked/>통합검색</label>
                         <label><input TYPE='radio' name='search_option' value='sns_all' />SNS 전체</label>
