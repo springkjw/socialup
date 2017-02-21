@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import MyUser, Seller, SellerAccount, Profit, MyUserThumbnail, Withdrawal
+from .models import MyUser, Seller, SellerAccount, MyUserThumbnail, Withdrawal
 
 class ThumbnailInline(admin.TabularInline):
 	extra = 1
@@ -23,5 +23,4 @@ class UserAdmin(admin.ModelAdmin):
 admin.site.register(MyUser, UserAdmin)
 admin.site.register(Seller)
 admin.site.register(SellerAccount)
-admin.site.register(Profit)
 admin.site.register(Withdrawal)

@@ -23,7 +23,7 @@ from .forms import ProductForm, TagForm, SellerAccountForm
 from carts.models import WishList, CartItem
 from carts.views import add_to_cart
 from billing.models import Order, ProductManage, OrderItem
-from accounts.models import MyUser, Seller, Profit, SellerAccount, Withdrawal
+from accounts.models import MyUser, Seller, SellerAccount, Withdrawal
 from accounts.forms import WithdrawalForm
 from reviews.models import ProductReview
 from billing.models import OrderItem
@@ -436,14 +436,12 @@ def product_profit_manage(request):
         seller = None
 
     if seller:
-        profits = Profit.objects.filter(seller=seller)
-        # expected_profit = profits.filter(seller=seller, type="expect_profit").aggregate(Sum('money'))['money__sum']
+        withdrawals = Withdrawal.objects.filter(seller=seller)
         cart_items = CartItem.objects.filter(Q(orderitem__seller=seller), Q(orderitem__status='paid') | Q(orderitem__status='processing') | Q(orderitem__status='wait_confirm'))
         expected_profit = cart_items.aggregate(Sum('line_item_total'))['line_item_total__sum']
-        # possible_profit = profits.filter(seller=seller, type="possible_profit").aggregate(Sum('money'))['money__sum']
         possible_profit = request.user.point
-        requested_profit = profits.filter(seller=seller, type="requested_profit").aggregate(Sum('money'))['money__sum']
-        completed_profit = profits.filter(seller=seller, type="completed_profit").aggregate(Sum('money'))['money__sum']
+        requested_profit = withdrawals.filter(seller=seller, status="request").aggregate(Sum('money'))['money__sum']
+        completed_profit = withdrawals.filter(seller=seller, status="completed").aggregate(Sum('money'))['money__sum']
 
         if expected_profit is None:
             expected_profit = 0
@@ -474,7 +472,7 @@ def product_profit_manage(request):
                     return HttpResponseRedirect('/product/profit/')
 
             if request.POST.get('withdraw'):
-                withdrawal = Withdrawal.objects.create(seller=seller, seller_account=s_account, status="request")
+                withdrawal = Withdrawal(seller=seller, seller_account=s_account, status="request", reject_reason="")
                 withdrawal_form = WithdrawalForm(request.POST, instance=withdrawal)
 
                 if withdrawal_form.is_valid():
