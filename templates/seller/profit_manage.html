@@ -9,14 +9,12 @@
     <script type="text/javascript" src="{% static 'js/seller/profit.js' %}"></script>
     <script type="text/javascript">
         $(function () {
+            // 출금 가능 최대최소값 프론트엔드 처리. 백엔드 처리도 되어있음
             $('#id_money').prop('max',{{ possible_profit }});
-            $('#id_money').prop('min',0);
-            {#            {% if messages %}#}
-            {#                {% for message in messages %}#}
-            {#                    alert('{{ message }}');#}
-            {#                    window.location.href = "{% url 'product_upload' %}";#}
-            {#                {% endfor %}#}
-            {#            {% endif %}#}
+            $('#id_money').prop('min',1);
+
+            // 출금 가능금액에 세자리마다 ,(comma)삽입
+            $('.money').digits();
         });
     </script>
 {% endblock %}
@@ -105,7 +103,7 @@
                 <div class="profit-info-left withdrawal">
                     <div class="account-info">
                         <label for="{{ withdrawal_forms.money.name }}">출금가능 금액</label>
-                        {{ possible_profit }}원 중
+                        <span class="money">{{ possible_profit }}</span>원 중
                         {{ withdrawal_forms.money }}원
                         출금
                     </div>
@@ -120,5 +118,22 @@
                 </div>
             </form>
         </div>
+{#        <div class="profit-history-nav">#}
+{#            <ul>#}
+{#                <li class="active status_0_menu">거래내역</li>#}
+{#                <li class="status_1_menu">출금내역</li>#}
+{#            </ul>#}
+{#        </div>#}
+{#        <div class="profit-history">#}
+{#            <div class="order-history">#}
+{#                <ul class="order-history-ul">#}
+{#                    <li class="order-history number">번호</li>#}
+{#                    <li class="order-history date">거래날짜</li>#}
+{#                    <li class="order-history service_title">서비스 제목</li>#}
+{#                    <li class="order-history buyer_id">구매자 ID</li>#}
+{#                    <li class="order-history price">판매금액</li>#}
+{#                </ul>#}
+{#            </div>#}
+{#        </div>#}
     </div>
 {% endblock %}

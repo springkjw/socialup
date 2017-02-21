@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import MyUser, Seller, SellerAccount, Profit, MyUserThumbnail, Withdrawal
+from .models import MyUser, Seller, SellerAccount, MyUserThumbnail, Withdrawal
 
 class ThumbnailInline(admin.TabularInline):
 	extra = 1
@@ -20,8 +20,11 @@ class UserAdmin(admin.ModelAdmin):
 	ordering = ('email',)
 	filter_horizontal = ()
 
+class WithdrawalAdmin(admin.ModelAdmin):
+	list_display = ('__unicode__', 'seller', 'status',)
+
+
 admin.site.register(MyUser, UserAdmin)
 admin.site.register(Seller)
 admin.site.register(SellerAccount)
-admin.site.register(Profit)
-admin.site.register(Withdrawal)
+admin.site.register(Withdrawal, WithdrawalAdmin)
