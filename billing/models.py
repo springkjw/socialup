@@ -15,7 +15,6 @@ from accounts.models import MyUser, Seller
 from markets.models import Product
 from carts.models import Cart, CartItem
 from .iamport import validation_prepare, get_transaction
-from notifications.signals import notify
 
 class Mileage(models.Model):
     user = models.OneToOneField(MyUser)
@@ -475,36 +474,6 @@ class OrderItem(models.Model):
 
 
 def order_item_receiver(instance, sender, created, *args, **kwargs):
-    print(instance.cart_item.item.oneline_intro)
-    status_to_notify = ''
-    # To seller
-    if instance.status == 'paid':
-        status_to_notify = '서비스를 구매했습니다. 작업을 진행해주세요.'
-        notify.send(instance.user, recipient=instance.seller.user, level='success',
-                    verb=instance.cart_item.item.oneline_intro, description=status_to_notify)
-        status_to_notify = '서비스 구매가 완료되었습니다. 판매자에게 자료를 전달해주세요.'
-        notify.send(instance.seller.user, recipient=instance.user, level='success',
-                    verb=instance.cart_item.item.oneline_intro, description=status_to_notify)
-    elif instance.status == 'finished':
-        status_to_notify = '구매를 확정했습니다. 수익금을 확인해주세요.'
-        notify.send(instance.user, recipient=instance.seller.user, level='success',
-                    verb=instance.cart_item.item.oneline_intro, description=status_to_notify)
-        status_to_notify = '거래가 완료되었습니다. 서비스 평가를 작성해주세요.'
-        notify.send(instance.seller.user, recipient=instance.user, level='success',
-                    verb=instance.cart_item.item.oneline_intro, description=status_to_notify)
-    elif instance.status == 'request_refund':
-        status_to_notify = '구매취소 요청을 했습니다.'
-        notify.send(instance.user, recipient=instance.seller.user, level='success',
-                    verb=instance.cart_item.item.oneline_intro, description=status_to_notify)
-    # To buyer
-    if instance.status == 'processing':
-        status_to_notify = '작업진행을 시작했습니다.'
-        notify.send(instance.seller.user, recipient=instance.user, level='success',
-                    verb=instance.cart_item.item.oneline_intro, description=status_to_notify)
-    elif instance.status == 'wait_confirm':
-        status_to_notify = '작업이 완료되었습니다. 구매확정을 해주세요.'
-        notify.send(instance.seller.user, recipient=instance.user, level='success',
-                    verb=instance.cart_item.item.oneline_intro, description=status_to_notify)
 
     if instance.status == 'finished':
         seller_id = instance.seller.user
