@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
     'django_summernote',
-    'notifications',
 ]
 
 # custom middleware

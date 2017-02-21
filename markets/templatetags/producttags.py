@@ -5,7 +5,6 @@ from billing.models import Order
 from accounts.models import MyUser
 from django.contrib.contenttypes.models import ContentType
 import datetime, pytz
-from notifications.models import Notification
 
 register = template.Library()
 
