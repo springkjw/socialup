@@ -8,6 +8,7 @@ from django.shortcuts import (
     redirect,
 )
 from django.db.models import Sum
+from django.db.models import Q
 from django.contrib import messages
 from django.forms import inlineformset_factory
 from django.contrib.contenttypes.models import ContentType
@@ -436,8 +437,11 @@ def product_profit_manage(request):
 
     if seller:
         profits = Profit.objects.filter(seller=seller)
-        expected_profit = profits.filter(seller=seller, type="expect_profit").aggregate(Sum('money'))['money__sum']
-        possible_profit = profits.filter(seller=seller, type="possible_profit").aggregate(Sum('money'))['money__sum']
+        # expected_profit = profits.filter(seller=seller, type="expect_profit").aggregate(Sum('money'))['money__sum']
+        cart_items = CartItem.objects.filter(Q(orderitem__seller=seller), Q(orderitem__status='paid') | Q(orderitem__status='processing') | Q(orderitem__status='wait_confirm'))
+        expected_profit = cart_items.aggregate(Sum('line_item_total'))['line_item_total__sum']
+        # possible_profit = profits.filter(seller=seller, type="possible_profit").aggregate(Sum('money'))['money__sum']
+        possible_profit = request.user.point
         requested_profit = profits.filter(seller=seller, type="requested_profit").aggregate(Sum('money'))['money__sum']
         completed_profit = profits.filter(seller=seller, type="completed_profit").aggregate(Sum('money'))['money__sum']
 
@@ -475,7 +479,7 @@ def product_profit_manage(request):
 
                 if withdrawal_form.is_valid():
                     # 출금 요청액이 출금 가능액을 초과하거나 음수인 경우
-                    if int(request.POST.get('money')) > int(possible_profit) or int(request.POST.get('money')) < 0:
+                    if int(request.POST.get('money')) > possible_profit or int(request.POST.get('money')) <= 0:
                         raise Http404
 
                     withdrawal_form_instance = withdrawal_form.save(commit=False)
