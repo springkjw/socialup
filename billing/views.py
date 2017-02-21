@@ -15,7 +15,6 @@ from datetime import datetime, timedelta
 from markets.models import Product
 from .forms import ReviewForm
 
-
 class PointCheckoutAjaxView(AjaxRequireMixin, View):
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated():
@@ -327,6 +326,7 @@ class ImpAjaxView(AjaxRequireMixin, View):
 
 @login_required
 def purchase_list(request):
+    curr_user = request.user
     if request.POST.get('is_status_change'):
         order_item_id = request.POST.get('order_item')
         try:

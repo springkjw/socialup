@@ -161,7 +161,7 @@
     color: #e8e8e8;
 }
 
-.detail_content_wrapper_mid .detail_content_mid_left .seller-rating .fa {
+.detail_content_wrapper_mid .detail_content_mid_left .seller-rating .fa.active {
     color: #FEDD43;
 }
 
