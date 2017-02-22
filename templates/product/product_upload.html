@@ -111,80 +111,89 @@
             ]
         });
 
-        $('.final').on('click', function() {
-            var sns_flag = false;
-            $('input[name=sns_type]').each(function(){
-                if(!sns_flag){
-                    sns_flag = $(this).prop('checked');
-                }
-            });
 
-            var tag_flag = false;
-            $('input[name=tag]').each(function(){
-                if(!tag_flag){
-                    tag_flag = $(this).prop('checked');
-                }
-            });
-            var follwer_flag = false;
-            if($('input[name=follower_visit_num]').val()!==''){
-                follwer_flag = true;
-            }else if($('input[name=follower_num]').val()!==''){
-                follwer_flag = true;
-            }else if($('input[name=follower_friends_num]').val()!==''){
-                follwer_flag = true;
-            }
-
+        $(document).ready(function (){
             var description_flag = false;
-            $(document.getElementById('id_description_iframe')).click(function(e) {
-                alert('hi');
+            /* access to iframe and detect change of input */
+            $('#id_description_iframe').load(function(){
+                var mydiv = $('#id_description_iframe').contents().find('.note-editable.panel-body');
+                mydiv.bind("DOMSubtreeModified",function(){
+                    description_flag = true;
+                });
             });
 
-            var precheck_flag = true;
-            if(!sns_flag){
-                alert('SNS를 선택해주세요.');
-                precheck_flag = false;
-            }else if($('input[name=sns_url]').val()==''){
-                alert('SNS 주소를 입력해주세요.');
-                precheck_flag = false;
-            }else if(!follwer_flag){
-                alert('팔로워수를 1개 이상 입력해주세요.');
-                precheck_flag = false;
-            }else if(!tag_flag){
-                alert('태그를 1개 이상 선택해주세요.');
-                precheck_flag = false;
-            }else if($('input[name=oneline_intro]').val()==''){
-                alert('한줄소개를 입력해주세요.');
-                precheck_flag = false;
-            }else if($('input[name=price]').val()==''){
-                alert('가격을 입력해주세요.');
-                precheck_flag = false;
-            }else if(!description_flag){
-                alert('상품소개를 입력해주세요.');
-                precheck_flag = false;
-            }
+            $('.final').on('click', function() {
+                var sns_flag = false;
+                $('input[name=sns_type]').each(function(){
+                    if(!sns_flag){
+                        sns_flag = $(this).prop('checked');
+                    }
+                });
 
-            if(precheck_flag) {
-                if(!$('#product-upload-form')[0].checkValidity()){
-                    if(!$('#id_sns_url')[0].checkValidity()){
-                        alert('SNS 주소 양식을 확인해주세요.');
-                    }else if(!$('#id_price')[0].checkValidity()){
-                        alert('가격부분에는 5000원 이상의 숫자를 입력해주세요.')
-                    }else if(!$('#id_working_period')[0].checkValidity()){
-                        alert('작업기간은 1 이상의 숫자를 입력해주세요.')
-                    }else if(!$('#id_description')[0].checkValidity()){
-                        alert('상품소개를 입력해주세요.')
+                var tag_flag = false;
+                $('input[name=tag]').each(function(){
+                    if(!tag_flag){
+                        tag_flag = $(this).prop('checked');
                     }
-                    else{
-                        alert('입력을 잘못했습니다.');
-                    }
-                }else{
-                    if ($('#agreenment1').is(':checked')) {
-                        $("#dialog-confirm").dialog('open');
-                    } else {
-                        alert('이용약관에 동의해주세요.');
-                    }
+                });
+                var follwer_flag = false;
+                if($('input[name=follower_visit_num]').val()!==''){
+                    follwer_flag = true;
+                }else if($('input[name=follower_num]').val()!==''){
+                    follwer_flag = true;
+                }else if($('input[name=follower_friends_num]').val()!==''){
+                    follwer_flag = true;
                 }
-            };
+
+                var precheck_flag = true;
+                if(!sns_flag){
+                    alert('SNS를 선택해주세요.');
+                    precheck_flag = false;
+                }else if($('input[name=sns_url]').val()==''){
+                    alert('SNS 주소를 입력해주세요.');
+                    precheck_flag = false;
+                }else if(!follwer_flag){
+                    alert('팔로워수를 1개 이상 입력해주세요.');
+                    precheck_flag = false;
+                }else if(!tag_flag){
+                    alert('태그를 1개 이상 선택해주세요.');
+                    precheck_flag = false;
+                }else if($('input[name=oneline_intro]').val()==''){
+                    alert('한줄소개를 입력해주세요.');
+                    precheck_flag = false;
+                }else if($('input[name=price]').val()==''){
+                    alert('가격을 입력해주세요.');
+                    precheck_flag = false;
+                }
+                else if(!description_flag){
+                    alert('상품소개를 입력해주세요.');
+                    precheck_flag = false;
+                }
+
+                if(precheck_flag) {
+                    if(!$('#product-upload-form')[0].checkValidity()){
+                        if(!$('#id_sns_url')[0].checkValidity()){
+                            alert('SNS 주소 양식을 확인해주세요.');
+                        }else if(!$('#id_price')[0].checkValidity()){
+                            alert('가격부분에는 5000원 이상의 숫자를 입력해주세요.')
+                        }else if(!$('#id_working_period')[0].checkValidity()){
+                            alert('작업기간은 1 이상의 숫자를 입력해주세요.')
+                        }
+                        else if(!$('#id_description')[0].checkValidity()){
+                            alert('상품소개를 입력해주세요.')
+                        }
+                        else{
+                            alert('입력을 잘못했습니다.');
+                        }
+                    }else{
+                        if ($('#agreenment1').is(':checked')) {
+                            $("#dialog-confirm").dialog('open');
+                        } else {
+                            alert('이용약관에 동의해주세요.');
+                        }
+                    }
+                };
+            });
         });
     </script>
 {% endblock %}

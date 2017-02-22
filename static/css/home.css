@@ -896,3 +896,7 @@ _:-ms-lang(x), .circle-mask2-text {
         width:35%;
     }
 }
+
+.card-author-product-reviews{
+    display: inline-block;
+}
