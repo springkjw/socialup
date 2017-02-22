@@ -522,7 +522,6 @@ withdrawal_status_list = (
 
 class Withdrawal(models.Model):
     seller = models.ForeignKey(Seller)
-    seller_account = models.ForeignKey(SellerAccount)
     money = models.PositiveIntegerField(default=0)
     status = models.CharField(choices=withdrawal_status_list, max_length=15, null=True)
     reject_reason = models.CharField(max_length=255, null=True, blank=True)
