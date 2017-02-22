@@ -724,8 +724,8 @@ li:nth-child(5) .circle-text {
     top:15%;
     background: white;
     border: 1px solid black;
-    width:30%;
-    height:550px;
+    width:500px;
+    height:auto;
     text-align:center;
     z-index:10;
     color:#777;
@@ -853,7 +853,7 @@ li:nth-child(5) .circle-text {
 }
 
 .review_form .review_form_content.review .review_form_content_input {
-    text-align:left;
+    text-align:center;
 }
 
 /* btns */
@@ -865,7 +865,7 @@ li:nth-child(5) .circle-text {
     border: 1px solid #648efc;
     color:white;
     font-size:12px;
-
+    margin-bottom: 20px;
 
 }
 
