@@ -18,9 +18,15 @@
                 if (type == '평점순') {
                     $('.product-rating').show();
                     $('.product-created').hide();
+                    $('.product-price').hide();
                 } else if (type == '최신순') {
                     $('.product-rating').hide();
                     $('.product-created').show();
+                    $('.product-price').hide();
+                } else if (type == '가격순') {
+                    $('.product-rating').hide();
+                    $('.product-created').hide();
+                    $('.product-price').show();
                 }
             });
         });
@@ -51,6 +57,7 @@
                         <ul>
                             <li class="sort active" data-type="sort_1">평점순</li>
                             <li class="sort" data-type="sort_2">최신순</li>
+                            <li class="sort" data-type="sort_3">가격순</li>
                         </ul>
                     </div>
                 {% endif %}
