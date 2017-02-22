@@ -73,13 +73,21 @@ $('.show_detail_btn.third').on('click', function () {
 });
 
 /* wish-list-modal part */
-$('.review').on('click', function () {
-    $(this).parent().next().show();
+$('.status_0 .review').on('click', function () {
+    $('.modal_in_status0_id_'+$(this).val()).show();
 });
 
-$('.table_product_detail_bottom .review').on('click', function () {
-    $(this).parent().parent().parent().parent().prev().show();
+$('.status_4 .review').on('click', function () {
+    $('.modal_in_status4_id_'+$(this).val()).show();
 });
+
+// $('.table_product_detail_bottom .review').on('click', function () {
+//     $(this).parent().parent().parent().parent().prev().show();
+// });
+//
+// $('.table_product_detail_bottom .review').on('click', function () {
+//     $('.modal_id_'+$(this).val()).show();
+// });
 
 $('.review_btn.submit').on('click', function () {
     value = parseFloat($(this).parent().find("input:radio[name='rating']:checked").val()).toFixed(1);
