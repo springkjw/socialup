@@ -3,6 +3,7 @@ from django import template
 from carts.models import Cart, WishList, CartItem
 from billing.models import Order
 from accounts.models import MyUser
+from reviews.models import ProductReview
 from django.contrib.contenttypes.models import ContentType
 import datetime, pytz
 
@@ -126,3 +127,8 @@ def get_dict_value(dict_data, key):
     """
     if key:
         return dict_data.get(key)
+
+@register.filter('get_product_review_count')
+def get_product_review_count(product_id):
+    review_count = ProductReview.objects.filter(product=product_id).count()
+    return review_count
