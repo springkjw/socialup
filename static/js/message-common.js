@@ -183,7 +183,10 @@ function checkUnreadMessage(sb) {
                 $('.unread-message').html('' + unreadCount);
             }
             if (unreadCount){
-                $('#message').append("<i class='fa fa-circle message' aria-hidden='true'></i>");
+                // $('#message').append("<i class='fa fa-circle message' aria-hidden='true'></i>");
+                 var str = "<div class='round_alarm_icon'>"+unreadCount+"</div>";
+                // var str = "<i class='fa fa-circle' aria-hidden='true'></i><span>"+unreadCount+"</span>" ;
+                $('#message').append(str);
             }
         });
     }

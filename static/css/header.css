@@ -330,10 +330,22 @@ _:-ms-lang(x), .dropdown-selected {
     top: -9px;
 }
 
-#header_tnb > a > .fa.fa-circle.message{
-    position: absolute;
-    top:10px;
-    margin-left:5px;
+.round_alarm_icon{
+    width:18px;
+    height:18px;
     font-size: 10px;
-    color:darkslategrey;
+    position:absolute;
+    line-height: 20px;
+    text-align: center;
+    font-weight: 100;
+    top:9px;
+    margin-left:55px;
+    background-color: #2e4277;
+    border-radius: 50%;
+}
+
+_:-ms-lang(x), .round_alarm_icon{
+    width:17px;
+    padding-left:1px;
+    line-height:16px;
 }
