@@ -479,11 +479,11 @@ def order_item_receiver(instance, sender, created, *args, **kwargs):
         seller_id = instance.seller.user
         order_price = instance.cart_item.line_item_total
 
-        # 판매자 포인트 추가
+        # 수수료 13%만큼 차감 후 판매자 포인트에 추가
         try:
             p = Point.objects.get(user=seller_id)
             point = p.point
-            new_point = point + order_price
+            new_point = int(point + ( order_price * 0.87 ))
             p.point = new_point
             p.save()
         except:
@@ -493,7 +493,7 @@ def order_item_receiver(instance, sender, created, *args, **kwargs):
         try:
             h = PointHistory(
                 user=seller_id,
-                amount=order_price,
+                amount=int( order_price * 0.87 ),
                 detail=instance.cart_item.item.oneline_intro + ' 판매'
             )
             h.save()
