@@ -226,8 +226,30 @@
     border: 2px solid #DADADA;
     width: 561px;
     height: 229px;
-    text-align: center;
+    text-align: left;
 }
+
+.order-history .number {
+    margin-left: 64px;
+}
+
+.order-history .date {
+    margin-left: 64px;
+}
+
+.order-history .service_title {
+    margin-left: 64px;
+}
+
+.order-history .buyer_id {
+    margin-left: 64px;
+}
+
+.order-history .price {
+    margin-left: 64px;
+}
+
+/* withdraw history tab */
 
 .withdraw-history-ul {
     list-style: none;
@@ -245,11 +267,15 @@
 }
 
 .withdraw-history .date{
-    margin-right: 110px;
+    margin-left: 90px;
 }
 
 .withdraw-history .price{
-    margin-right: 110px;
+    margin-left: 107px;
+}
+
+.withdraw-history .status{
+    margin-left: 123px;
 }
 
 .withdraw-history-ul-wrapper {

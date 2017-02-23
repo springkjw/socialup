@@ -125,15 +125,28 @@
             </ul>
         </div>
         <div class="profit-history">
-{#            <div class="order-history">#}
-{#                <ul class="order-history-ul">#}
-{#                    <li class="order-history number">번호</li>#}
-{#                    <li class="order-history date">거래날짜</li>#}
-{#                    <li class="order-history service_title">서비스 제목</li>#}
-{#                    <li class="order-history buyer_id">구매자 ID</li>#}
-{#                    <li class="order-history price">판매금액</li>#}
-{#                </ul>#}
-{#            </div>#}
+            <div class="order-history" style="display: none">
+                <div class="withdraw-history-ul-wrapper">
+                    <ul class="withdraw-history-ul">
+                        <li class="order-history number">번호</li>
+                        <li class="order-history date">거래날짜</li>
+                        <li class="order-history service_title">서비스 제목</li>
+                        <li class="order-history buyer_id">구매자 ID</li>
+                        <li class="order-history price">판매금액</li>
+                    </ul>
+                </div>
+                <div class="withdrawal_items_wrapper">
+                    {% if withdrawals %}
+                        {% for withdrawal in withdrawals reversed %}
+                            <div class="withdrawal_item">
+                                <span class="withdraw_date">{{ withdrawal.created|date:"m.d" }}</span>
+                                <span class="withdraw_money">{{ withdrawal.money }}원</span>
+                                <span class="withdraw_status">{{ withdrawal.status_in_korean }}</span>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
 
             <div class="withdraw-history">
                 <div class="withdraw-history-ul-wrapper">
