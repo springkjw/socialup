@@ -132,3 +132,10 @@ def get_dict_value(dict_data, key):
 def get_product_review_count(product_id):
     review_count = ProductReview.objects.filter(product=product_id).count()
     return review_count
+
+@register.filter('get_image_name')
+def get_image_name(image_name):
+    end_index = len(image_name)
+    cut_index = image_name.rfind('/', 0, end_index)
+    return image_name[cut_index+1:]
+

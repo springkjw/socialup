@@ -388,6 +388,11 @@ seller_type_list = (
     ("corporate_business", "법인사업자")
 )
 
+def download_seller_account_location(instance, filename):
+    return "account_copy/%s/%s" % (instance, filename)
+
+def download_seller_license_location(instance, filename):
+    return "business_license/%s/%s" % (instance, filename)
 
 class Seller(models.Model):
     user = models.OneToOneField(MyUser)
@@ -408,12 +413,12 @@ class Seller(models.Model):
     business_license = models.ImageField(
         blank=True,
         null=True,
-        upload_to=settings.MEDIA_ROOT + '/business_license/'
+        upload_to=download_seller_license_location
     )
     account_copy = models.ImageField(
         blank=True,
         null=True,
-        upload_to=settings.MEDIA_ROOT + '/account_copy/'
+        upload_to=download_seller_account_location
     )
 
     # seller_account

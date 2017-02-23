@@ -1,5 +1,6 @@
 {% extends 'account/dashboard_base.html' %}
 {% load staticfiles %}
+{% load producttags %}
 
 {% block dashboard_js %}
      <script type="text/javascript" src="{% static 'js/accounts.js' %}"></script>
@@ -360,7 +361,11 @@
                             {{ seller_form.business_license.label }}
                         </div>
                         <div class="seller_form_input business_license">
-                            <input class="file_name business_license" value="파일선택" disabled="disabled">
+                            {% if seller.business_license.name %}
+                                <a target="_blank" href="{{ seller.business_license.url }}"><input class="file_name business_license" value='{{ seller.business_license.name|get_image_name }}' disabled="disabled"></a>
+                            {% else %}
+                                <input class="file_name business_license" value="파일선택" disabled="disabled">
+                            {% endif %}
                             <label for="id_business_license">찾아보기</label>
                             {{ seller_form.business_license }}
                         </div>
@@ -370,7 +375,11 @@
                             {{ seller_form.account_copy.label }}
                         </div>
                         <div class="seller_form_input account_copy">
-                            <input class="file_name account_copy" value="파일선택" disabled="disabled">
+                            {% if seller.account_copy.name %}
+                                <a target="_blank" href="{{ seller.account_copy.url }}"><input class="file_name account_copy" value='{{ seller.account_copy.name|get_image_name}}' disabled="disabled"></a>
+                            {% else %}
+                                <input class="file_name account_copy" value="파일선택" disabled="disabled">
+                            {% endif %}
                             <label for="id_account_copy">찾아보기</label>
                             {{ seller_form.account_copy }}
                         </div>

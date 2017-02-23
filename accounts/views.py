@@ -94,14 +94,16 @@ def change_info(request):
         seller_account_form = ChangeSellerAccountForm(request.POST or None, request.FILES or None)
 
         if seller_form.is_valid():
+            if seller_form.cleaned_data['business_license'] != None:
+                seller.business_license = seller_form.cleaned_data['business_license']
+            if seller_form.cleaned_data['account_copy'] != None:
+                seller.account_copy = seller_form.cleaned_data['account_copy']
             seller.type=seller_form.cleaned_data['type']
             seller.company_name=seller_form.cleaned_data['company_name']
             seller.representative_name=seller_form.cleaned_data['representative_name']
             seller.corporate_number=seller_form.cleaned_data['corporate_number']
             seller.business_field=seller_form.cleaned_data['business_field']
             seller.company_type=seller_form.cleaned_data['company_type']
-            seller.business_license=seller_form.cleaned_data['business_license']
-            seller.account_copy=seller_form.cleaned_data['account_copy']
             seller.save()
 
         if seller_account_form.is_valid() and 'type' in request.POST:
