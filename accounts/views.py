@@ -93,19 +93,26 @@ def change_info(request):
         seller_form = ChangeSellerForm(request.POST or None, request.FILES or None)
         seller_account_form = ChangeSellerAccountForm(request.POST or None, request.FILES or None)
 
+        confirming_flag = True
         if seller_form.is_valid():
-            seller.type=seller_form.cleaned_data['type']
+            if seller_form.cleaned_data['business_license'] != None:
+                seller.business_license = seller_form.cleaned_data['business_license']
+                seller.type="confirming_status"
+                confirming_flag=False
+            else:
+                seller.type = seller_form.cleaned_data['type']
+            if seller_form.cleaned_data['account_copy'] != None:
+                seller.account_copy = seller_form.cleaned_data['account_copy']
             seller.company_name=seller_form.cleaned_data['company_name']
             seller.representative_name=seller_form.cleaned_data['representative_name']
             seller.corporate_number=seller_form.cleaned_data['corporate_number']
             seller.business_field=seller_form.cleaned_data['business_field']
             seller.company_type=seller_form.cleaned_data['company_type']
-            seller.business_license=seller_form.cleaned_data['business_license']
-            seller.account_copy=seller_form.cleaned_data['account_copy']
             seller.save()
 
         if seller_account_form.is_valid() and 'type' in request.POST:
-            seller.type = request.POST['type']
+            if confirming_flag:
+                seller.type = request.POST['type']
             seller.save()
             seller_account.account_number= seller_account_form.cleaned_data['account_number']
             seller_account.account_name= seller_account_form.cleaned_data['account_name']

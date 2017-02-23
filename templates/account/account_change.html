@@ -1,5 +1,6 @@
 {% extends 'account/dashboard_base.html' %}
 {% load staticfiles %}
+{% load producttags %}
 
 {% block dashboard_js %}
      <script type="text/javascript" src="{% static 'js/accounts.js' %}"></script>
@@ -76,6 +77,34 @@
                 });
             }
         });
+
+        $('.change_button_seller').on('click', function() {
+            console.log($('input[type=radio]:checked'));
+            if($('input[name=type]:checked').val()=='individual'){
+                $("#dialog-confirm2").dialog('open');
+            }
+            else{
+                var precheck_flag = true;
+
+                if($('input[name=company_name]').val()==''){
+                    alert('회사명을 입력해주세요.');
+                    precheck_flag = false;
+                }else if($('input[name=representative_name]').val()=='') {
+                    alert('대표자명을 입력해주세요.');
+                    precheck_flag = false;
+                }else if($('input[name=corporate_number]').val()=='') {
+                    alert('사업자 번호를 입력해주세요.');
+                    precheck_flag = false;
+                }else if($('.file_name.business_license').val()=='파일선택'){
+                    alert('사업자등록증 사본을 업로드해주세요.');
+                    precheck_flag = false;
+                }
+                if(precheck_flag){
+                    $("#dialog-confirm2").dialog('open');
+                }
+            }
+        });
+
      </script>
 {% endblock %}
 
@@ -206,7 +235,7 @@
                     </div>
                     <div class="password_rest_content">
                         <div>
-                            * 현재 비밀번호 <input type="password" name="current_passwd" id="current_passwd">
+                            현재 비밀번호 <input type="password" name="current_passwd" id="current_passwd">
                         </div>
                         <div>
                             변경 비밀번호 <input type="password" name="new_passwd1" id="new_passwd1">
@@ -317,7 +346,7 @@
                     </div>
                     <div class="seller_form_content company_name">
                         <div class="seller_form_title company_name">
-                            {{ seller_form.company_name.label }}
+                            *{{ seller_form.company_name.label }}
                         </div>
                         <div class="seller_form_input company_name">
                             {{ seller_form.company_name }}
@@ -325,7 +354,7 @@
                     </div>
                     <div class="seller_form_content representative_name">
                         <div class="seller_form_title representative_name">
-                            {{ seller_form.representative_name.label }}
+                            *{{ seller_form.representative_name.label }}
                         </div>
                         <div class="seller_form_input representative_name">
                             {{ seller_form.representative_name }}
@@ -333,7 +362,7 @@
                     </div>
                     <div class="seller_form_content corporate_number">
                         <div class="seller_form_title corporate_number">
-                            {{ seller_form.corporate_number.label }}
+                            *{{ seller_form.corporate_number.label }}
                         </div>
                         <div class="seller_form_input corporate_number">
                             {{ seller_form.corporate_number }}
@@ -357,10 +386,14 @@
                     </div>
                     <div class="seller_form_content business_license">
                         <div class="seller_form_title business_license">
-                            {{ seller_form.business_license.label }}
+                            *{{ seller_form.business_license.label }}
                         </div>
                         <div class="seller_form_input business_license">
-                            <input class="file_name business_license" value="파일선택" disabled="disabled">
+                            {% if seller.business_license.name %}
+                                <a target="_blank" href="{{ seller.business_license.url }}"><input class="file_name business_license" value='{{ seller.business_license.name|get_image_name }}' disabled="disabled"></a>
+                            {% else %}
+                                <input class="file_name business_license" value="파일선택" disabled="disabled">
+                            {% endif %}
                             <label for="id_business_license">찾아보기</label>
                             {{ seller_form.business_license }}
                         </div>
@@ -370,7 +403,11 @@
                             {{ seller_form.account_copy.label }}
                         </div>
                         <div class="seller_form_input account_copy">
-                            <input class="file_name account_copy" value="파일선택" disabled="disabled">
+                            {% if seller.account_copy.name %}
+                                <a target="_blank" href="{{ seller.account_copy.url }}"><input class="file_name account_copy" value='{{ seller.account_copy.name|get_image_name}}' disabled="disabled"></a>
+                            {% else %}
+                                <input class="file_name account_copy" value="파일선택" disabled="disabled">
+                            {% endif %}
                             <label for="id_account_copy">찾아보기</label>
                             {{ seller_form.account_copy }}
                         </div>

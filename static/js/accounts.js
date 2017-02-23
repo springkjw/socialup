@@ -111,11 +111,6 @@ $(document).ready(function(){
             }
         ]
     });
-
-    $('.change_button_seller').on('click', function() {
-        $("#dialog-confirm2").dialog('open');
-    });
-
 });
 
 
@@ -286,4 +281,27 @@ $(document).ready(function(){
             $(this).hide();
         }
     });
+});
+
+
+$('#id_business_license').change(function() {
+    var filename = $(this).val();
+    var lastIndex = filename.lastIndexOf("\\");
+    if (lastIndex >= 0) {
+        filename = filename.substring(lastIndex + 1);
+    }
+    $('.file_name.business_license').val(filename);
+    $('.file_name.business_license').parent().removeAttr("href");
+    $('.file_name.business_license').parent().removeAttr('target');
+});
+
+$('#id_account_copy').change(function() {
+    var filename = $(this).val();
+    var lastIndex = filename.lastIndexOf("\\");
+    if (lastIndex >= 0) {
+        filename = filename.substring(lastIndex + 1);
+    }
+    $('.file_name.account_copy').val(filename);
+    $('.file_name.account_copy').parent().removeAttr("href");
+    $('.file_name.account_copy').parent().removeAttr('target');
 });
