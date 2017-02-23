@@ -500,6 +500,7 @@ def product_profit_manage(request):
             "possible_profit": possible_profit,
             "requested_profit": requested_profit,
             "completed_profit": completed_profit,
+            "withdrawals": withdrawals,
         }
 
         return render(request, template, context)

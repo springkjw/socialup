@@ -222,11 +222,34 @@
 
 .profit-history {
     margin-top: 10px;
+    padding-bottom: 25px;
     border: 2px solid #DADADA;
     width: 561px;
-    min-height: 252px;
-    text-align: center;
+    height: 229px;
+    text-align: left;
 }
+
+.order-history .number {
+    margin-left: 64px;
+}
+
+.order-history .date {
+    margin-left: 64px;
+}
+
+.order-history .service_title {
+    margin-left: 64px;
+}
+
+.order-history .buyer_id {
+    margin-left: 64px;
+}
+
+.order-history .price {
+    margin-left: 64px;
+}
+
+/* withdraw history tab */
 
 .withdraw-history-ul {
     list-style: none;
@@ -244,9 +267,50 @@
 }
 
 .withdraw-history .date{
-    margin-right: 110px;
+    margin-left: 90px;
 }
 
 .withdraw-history .price{
-    margin-right: 110px;
+    margin-left: 107px;
+}
+
+.withdraw-history .status{
+    margin-left: 123px;
+}
+
+.withdraw-history-ul-wrapper {
+    margin-bottom: 10px;
+}
+
+.withdrawal_items_wrapper {
+    text-align: center;
+    overflow: auto;
+    max-height: 172px;
+}
+.withdrawal_items_wrapper .withdrawal_item {
+    border: 1px solid #DADADA;
+    width: 88%;
+    text-align: center;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.withdrawal_item span {
+    display: inline-block;
+
+}
+
+.withdrawal_item .withdraw_date {
+    width: 32%;
+    text-align: center;
+}
+
+.withdrawal_item .withdraw_money {
+    width: 32%;
+    text-align: center;
+}
+
+.withdrawal_item .withdraw_status {
+    width: 33%;
+    text-align: center;
 }

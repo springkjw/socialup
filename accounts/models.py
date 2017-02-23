@@ -537,6 +537,12 @@ class Withdrawal(models.Model):
     def __unicode__(self):
         return str(self.money)
 
+    def status_in_korean(self):
+        statuses = {'request': '출금요청',
+                    'completed': '출금완료',
+                    'rejected': '출금거절'}
+        return statuses[self.status]
+
 
 def withdrawal_post_save_receiver(sender, instance, created, *args, **kwargs):
     if created and instance.status == "request":
