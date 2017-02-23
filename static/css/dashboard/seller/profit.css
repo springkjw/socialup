@@ -258,7 +258,7 @@
 
 .withdrawal_items_wrapper {
     text-align: center;
-    overflow: scroll;
+    overflow: auto;
     max-height: 172px;
 }
 .withdrawal_items_wrapper .withdrawal_item {
