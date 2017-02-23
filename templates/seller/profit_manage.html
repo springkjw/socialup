@@ -136,11 +136,24 @@
 {#            </div>#}
 
             <div class="withdraw-history">
-                <ul class="withdraw-history-ul">
-                    <li class="withdraw-history date">출금날짜</li>
-                    <li class="withdraw-history price">출금금액</li>
-                    <li class="withdraw-history status">상태</li>
-                </ul>
+                <div class="withdraw-history-ul-wrapper">
+                    <ul class="withdraw-history-ul">
+                        <li class="withdraw-history date">출금날짜</li>
+                        <li class="withdraw-history price">출금금액</li>
+                        <li class="withdraw-history status">상태</li>
+                    </ul>
+                </div>
+                <div class="withdrawal_items_wrapper">
+                    {% if withdrawals %}
+                        {% for withdrawal in withdrawals reversed %}
+                            <div class="withdrawal_item">
+                                <span class="withdraw_date">{{ withdrawal.created|date:"m.d" }}</span>
+                                <span class="withdraw_money">{{ withdrawal.money }}원</span>
+                                <span class="withdraw_status">{{ withdrawal.status_in_korean }}</span>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
