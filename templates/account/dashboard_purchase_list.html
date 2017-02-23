@@ -76,17 +76,18 @@
             });
 
             // 기존 rating에 따라 별점 넣기
-            $('.status_4_menu').on('click', function () {
+            $(document).ready(function() {
                 {% for order_item in order_items_finished %}
                     {% with reviews|get_dict_value:order_item.id as each_review %}
                         $("input:radio[class='id_{{ order_item.id }}_rating']:radio[value='{{ each_review.rating }}']").attr('checked', true);
 
                         // 별점 옆의 숫자 설정
-                        span = document.getElementById("rating_number_id_{{ order_item.id }}");
+                        span = document.getElementsByClassName("rating_number_id_{{ order_item.id }}");
                         value = parseFloat($("input:radio[class='id_{{ order_item.id }}_rating']:checked").val()).toFixed(1);
                         if (isNaN(value))
                             value = "0.0";
-                        span.innerHTML = String(value) + "/5";
+                        span[0].innerHTML = String(value) + "/5";
+                        span[1].innerHTML = String(value) + "/5";
                     {% endwith %}
                 {% endfor %}
             });
@@ -95,9 +96,12 @@
             $('input:radio[name="rating"]').change(function() {
                 {% for order_item in order_items_finished %}
                     {% with reviews|get_dict_value:order_item.id as each_review %}
-                        span = document.getElementById("rating_number_id_{{ order_item.id }}");
+                        span = document.getElementsByClassName("rating_number_id_{{ order_item.id }}");
                         value = parseFloat($("input:radio[class='id_{{ order_item.id }}_rating']:checked").val()).toFixed(1);
-                        span.innerHTML = String(value) + "/5";
+                        if (isNaN(value))
+                            value = "0.0";
+                        span[0].innerHTML = String(value) + "/5";
+                        span[1].innerHTML = String(value) + "/5";
                     {% endwith %}
                 {% endfor %}
             });
@@ -143,7 +147,7 @@
                                 <li class="table_product empty"></li>
                             </ul>
                         </div>
-                        {% for order_item in order_items %}
+                            {% for order_item in order_items %}
                                 <div class="product_item_each_wrapper">
                                     <ul class="purchase-table-ul">
                                         <li class="table_product number">{{ order_item.cart_item.item.id }}</li>
@@ -277,11 +281,117 @@
                                                     </form>
                                                 </li>
                                                 {% endif %}
+                                                {% if order_item.status_in_korean == '거래완료'%}
+                                                <li>
+                                                    <button class="review" value="{{ order_item.id }}">
+                                                        서비스 평가
+                                                    </button>
+                                                </li>
+                                                {% endif %}
                                             </ul>
                                         </div>
+                                        {% with review_forms|get_dict_value:order_item.id as each_review_form %}
+                                            <div class="review_modal modal_in_status0_id_{{ order_item.id }}">
+                                                <form class="review_form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                                                    <div class="review_form_title">
+                                                        <span>서비스에 대해 평가해주세요!</span>
+                                                    </div>
+                                                    <div class="review_form_notice">
+                                                        <span>
+                                                            평가 작성시 0.5% 포인트 적립
+                                                        </span>
+                                                    </div>
+                                                    <input type="hidden" name="order_item_id" value="{{ order_item.id }}">
+                                                    <input type="hidden" name="is_review_upload" value="true"/>
+                                                    <div class="review_form_content product">
+                                                        <div class="review_form_content_title">
+                                                            구매 서비스
+                                                        </div>
+                                                        <div class="review_form_content_input">
+                                                            <span class="review_product_title">{{ order_item.cart_item.item.oneline_intro }}</span>
+                                                            <br>
+                                                            <div class="review_product_detail option">
+                                                                {% if order_item.cart_item.manuscript_checked or order_item.cart_item.haighrank_checked %}
+                                                                    [옵션]
+                                                                    {% if order_item.cart_item.item.manuscript_price != 0 %}
+                                                                        원고추가 <span>{{ order_item.cart_item.item.manuscript_price }}원</span>
+                                                                    {% endif %}
+
+                                                                    {% if order_item.cart_item.item.highrank_price != 0 %}
+                                                                        ,상위노출 <span>{{ order_item.cart_item.item.highrank_price }}원</span>
+                                                                    {% endif %}
+                                                                {% else %}
+                                                                    [옵션]없음
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="review_product_detail price">
+                                                                ￦ {{ order_item.cart_item.line_item_total }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="review_form_content rating">
+                                                        <div class="review_form_content_title">
+                                                            만족도 평가<br>
+                                                            <span style="color:#648efc;">(필수)</span>
+                                                        </div>
+                                                        <div class="review_form_content_input">
+                                                            <fieldset class="rating">
+                                                                <input type="radio" id="id_{{ order_item.id }}_rating_10" name="rating" class="id_{{ order_item.id }}_rating" value="5.00" />
+                                                                <label class = "full" for="id_{{ order_item.id }}_rating_10" title="Awesome - 5 stars"></label>
+                                                                <input type="radio" id="id_{{ order_item.id }}_rating_9" name="rating" class="id_{{ order_item.id }}_rating" value="4.50" />
+                                                                <label class="half" for="id_{{ order_item.id }}_rating_9" title="Pretty good - 4.5 stars"></label>
+                                                                <input type="radio" id="id_{{ order_item.id }}_rating_8" name="rating" class="id_{{ order_item.id }}_rating" value="4.00" />
+                                                                <label class = "full" for="id_{{ order_item.id }}_rating_8" title="Pretty good - 4 stars"></label>
+                                                                <input type="radio" id="id_{{ order_item.id }}_rating_7" name="rating" class="id_{{ order_item.id }}_rating" value="3.50" />
+                                                                <label class="half" for="id_{{ order_item.id }}_rating_7" title="Meh - 3.5 stars"></label>
+                                                                <input type="radio" id="id_{{ order_item.id }}_rating_6" name="rating" class="id_{{ order_item.id }}_rating" value="3.00" />
+                                                                <label class = "full" for="id_{{ order_item.id }}_rating_6" title="Meh - 3 stars"></label>
+                                                                <input type="radio" id="id_{{ order_item.id }}_rating_5" name="rating" class="id_{{ order_item.id }}_rating" value="2.50" />
+                                                                <label class="half" for="id_{{ order_item.id }}_rating_5" title="Kinda bad - 2.5 stars"></label>
+                                                                <input type="radio" id="id_{{ order_item.id }}_rating_4" name="rating" class="id_{{ order_item.id }}_rating" value="2.00" />
+                                                                <label class = "full" for="id_{{ order_item.id }}_rating_4" title="Kinda bad - 2 stars"></label>
+                                                                <input type="radio" id="id_{{ order_item.id }}_rating_3" name="rating" class="id_{{ order_item.id }}_rating" value="1.50" />
+                                                                <label class="half" for="id_{{ order_item.id }}_rating_3" title="Meh - 1.5 stars"></label>
+                                                                <input type="radio" id="id_{{ order_item.id }}_rating_2" name="rating" class="id_{{ order_item.id }}_rating" value="1.00" />
+                                                                <label class = "full" for="id_{{ order_item.id }}_rating_2" title="Sucks big time - 1 star"></label>
+                                                                <input type="radio" id="id_{{ order_item.id }}_rating_1" name="rating" class="id_{{ order_item.id }}_rating" value="0.50" />
+                                                                <label class="half" for="id_{{ order_item.id }}_rating_1" title="Sucks big time - 0.5 stars"></label>
+
+                                                            </fieldset>
+                                                            <span class="rating_number rating_number_id_{{ order_item.id }}">0.0/5</span>
+                                                            <div class="rating_notice">별을 클릭하여 서비스 만족도를 알려주세요.</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="review_form_content satisfy" style="clear:both;">
+                                                        <div class="review_form_content_title">
+                                                            세부 평가<br>
+                                                            <span style="color:#648efc;">(필수)</span>
+                                                        </div>
+                                                        <div class="review_form_content_input">
+                                                            <span class="satisfy_title_each">콘텐츠</span>{{ each_review_form.contents_satisfy }}<br>
+                                                            <span class="satisfy_title_each">광고효과</span>{{ each_review_form.ad_satisfy }}<br>
+                                                            <span class="satisfy_title_each">친절도</span>{{ each_review_form.kind_satisfy }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="review_form_content review" style="clear:both;">
+                                                        <div class="review_form_content_title">
+                                                            한줄 리뷰<br>
+                                                            <span style="color:#648efc;">(필수)</span>
+                                                        </div>
+                                                        <div class="review_form_content_input">
+                                                            {{ each_review_form.review }}
+                                                        </div>
+                                                    </div>
+                                                    <button type="button" class="review_btn submit">평가하기</button>
+                                                    <button type="submit" class="review_btn hidden_submit" style="display: None;"></button>
+                                                    <button type="button" class="review_btn close">닫기</button>
+                                                </form>
+                                            </div>
+                                        {% endwith %}
                                     </div>
                                 </div>
-                        {% endfor %}
+                            {% endfor %}
                         <div class="status_table">
                             <table>
                                 <tr>
@@ -868,11 +978,11 @@
                                         </button>
                                     </div>
                                     <div class="table_product_btn change" style="width:75px; font-size:11px; margin-right:3px;">
-                                        <button class="review">
+                                        <button class="review" value="{{ order_item.id }}">
                                             서비스 평가
                                         </button>
                                     </div>
-                                    <div class="review_modal">
+                                    <div class="review_modal modal_in_status4_id_{{ order_item.id }}">
                                         <form class="review_form" method="POST" enctype="multipart/form-data">{% csrf_token %}
                                             <div class="review_form_title">
                                                 <span>서비스에 대해 평가해주세요!</span>
@@ -939,7 +1049,7 @@
                                                         <label class="half" for="id_{{ order_item.id }}_rating_1" title="Sucks big time - 0.5 stars"></label>
 
                                                     </fieldset>
-                                                    <span id="rating_number_id_{{ order_item.id }}" class="rating_number">0.0/5</span>
+                                                    <span class="rating_number rating_number_id_{{ order_item.id }}">0.0/5</span>
                                                     <div class="rating_notice">별을 클릭하여 서비스 만족도를 알려주세요.</div>
                                                 </div>
                                             </div>
@@ -1074,7 +1184,7 @@
                                                     </button>
                                                 </li>
                                                 <li>
-                                                    <button class="review">
+                                                    <button class="review" value="{{ order_item.id }}">
                                                         서비스 평가
                                                     </button>
                                                 </li>
