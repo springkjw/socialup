@@ -385,7 +385,8 @@ post_save.connect(myuser_post_save_receiver, sender=MyUser)
 seller_type_list = (
     ("individual", "개인"),
     ("personal_business", "개인사업자"),
-    ("corporate_business", "법인사업자")
+    ("corporate_business", "법인사업자"),
+    ("confirming_status", "확인중")
 )
 
 def download_seller_account_location(instance, filename):

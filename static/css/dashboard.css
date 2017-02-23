@@ -890,3 +890,7 @@ body {
 }
 
 /*  */
+
+#id_type li:nth-child(4){
+    display: none;
+}

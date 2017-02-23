@@ -79,24 +79,29 @@
         });
 
         $('.change_button_seller').on('click', function() {
-            var precheck_flag = true;
-
-            if($('input[name=company_name]').val()==''){
-                alert('회사명을 입력해주세요.');
-                precheck_flag = false;
-            }else if($('input[name=representative_name]').val()=='') {
-                alert('대표자명을 입력해주세요.');
-                precheck_flag = false;
-            }else if($('input[name=corporate_number]').val()=='') {
-                alert('사업자 번호를 입력해주세요.');
-                precheck_flag = false;
-            }else if($('.file_name.business_license').val()=='파일선택'){
-                alert('사업자등록증 사본을 업로드해주세요.');
-                precheck_flag = false;
-            }
-
-            if(precheck_flag){
+            console.log($('input[type=radio]:checked'));
+            if($('input[name=type]:checked').val()=='individual'){
                 $("#dialog-confirm2").dialog('open');
+            }
+            else{
+                var precheck_flag = true;
+
+                if($('input[name=company_name]').val()==''){
+                    alert('회사명을 입력해주세요.');
+                    precheck_flag = false;
+                }else if($('input[name=representative_name]').val()=='') {
+                    alert('대표자명을 입력해주세요.');
+                    precheck_flag = false;
+                }else if($('input[name=corporate_number]').val()=='') {
+                    alert('사업자 번호를 입력해주세요.');
+                    precheck_flag = false;
+                }else if($('.file_name.business_license').val()=='파일선택'){
+                    alert('사업자등록증 사본을 업로드해주세요.');
+                    precheck_flag = false;
+                }
+                if(precheck_flag){
+                    $("#dialog-confirm2").dialog('open');
+                }
             }
         });
 
