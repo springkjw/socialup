@@ -472,7 +472,7 @@ def product_profit_manage(request):
                     return HttpResponseRedirect('/product/profit/')
 
             if request.POST.get('withdraw'):
-                withdrawal = Withdrawal(seller=seller, seller_account=s_account, status="request", reject_reason="")
+                withdrawal = Withdrawal(seller=seller, status="request", reject_reason="")
                 withdrawal_form = WithdrawalForm(request.POST, instance=withdrawal)
 
                 if withdrawal_form.is_valid():
