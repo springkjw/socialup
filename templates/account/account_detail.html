@@ -206,7 +206,7 @@
                             {% if seller.user.birth_year == None or seller.user.birth_year == 'None' or seller.user.birth_year == '' or seller.user.birth_year == 1930 %}
                                 -년생
                             {% else %}
-                                {{ seller.user.birth_year|replace_dash }}년생
+                                {{ seller.user.birth_year }}년생
                             {% endif %}
                             / {{ seller.user.address|replace_dash }}
                             / {{ seller.user.job|replace_dash }}

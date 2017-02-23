@@ -118,13 +118,13 @@
                 </div>
             </form>
         </div>
-{#        <div class="profit-history-nav">#}
-{#            <ul>#}
-{#                <li class="active status_0_menu">거래내역</li>#}
-{#                <li class="status_1_menu">출금내역</li>#}
-{#            </ul>#}
-{#        </div>#}
-{#        <div class="profit-history">#}
+        <div class="profit-history-nav">
+            <ul>
+                <li class="status_0_menu">거래내역</li>
+                <li class="status_1_menu active">출금내역</li>
+            </ul>
+        </div>
+        <div class="profit-history">
 {#            <div class="order-history">#}
 {#                <ul class="order-history-ul">#}
 {#                    <li class="order-history number">번호</li>#}
@@ -134,6 +134,14 @@
 {#                    <li class="order-history price">판매금액</li>#}
 {#                </ul>#}
 {#            </div>#}
-{#        </div>#}
+
+            <div class="withdraw-history">
+                <ul class="withdraw-history-ul">
+                    <li class="withdraw-history date">출금날짜</li>
+                    <li class="withdraw-history price">출금금액</li>
+                    <li class="withdraw-history status">상태</li>
+                </ul>
+            </div>
+        </div>
     </div>
 {% endblock %}

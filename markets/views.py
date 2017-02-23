@@ -472,12 +472,12 @@ def product_profit_manage(request):
                     return HttpResponseRedirect('/product/profit/')
 
             if request.POST.get('withdraw'):
-                withdrawal = Withdrawal(seller=seller, seller_account=s_account, status="request", reject_reason="")
+                withdrawal = Withdrawal(seller=seller, status="request", reject_reason="")
                 withdrawal_form = WithdrawalForm(request.POST, instance=withdrawal)
 
                 if withdrawal_form.is_valid():
                     # 출금 요청액이 출금 가능액을 초과하거나 음수인 경우
-                    if int(request.POST.get('money')) > possible_profit or int(request.POST.get('money')) <= 0:
+                    if int(request.POST.get('money')) > request.user.point.point or int(request.POST.get('money')) <= 0:
                         raise Http404
 
                     withdrawal_form_instance = withdrawal_form.save(commit=False)
