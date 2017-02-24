@@ -499,53 +499,55 @@
                                         <img id="user" src="{{ review.user.get_avatar }}">
                                         </div>
                                         <div class="review-wrapper">
-                                            <div class="review-user">
-                                                <span class="review-user-name">{{ review.user.name }}</span>
-                                                <span class="review-created">{{ review.created|date:"Y.m.d h:i" }}</span>
-                                            </div>
-                                            <div class="seller-rating" data-rating="{{ review.rating }}">
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                            </div>
-                                            <div class="review-satisfiy">
-                                                <div class="review-satisfiy-sub contents">
-                                                    콘텐츠
-                                                    <div class="review-satisfiy-sub-box">
-                                                        {% if review.contents_satisfy == 'good' %}
-                                                            <span style="color:#394284;">만족</span>
-                                                        {% elif review.contents_satisfy == 'neutral' %}
-                                                            <span style="color:#6e8e3a;">보통</span>
-                                                        {% else %}
-                                                            <span style="color:#a64949;">불만족</span>
-                                                        {% endif %}
+                                            <div class="review-up-wrapper">
+                                                <div class="review-user">
+                                                    <div class="review-user-name">{{ review.user.get_short_name }}</div>
+                                                    <div class="review-created">{{ review.created|date:"Y.m.d h:i" }}</div>
+                                                </div>
+                                                <div class="review-satisfiy">
+                                                    <div class="review-satisfiy-sub contents">
+                                                        콘텐츠
+                                                        <div class="review-satisfiy-sub-box">
+                                                            {% if review.contents_satisfy == 'good' %}
+                                                                <span style="color:#394284;">만족</span>
+                                                            {% elif review.contents_satisfy == 'neutral' %}
+                                                                <span style="color:#6e8e3a;">보통</span>
+                                                            {% else %}
+                                                                <span style="color:#a64949;">불만족</span>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="review-satisfiy-sub ads">
+                                                        광고효과
+                                                        <div class="review-satisfiy-sub-box">
+                                                            {% if review.ad_satisfy == 'good' %}
+                                                                <span style="color:#394284;">만족</span>
+                                                            {% elif review.ad_satisfy == 'neutral' %}
+                                                                <span style="color:#6e8e3a;">보통</span>
+                                                            {% else %}
+                                                                <span style="color:#a64949;">불만족</span>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="review-satisfiy-sub kindness">
+                                                        친절도
+                                                        <div class="review-satisfiy-sub-box">
+                                                            {% if review.kind_satisfy == 'good' %}
+                                                                <span style="color:#394284;">만족</span>
+                                                            {% elif review.kind_satisfy == 'neutral' %}
+                                                                <span style="color:#6e8e3a;">보통</span>
+                                                            {% else %}
+                                                                <span style="color:#a64949;">불만족</span>
+                                                            {% endif %}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="review-satisfiy-sub ads">
-                                                    광고효과
-                                                    <div class="review-satisfiy-sub-box">
-                                                        {% if review.ad_satisfy == 'good' %}
-                                                            <span style="color:#394284;">만족</span>
-                                                        {% elif review.ad_satisfy == 'neutral' %}
-                                                            <span style="color:#6e8e3a;">보통</span>
-                                                        {% else %}
-                                                            <span style="color:#a64949;">불만족</span>
-                                                        {% endif %}
-                                                    </div>
-                                                </div>
-                                                <div class="review-satisfiy-sub kindness">
-                                                    친절도
-                                                    <div class="review-satisfiy-sub-box">
-                                                        {% if review.kind_satisfy == 'good' %}
-                                                            <span style="color:#394284;">만족</span>
-                                                        {% elif review.kind_satisfy == 'neutral' %}
-                                                            <span style="color:#6e8e3a;">보통</span>
-                                                        {% else %}
-                                                            <span style="color:#a64949;">불만족</span>
-                                                        {% endif %}
-                                                    </div>
+                                                <div class="seller-rating" data-rating="{{ review.rating }}">
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
                                                 </div>
                                             </div>
                                             <div class="review-content">
