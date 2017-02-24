@@ -494,7 +494,8 @@ def order_item_receiver(instance, sender, created, *args, **kwargs):
             h = PointHistory(
                 user=seller_id,
                 amount=int( order_price * 0.87 ),
-                detail=instance.cart_item.item.oneline_intro + ' 판매'
+                type='sale_product',
+                detail=instance.cart_item.item.oneline_intro + ' 판매',
             )
             h.save()
         except:
