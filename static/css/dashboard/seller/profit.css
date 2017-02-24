@@ -189,7 +189,7 @@
 }
 
 
-.profit-info .profit-info-right input[type="submit"]{
+.profit-info .profit-info-right input:nth-child(2){
     width:85px;
     height:28px;
     background-color: #648efc;
@@ -313,4 +313,22 @@
 .withdrawal_item .withdraw_status {
     width: 33%;
     text-align: center;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button{
+    font-size:13px;
+    padding:8px 0;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button:nth-child(2){
+    background-color: #648efc;
+    border: 1px solid #648efc;
+    color: white;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset button:nth-child(1) {
+    background-color: #cccccc;
+    border: 1px solid #cccccc;
+    border-radius:0px;
+    color: #000;
 }

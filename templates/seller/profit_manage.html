@@ -16,6 +16,51 @@
             // 출금 가능금액에 세자리마다 ,(comma)삽입
             $('.money').digits();
         });
+
+        $("#profit-dialog-confirm").dialog({
+        resizable: false,
+        height:190,
+        autoOpen: false,
+        width: 330,
+        modal: true,
+        buttons: [
+            {
+                text: "취소",
+                click: function() {
+                    $(this).dialog('close');
+                }
+            },{
+                text: "확인",
+                click: function() {
+                    $('#profit-withdrawal-form').submit();
+                }
+            }
+            ]
+        });
+
+        $('#profit-withdrawal-submit').click(function () {
+            var precheck_flag=true;
+            var withdrawal_money = $('#id_money').val();
+            var available_money = $('#id_money').prop('max');
+            available_money = Number(available_money);
+            console.log(available_money);
+            console.log(withdrawal_money);
+            if(withdrawal_money<=0 ){
+                alert('출금할 금액을 확인해주세요.');
+                precheck_flag=false;
+            }else if (available_money < withdrawal_money){
+                alert('출금가능 금액보다 많은 금액은 출금할 수 없습니다.');
+                precheck_flag=false;
+            }
+
+            if(precheck_flag){
+                var temp_money = $('#id_money').val();
+                temp_money = Number(temp_money);
+                $('#money_to_withdrawal').text(temp_money);
+                $('#money_to_withdrawal').digits();
+                $("#profit-dialog-confirm").dialog('open');
+            }
+        });
     </script>
 {% endblock %}
 
@@ -99,7 +144,7 @@
                     <input type="submit" value="계좌수정"/>
                 </div>
             </form>
-            <form method="POST">{% csrf_token %}
+            <form id="profit-withdrawal-form" method="POST">{% csrf_token %}
                 <div class="profit-info-left withdrawal">
                     <div class="account-info">
                         <label for="{{ withdrawal_forms.money.name }}">출금가능 금액</label>
@@ -111,7 +156,7 @@
                 </div>
                 <div class="profit-info-right">
                     <input type="hidden" name="withdraw" value="true"/>
-                    <input type="submit" value="출금하기"/>
+                    <input id="profit-withdrawal-submit" type="button" value="출금하기"/>
                 </div>
                 <div class="meta">
                     출금 신청일로부터 영업일 기준 3일안에 입금해드립니다.
@@ -169,5 +214,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div id="profit-dialog-confirm" style="text-align: center;" title="출금하기">
+        <span id="money_to_withdrawal">0</span>원을 출금하시겠습니까?
     </div>
 {% endblock %}
