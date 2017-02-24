@@ -62,40 +62,45 @@
             });
 
             // selected tag color
-            if('{{ tag_name.0 }}'){
-                ($('.tags_wrapper').find("input[value={{ tag_name.0 }}]")).attr('checked',true);
+            if('{{ tag_name }}'){
+                ($('.tags_wrapper').find("input[value={{ tag_name }}]")).attr('checked',true);
                 check_tags_for_hover();
+                get_items_by_ajax();
             }
-            $('#tag_navigation').on('change', function () {
-                var checked_tags = [];
-                var checked_clicked = $('input[name=tag]:checked').next().find('.tag_image_clicked').get();
-                checked_clicked.forEach(function(val){
-                    checked_tags.push(jQuery(val).parent().prev().attr('value'));
-                });
-
-                $.ajax({
-                    url: window.location.pathname,
-                    data: {
-                        checked_tags: JSON.stringify(checked_tags)
-                    },
-                    success: function (data) {
-                        if(data['checked_tags'].length ==0){
-                            $('.list-card').each(function () {
-                                $(this).show();
-                            });
-                        }
-                        else{
-                            $('.list-card').each(function () {
-                                $(this).hide();
-                            });
-                            data['product_ids_by_tags'].forEach(function(val){
-                                $('.list-card[data-id=' + val + ']').show();
-                            });
-                        }
-                    }
-                })
+            $('#tag_navigation').on('change', function() {
+                get_items_by_ajax();
             });
         });
+
+        function get_items_by_ajax() {
+            var checked_tags = [];
+            var checked_clicked = $('input[name=tag]:checked').next().find('.tag_image_clicked').get();
+            checked_clicked.forEach(function(val){
+                checked_tags.push(jQuery(val).parent().prev().attr('value'));
+            });
+
+            $.ajax({
+                url: window.location.pathname,
+                data: {
+                    checked_tags: JSON.stringify(checked_tags)
+                },
+                success: function (data) {
+                    if(data['checked_tags'].length ==0){
+                        $('.list-card').each(function () {
+                            $(this).show();
+                        });
+                    }
+                    else{
+                        $('.list-card').each(function () {
+                            $(this).hide();
+                        });
+                        data['product_ids_by_tags'].forEach(function(val){
+                            $('.list-card[data-id=' + val + ']').show();
+                        });
+                    }
+                }
+            })
+        }
     </script>
 {% endblock %}
 
@@ -195,13 +200,7 @@
         <div class="special-service">
             <div class="special-info">
                 <div class="special-title">
-                    인기
-                    {% if tag_name.1 %}
-                        {{ tag_name.1 }}
-                    {% else %}
-                        {{ category_name }}
-                    {% endif %}
-                    포스팅
+                    인기 {{ category_name }} 포스팅
                     <div class="special-subtitle">
                         * 소셜업 게이지란? 소셜업만의 알고리즘을 통해 SNS의 다양한 요소를 분석해 수치화 시킨 광고비 대비 효과 지수입니다.
                     </div>

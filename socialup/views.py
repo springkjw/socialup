@@ -53,14 +53,7 @@ def product_category(request, category):
         category_name = "전체"
 
         try:
-            tag = request.GET['tag']
-            products = products.filter(product_tag__tag=tag)
-            banner_tag_list = {'it': 'IT',
-                               'food': '맛집',
-                               'fashion': '뷰티',
-                               'pet': '애완',
-                               'travel': '여행'}
-            tag_name = [tag, banner_tag_list[tag]]
+            tag_name = request.GET['tag']
         except:
             pass
     else:
