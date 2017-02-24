@@ -492,6 +492,8 @@ def product_profit_manage(request):
             s_account_form = SellerAccountForm(instance=s_account)
             withdrawal_form = WithdrawalForm()
 
+        order_items = OrderItem.objects.filter(seller=seller, status='finished')
+
         template = 'seller/profit_manage.html'
         context = {
             "seller_account_forms" : s_account_form,
@@ -501,6 +503,7 @@ def product_profit_manage(request):
             "requested_profit": requested_profit,
             "completed_profit": completed_profit,
             "withdrawals": withdrawals,
+            "order_items" : order_items,
         }
 
         return render(request, template, context)
