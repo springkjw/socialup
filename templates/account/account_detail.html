@@ -173,7 +173,13 @@
                     <div class="seller_name_type">
                         <div class="seller_name">{{ seller.user.get_short_name }}</div>
                         <div class="seller_type">
-                            {{ seller.type_in_korean }}
+                            {% if seller.type == 'personal_business' %}
+                                개인사업자
+                            {% elif seller.type == 'corporate_business' %}
+                                법인사업자
+                            {% else %}
+                                개인
+                            {% endif %}
                         </div>
                         <div class="ask_to_seller">
                             <button class="ask_to_seller_btn" data-id="{{ user.id }}"
