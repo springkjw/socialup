@@ -4,7 +4,7 @@ $(function () {
     console.log(os);
 
     var IMP = window.IMP;
-    IMP.init('imp68762150');
+    IMP.init('imp76458943');
 
     $('#etc-money').find('input[type="tel"]').autoNumeric('init', {
         vMin: '0',
@@ -61,4 +61,3 @@ $(function () {
 
     $('.dashboard-charge-info #phone').mask("000-0000-0000");
 });
-

@@ -537,17 +537,36 @@ class Withdrawal(models.Model):
     def __unicode__(self):
         return str(self.money)
 
+    def status_in_korean(self):
+        statuses = {'request': '출금요청',
+                    'completed': '출금완료',
+                    'rejected': '출금거절'}
+        return statuses[self.status]
+
 
 def withdrawal_post_save_receiver(sender, instance, created, *args, **kwargs):
     if created and instance.status == "request":
-        from billing.models import Point
+        from billing.models import Point, PointHistory
         user = instance.seller.user
         try:
+            # 출금 요청액만큼 point 차감
             point = Point.objects.get(user=user)
             point.point= point.point - instance.money
             point.save()
         except:
-            pass
+            raise ValueError('포인트 차감에 문제가 발생했습니다.')
+
+        try:
+            # 포인트 history 추가
+            h = PointHistory(
+                user=instance.seller.user,
+                amount=-instance.money,
+                type='withdraw_request',
+                detail='출금요청',
+            )
+            h.save()
+        except:
+            raise ValueError('포인트 히스토리 추가에 문제가 발생했습니다.')
 
 
 post_save.connect(withdrawal_post_save_receiver, sender=Withdrawal)

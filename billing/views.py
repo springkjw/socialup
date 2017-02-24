@@ -332,9 +332,24 @@ def purchase_list(request):
         try:
             order_item = OrderItem.objects.get(id=order_item_id)
             new_status = request.POST.get('new_status')
-            if order_item.status == 'paid' and new_status == 'request_refund' or \
-            order_item.status != 'request_refund' and new_status == 'finished' or \
-            order_item.status != 'refunded' and new_status == 'finished' :
+
+            # 작업상태(status) 변경이 허용되는 경우
+            # paid -> processing
+            # paid -> wait_confirm
+            # paid -> finished
+            # paid -> request_refund
+            # processing -> wait_confirm
+            # processing -> finished
+            # processing -> request_refund  # 판매자만 요청 가능
+            # wait_confirm -> finished
+            if order_item.status == 'paid' and new_status == 'processing' or \
+            order_item.status == 'paid' and new_status == 'wait_confirm' or \
+            order_item.status == 'paid' and new_status == 'finished' or \
+            order_item.status == 'paid' and new_status == 'request_refund' or \
+            order_item.status == 'processing' and new_status == 'wait_confirm' or \
+            order_item.status == 'processing' and new_status == 'finished' or \
+            order_item.status == 'processing' and new_status == 'request_refund' or \
+            order_item.status == 'wait_confirm' and new_status == 'finished' :
                 order_item.status = new_status
                 order_item.save()
         except:
