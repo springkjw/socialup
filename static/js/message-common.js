@@ -202,7 +202,7 @@ function checkOrCreateUser(userId, nickname, profileUrl) {
             console.error(error);
             return;
         }
-        if (user.nickname != nickname) {
+        if (user.nickname != nickname || user.profile_url != profileUrl) {
             console.log('Registering seller.. {},{},{}'.format(userId, nickname, profileUrl));
             sb.updateCurrentUserInfo(nickname, profileUrl, function(response, error) {
                 console.log(response, error);
