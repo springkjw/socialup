@@ -17,6 +17,16 @@
             // 출금 가능금액에 세자리마다 ,(comma)삽입
             $('.money').digits();
         });
+
+        $('.status_menu').on('click', function() {
+            $('.status_menu').removeClass('active');
+            $(this).addClass('active');
+
+            $('.profit_show_and_hide_0').hide();
+            $('.profit_show_and_hide_1').hide();
+            $('.profit_show_and_hide_'+$(this).val()).show();
+        });
+
     </script>
 {% endblock %}
 
@@ -121,14 +131,14 @@
         </div>
         <div class="profit-history-nav">
             <ul>
-                <li class="status_0_menu active">거래내역</li>
-                <li class="status_1_menu">출금내역</li>
+                <li value="0" class="status_menu active">거래내역</li>
+                <li value="1" class="status_menu">출금내역</li>
             </ul>
         </div>
         <div class="profit-history">
-            <div class="order-history">
-                <div class="withdraw-history-ul-wrapper">
-                    <ul class="withdraw-history-ul">
+            <div class="order-history profit_show_and_hide_0">
+                <div class="profit-history-ul-wrapper">
+                    <ul class="profit-history-ul">
                         <li class="order-history number">주문번호</li>
                         <li class="order-history date">거래날짜</li>
                         <li class="order-history service_title">서비스 제목</li>
@@ -136,10 +146,10 @@
                         <li class="order-history price">수익금</li>
                     </ul>
                 </div>
-                <div class="withdrawal_items_wrapper">
+                <div class="profit_items_wrapper">
                     {% if order_items %}
                         {% for order_item in order_items reversed %}
-                            <div class="withdrawal_item">
+                            <div class="profit_item">
                                 <span class="order_number">{{ order_item.order.order_id }}</span>
                                 <span class="order_date">{{ order_item.order.timestamp|date:"m.d" }}</span>
                                 <span class="order_service_title">{{ order_item.cart_item.item.oneline_intro }}</span>
@@ -151,18 +161,18 @@
                 </div>
             </div>
 
-            <div class="withdraw-history" style="display: none">
-                <div class="withdraw-history-ul-wrapper">
-                    <ul class="withdraw-history-ul">
+            <div class="withdraw-history profit_show_and_hide_1" style="display: none">
+                <div class="profit-history-ul-wrapper">
+                    <ul class="profit-history-ul">
                         <li class="withdraw-history date">출금날짜</li>
                         <li class="withdraw-history price">출금금액</li>
                         <li class="withdraw-history status">상태</li>
                     </ul>
                 </div>
-                <div class="withdrawal_items_wrapper">
+                <div class="profit_items_wrapper">
                     {% if withdrawals %}
                         {% for withdrawal in withdrawals reversed %}
-                            <div class="withdrawal_item">
+                            <div class="profit_item">
                                 <span class="withdraw_date">{{ withdrawal.created|date:"m.d" }}</span>
                                 <span class="withdraw_money">{{ withdrawal.money }}원</span>
                                 <span class="withdraw_status">{{ withdrawal.status_in_korean }}</span>
