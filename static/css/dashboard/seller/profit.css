@@ -230,23 +230,57 @@
 }
 
 .order-history .number {
-    margin-left: 64px;
+    margin-left: 58px;
 }
 
 .order-history .date {
-    margin-left: 64px;
+    margin-left: 27px;
 }
 
 .order-history .service_title {
-    margin-left: 64px;
+    margin-left: 45px;
 }
 
 .order-history .buyer_id {
-    margin-left: 64px;
+    margin-left: 59px;
 }
 
 .order-history .price {
-    margin-left: 64px;
+    margin-left: 43px;
+}
+
+.withdrawal_item .order_number {
+    width: 20%;
+    text-align: center;
+    overflow:hidden;
+}
+
+.withdrawal_item .order_date {
+    width: 10%;
+    text-align: center;
+    overflow:hidden;
+}
+
+.withdrawal_item .order_service_title {
+    width: 31%;
+    text-align: center;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.withdrawal_item .order_buyer_id {
+    width: 14%;
+    text-align: center;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.withdrawal_item .order_price {
+    width: 19%;
+    text-align: center;
+    overflow:hidden;
 }
 
 /* withdraw history tab */
@@ -289,10 +323,11 @@
 }
 .withdrawal_items_wrapper .withdrawal_item {
     border: 1px solid #DADADA;
-    width: 88%;
+    width: 500px;
     text-align: center;
     display: inline-block;
     margin-bottom: 5px;
+    padding-top: 5px;
 }
 
 .withdrawal_item span {

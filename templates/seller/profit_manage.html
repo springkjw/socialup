@@ -1,5 +1,6 @@
 {% extends 'account/dashboard_base.html' %}
 {% load staticfiles %}
+{% load producttags %}
 
 {% block dashboard_css %}
     <link rel="stylesheet" href="{% static 'css/dashboard/seller/profit.css' %}">
@@ -120,35 +121,37 @@
         </div>
         <div class="profit-history-nav">
             <ul>
-                <li class="status_0_menu">거래내역</li>
-                <li class="status_1_menu active">출금내역</li>
+                <li class="status_0_menu active">거래내역</li>
+                <li class="status_1_menu">출금내역</li>
             </ul>
         </div>
         <div class="profit-history">
-            <div class="order-history" style="display: none">
+            <div class="order-history">
                 <div class="withdraw-history-ul-wrapper">
                     <ul class="withdraw-history-ul">
-                        <li class="order-history number">번호</li>
+                        <li class="order-history number">주문번호</li>
                         <li class="order-history date">거래날짜</li>
                         <li class="order-history service_title">서비스 제목</li>
-                        <li class="order-history buyer_id">구매자 ID</li>
-                        <li class="order-history price">판매금액</li>
+                        <li class="order-history buyer_id">구매자</li>
+                        <li class="order-history price">수익금</li>
                     </ul>
                 </div>
                 <div class="withdrawal_items_wrapper">
-                    {% if withdrawals %}
-                        {% for withdrawal in withdrawals reversed %}
+                    {% if order_items %}
+                        {% for order_item in order_items reversed %}
                             <div class="withdrawal_item">
-                                <span class="withdraw_date">{{ withdrawal.created|date:"m.d" }}</span>
-                                <span class="withdraw_money">{{ withdrawal.money }}원</span>
-                                <span class="withdraw_status">{{ withdrawal.status_in_korean }}</span>
+                                <span class="order_number">{{ order_item.order.order_id }}</span>
+                                <span class="order_date">{{ order_item.order.timestamp|date:"m.d" }}</span>
+                                <span class="order_service_title">{{ order_item.cart_item.item.oneline_intro }}</span>
+                                <span class="order_buyer_id">{{ order_item.user.name }}</span>
+                                <span class="order_price">{{ order_item.cart_item.line_item_total|multiply_int:0.87 }}원</span>
                             </div>
                         {% endfor %}
                     {% endif %}
                 </div>
             </div>
 
-            <div class="withdraw-history">
+            <div class="withdraw-history" style="display: none">
                 <div class="withdraw-history-ul-wrapper">
                     <ul class="withdraw-history-ul">
                         <li class="withdraw-history date">출금날짜</li>
