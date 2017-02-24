@@ -561,8 +561,8 @@ _:-ms-lang(x), .content .product-top .seller-info .seller-img img {
 .content .tab .tab-review {
     border: 1px solid #DEDEDE;
     margin-top: 15px;
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-left: 20px;
+    padding-right: 20px;
     padding-top: 15px;
     padding-bottom: 15px;
 }
@@ -599,9 +599,9 @@ _:-ms-lang(x), .content .product-top .seller-info .seller-img img {
 
 .content .tab .tab-review .seller-rating {
     text-align: left;
-    float:right;
     display: inline-block;
     vertical-align: top;
+    width:19%;
 }
 
 .content .tab .tab-review .seller-rating i {
@@ -613,6 +613,11 @@ _:-ms-lang(x), .content .product-top .seller-info .seller-img img {
     vertical-align: top;
     width:86%;
 }
+.content .tab .tab-review .review-wrapper .review-up-wrapper{
+    width:100%;
+    height:21px;
+}
+
 .content .tab .tab-review .review-content {
     display: block;
     width: 100%;
@@ -623,16 +628,28 @@ _:-ms-lang(x), .content .product-top .seller-info .seller-img img {
 .content .tab .tab-review .review-user {
     display: inline-block;
     vertical-align: top;
-    margin-right:10px;
+    width:30%;
 }
 
 .review-user .review-user-name{
-    margin-right:10px;
+    margin-right:5px;
+    display: inline-block;
+    width:30%;
+    height:21px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
+}
+
+.review-user .review-created {
+    display: inline-block;
+    width:60%;
 }
 
 .content .tab .tab-review .review-satisfiy {
     display: inline-block;
-    float:right;
+    width:49%;
 }
 
 .content .tab .tab-review .review-satisfiy .review-satisfiy-sub {
