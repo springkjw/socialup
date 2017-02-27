@@ -122,10 +122,10 @@ def product_search(request):
         products = Product.objects.active().filter(Q(oneline_intro__contains=keyword) | Q(seller__user__email__iregex=keyword + '@' + r'.*$'))
     elif search_option == 'sns_all':
         products = Product.objects.active().filter(oneline_intro__contains=keyword)
+    elif search_option == 'sns_blog':
+        products = Product.objects.active().filter(sns_type='blog', oneline_intro__contains=keyword)
     elif search_option == 'sns_facebook':
         products = Product.objects.active().filter(sns_type='facebook', oneline_intro__contains=keyword)
-    elif search_option == 'sns_facebook':
-        products = Product.objects.active().filter(sns_type='blog', oneline_intro__contains=keyword)
     elif search_option == 'sns_instagram':
         products = Product.objects.active().filter(sns_type='instagram', oneline_intro__contains=keyword)
     elif search_option == 'sns_youtube':
