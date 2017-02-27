@@ -1,5 +1,6 @@
 {% extends 'account/dashboard_base.html' %}
 {% load staticfiles %}
+{% load producttags %}
 
 {% block dashboard_css %}
     <link rel="stylesheet" href="{% static 'css/dashboard/report.css' %}">
@@ -73,7 +74,7 @@
                         {% if report.reply %}
                             <div class="report_each_wrapper reply">
                                 <div class="report_each_left">
-                                    <img id="user" src="{% static 'img/no_profile_1.png' %}">
+                                    <img id="user" src="{{ 1|cs_admin_user_avatar }}">
                                 </div>
                                 <div class="report_each_mid">
                                     <div class="report_each_detail">{{ report.reply}}</div>
