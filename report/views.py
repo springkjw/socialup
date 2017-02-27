@@ -19,7 +19,7 @@ def report(request):
             instance.writer = request.user
             instance.save()
 
-            return HttpResponseRedirect('/dashboard/')
+            return HttpResponseRedirect('/dashboard/report/history/')
         else:
             pass
     else:
