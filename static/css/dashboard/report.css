@@ -150,3 +150,72 @@
 .report-received-table-ul li:nth-child(5){
     width:15%;
 }
+
+.report_each_wrapper{
+    margin: 0 auto;
+    padding:15px 20px;
+    border: 1px solid #c6c6c6;
+    background-color: white;
+}
+.report_each_wrapper.detail{
+    background-color: #ebebeb;
+}
+
+.report_each_wrapper.overview{
+    border: none;
+}
+
+.report_each_left{
+    display: inline-block;
+    width:20%;
+    vertical-align: top;
+}
+
+.report_each_left img{
+    width:70px;
+}
+
+.report_each_mid {
+    display: inline-block;
+    width:79%;
+}
+
+.report_each_mid.overview {
+    display: inline-block;
+    width:56%;
+    vertical-align: middle;
+}
+
+.report_each_mid .report_each_type{
+    margin-bottom:10px;
+}
+
+.report_each_mid .report_each_type.overview{
+    font-weight:500;
+}
+
+.report_each_right{
+    display: inline-block;
+    width:22%;
+}
+
+.report_each_right .report_status_user_wrapper{
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.report_each_right .report_status_box{
+    border:1px solid #c6c6c6;
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+.report_each_right img {
+    float:right;
+    width:30px;
+    margin-top:10px;
+}
+
+.report_detail_wrapper{
+    display: none;
+}

@@ -7,6 +7,17 @@
 
 {% block dashboard_js %}
     <script type="text/javascript" src="{% static 'js/seller/order.js' %}"></script>
+    <script type="text/javascript">
+        $('.report_detail_button').on('click', function () {
+            if($(this).attr('aria-hidden')=='true'){
+                $(this).parent().parent().next().show();
+                $(this).attr('aria-hidden', 'false');
+            }else{
+                $(this).parent().parent().next().hide();
+                $(this).attr('aria-hidden', 'true');
+            }
+        });
+    </script>
 {% endblock %}
 
 {% block dashboard_content %}
@@ -29,8 +40,46 @@
         <div>
             {% if reports %}
                 {% for report in reports %}
-                    <div>
-                        <p>{{ report.detail}}</p>
+                    <div class="report_each_wrapper overview">
+                        <div class="report_each_left">
+                            <img id="user" src="{{ report.writer.get_avatar }}">
+                        </div>
+                        <div class="report_each_mid overview">
+                            <div class="report_each_type overview">{{ report.id }}. {{ report.type_in_korean }}</div>
+                            <div class="report_each_detail">{{ report.created|date:"Y.m.d" }}</div>
+                        </div>
+                        <div class="report_each_right">
+                            <div class="report_status_user_wrapper"">
+                                <div style="text-align: right">{{ report.writer.get_short_name }}</div>
+                                {% if report.status == 'completed' %}
+                                    <div class="report_status_box">처리완료</div>
+                                {% else %}
+                                    <div class="report_status_box">처리중</div>
+                                {% endif %}
+                            </div>
+                            <img class="report_detail_button" src="{% static 'img/report_arrow.png' %}" aria-hidden="true">
+                        </div>
+                    </div>
+                    <div class="report_detail_wrapper">
+                        <div class="report_each_wrapper detail">
+                            <div class="report_each_left">
+                                <img id="user" src="{{ report.writer.get_avatar }}">
+                            </div>
+                            <div class="report_each_mid">
+                                <div class="report_each_type">{{ report.type_in_korean }}</div>
+                                <div class="report_each_detail">{{ report.detail}}</div>
+                            </div>
+                        </div>
+                        {% if report.reply %}
+                            <div class="report_each_wrapper reply">
+                                <div class="report_each_left">
+                                    <img id="user" src="{% static 'img/no_profile_1.png' %}">
+                                </div>
+                                <div class="report_each_mid">
+                                    <div class="report_each_detail">{{ report.reply}}</div>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
                 {% endfor %}
             {% else %}

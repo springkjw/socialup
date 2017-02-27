@@ -40,3 +40,10 @@ class Report(models.Model):
 
     def __unicode__(self):
         return u'%s' % (self.detail)
+
+    def type_in_korean(self):
+        statuses = {'direct_dealing': '직거래 유도',
+                   'bad_words': '욕설비방',
+                   'illegal_promotion': '불법 홍보 유도',
+                   'etc': '기타'}
+        return statuses[self.type]
