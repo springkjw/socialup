@@ -156,14 +156,15 @@ def history_point(request):
 def switch_history_type(type):
     return {
         'card': '신용카드',
-        'phone': '휴대폰결제'
+        'phone': '휴대폰결제',
+        'sale_product': '서비스 판매',
     }.get(type, '알수없음')
 
 
 def switch_history_status(status):
     return {
-        'paid': '결제완료'
-    }.get(status, '알수없음')
+        'paid': '결제완료',
+    }.get(status, '-')
 
 
 @login_required
