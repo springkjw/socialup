@@ -305,3 +305,27 @@ $('#id_account_copy').change(function() {
     $('.file_name.account_copy').parent().removeAttr("href");
     $('.file_name.account_copy').parent().removeAttr('target');
 });
+
+$('#btn_seller_info').click(function () {
+    var checked_type = $('input[name=type]:checked').val();
+    // $('.business_confirming').hide();
+    if (checked_type == "confirming_personal") {
+        $('.personal').show();
+    }
+    else if (checked_type == "confirming_corporate") {
+        $('.corporate').show();
+    }
+});
+//
+// $(document).ready(function(){
+//     var checked_type = $('.seller_form_input input:checked').val();
+//     alert($('input[name=type]:checked').val());
+//     if (checked_type == 'confirming_personal') {
+//         alert('here1');
+//         $('.business_confirming .personal').show()
+//     }
+//     else if (checked_type == 'confirming_corporate') {
+//         alert('here2');
+//         $('.business_confirming .corporate').show()
+//     }
+// });

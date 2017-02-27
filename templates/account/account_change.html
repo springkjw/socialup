@@ -320,6 +320,12 @@
             <form class="change_form seller" id="change_form_seller" method="POST" action="{% url 'change_info' %}" enctype="multipart/form-data">{%  csrf_token %}
                 <div class="change_seller_form_wrapper">
                     <div class="seller_form_content type">
+                        <div class="business_confirming personal">
+                            개인사업자 승인대기 중
+                        </div>
+                        <div class="business_confirming corporate">
+                            법인사업자 승인대기 중
+                        </div>
                         <div class="seller_form_title type">
                             {{ seller_form.type.label }}
                         </div>
