@@ -925,7 +925,8 @@ li:nth-child(5) .circle-text {
 	z-index:3;
 }
 .circle-mask2-text{
-  padding-top:1.5em;
+    padding-top:0.8em;
+    line-height: 1.5em;
 }
 
 .cash{
