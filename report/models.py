@@ -30,6 +30,7 @@ class Report(models.Model):
     type = models.CharField(choices=report_type_list, max_length=20, null=False)
     detail = models.TextField(null=True, blank=True)
     reply = models.TextField(null=True, blank=True)
+    message_to_bad_user = models.TextField(null=True, blank=True)
     file = models.FileField(
         null=True,
         blank=True,
