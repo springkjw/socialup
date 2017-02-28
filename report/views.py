@@ -13,7 +13,7 @@ from billing.models import Order
 @login_required
 def report(request):
     if request.method == 'POST':
-        form = ReportForm(request.POST)
+        form = ReportForm(request.POST or None, request.FILES or None)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.writer = request.user

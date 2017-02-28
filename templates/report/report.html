@@ -27,7 +27,7 @@
                 <p>고객님의 원활한 소셜업 사용에 불편을 주는 셀러가 있다면 이야기해주세요</p>
             </div>
             <div class="report-form">
-                <form method="POST">{% csrf_token %}
+                <form method="POST" enctype="multipart/form-data">{% csrf_token %}
                     {% for form in forms %}
                         <div class="report-input">
                             <label for="{{ form.name }}">{{ form.label }}</label>
