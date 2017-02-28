@@ -93,16 +93,22 @@ def change_info(request):
         seller_form = ChangeSellerForm(request.POST or None, request.FILES or None)
         seller_account_form = ChangeSellerAccountForm(request.POST or None, request.FILES or None)
 
-        confirming_flag = True
         if seller_form.is_valid():
-            if seller_form.cleaned_data['business_license'] != None:
-                seller.business_license = seller_form.cleaned_data['business_license']
-                seller.type="confirming_status"
-                confirming_flag=False
-            else:
-                seller.type = seller_form.cleaned_data['type']
+            # 판매회원유형에 변화가 있거나, 사업자등록증을 새로 업로드 한 경우
+            if seller.type != seller_form.cleaned_data['type'] or seller_form.cleaned_data['business_license'] != None:
+                if seller_form.cleaned_data['business_license'] != None:
+                    seller.business_license = seller_form.cleaned_data['business_license']
+
+                if seller_form.cleaned_data['type'] == 'personal_business':
+                    seller.type = 'confirming_personal'
+                elif seller_form.cleaned_data['type'] == 'corporate_business':
+                    seller.type = 'confirming_corporate'
+                else:
+                    seller.type = 'individual'
+
             if seller_form.cleaned_data['account_copy'] != None:
                 seller.account_copy = seller_form.cleaned_data['account_copy']
+
             seller.company_name=seller_form.cleaned_data['company_name']
             seller.representative_name=seller_form.cleaned_data['representative_name']
             seller.corporate_number=seller_form.cleaned_data['corporate_number']
@@ -111,8 +117,6 @@ def change_info(request):
             seller.save()
 
         if seller_account_form.is_valid() and 'type' in request.POST:
-            if confirming_flag:
-                seller.type = request.POST['type']
             seller.save()
             seller_account.account_number= seller_account_form.cleaned_data['account_number']
             seller_account.account_name= seller_account_form.cleaned_data['account_name']

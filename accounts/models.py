@@ -386,7 +386,8 @@ seller_type_list = (
     ("individual", "개인"),
     ("personal_business", "개인사업자"),
     ("corporate_business", "법인사업자"),
-    ("confirming_status", "확인중")
+    ("confirming_personal", "확인중(개인사업자)"),
+    ("confirming_corporate", "확인중(법인사업자)"),
 )
 
 def download_seller_account_location(instance, filename):

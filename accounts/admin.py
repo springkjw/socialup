@@ -23,8 +23,11 @@ class UserAdmin(admin.ModelAdmin):
 class WithdrawalAdmin(admin.ModelAdmin):
 	list_display = ('__unicode__', 'seller', 'status',)
 
+class SellerAdmin(admin.ModelAdmin):
+    list_display = ('__unicode__', 'type')
+
 
 admin.site.register(MyUser, UserAdmin)
-admin.site.register(Seller)
+admin.site.register(Seller, SellerAdmin)
 admin.site.register(SellerAccount)
 admin.site.register(Withdrawal, WithdrawalAdmin)

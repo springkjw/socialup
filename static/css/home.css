@@ -690,11 +690,12 @@ li:nth-child(5) .circle-text {
 	z-index:3;
 }
 .circle-mask2-text{
-  padding-top:20px;
+    padding-top:6px;
+    line-height: 20px;
 }
 
 _:-ms-lang(x), .circle-mask2-text {
-  padding-top:15px;
+  padding-top:2px;
 }
 
 .cash{

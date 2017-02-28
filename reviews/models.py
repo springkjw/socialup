@@ -62,7 +62,9 @@ def new_review_receiver(sender, instance, created, *args, **kwargs):
     sum_of_seller_ratings = 0
     num_seller_reviews = 0
     for each_product in products:
-        sum_of_seller_ratings += each_product.rating
+        each_product_reviews = ProductReview.objects.filter(product=each_product)
+        for each_product_review in each_product_reviews:
+            sum_of_seller_ratings += each_product_review.rating
         num_seller_reviews += each_product.get_num_reviews
 
     if num_seller_reviews :

@@ -364,6 +364,7 @@ body {
 .dashboard-content .dashboard-change-form label {
     font-size: 14px;
     color: #3D3D3D;
+    margin-right: 10px;
 }
 
 .dashboard-content .dashboard-change-form label[for=id_description] {
@@ -641,6 +642,13 @@ body {
     text-align:center;
 }
 
+.dashboard-change-form.seller .business_confirming {
+    display: none;
+    text-align: center;
+    color: red;
+    margin-bottom: 4px;
+}
+
 .dashboard-change-form.seller .seller_form_title.representative_name{
     width:40%;
 }
@@ -889,8 +897,11 @@ body {
     background: white;
 }
 
-/*  */
-
+/* hide comfirming status option */
 #id_type li:nth-child(4){
+    display: none;
+}
+
+#id_type li:nth-child(5){
     display: none;
 }

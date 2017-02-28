@@ -116,7 +116,7 @@ def cs_admin_user_short_name(user_id):
 def cs_admin_user_avatar(user_id):
     try:
         cs_admin_user = MyUser.objects.get(email='social_up@naver.com')
-        cs_admin_user_avatar = cs_admin_user.get_avatar()
+        cs_admin_user_avatar = cs_admin_user.get_avatar
     except:
         cs_admin_user_avatar = None
     return cs_admin_user_avatar
