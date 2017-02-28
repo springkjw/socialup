@@ -7,6 +7,17 @@
 
 {% block dashboard_js %}
     <script type="text/javascript" src="{% static 'js/seller/order.js' %}"></script>
+    <script type="text/javascript">
+        $('.report_detail_button').on('click', function () {
+            if($(this).attr('aria-hidden')=='true'){
+                $(this).parent().next().show();
+                $(this).attr('aria-hidden', 'false');
+            }else{
+                $(this).parent().next().hide();
+                $(this).attr('aria-hidden', 'true');
+            }
+        });
+    </script>
 {% endblock %}
 
 {% block dashboard_content %}
@@ -27,19 +38,46 @@
             </div>
         </div>
         <div>
-            <div class="report-received-table-wrapper">
-                <ul class="report-received-table-ul">
-                    <li class="table_report number">번호</li>
-                    <li class="table_report type">유형</li>
-                    <li class="table_report detail">문의내용</li>
-                    <li class="table_report date">날짜</li>
-                    <li class="table_report status">상태</li>
+            <div class="report-column-name-wrapper">
+                <ul class="report-column-name-ul">
+                    <li class="report-column-name number">번호</li>
+                    <li class="report-column-name type">유형</li>
+                    <li class="report-column-name content" style="width: 37%">신고받은 내용</li>
+                    <li class="report-column-name date" style="width: 8%">날짜</li>
+                    <li class="report-column-name status" style="width: 19%">진행상태</li>
                 </ul>
             </div>
             {% if reports %}
                 {% for report in reports %}
-                    <div>
-                        <p>{{ report.detail}}</p>
+                    <div class="report_each_wrapper overview">
+                        <ul class="report-table-ul">
+                            <li class="report-item number">{{ report.id }}</li>
+                            <li class="report-item type">{{ report.type_in_korean }}</li>
+                            <li class="report-item content" style="width: 38%">{{ report.message_to_bad_user }}</li>
+                            <li class="report-item date">{{ report.created|date:"m.d" }}</li>
+                            <li class="report-item status" style="width: 19%">
+                                {% if report.status == 'completed' %}
+                                    처리완료
+                                {% else %}
+                                    처리중
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="report_detail_button_wrapper">
+                        <img class="report_detail_button" src="{% static 'img/downward_arrow.png' %}" aria-hidden="true">
+                    </div>
+                    <div class="report_detail_wrapper">
+                        <div class="report_each_wrapper detail">
+                            <div class="report_each_detail_left">신고받은 내용</div>
+                            <div class="report_each_detail_right" style="width: 350px">
+                                {% if report.message_to_bad_user %}
+                                    {{ report.message_to_bad_user }}
+                                {% else %}
+                                    {{ report.type_in_korean }}
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
                 {% endfor %}
             {% else %}
