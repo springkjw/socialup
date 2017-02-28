@@ -12,19 +12,20 @@ class UserAdmin(admin.ModelAdmin):
 	list_filter = ('is_admin', 'is_active')
 	fieldsets = (
 	    (None, {'fields': ('password', 'media',)}),
-	    ('Personal info', {'fields': ('email', 'name', 'phone',
+		('Personal info', {'fields': ('email', 'name', 'phone',
 									  'description', 'sex', 'address',
 									  'job', 'birth_year', 'agree_purchase_info_email')}),
-	    ('Permissions', {'fields': ('is_admin', 'is_active')}),
+		('Permissions', {'fields': ('is_admin', 'is_active')}),
 	)
 	ordering = ('email',)
 	filter_horizontal = ()
 
 class WithdrawalAdmin(admin.ModelAdmin):
 	list_display = ('__unicode__', 'seller', 'status',)
+	list_filter = ('status',)
 
 class SellerAdmin(admin.ModelAdmin):
-    list_display = ('__unicode__', 'type')
+	list_display = ('__unicode__', 'type')
 
 
 admin.site.register(MyUser, UserAdmin)
