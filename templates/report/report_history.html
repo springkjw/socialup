@@ -74,7 +74,13 @@
                     <div class="report_detail_wrapper">
                         <div class="report_each_wrapper detail">
                             <div class="report_each_detail_left">&nbsp;&nbsp;&nbsp;&nbsp;신고내용</div>
-                            <div class="report_each_detail_right">{{ report.detail }}</div>
+                            <div class="report_each_detail_right">
+                                {{ report.detail }}
+                                {% if report.file %}
+                                    <br><br>
+                                    <span style="color: rgba(0, 0, 0, .5)">첨부파일 : <a target="_blank" href="{{ report.file.url }}">{{ report.file.name|get_image_name }}</a><span>
+                                {% endif %}
+                            </div>
                         </div>
                         {% if report.reply %}
                             <div class="report_each_wrapper reply">
