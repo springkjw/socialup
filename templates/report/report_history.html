@@ -11,10 +11,10 @@
     <script type="text/javascript">
         $('.report_detail_button').on('click', function () {
             if($(this).attr('aria-hidden')=='true'){
-                $(this).parent().parent().next().show();
+                $(this).parent().next().show();
                 $(this).attr('aria-hidden', 'false');
             }else{
-                $(this).parent().parent().next().hide();
+                $(this).parent().next().hide();
                 $(this).attr('aria-hidden', 'true');
             }
         });
@@ -39,46 +39,53 @@
             </div>
         </div>
         <div>
+            <div class="report-column-name-wrapper">
+                <ul class="report-column-name-ul">
+                    <li class="report-column-name number">번호</li>
+                    <li class="report-column-name type">유형</li>
+                    <li class="report-column-name content">신고내용</li>
+                    <li class="report-column-name bad_user_description">신고한 ID</li>
+                    <li class="report-column-name date">날짜</li>
+                    <li class="report-column-name status">진행상태</li>
+                </ul>
+            </div>
+
             {% if reports %}
                 {% for report in reports %}
                     <div class="report_each_wrapper overview">
-                        <div class="report_each_left">
-                            <img id="user" src="{{ report.writer.get_avatar }}">
-                        </div>
-                        <div class="report_each_mid overview">
-                            <div class="report_each_type overview">{{ report.id }}. {{ report.type_in_korean }}</div>
-                            <div class="report_each_detail">{{ report.created|date:"Y.m.d" }}</div>
-                        </div>
-                        <div class="report_each_right">
-                            <div class="report_status_user_wrapper"">
-                                <div style="text-align: right">{{ report.writer.get_short_name }}</div>
+                        <ul class="report-table-ul">
+                            <li class="report-item number">{{ report.id }}</li>
+                            <li class="report-item type">{{ report.type_in_korean }}</li>
+                            <li class="report-item content">{{ report.detail }}</li>
+                            <li class="report-item bad_user_description">{{ report.bad_user_description }}</li>
+                            <li class="report-item date">{{ report.created|date:"m.d" }}</li>
+                            <li class="report-item status">
                                 {% if report.status == 'completed' %}
-                                    <div class="report_status_box">처리완료</div>
+                                    처리완료
                                 {% else %}
-                                    <div class="report_status_box">처리중</div>
+                                    처리중
                                 {% endif %}
-                            </div>
-                            <img class="report_detail_button" src="{% static 'img/report_arrow.png' %}" aria-hidden="true">
-                        </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="report_detail_button_wrapper">
+                        <img class="report_detail_button" src="{% static 'img/downward_arrow.png' %}" aria-hidden="true">
                     </div>
                     <div class="report_detail_wrapper">
                         <div class="report_each_wrapper detail">
-                            <div class="report_each_left">
-                                <img id="user" src="{{ report.writer.get_avatar }}">
-                            </div>
-                            <div class="report_each_mid">
-                                <div class="report_each_type">{{ report.type_in_korean }}</div>
-                                <div class="report_each_detail">{{ report.detail}}</div>
+                            <div class="report_each_detail_left">&nbsp;&nbsp;&nbsp;&nbsp;신고내용</div>
+                            <div class="report_each_detail_right">
+                                {{ report.detail }}
+                                {% if report.file %}
+                                    <br><br>
+                                    <span style="color: rgba(0, 0, 0, .5)">첨부파일 : <a target="_blank" href="{{ report.file.url }}">{{ report.file.name|get_image_name }}</a><span>
+                                {% endif %}
                             </div>
                         </div>
                         {% if report.reply %}
                             <div class="report_each_wrapper reply">
-                                <div class="report_each_left">
-                                    <img id="user" src="{{ 1|cs_admin_user_avatar }}">
-                                </div>
-                                <div class="report_each_mid">
-                                    <div class="report_each_detail">{{ report.reply}}</div>
-                                </div>
+                                <div class="report_each_detail_left">관리자 답변</div>
+                                <div class="report_each_detail_right">{{ report.reply }}</div>
                             </div>
                         {% endif %}
                     </div>
