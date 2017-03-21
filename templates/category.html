@@ -10,22 +10,22 @@
     <script type="text/javascript" src="{% static 'js/home.js' %}"></script>
     <script type="text/javascript">
         $(function () {
-            $( "#slider-range" ).slider({
-            range: true,
-            min: {{ high_low.1 }},
-            max: {{ high_low.0 }},
-            values: [ {{ high_low.1 }}, {{ high_low.0 }} ],
-            slide: function( event, ui ) {
-                $( "#amount" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
-                var first_span  = parseInt($(this).find('span').eq(0).css("left"))-10;
-                var second_span  = parseInt($(this).find('span').eq(1).css("left"))-30-first_span;
-                first_span = first_span+"px";
-                second_span = second_span+"px";
-                $("#first_span_val").text(ui.values[0]).css("margin-left", first_span);
-                $("#first_span_val").digits();
-                $("#second_span_val").text(ui.values[1]).css("margin-left", second_span);
-                $("#second_span_val").digits();
-                filter_ajax(ui.values[0],ui.values[1]);
+            $("#slider-range").slider({
+                range: true,
+                min: {{ high_low.1 }},
+                max: {{ high_low.0 }},
+                values: [{{ high_low.1 }}, {{ high_low.0 }}],
+                slide: function (event, ui) {
+                    $("#amount").val(ui.values[0] + " - " + ui.values[1]);
+                    var first_span = parseInt($(this).find('span').eq(0).css("left")) - 10;
+                    var second_span = parseInt($(this).find('span').eq(1).css("left")) - 30 - first_span;
+                    first_span = first_span + "px";
+                    second_span = second_span + "px";
+                    $("#first_span_val").text(ui.values[0]).css("margin-left", first_span);
+                    $("#first_span_val").digits();
+                    $("#second_span_val").text(ui.values[1]).css("margin-left", second_span);
+                    $("#second_span_val").digits();
+                    filter_ajax(ui.values[0], ui.values[1]);
                 }
             });
             $("#first_span_val").text({{ high_low.1 }}).css("margin-left", -10);
@@ -55,19 +55,19 @@
 
 
             // selected category color
-            $('.header_navigation li a').each(function(){
-                if($(this).text().trim()=='{{ category_name }}'){
+            $('.header_navigation li a').each(function () {
+                if ($(this).text().trim() == '{{ category_name }}') {
                     $(this).parent().addClass('active');
                 }
             });
 
             // selected tag color
-            if('{{ tag_name }}'){
-                ($('.tags_wrapper').find("input[value={{ tag_name }}]")).attr('checked',true);
+            if ('{{ tag_name }}') {
+                ($('.tags_wrapper').find("input[value={{ tag_name }}]")).attr('checked', true);
                 check_tags_for_hover();
                 get_items_by_ajax();
             }
-            $('#tag_navigation').on('change', function() {
+            $('#tag_navigation').on('change', function () {
                 get_items_by_ajax();
             });
         });
@@ -75,7 +75,7 @@
         function get_items_by_ajax() {
             var checked_tags = [];
             var checked_clicked = $('input[name=tag]:checked').next().find('.tag_image_clicked').get();
-            checked_clicked.forEach(function(val){
+            checked_clicked.forEach(function (val) {
                 checked_tags.push(jQuery(val).parent().prev().attr('value'));
             });
 
@@ -85,16 +85,16 @@
                     checked_tags: JSON.stringify(checked_tags)
                 },
                 success: function (data) {
-                    if(data['checked_tags'].length ==0){
+                    if (data['checked_tags'].length == 0) {
                         $('.list-card').each(function () {
                             $(this).show();
                         });
                     }
-                    else{
+                    else {
                         $('.list-card').each(function () {
                             $(this).hide();
                         });
-                        data['product_ids_by_tags'].forEach(function(val){
+                        data['product_ids_by_tags'].forEach(function (val) {
                             $('.list-card[data-id=' + val + ']').show();
                         });
                     }
@@ -112,40 +112,40 @@
                 <div class="tag_wrapper">
                     <input type="checkbox" name="tag" id="all_checkbox" value="all"/>
                     <label for="all_checkbox">
-                        <img class="tag_image_before_click" src="{% static 'img/new_tags/all.png'%}">
-                        <img class="tag_image_clicked" src="{% static 'img/new_tags/all_click.png'%}">
+                        <img class="tag_image_before_click" src="{% static 'img/new_tags/all.png' %}">
+                        <img class="tag_image_clicked" src="{% static 'img/new_tags/all_click.png' %}">
                         <span>전체</span>
                     </label>
                 </div>
                 <div class="tag_wrapper">
                     <input type="checkbox" name="tag" id="it_checkbox" value="it"/>
                     <label for="it_checkbox">
-                        <img class="tag_image_before_click" src="{% static 'img/new_tags/it.png'%}">
-                        <img class="tag_image_clicked" src="{% static 'img/new_tags/it_click.png'%}">
+                        <img class="tag_image_before_click" src="{% static 'img/new_tags/it.png' %}">
+                        <img class="tag_image_clicked" src="{% static 'img/new_tags/it_click.png' %}">
                         <span>IT, 기기</span>
                     </label>
                 </div>
                 <div class="tag_wrapper">
                     <input type="checkbox" name="tag" id="food_checkbox" value="food"/>
                     <label for="food_checkbox">
-                        <img class="tag_image_before_click" src="{% static 'img/new_tags/food.png'%}">
-                        <img class="tag_image_clicked" src="{% static 'img/new_tags/food_click.png'%}">
+                        <img class="tag_image_before_click" src="{% static 'img/new_tags/food.png' %}">
+                        <img class="tag_image_clicked" src="{% static 'img/new_tags/food_click.png' %}">
                         <span>식품/맛집</span>
                     </label>
                 </div>
                 <div class="tag_wrapper">
                     <input type="checkbox" name="tag" id="fashion_checkbox" value="fashion"/>
                     <label for="fashion_checkbox">
-                        <img class="tag_image_before_click" src="{% static 'img/new_tags/fashion.png'%}">
-                        <img class="tag_image_clicked" src="{% static 'img/new_tags/fashion_click.png'%}">
+                        <img class="tag_image_before_click" src="{% static 'img/new_tags/fashion.png' %}">
+                        <img class="tag_image_clicked" src="{% static 'img/new_tags/fashion_click.png' %}">
                         <span>패션/뷰티</span>
                     </label>
                 </div>
                 <div class="tag_wrapper">
                     <input type="checkbox" name="tag" id="pet_checkbox" value="pet"/>
                     <label for="pet_checkbox">
-                        <img class="tag_image_before_click" src="{% static 'img/new_tags/pet.png'%}">
-                        <img class="tag_image_clicked" src="{% static 'img/new_tags/pet_click.png'%}">
+                        <img class="tag_image_before_click" src="{% static 'img/new_tags/pet.png' %}">
+                        <img class="tag_image_clicked" src="{% static 'img/new_tags/pet_click.png' %}">
                         <span>반려동물</span>
                     </label>
                 </div>
@@ -153,40 +153,40 @@
                 <div class="tag_wrapper">
                     <input type="checkbox" name="tag" id="car_checkbox" value="car"/>
                     <label for="car_checkbox">
-                        <img class="tag_image_before_click" src="{% static 'img/new_tags/car.png'%}">
-                        <img class="tag_image_clicked" src="{% static 'img/new_tags/car_click.png'%}">
+                        <img class="tag_image_before_click" src="{% static 'img/new_tags/car.png' %}">
+                        <img class="tag_image_clicked" src="{% static 'img/new_tags/car_click.png' %}">
                         <span>자동차</span>
                     </label>
                 </div>
                 <div class="tag_wrapper">
                     <input type="checkbox" name="tag" id="travel_checkbox" value="travel"/>
                     <label for="travel_checkbox">
-                        <img class="tag_image_before_click" src="{% static 'img/new_tags/travel.png'%}">
-                        <img class="tag_image_clicked" src="{% static 'img/new_tags/travel_click.png'%}">
+                        <img class="tag_image_before_click" src="{% static 'img/new_tags/travel.png' %}">
+                        <img class="tag_image_clicked" src="{% static 'img/new_tags/travel_click.png' %}">
                         <span>여행,취미</span>
                     </label>
                 </div>
                 <div class="tag_wrapper">
                     <input type="checkbox" name="tag" id="health_checkbox" value="health"/>
                     <label for="health_checkbox">
-                        <img class="tag_image_before_click" src="{% static 'img/new_tags/health.png'%}">
-                        <img class="tag_image_clicked" src="{% static 'img/new_tags/health_click.png'%}">
+                        <img class="tag_image_before_click" src="{% static 'img/new_tags/health.png' %}">
+                        <img class="tag_image_clicked" src="{% static 'img/new_tags/health_click.png' %}">
                         <span>건강,의료</span>
                     </label>
                 </div>
                 <div class="tag_wrapper">
                     <input type="checkbox" name="tag" id="interior_checkbox" value="interior"/>
                     <label for="interior_checkbox">
-                        <img class="tag_image_before_click" src="{% static 'img/new_tags/interior.png'%}">
-                        <img class="tag_image_clicked" src="{% static 'img/new_tags/interior_click.png'%}">
+                        <img class="tag_image_before_click" src="{% static 'img/new_tags/interior.png' %}">
+                        <img class="tag_image_clicked" src="{% static 'img/new_tags/interior_click.png' %}">
                         <span>인테리어</span>
                     </label>
                 </div>
                 <div class="tag_wrapper">
                     <input type="checkbox" name="tag" id="etc_checkbox" value="etc"/>
                     <label for="etc_checkbox">
-                        <img class="tag_image_before_click" src="{% static 'img/new_tags/etc.png'%}">
-                        <img class="tag_image_clicked" src="{% static 'img/new_tags/etc_click.png'%}">
+                        <img class="tag_image_before_click" src="{% static 'img/new_tags/etc.png' %}">
+                        <img class="tag_image_clicked" src="{% static 'img/new_tags/etc_click.png' %}">
                         <span>기타</span>
                     </label>
                 </div>
@@ -230,9 +230,11 @@
                     <div class="product-rating" style="display:block;">
                         {% for product in products_rating %}
                             <a href="{{ product.get_absolute_url }}"
-                               class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}" data-id="{{ product.id }}">
-                                <div class="card-main-info" data-type="{{ product.sns_type }}" data-color="{{ product.sns_type_color }}">
-                                {% if product.manuscript_available and product.manuscript_price != 0 %}
+                               class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}"
+                               data-id="{{ product.id }}">
+                                <div class="card-main-info" data-type="{{ product.sns_type }}"
+                                     data-color="{{ product.sns_type_color }}">
+                                    {% if product.manuscript_available and product.manuscript_price != 0 %}
                                         <span class="card_manuscript_option separate">원고료 별도</span>
                                     {% elif product.manuscript_available %}
                                         <span class="card_manuscript_option">원고료 포함</span>
@@ -262,14 +264,15 @@
                                             상위노출
                                         </div>
                                     {% endif %}
-                                  <div class="card-type">
-                                    <img class="product-type-image" src="{{ product.sns_type_image_url }}" alt="{{ product.sns_type }}" />
-                                  </div>
-                                  <div class="card-title">
-                                        {{product.oneline_intro}}
+                                    <div class="card-type">
+                                        <img class="product-type-image" src="{{ product.sns_type_image_url }}"
+                                             alt="{{ product.sns_type }}"/>
+                                    </div>
+                                    <div class="card-title">
+                                        {{ product.oneline_intro }}
                                     </div>
                                     <div class="circle-wrapper">
-                                        <img class="circle-arrow" src="{% static 'img/arrow_gauge.png' %}" >
+                                        <img class="circle-arrow" src="{% static 'img/arrow_gauge.png' %}">
                                         <ul class="circle" gauge-data="{{ product.socialup_gauge }}">
                                             <li class="circle-list">
                                                 <div class="circle-text">1</div>
@@ -295,7 +298,8 @@
                                             </div>
                                         </ul>
                                         <div class="cash">
-                                            <span class="cash-price" style="font-size:1.2em; color:grey;" data-price="{{ product.price }}">
+                                            <span class="cash-price" style="font-size:1.2em; color:grey;"
+                                                  data-price="{{ product.price }}">
                                                {{ product.price }}원
                                                 {% if product.manuscript_price > 0 or product.highrank_price > 0 %}
                                                     ~
@@ -314,7 +318,7 @@
                                     </div>
                                     <div class="card-author">
                                         <div class="card-author-info">
-                                            <img src="{{ product.seller.user.get_avatar }}" >
+                                            <img src="{{ product.seller.user.get_avatar }}">
                                         </div>
                                         <div class="card-author-info-seller-rating">
                                             <div class="card-author-info-seller">{{ product.seller.user.get_short_name }}</div>
@@ -342,9 +346,11 @@
                     <div class="product-created" style="display:none;">
                         {% for product in products_created %}
                             <a href="{{ product.get_absolute_url }}"
-                               class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}" data-id="{{ product.id }}">
-                                <div class="card-main-info" data-type="{{ product.sns_type }}" data-color="{{ product.sns_type_color }}">
-                                {% if product.manuscript_available and product.manuscript_price != 0 %}
+                               class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}"
+                               data-id="{{ product.id }}">
+                                <div class="card-main-info" data-type="{{ product.sns_type }}"
+                                     data-color="{{ product.sns_type_color }}">
+                                    {% if product.manuscript_available and product.manuscript_price != 0 %}
                                         <span class="card_manuscript_option separate">원고료 별도</span>
                                     {% elif product.manuscript_available %}
                                         <span class="card_manuscript_option">원고료 포함</span>
@@ -374,14 +380,15 @@
                                             상위노출
                                         </div>
                                     {% endif %}
-                                  <div class="card-type">
-                                    <img class="product-type-image" src="{{ product.sns_type_image_url }}" alt="{{ product.sns_type }}" />
-                                  </div>
-                                  <div class="card-title">
-                                        {{product.oneline_intro}}
+                                    <div class="card-type">
+                                        <img class="product-type-image" src="{{ product.sns_type_image_url }}"
+                                             alt="{{ product.sns_type }}"/>
+                                    </div>
+                                    <div class="card-title">
+                                        {{ product.oneline_intro }}
                                     </div>
                                     <div class="circle-wrapper">
-                                        <img class="circle-arrow" src="{% static 'img/arrow_gauge.png' %}" >
+                                        <img class="circle-arrow" src="{% static 'img/arrow_gauge.png' %}">
                                         <ul class="circle" gauge-data="{{ product.socialup_gauge }}">
                                             <li class="circle-list">
                                                 <div class="circle-text">1</div>
@@ -406,7 +413,8 @@
                                             </div>
                                         </ul>
                                         <div class="cash">
-                                            <span class="cash-price" style="font-size:1.2em; color:grey;" data-price="{{ product.price }}">
+                                            <span class="cash-price" style="font-size:1.2em; color:grey;"
+                                                  data-price="{{ product.price }}">
                                                {{ product.price }}원
                                                 {% if product.manuscript_price > 0 or product.highrank_price > 0 %}
                                                     ~
@@ -425,7 +433,7 @@
                                     </div>
                                     <div class="card-author">
                                         <div class="card-author-info">
-                                            <img src="{{ product.seller.user.get_avatar }}" >
+                                            <img src="{{ product.seller.user.get_avatar }}">
                                         </div>
                                         <div class="card-author-info-seller-rating">
                                             <div class="card-author-info-seller">{{ product.seller.user.get_short_name }}</div>
@@ -453,9 +461,11 @@
                     <div class="product-price" style="display:none;">
                         {% for product in products_price %}
                             <a href="{{ product.get_absolute_url }}"
-                               class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}" data-id="{{ product.id }}">
-                                <div class="card-main-info" data-type="{{ product.sns_type }}" data-color="{{ product.sns_type_color }}">
-                                {% if product.manuscript_available and product.manuscript_price != 0 %}
+                               class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}"
+                               data-id="{{ product.id }}">
+                                <div class="card-main-info" data-type="{{ product.sns_type }}"
+                                     data-color="{{ product.sns_type_color }}">
+                                    {% if product.manuscript_available and product.manuscript_price != 0 %}
                                         <span class="card_manuscript_option separate">원고료 별도</span>
                                     {% elif product.manuscript_available %}
                                         <span class="card_manuscript_option">원고료 포함</span>
@@ -485,14 +495,15 @@
                                             상위노출
                                         </div>
                                     {% endif %}
-                                  <div class="card-type">
-                                    <img class="product-type-image" src="{{ product.sns_type_image_url }}" alt="{{ product.sns_type }}" />
-                                  </div>
-                                  <div class="card-title">
-                                        {{product.oneline_intro}}
+                                    <div class="card-type">
+                                        <img class="product-type-image" src="{{ product.sns_type_image_url }}"
+                                             alt="{{ product.sns_type }}"/>
+                                    </div>
+                                    <div class="card-title">
+                                        {{ product.oneline_intro }}
                                     </div>
                                     <div class="circle-wrapper">
-                                        <img class="circle-arrow" src="{% static 'img/arrow_gauge.png' %}" >
+                                        <img class="circle-arrow" src="{% static 'img/arrow_gauge.png' %}">
                                         <ul class="circle" gauge-data="{{ product.socialup_gauge }}">
                                             <li class="circle-list">
                                                 <div class="circle-text">1</div>
@@ -517,7 +528,8 @@
                                             </div>
                                         </ul>
                                         <div class="cash">
-                                            <span class="cash-price" style="font-size:1.2em; color:grey;" data-price="{{ product.price }}">
+                                            <span class="cash-price" style="font-size:1.2em; color:grey;"
+                                                  data-price="{{ product.price }}">
                                                {{ product.price }}원
                                                 {% if product.manuscript_price > 0 or product.highrank_price > 0 %}
                                                     ~
@@ -536,7 +548,7 @@
                                     </div>
                                     <div class="card-author">
                                         <div class="card-author-info">
-                                            <img src="{{ product.seller.user.get_avatar }}" >
+                                            <img src="{{ product.seller.user.get_avatar }}">
                                         </div>
                                         <div class="card-author-info-seller-rating">
                                             <div class="card-author-info-seller">{{ product.seller.user.get_short_name }}</div>
@@ -559,6 +571,9 @@
                                 </div>
                             {% endif %}
                         {% endfor %}
+                    </div>
+                    <div class="paginator">
+                        Page {{ products_rating.number }} of {{ products_rating.paginator.num_pages }}.
                     </div>
                     </div>
 

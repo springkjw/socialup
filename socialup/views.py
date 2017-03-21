@@ -6,6 +6,7 @@ from django.shortcuts import (
     HttpResponse,
 )
 from django.template import RequestContext
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
 
@@ -41,7 +42,6 @@ def home(request):
         "products_price": products_by_price,
         "high_low": high_low,
     }
-
 
     return render(request, template, context)
 
@@ -84,12 +84,18 @@ def product_category(request, category):
 
         return HttpResponse(json.dumps(data), content_type='application/json')
 
-    # 평점순
-    products_by_rating = products.active().order_by('-rating')
-    # 최신순
+    products_by_rating_list = products.active().order_by('-rating')
     products_by_created = products.active().order_by('-created')
-    # 가격순
     products_by_price = products.active().order_by('-price')
+
+    products_by_rating_paginator = Paginator(products_by_rating_list, 40)
+    page = request.GET.get('page')
+    try:
+        products_by_rating = products_by_rating_paginator.page(page)
+    except PageNotAnInteger:
+        products_by_rating = products_by_rating_paginator.page(1)
+    except EmptyPage:
+        products_by_rating = products_by_rating_paginator.page(products_by_rating_paginator.num_pages)
 
     try:
         highest_price = products_by_price[0].price
@@ -119,7 +125,8 @@ def product_search(request):
     search_option = request.GET['search_option']
 
     if search_option == 'integrated_search':
-        products = Product.objects.active().filter(Q(oneline_intro__contains=keyword) | Q(seller__user__email__iregex=keyword + '@' + r'.*$'))
+        products = Product.objects.active().filter(
+            Q(oneline_intro__contains=keyword) | Q(seller__user__email__iregex=keyword + '@' + r'.*$'))
     elif search_option == 'sns_all':
         products = Product.objects.active().filter(oneline_intro__contains=keyword)
     elif search_option == 'sns_blog':

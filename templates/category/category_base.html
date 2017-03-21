@@ -1,0 +1,235 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load producttags %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{% static 'js/home.js' %}"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#slider-range").slider({
+                range: true,
+                min: {{ high_low.1 }},
+                max: {{ high_low.0 }},
+                values: [{{ high_low.1 }}, {{ high_low.0 }}],
+                slide: function (event, ui) {
+                    $("#amount").val(ui.values[0] + " - " + ui.values[1]);
+                    var first_span = parseInt($(this).find('span').eq(0).css("left")) - 10;
+                    var second_span = parseInt($(this).find('span').eq(1).css("left")) - 30 - first_span;
+                    first_span = first_span + "px";
+                    second_span = second_span + "px";
+                    $("#first_span_val").text(ui.values[0]).css("margin-left", first_span);
+                    $("#first_span_val").digits();
+                    $("#second_span_val").text(ui.values[1]).css("margin-left", second_span);
+                    $("#second_span_val").digits();
+                    filter_ajax(ui.values[0], ui.values[1]);
+                }
+            });
+            $("#first_span_val").text({{ high_low.1 }}).css("margin-left", -10);
+            $("#first_span_val").digits();
+            $("#second_span_val").text({{ high_low.0 }}).css("margin-left", 75);
+            $("#second_span_val").digits();
+
+            $('.sort').on('click', function () {
+                $('.sort').removeClass('active');
+                $(this).addClass('active');
+
+                var type = $(this).text();
+                if (type == '평점순') {
+                    $('.product-rating').show();
+                    $('.product-created').hide();
+                    $('.product-price').hide();
+                } else if (type == '최신순') {
+                    $('.product-rating').hide();
+                    $('.product-created').show();
+                    $('.product-price').hide();
+                } else if (type == '가격순') {
+                    $('.product-rating').hide();
+                    $('.product-created').hide();
+                    $('.product-price').show();
+                }
+            });
+
+
+            // selected category color
+            $('.header_navigation li a').each(function () {
+                if ($(this).text().trim() == '{{ category_name }}') {
+                    $(this).parent().addClass('active');
+                }
+            });
+
+            // selected tag color
+            if ('{{ tag_name }}') {
+                ($('.tags_wrapper').find("input[value={{ tag_name }}]")).attr('checked', true);
+                check_tags_for_hover();
+                get_items_by_ajax();
+            }
+            $('#tag_navigation').on('change', function () {
+                get_items_by_ajax();
+            });
+        });
+
+        function get_items_by_ajax() {
+            var checked_tags = [];
+            var checked_clicked = $('input[name=tag]:checked').next().find('.tag_image_clicked').get();
+            checked_clicked.forEach(function (val) {
+                checked_tags.push(jQuery(val).parent().prev().attr('value'));
+            });
+
+            $.ajax({
+                url: window.location.pathname,
+                data: {
+                    checked_tags: JSON.stringify(checked_tags)
+                },
+                success: function (data) {
+                    if (data['checked_tags'].length == 0) {
+                        $('.list-card').each(function () {
+                            $(this).show();
+                        });
+                    }
+                    else {
+                        $('.list-card').each(function () {
+                            $(this).hide();
+                        });
+                        data['product_ids_by_tags'].forEach(function (val) {
+                            $('.list-card[data-id=' + val + ']').show();
+                        });
+                    }
+                }
+            })
+        }
+    </script>
+{% endblock %}
+
+{% block jumbotron %}
+    <div id="tag_navigation_wrapper">
+        <div id="tag_navigation_title">원하는 카테고리를 선택해주세요. (중복선택 가능)</div>
+        <div id="tag_navigation">
+            <div class="tags_wrapper">
+                <div class="tag_wrapper">
+                    <input type="checkbox" name="tag" id="all_checkbox" value="all"/>
+                    <label for="all_checkbox">
+                        <img class="tag_image_before_click" src="{% static 'img/new_tags/all.png' %}">
+                        <img class="tag_image_clicked" src="{% static 'img/new_tags/all_click.png' %}">
+                        <span>전체</span>
+                    </label>
+                </div>
+                <div class="tag_wrapper">
+                    <input type="checkbox" name="tag" id="it_checkbox" value="it"/>
+                    <label for="it_checkbox">
+                        <img class="tag_image_before_click" src="{% static 'img/new_tags/it.png' %}">
+                        <img class="tag_image_clicked" src="{% static 'img/new_tags/it_click.png' %}">
+                        <span>IT, 기기</span>
+                    </label>
+                </div>
+                <div class="tag_wrapper">
+                    <input type="checkbox" name="tag" id="food_checkbox" value="food"/>
+                    <label for="food_checkbox">
+                        <img class="tag_image_before_click" src="{% static 'img/new_tags/food.png' %}">
+                        <img class="tag_image_clicked" src="{% static 'img/new_tags/food_click.png' %}">
+                        <span>식품/맛집</span>
+                    </label>
+                </div>
+                <div class="tag_wrapper">
+                    <input type="checkbox" name="tag" id="fashion_checkbox" value="fashion"/>
+                    <label for="fashion_checkbox">
+                        <img class="tag_image_before_click" src="{% static 'img/new_tags/fashion.png' %}">
+                        <img class="tag_image_clicked" src="{% static 'img/new_tags/fashion_click.png' %}">
+                        <span>패션/뷰티</span>
+                    </label>
+                </div>
+                <div class="tag_wrapper">
+                    <input type="checkbox" name="tag" id="pet_checkbox" value="pet"/>
+                    <label for="pet_checkbox">
+                        <img class="tag_image_before_click" src="{% static 'img/new_tags/pet.png' %}">
+                        <img class="tag_image_clicked" src="{% static 'img/new_tags/pet_click.png' %}">
+                        <span>반려동물</span>
+                    </label>
+                </div>
+                <br>
+                <div class="tag_wrapper">
+                    <input type="checkbox" name="tag" id="car_checkbox" value="car"/>
+                    <label for="car_checkbox">
+                        <img class="tag_image_before_click" src="{% static 'img/new_tags/car.png' %}">
+                        <img class="tag_image_clicked" src="{% static 'img/new_tags/car_click.png' %}">
+                        <span>자동차</span>
+                    </label>
+                </div>
+                <div class="tag_wrapper">
+                    <input type="checkbox" name="tag" id="travel_checkbox" value="travel"/>
+                    <label for="travel_checkbox">
+                        <img class="tag_image_before_click" src="{% static 'img/new_tags/travel.png' %}">
+                        <img class="tag_image_clicked" src="{% static 'img/new_tags/travel_click.png' %}">
+                        <span>여행,취미</span>
+                    </label>
+                </div>
+                <div class="tag_wrapper">
+                    <input type="checkbox" name="tag" id="health_checkbox" value="health"/>
+                    <label for="health_checkbox">
+                        <img class="tag_image_before_click" src="{% static 'img/new_tags/health.png' %}">
+                        <img class="tag_image_clicked" src="{% static 'img/new_tags/health_click.png' %}">
+                        <span>건강,의료</span>
+                    </label>
+                </div>
+                <div class="tag_wrapper">
+                    <input type="checkbox" name="tag" id="interior_checkbox" value="interior"/>
+                    <label for="interior_checkbox">
+                        <img class="tag_image_before_click" src="{% static 'img/new_tags/interior.png' %}">
+                        <img class="tag_image_clicked" src="{% static 'img/new_tags/interior_click.png' %}">
+                        <span>인테리어</span>
+                    </label>
+                </div>
+                <div class="tag_wrapper">
+                    <input type="checkbox" name="tag" id="etc_checkbox" value="etc"/>
+                    <label for="etc_checkbox">
+                        <img class="tag_image_before_click" src="{% static 'img/new_tags/etc.png' %}">
+                        <img class="tag_image_clicked" src="{% static 'img/new_tags/etc_click.png' %}">
+                        <span>기타</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="special-service">
+            <div class="special-info">
+                <div class="special-title">
+                    인기 {{ category_name }} 포스팅
+                    <div class="special-subtitle">
+                        * 소셜업 게이지란? 소셜업만의 알고리즘을 통해 SNS의 다양한 요소를 분석해 수치화 시킨 광고비 대비 효과 지수입니다.
+                    </div>
+                </div>
+                <div class="special-sort">
+                    <ul>
+                        <li class="sort active" data-type="sort_1">평점순</li>
+                        <li class="sort" data-type="sort_2">최신순</li>
+                        <li class="sort" data-type="sort_3">가격순</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="range-wrapper">
+                <div id="slider-range"></div>
+                <span id="first_span_val"></span>
+                <span id="second_span_val"></span>
+            </div>
+            <div id="loading" style="display: none; position:absolute; left:50%; top:50%; z-index: 10;">
+                <img src="{% static 'img/ajax-loader_mid.gif' %}">
+            </div>
+            <div class="special-list">
+                {% if not products_rating %}
+                    <div class="no-list">
+                        아직 등록된 서비스가 없습니다.
+                    </div>
+                {% else %}
+                    {% block category_content %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
