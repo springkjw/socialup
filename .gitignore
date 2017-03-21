@@ -176,6 +176,6 @@ db.sqlite3
 .elasticbeanstalk/
 
 # Migrate files
-*/migrations/*
+#*/migrations/*
 !*/migrations/__init__.py
 
