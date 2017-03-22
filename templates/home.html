@@ -24,49 +24,6 @@
     <script type="text/javascript" src="{% static 'js/highcharts/solid-gauge.src.js' %}"></script>
     <script type="text/javascript">
         $(function () {
-            $( "#slider-range" ).slider({
-            range: true,
-            min: {{ high_low.1 }},
-            max: {{ high_low.0 }},
-            values: [ {{ high_low.1 }}, {{ high_low.0 }} ],
-            slide: function( event, ui ) {
-                $( "#amount" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
-                var first_span  = parseInt($(this).find('span').eq(0).css("left"))-10;
-                var second_span  = parseInt($(this).find('span').eq(1).css("left"))-50-first_span;
-                first_span = first_span+"px";
-                second_span = second_span+"px";
-                $("#first_span_val").text(ui.values[0]).css("margin-left", first_span);
-                $("#first_span_val").digits();
-                $("#second_span_val").text(ui.values[1]).css("margin-left", second_span);
-                $("#second_span_val").digits();
-                filter_ajax(ui.values[0],ui.values[1]);
-                }
-            });
-            $("#first_span_val").text({{ high_low.1 }}).css("margin-left", -10);
-            $("#first_span_val").digits();
-            $("#second_span_val").text({{ high_low.0 }}).css("margin-left", 75);
-            $("#second_span_val").digits();
-
-            $('.sort').on('click', function () {
-                $('.sort').removeClass('active');
-                $(this).addClass('active');
-
-                var type = $(this).text();
-                if (type == '평점순') {
-                    $('.product-rating').show();
-                    $('.product-created').hide();
-                    $('.product-price').hide();
-                } else if (type == '최신순') {
-                    $('.product-rating').hide();
-                    $('.product-created').show();
-                    $('.product-price').hide();
-                } else if (type == '가격순') {
-                    $('.product-rating').hide();
-                    $('.product-created').hide();
-                    $('.product-price').show();
-                }
-            });
-
             var jumbo_left = $(".jumbotron_left");
             var count = 0;
             jumbo_left.owlCarousel({
@@ -75,26 +32,26 @@
                 singleItem: true,
                 autoPlay: true,
                 stopOnHover: true,
-                pagination:false,
+                pagination: false,
                 loop: true,
-                navigation:true,
+                navigation: true,
                 navigationText: [
-                  "<i class='icon-chevron-left icon-white'><</i>",
-                  "<i class='icon-chevron-right icon-white'>></i>"
-                  ],
+                    "<i class='icon-chevron-left icon-white'><</i>",
+                    "<i class='icon-chevron-right icon-white'>></i>"
+                ],
                 afterMove: function () {
                     count++;
-                    if(count%6==1){
+                    if (count % 6 == 1) {
                         right_zero();
-                    }else if(count%6==2){
+                    } else if (count % 6 == 2) {
                         right_first();
-                    }else if(count%6==3){
+                    } else if (count % 6 == 3) {
                         right_second();
-                    }else if(count%6==4){
+                    } else if (count % 6 == 4) {
                         right_third();
-                    }else if(count%6==5){
+                    } else if (count % 6 == 5) {
                         right_fourth();
-                    }else{
+                    } else {
                         right_fifth();
                     }
                 }
@@ -106,55 +63,167 @@
             $('.allow-right').on('click', function () {
                 owl.trigger('owl.next');
             });
+
+            var order = getUrlParameter('order');
+            if (order == 'created') {
+                $('.sort[data-type=created]').addClass('active');
+            } else if (order == 'price') {
+                $('.sort[data-type=price]').addClass('active');
+            } else {
+                $('.sort[data-type=rating]').addClass('active');
+            }
         });
+
+        function getUrlParameter(params) {
+            var pageURL = decodeURIComponent(window.location.search.substring(1)),
+                    urlVariables = pageURL.split('&'), parameterName, i;
+
+            for (i = 0; i < urlVariables.length; i++) {
+                parameterName = urlVariables[i].split('=');
+
+                if (parameterName[0] === params) {
+                    return parameterName[1] === undefined ? true : parameterName[1];
+                }
+            }
+        }
     </script>
 {% endblock %}
 
 {% block jumbotron %}
     <div class="new_jumbotron">
         <div class="jumbotron_left">
-            <a href='/dashboard/guide/'><div class="owl-slide banner-0" style='background-image: url("{% static 'img/ver1.5/banner_00.png' %}");'></div></a>
-            <a href='/category/all?tag=pet'><div class="owl-slide banner-1" style='background-image: url("{% static 'img/ver1.5/banner_01.png' %}");'></div></a>
-            <a href='/category/all?tag=travel'><div class="owl-slide banner-2" style='background-image: url("{% static 'img/ver1.5/banner_02.png' %}");'></div></a>
-            <a href='/category/all?tag=food'><div class="owl-slide banner-3" style='background-image: url("{% static 'img/ver1.5/banner_03.png' %}");'></div></a>
-            <a href='/category/all?tag=fashion'><div class="owl-slide banner-4" style='background-image: url("{% static 'img/ver1.5/banner_04.png' %}");'></div></a>
-            <a href='/category/all?tag=it'><div class="owl-slide banner-5" style='background-image: url("{% static 'img/ver1.5/banner_05.png' %}");'></div></a>
+            <a href='/dashboard/guide/'>
+                <div class="owl-slide banner-0"
+                     style='background-image: url("{% static 'img/ver1.5/banner_00.png' %}");'></div>
+            </a>
+            <a href='/category/all?tag=pet'>
+                <div class="owl-slide banner-1"
+                     style='background-image: url("{% static 'img/ver1.5/banner_01.png' %}");'></div>
+            </a>
+            <a href='/category/all?tag=travel'>
+                <div class="owl-slide banner-2"
+                     style='background-image: url("{% static 'img/ver1.5/banner_02.png' %}");'></div>
+            </a>
+            <a href='/category/all?tag=food'>
+                <div class="owl-slide banner-3"
+                     style='background-image: url("{% static 'img/ver1.5/banner_03.png' %}");'></div>
+            </a>
+            <a href='/category/all?tag=fashion'>
+                <div class="owl-slide banner-4"
+                     style='background-image: url("{% static 'img/ver1.5/banner_04.png' %}");'></div>
+            </a>
+            <a href='/category/all?tag=it'>
+                <div class="owl-slide banner-5"
+                     style='background-image: url("{% static 'img/ver1.5/banner_05.png' %}");'></div>
+            </a>
         </div>
         <div class="jumbotron_right zero">
-            <a href='/category/all?tag=travel'><div class="jumbotron_right_content first" style='background-image: url("{% static 'img/ver1.5/side_02.png' %}");'></div></a>
-            <a href='/category/all?tag=food'><div class="jumbotron_right_content second" style='background-image: url("{% static 'img/ver1.5/side_03.png' %}");'></div></a>
-            <a href='/category/all?tag=fashion'><div class="jumbotron_right_content third" style='background-image: url("{% static 'img/ver1.5/side_04.png' %}");'></div></a>
-            <a href='/category/all?tag=it'><div class="jumbotron_right_content fourth" style='background-image: url("{% static 'img/ver1.5/side_05.png' %}");'></div></a>
+            <a href='/category/all?tag=travel'>
+                <div class="jumbotron_right_content first"
+                     style='background-image: url("{% static 'img/ver1.5/side_02.png' %}");'></div>
+            </a>
+            <a href='/category/all?tag=food'>
+                <div class="jumbotron_right_content second"
+                     style='background-image: url("{% static 'img/ver1.5/side_03.png' %}");'></div>
+            </a>
+            <a href='/category/all?tag=fashion'>
+                <div class="jumbotron_right_content third"
+                     style='background-image: url("{% static 'img/ver1.5/side_04.png' %}");'></div>
+            </a>
+            <a href='/category/all?tag=it'>
+                <div class="jumbotron_right_content fourth"
+                     style='background-image: url("{% static 'img/ver1.5/side_05.png' %}");'></div>
+            </a>
         </div>
         <div class="jumbotron_right first">
-            <a href='/category/all?tag=travel'><div class="jumbotron_right_content first" style='background-image: url("{% static 'img/ver1.5/side_02.png' %}");'></div></a>
-            <a href='/category/all?tag=food'><div class="jumbotron_right_content second" style='background-image: url("{% static 'img/ver1.5/side_03.png' %}");'></div></a>
-            <a href='/category/all?tag=fashion'><div class="jumbotron_right_content third" style='background-image: url("{% static 'img/ver1.5/side_04.png' %}");'></div></a>
-            <a href='/category/all?tag=it'><div class="jumbotron_right_content fourth" style='background-image: url("{% static 'img/ver1.5/side_05.png' %}");'></div></a>
+            <a href='/category/all?tag=travel'>
+                <div class="jumbotron_right_content first"
+                     style='background-image: url("{% static 'img/ver1.5/side_02.png' %}");'></div>
+            </a>
+            <a href='/category/all?tag=food'>
+                <div class="jumbotron_right_content second"
+                     style='background-image: url("{% static 'img/ver1.5/side_03.png' %}");'></div>
+            </a>
+            <a href='/category/all?tag=fashion'>
+                <div class="jumbotron_right_content third"
+                     style='background-image: url("{% static 'img/ver1.5/side_04.png' %}");'></div>
+            </a>
+            <a href='/category/all?tag=it'>
+                <div class="jumbotron_right_content fourth"
+                     style='background-image: url("{% static 'img/ver1.5/side_05.png' %}");'></div>
+            </a>
         </div>
         <div class="jumbotron_right second">
-            <a href='/category/all?tag=pet'><div class="jumbotron_right_content first" style='background-image: url("{% static 'img/ver1.5/side_01.png' %}");'></div></a>
-            <a href='/category/all?tag=food'><div class="jumbotron_right_content second" style='background-image: url("{% static 'img/ver1.5/side_03.png' %}");'></div></a>
-            <a href='/category/all?tag=fashion'><div class="jumbotron_right_content third" style='background-image: url("{% static 'img/ver1.5/side_04.png' %}");'></div></a>
-            <a href='/category/all?tag=it'><div class="jumbotron_right_content fourth" style='background-image: url("{% static 'img/ver1.5/side_05.png' %}");'></div></a>
+            <a href='/category/all?tag=pet'>
+                <div class="jumbotron_right_content first"
+                     style='background-image: url("{% static 'img/ver1.5/side_01.png' %}");'></div>
+            </a>
+            <a href='/category/all?tag=food'>
+                <div class="jumbotron_right_content second"
+                     style='background-image: url("{% static 'img/ver1.5/side_03.png' %}");'></div>
+            </a>
+            <a href='/category/all?tag=fashion'>
+                <div class="jumbotron_right_content third"
+                     style='background-image: url("{% static 'img/ver1.5/side_04.png' %}");'></div>
+            </a>
+            <a href='/category/all?tag=it'>
+                <div class="jumbotron_right_content fourth"
+                     style='background-image: url("{% static 'img/ver1.5/side_05.png' %}");'></div>
+            </a>
         </div>
         <div class="jumbotron_right third">
-            <a href='/category/all?tag=pet'><div class="jumbotron_right_content first" style='background-image: url("{% static 'img/ver1.5/side_01.png' %}");'></div></a>
-            <a href='/category/all?tag=travel'><div class="jumbotron_right_content first" style='background-image: url("{% static 'img/ver1.5/side_02.png' %}");'></div></a>
-            <a href='/category/all?tag=fashion'><div class="jumbotron_right_content third" style='background-image: url("{% static 'img/ver1.5/side_04.png' %}");'></div></a>
-            <a href='/category/all?tag=it'><div class="jumbotron_right_content fourth" style='background-image: url("{% static 'img/ver1.5/side_05.png' %}");'></div></a>
+            <a href='/category/all?tag=pet'>
+                <div class="jumbotron_right_content first"
+                     style='background-image: url("{% static 'img/ver1.5/side_01.png' %}");'></div>
+            </a>
+            <a href='/category/all?tag=travel'>
+                <div class="jumbotron_right_content first"
+                     style='background-image: url("{% static 'img/ver1.5/side_02.png' %}");'></div>
+            </a>
+            <a href='/category/all?tag=fashion'>
+                <div class="jumbotron_right_content third"
+                     style='background-image: url("{% static 'img/ver1.5/side_04.png' %}");'></div>
+            </a>
+            <a href='/category/all?tag=it'>
+                <div class="jumbotron_right_content fourth"
+                     style='background-image: url("{% static 'img/ver1.5/side_05.png' %}");'></div>
+            </a>
         </div>
         <div class="jumbotron_right fourth">
-            <a href='/category/all?tag=pet'><div class="jumbotron_right_content first" style='background-image: url("{% static 'img/ver1.5/side_01.png' %}");'></div></a>
-            <a href='/category/all?tag=travel'><div class="jumbotron_right_content first" style='background-image: url("{% static 'img/ver1.5/side_02.png' %}");'></div></a>
-            <a href='/category/all?tag=food'><div class="jumbotron_right_content second" style='background-image: url("{% static 'img/ver1.5/side_03.png' %}");'></div></a>
-            <a href='/category/all?tag=it'><div class="jumbotron_right_content fourth" style='background-image: url("{% static 'img/ver1.5/side_05.png' %}");'></div></a>
+            <a href='/category/all?tag=pet'>
+                <div class="jumbotron_right_content first"
+                     style='background-image: url("{% static 'img/ver1.5/side_01.png' %}");'></div>
+            </a>
+            <a href='/category/all?tag=travel'>
+                <div class="jumbotron_right_content first"
+                     style='background-image: url("{% static 'img/ver1.5/side_02.png' %}");'></div>
+            </a>
+            <a href='/category/all?tag=food'>
+                <div class="jumbotron_right_content second"
+                     style='background-image: url("{% static 'img/ver1.5/side_03.png' %}");'></div>
+            </a>
+            <a href='/category/all?tag=it'>
+                <div class="jumbotron_right_content fourth"
+                     style='background-image: url("{% static 'img/ver1.5/side_05.png' %}");'></div>
+            </a>
         </div>
         <div class="jumbotron_right fifth">
-            <a href='/category/all?tag=pet'><div class="jumbotron_right_content first" style='background-image: url("{% static 'img/ver1.5/side_01.png' %}");'></div></a>
-            <a href='/category/all?tag=travel'><div class="jumbotron_right_content first" style='background-image: url("{% static 'img/ver1.5/side_02.png' %}");'></div></a>
-            <a href='/category/all?tag=food'><div class="jumbotron_right_content second" style='background-image: url("{% static 'img/ver1.5/side_03.png' %}");'></div></a>
-            <a href='/category/all?tag=fashion'><div class="jumbotron_right_content third" style='background-image: url("{% static 'img/ver1.5/side_04.png' %}");'></div></a>
+            <a href='/category/all?tag=pet'>
+                <div class="jumbotron_right_content first"
+                     style='background-image: url("{% static 'img/ver1.5/side_01.png' %}");'></div>
+            </a>
+            <a href='/category/all?tag=travel'>
+                <div class="jumbotron_right_content first"
+                     style='background-image: url("{% static 'img/ver1.5/side_02.png' %}");'></div>
+            </a>
+            <a href='/category/all?tag=food'>
+                <div class="jumbotron_right_content second"
+                     style='background-image: url("{% static 'img/ver1.5/side_03.png' %}");'></div>
+            </a>
+            <a href='/category/all?tag=fashion'>
+                <div class="jumbotron_right_content third"
+                     style='background-image: url("{% static 'img/ver1.5/side_04.png' %}");'></div>
+            </a>
         </div>
     </div>
 {% endblock %}
@@ -178,17 +247,18 @@
                     </div>
                     <div class="special-sort">
                         <ul>
-                            <li class="sort active" data-type="sort_1">평점순</li>
-                            <li class="sort" data-type="sort_2">최신순</li>
-                            <li class="sort" data-type="sort_3">가격순</li>
+                            <li class="sort" data-type="rating"><a
+                                    href="{{ request.path }}?category={{ request.GET.category }}{{ tag_params }}&order=rating">평점순</a>
+                            </li>
+                            <li class="sort" data-type="created"><a
+                                    href="{{ request.path }}?category={{ request.GET.category }}{{ tag_params }}&order=created">최신순</a>
+                            </li>
+                            <li class="sort" data-type="price"><a
+                                    href="{{ request.path }}?category={{ request.GET.category }}{{ tag_params }}&order=price">가격순</a>
+                            </li>
                         </ul>
                     </div>
                 {% endif %}
-            </div>
-            <div id="range-wrapper">
-                <div id="slider-range"></div>
-                <span id="first_span_val"></span>
-                <span id="second_span_val"></span>
             </div>
             <div id="loading" style="display: none; position:absolute; left:50%; top:50%; z-index: 10;">
                 <img src="{% static 'img/ajax-loader_mid.gif' %}">
@@ -245,11 +315,12 @@
                         {% endif %}
                     {% endfor %}
                 {% else %}
-                    <div class="product-rating" style="display:block;">
-                        {% for product in products_rating %}
+                    <div class="product" style="display:block;">
+                        {% for product in products %}
                             <a href="{{ product.get_absolute_url }}"
                                class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}">
-                                <div class="card-main-info" data-type="{{ product.sns_type }}" data-color="{{ product.sns_type_color }}">
+                                <div class="card-main-info" data-type="{{ product.sns_type }}"
+                                     data-color="{{ product.sns_type_color }}">
                                     {% if product.manuscript_available and product.manuscript_price != 0 %}
                                         <span class="card_manuscript_option separate">원고료 별도</span>
                                     {% elif product.manuscript_available %}
@@ -281,14 +352,15 @@
                                         </div>
                                     {% endif %}
 
-                                  <div class="card-type">
-                                    <img class="product-type-image" src="{{ product.sns_type_image_url }}" alt="{{ product.sns_type }}" />
-                                  </div>
-                                  <div class="card-title">
-                                        {{product.oneline_intro}}
+                                    <div class="card-type">
+                                        <img class="product-type-image" src="{{ product.sns_type_image_url }}"
+                                             alt="{{ product.sns_type }}"/>
+                                    </div>
+                                    <div class="card-title">
+                                        {{ product.oneline_intro }}
                                     </div>
                                     <div class="circle-wrapper">
-                                        <img class="circle-arrow" src="{% static 'img/arrow_gauge.png' %}" >
+                                        <img class="circle-arrow" src="{% static 'img/arrow_gauge.png' %}">
                                         <ul class="circle" gauge-data="{{ product.socialup_gauge }}">
                                             <li class="circle-list">
                                                 <div class="circle-text">1</div>
@@ -314,7 +386,8 @@
                                             </div>
                                         </ul>
                                         <div class="cash">
-                                            <span class="cash-price" style="font-size:1.2em; color:grey;" data-price="{{ product.price }}">
+                                            <span class="cash-price" style="font-size:1.2em; color:grey;"
+                                                  data-price="{{ product.price }}">
                                                {{ product.price }}원
                                                 {% if product.manuscript_price > 0 or product.highrank_price > 0 %}
                                                     ~
@@ -333,7 +406,7 @@
                                     </div>
                                     <div class="card-author">
                                         <div class="card-author-info">
-                                            <img src="{{ product.seller.user.get_avatar }}" >
+                                            <img src="{{ product.seller.user.get_avatar }}">
                                         </div>
                                         <div class="card-author-info-seller-rating">
                                             <div class="card-author-info-seller">{{ product.seller.user.get_short_name }}</div>
@@ -356,235 +429,9 @@
                                 </div>
                             {% endif %}
                         {% endfor %}
-                       </div>
                     </div>
-                    <div class="product-created" style="display:none;">
-                    {% for product in products_created %}
-                            <a href="{{ product.get_absolute_url }}"
-                               class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}">
-                                <div class="card-main-info" data-type="{{ product.sns_type }}" data-color="{{ product.sns_type_color }}">
-                                {% if product.manuscript_available and product.manuscript_price != 0 %}
-                                        <span class="card_manuscript_option separate">원고료 별도</span>
-                                    {% elif product.manuscript_available %}
-                                        <span class="card_manuscript_option">원고료 포함</span>
-                                    {% else %}
-                                        <span class="card_manuscript_option disable">원고작성 불가</span>
-                                    {% endif %}
-                                    {% if product.sns_type == 'facebook' %}
-                                        <div class="card_sns_option">
-                                            {% if product.sns_additional_info == 'individual' %}
-                                                개인
-                                            {% else %}
-                                                페이지
-                                            {% endif %}
-                                        </div>
-                                    {% endif %}
-                                    {% if product.sns_type == 'instagram' %}
-                                        <div class="card_sns_option">
-                                            {% if product.sex == 'female' %}
-                                                여성
-                                            {% else %}
-                                                남성
-                                            {% endif %}
-                                        </div>
-                                    {% endif %}
-                                    {% if product.sns_type == 'blog' and product.highrank_available %}
-                                        <div class="card_sns_option blog">
-                                            상위노출
-                                        </div>
-                                    {% endif %}
-                                  <div class="card-type">
-                                    <img class="product-type-image" src="{{ product.sns_type_image_url }}" alt="{{ product.sns_type }}" />
-                                  </div>
-                                  <div class="card-title">
-                                        {{product.oneline_intro}}
-                                    </div>
-                                    <div class="circle-wrapper">
-                                        <img class="circle-arrow" src="{% static 'img/arrow_gauge.png' %}" >
-                                        <ul class="circle" gauge-data="{{ product.socialup_gauge }}">
-                                            <li class="circle-list">
-                                                <div class="circle-text">1</div>
-                                            </li>
-                                            <li class="circle-list">
-                                                <div class="circle-text">2</div>
-                                            </li>
-                                            <li class="circle-list">
-                                                <div class="circle-text">3</div>
-                                            </li>
-                                            <li class="circle-list">
-                                                <div class="circle-text">4</div>
-                                            </li>
-                                            <li class="circle-list">
-                                                <div class="circle-text">5</div>
-                                            </li>
-                                            <div class="circle-mask2">
-                                                <div class="circle-mask2-text">
-                                                    <span style="font-size:11px; color:#888;">팔로워 1명당</span><br>
-                                                    <span style="font-size:23px;">
-                                                        {{ product.unit_price }}
-                                                    </span>
-                                                    <span style="font-size:15px;">원</span>
-                                                </div>
-                                            </div>
-                                        </ul>
-                                        <div class="cash">
-                                            <span class="cash-price" style="font-size:1.2em; color:grey;" data-price="{{ product.price }}">
-                                               {{ product.price }}원
-                                                {% if product.manuscript_price > 0 or product.highrank_price > 0 %}
-                                                    ~
-                                                {% endif %}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-info">
-                                    <div class="card-subtitle">
-                                        {% for sns in product.sns_set.all %}
-                                            {% for item in sns.analytics.all %}
-                                                {{ item }} {{ item.outcome|round_count }}
-                                            {% endfor %}
-                                        {% endfor %}
-                                    </div>
-                                    <div class="card-author">
-                                        <div class="card-author-info">
-                                            <img src="{{ product.seller.user.get_avatar }}" >
-                                        </div>
-                                        <div class="card-author-info-seller-rating">
-                                            <div class="card-author-info-seller">{{ product.seller.user.get_short_name }}</div>
-                                            <div class="card-author-info-rating" data-rating="{{ product.rating }}">
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                            </div>
-                                            <div class="card-author-product-reviews">
-                                                ({{ product.id|get_product_review_count }})
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            {% if products|length == forloop.counter %}
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                       </div>
                     </div>
-                    <div class="product-price" style="display:none;">
-                    {% for product in products_price %}
-                            <a href="{{ product.get_absolute_url }}"
-                               class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}">
-                                <div class="card-main-info" data-type="{{ product.sns_type }}" data-color="{{ product.sns_type_color }}">
-                                {% if product.manuscript_available and product.manuscript_price != 0 %}
-                                        <span class="card_manuscript_option separate">원고료 별도</span>
-                                    {% elif product.manuscript_available %}
-                                        <span class="card_manuscript_option">원고료 포함</span>
-                                    {% else %}
-                                        <span class="card_manuscript_option disable">원고작성 불가</span>
-                                    {% endif %}
-                                    {% if product.sns_type == 'facebook' %}
-                                        <div class="card_sns_option">
-                                            {% if product.sns_additional_info == 'individual' %}
-                                                개인
-                                            {% else %}
-                                                페이지
-                                            {% endif %}
-                                        </div>
-                                    {% endif %}
-                                    {% if product.sns_type == 'instagram' %}
-                                        <div class="card_sns_option">
-                                            {% if product.sex == 'female' %}
-                                                여성
-                                            {% else %}
-                                                남성
-                                            {% endif %}
-                                        </div>
-                                    {% endif %}
-                                    {% if product.sns_type == 'blog' and product.highrank_available %}
-                                        <div class="card_sns_option blog">
-                                            상위노출
-                                        </div>
-                                    {% endif %}
-                                  <div class="card-type">
-                                    <img class="product-type-image" src="{{ product.sns_type_image_url }}" alt="{{ product.sns_type }}" />
-                                  </div>
-                                  <div class="card-title">
-                                        {{product.oneline_intro}}
-                                    </div>
-                                    <div class="circle-wrapper">
-                                        <img class="circle-arrow" src="{% static 'img/arrow_gauge.png' %}" >
-                                        <ul class="circle" gauge-data="{{ product.socialup_gauge }}">
-                                            <li class="circle-list">
-                                                <div class="circle-text">1</div>
-                                            </li>
-                                            <li class="circle-list">
-                                                <div class="circle-text">2</div>
-                                            </li>
-                                            <li class="circle-list">
-                                                <div class="circle-text">3</div>
-                                            </li>
-                                            <li class="circle-list">
-                                                <div class="circle-text">4</div>
-                                            </li>
-                                            <li class="circle-list">
-                                                <div class="circle-text">5</div>
-                                            </li>
-                                            <div class="circle-mask2">
-                                                <div class="circle-mask2-text">
-                                                    <span style="font-size:11px; color:#888;">팔로워 1명당</span><br>
-                                                    <span style="font-size:23px;">
-                                                        {{ product.unit_price }}
-                                                    </span>
-                                                    <span style="font-size:15px;">원</span>
-                                                </div>
-                                            </div>
-                                        </ul>
-                                        <div class="cash">
-                                            <span class="cash-price" style="font-size:1.2em; color:grey;" data-price="{{ product.price }}">
-                                               {{ product.price }}원
-                                                {% if product.manuscript_price > 0 or product.highrank_price > 0 %}
-                                                    ~
-                                                {% endif %}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-info">
-                                    <div class="card-subtitle">
-                                        {% for sns in product.sns_set.all %}
-                                            {% for item in sns.analytics.all %}
-                                                {{ item }} {{ item.outcome|round_count }}
-                                            {% endfor %}
-                                        {% endfor %}
-                                    </div>
-                                    <div class="card-author">
-                                        <div class="card-author-info">
-                                            <img src="{{ product.seller.user.get_avatar }}" >
-                                        </div>
-                                        <div class="card-author-info-seller-rating">
-                                            <div class="card-author-info-seller">{{ product.seller.user.get_short_name }}</div>
-                                            <div class="card-author-info-rating" data-rating="{{ product.rating }}">
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                            </div>
-                                            <div class="card-author-product-reviews">
-                                                ({{ product.id|get_product_review_count }})
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-
-                            {% if products|length == forloop.counter %}
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                       </div>
+                    </div>
                     </div>
                 {% endif %}
     </div>

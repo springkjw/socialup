@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load producttags %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{% static 'js/home.js' %}"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#slider-range").slider({
+                range: true,
+                min: {{ high_low.1 }},
+                max: {{ high_low.0 }},
+                values: [{{ price_min }}, {{ price_max }}],
+                step: 1000,
+                slide: function (event, ui) {
+                    $("#amount").val(ui.values[0] + " - " + ui.values[1]);
+                    var first_span = parseInt($(this).find('span').eq(0).css("left")) - 10;
+                    var second_span = parseInt($(this).find('span').eq(1).css("left")) - 30 - first_span;
+                    first_span = first_span + "px";
+                    second_span = second_span + "px";
+                    $("#first_span_val").text(ui.values[0]).css("margin-left", first_span);
+                    $("#first_span_val").digits();
+                    $("#second_span_val").text(ui.values[1]).css("margin-left", second_span);
+                    $("#second_span_val").digits();
+
+                    var price_max = ui.values[1];
+                    var price_min = ui.values[0];
+                    var url = "{{ request.path }}?&category={{ request.GET.category }}{{ tag_params }}&order={{ request.GET.order }}&price_min=" + price_min + "&price_max=" + price_max;
+                    $(location).attr('href', url);
+                    $('#loading').css("display", "block");
+                }
+            });
+            $("#first_span_val").text({{ price_min }}).css("margin-left", -10);
+            $("#first_span_val").digits();
+            $("#second_span_val").text({{ price_max }}).css("margin-left", 75);
+            $("#second_span_val").digits();
+
+            // selected category color
+            $('.header_navigation li a').each(function () {
+                if ($(this).text().trim() == '{{ category_name }}') {
+                    $(this).parent().addClass('active');
+                }
+            });
+
+            // selected tag color
+            if ('{{ tags }}') {
+                {% for tag in tags  %}
+                    ($('.tags_wrapper').find("input[value={{ tag }}]")).attr('checked', true);
+                {% endfor %}
+                check_tags_for_hover();
+            }
+            $('#tag_navigation').on('change', function () {
+                var tags_ele = $(this).find('input[type=checkbox]:checked');
+                var tags_parm = "";
+                tags_ele.each(function () {
+                    var tag = $(this).val();
+                    tags_parm = tags_parm + '&tag=' + tag;
+                });
+                $(location).attr('href', "{{ request.path }}?&category={{ request.GET.category }}" + tags_parm);
+                $('#loading').css("display", "block");
+            });
+
+
+            var order = getUrlParameter('order');
+            if (order == 'created') {
+                $('.sort[data-type=created]').addClass('active');
+            } else if (order == 'price') {
+                $('.sort[data-type=price]').addClass('active');
+            } else {
+                $('.sort[data-type=rating]').addClass('active');
+            }
+        });
+
+        function getUrlParameter(params) {
+            var pageURL = decodeURIComponent(window.location.search.substring(1)),
+                    urlVariables = pageURL.split('&'), parameterName, i;
+
+            for (i = 0; i < urlVariables.length; i++) {
+                parameterName = urlVariables[i].split('=');
+
+                if (parameterName[0] === params) {
+                    return parameterName[1] === undefined ? true : parameterName[1];
+                }
+            }
+        }
+    </script>
+{% endblock %}
+
+{% block jumbotron %}
+    {% include 'category/category_jumbotron.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="special-service">
+            <div class="special-info">
+                <div class="special-title">
+                    인기 {{ category_name }} 포스팅
+                    <div class="special-subtitle">
+                        * 소셜업 게이지란? 소셜업만의 알고리즘을 통해 SNS의 다양한 요소를 분석해 수치화 시킨 광고비 대비 효과 지수입니다.
+                    </div>
+                </div>
+                <div class="special-sort">
+                    <ul>
+                        <li class="sort" data-type="rating"><a
+                                href="{{ request.path }}?category={{ request.GET.category }}{{ tag_params }}&order=rating">평점순</a>
+                        </li>
+                        <li class="sort" data-type="created"><a
+                                href="{{ request.path }}?category={{ request.GET.category }}{{ tag_params }}&order=created">최신순</a>
+                        </li>
+                        <li class="sort" data-type="price"><a
+                                href="{{ request.path }}?category={{ request.GET.category }}{{ tag_params }}&order=price">가격순</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="range-wrapper">
+                <div id="slider-range"></div>
+                <span id="first_span_val"></span>
+                <span id="second_span_val"></span>
+            </div>
+            <div id="loading" style="display: none; position:absolute; left:50%; top:50%; z-index: 10;">
+                <img src="{% static 'img/ajax-loader_mid.gif' %}">
+            </div>
+            <div class="special-list">
+                {% if not products %}
+                    <div class="no-list">
+                        아직 등록된 서비스가 없습니다.
+                    </div>
+                {% else %}
+                    {% include 'category/category_item.html' %}
+                {% endif %}
+            </div>
+            <div class="pagination">
+                {% if products.has_previous %}
+                    <a href="{{ request.path }}?category={{ request.GET.category }}{{ tag_params }}&order={{ request.GET.order }}&price_min={{ price_min }}&price_max={{ price_max }}&page={{ products.previous_page_number }}"
+                       class="icon">
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    </a>
+                {% endif %}
+                {% for i in previous_num %}
+                    <a href="{{ request.path }}?category={{ request.GET.category }}{{ tag_params }}&order={{ request.GET.order }}&price_min={{ price_min }}&price_max={{ price_max }}&page={{ i }}">{{ i }}</a>
+                {% endfor %}
+                <a class="active" href="#">{{ products.number }}</a>
+                {% for i in next_num %}
+                    <a href="{{ request.path }}?category={{ request.GET.category }}{{ tag_params }}&order={{ request.GET.order }}&price_min={{ price_min }}&price_max={{ price_max }}&page={{ i }}">{{ i }}</a>
+                {% endfor %}
+                {% if products.has_next %}
+                    <a href="{{ request.path }}?category={{ request.GET.category }}{{ tag_params }}&order={{ request.GET.order }}&price_min={{ price_min }}&price_max={{ price_max }}&page={{ products.next_page_number }}"
+                       class="icon">
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
