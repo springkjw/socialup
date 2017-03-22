@@ -46,75 +46,78 @@ def home(request):
     return render(request, template, context)
 
 
-def product_category(request, category):
-    tag_name = ''
-    if category == "all":
-        products = Product.objects.active().all()
-        category_name = "전체"
+def product_category(request):
+    category = request.GET.get('category') or 'all'
+    tags = request.GET.getlist('tag')
+    order = request.GET.get('order') or 'rating'
+    page = request.GET.get('page')
 
-        try:
-            tag_name = request.GET['tag']
-        except:
-            pass
+    products = Product.objects.all().active()
+    if category == 'all':
+        category_name = "전체"
     else:
-        products = Product.objects.active().filter(sns_type=category)
+        products = Product.objects.filter(sns_type=category)
         category_name = [type_[1] for type_ in sns_type_list if type_[0] == category][0]
 
-    if request.is_ajax():
-        checked_tags = json.loads(request.GET['checked_tags'])
-
-        if 'all' in checked_tags:
-            products_by_tags = []
-            products_by_tags.extend(products)
-        else:
-            products_by_tags = []
-            for tag in checked_tags:
-                products_by_tags.extend(products.active().filter(product_tag__tag=tag))
-
-        # 중복된 아이템 제거
-        products_by_tags = list(set(products_by_tags))
-
-        product_ids_by_tags = []
-        for product in products_by_tags:
-            product_ids_by_tags.append(product.id)
-        data = {
-            "product_ids_by_tags": product_ids_by_tags,
-            "checked_tags": checked_tags,
-        }
-
-        return HttpResponse(json.dumps(data), content_type='application/json')
-
-    products_by_rating_list = products.active().order_by('-rating')
-    products_by_created = products.active().order_by('-created')
-    products_by_price = products.active().order_by('-price')
-
-    products_by_rating_paginator = Paginator(products_by_rating_list, 40)
-    page = request.GET.get('page')
-    try:
-        products_by_rating = products_by_rating_paginator.page(page)
-    except PageNotAnInteger:
-        products_by_rating = products_by_rating_paginator.page(1)
-    except EmptyPage:
-        products_by_rating = products_by_rating_paginator.page(products_by_rating_paginator.num_pages)
+    tag_params = ""
+    if "all" not in tags:
+        tag_q = Q()
+        for tag in tags:
+            tag_q.add(Q(product_tag__tag=tag), Q.OR)
+            tag_params += "&tag=" + tag
+        products = products.filter(tag_q).distinct()
 
     try:
-        highest_price = products_by_price[0].price
-        lowest_price = products_by_price.reverse()[0].price
+        highest_price = products.order_by('price').reverse()[0].price
+        lowest_price = products.order_by('price')[0].price
     except IndexError:
         highest_price = 10000
         lowest_price = 0
+
+    price_max = request.GET.get('price_max') or highest_price
+    price_min = request.GET.get('price_min') or lowest_price
+    products = products.filter(price__gte=price_min, price__lte=price_max)
+
     if highest_price == lowest_price:
         high_low = [highest_price, 0]
     else:
         high_low = [highest_price, lowest_price]
-    template = 'category.html'
+
+    # pagination
+    products_list = products.order_by('-' + order)
+    products_paginator = Paginator(products_list, 20)
+    try:
+        products = products_paginator.page(page)
+    except PageNotAnInteger:
+        products = products_paginator.page(1)
+    except EmptyPage:
+        products = products_paginator.page(products_paginator.num_pages)
+
+    if products_paginator.num_pages <= 10:
+        previous_num = xrange(1, products.number)
+        next_num = xrange(products.number + 1, products_paginator.num_pages + 1)
+    else:
+        if products.number <= 5:
+            previous_num = xrange(1, products.number)
+            next_num = xrange(products.number + 1, 11)
+        elif products.number >= products_paginator.num_pages - 5:
+            previous_num = xrange(products_paginator.num_pages - 9, products.number)
+            next_num = xrange(products.number + 1, products_paginator.num_pages + 1)
+        else:
+            previous_num = xrange(products.number - 5, products.number)
+            next_num = xrange(products.number + 1, products.number + 5)
+
+    template = "category/category.html"
     context = {
         "category_name": category_name,
-        "tag_name": tag_name,
-        "products_rating": products_by_rating,
-        "products_created": products_by_created,
-        "products_price": products_by_price,
+        "tags": tags,
+        "tag_params": tag_params,
+        "products": products,
         "high_low": high_low,
+        "price_max": price_max,
+        "price_min": price_min,
+        "previous_num": previous_num,
+        "next_num": next_num
     }
 
     return render(request, template, context)

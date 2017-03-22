@@ -136,28 +136,28 @@ $(document).ready(function(){
     tag_func();
 });
 
-function filter_ajax(min, max){
-    var real_min = min;
-    var real_max = max;
-    $('#loading').css("display", "block");
-    setTimeout(function() {
-        $.ajax({url: "/", success: function(result){
-            $(".list-card").each(function (){
-                var temp_text = $(this).find('.cash span').attr("data-price");
-                temp_text = parseInt(temp_text);
-                if(real_min <= temp_text && temp_text <= real_max) {
-                    $(this).css("display", "inline-block");
-                }else{
-                    $(this).css("display", "none");
-                }
-            });
-            $('#loading').css("display","none");
-        }});
-    },1000);
-
-    /*
-    */
-}
+//function filter_ajax(min, max){
+//    var real_min = min;
+//    var real_max = max;
+//    $('#loading').css("display", "block");
+//    setTimeout(function() {
+//        $.ajax({url: "/", success: function(result){
+//            $(".list-card").each(function (){
+//                var temp_text = $(this).find('.cash span').attr("data-price");
+//                temp_text = parseInt(temp_text);
+//                if(real_min <= temp_text && temp_text <= real_max) {
+//                    $(this).css("display", "inline-block");
+//                }else{
+//                    $(this).css("display", "none");
+//                }
+//            });
+//            $('#loading').css("display","none");
+//        }});
+//    },1000);
+//
+//    /*
+//    */
+//}
 
 $.fn.digits = function() {
     return this.each(function() {

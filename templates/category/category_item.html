@@ -1,0 +1,118 @@
+{% load staticfiles %}
+{% load producttags %}
+
+<div class="product-rating" style="display:block;">
+    {% for product in products %}
+        <a href="{{ product.get_absolute_url }}"
+           class="{% cycle 'list-card' 'list-card' 'list-card' 'list-card last' %}"
+           data-id="{{ product.id }}">
+            <div class="card-main-info" data-type="{{ product.sns_type }}"
+                 data-color="{{ product.sns_type_color }}">
+                {% if product.manuscript_available and product.manuscript_price != 0 %}
+                    <span class="card_manuscript_option separate">원고료 별도</span>
+                {% elif product.manuscript_available %}
+                    <span class="card_manuscript_option">원고료 포함</span>
+                {% else %}
+                    <span class="card_manuscript_option disable">원고작성 불가</span>
+                {% endif %}
+                {% if product.sns_type == 'facebook' %}
+                    <div class="card_sns_option">
+                        {% if product.sns_additional_info == 'individual' %}
+                            개인
+                        {% else %}
+                            페이지
+                        {% endif %}
+                    </div>
+                {% endif %}
+                {% if product.sns_type == 'instagram' %}
+                    <div class="card_sns_option">
+                        {% if product.sex == 'female' %}
+                            여성
+                        {% else %}
+                            남성
+                        {% endif %}
+                    </div>
+                {% endif %}
+                {% if product.sns_type == 'blog' and product.highrank_available %}
+                    <div class="card_sns_option blog">
+                        상위노출
+                    </div>
+                {% endif %}
+                <div class="card-type">
+                    <img class="product-type-image" src="{{ product.sns_type_image_url }}"
+                         alt="{{ product.sns_type }}"/>
+                </div>
+                <div class="card-title">
+                    {{ product.oneline_intro }}
+                </div>
+                <div class="circle-wrapper">
+                    <img class="circle-arrow" src="{% static 'img/arrow_gauge.png' %}">
+                    <ul class="circle" gauge-data="{{ product.socialup_gauge }}">
+                        <li class="circle-list">
+                            <div class="circle-text">1</div>
+                        </li>
+                        <li class="circle-list">
+                            <div class="circle-text">2</div>
+                        </li>
+                        <li class="circle-list">
+                            <div class="circle-text">3</div>
+                        </li>
+                        <li class="circle-list">
+                            <div class="circle-text">4</div>
+                        </li>
+                        <li class="circle-list">
+                            <div class="circle-text">5</div>
+                        </li>
+                        <div class="circle-mask2">
+                            <div class="circle-mask2-text">
+                                <span style="font-size:11px; color:#888;">팔로워 1명당</span><br>
+                                <span style="font-size:24px;">{{ product.unit_price }}</span>
+                                <span style="font-size:15px;">원</span>
+                            </div>
+                        </div>
+                    </ul>
+                    <div class="cash">
+                                            <span class="cash-price" style="font-size:1.2em; color:grey;"
+                                                  data-price="{{ product.price }}">
+                                               {{ product.price }}원
+                                                {% if product.manuscript_price > 0 or product.highrank_price > 0 %}
+                                                    ~
+                                                {% endif %}
+                                            </span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-info">
+                <div class="card-subtitle">
+                    {% for sns in product.sns_set.all %}
+                        {% for item in sns.analytics.all %}
+                            {{ item }} {{ item.outcome|round_count }}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+                <div class="card-author">
+                    <div class="card-author-info">
+                        <img src="{{ product.seller.user.get_avatar }}">
+                    </div>
+                    <div class="card-author-info-seller-rating">
+                        <div class="card-author-info-seller">{{ product.seller.user.get_short_name }}</div>
+                        <div class="card-author-info-rating" data-rating="{{ product.rating }}">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                        </div>
+                        <div class="card-author-product-reviews">
+                            ({{ product.id|get_product_review_count }})
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        {% if products|length == forloop.counter %}
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>

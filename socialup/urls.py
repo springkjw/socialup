@@ -10,15 +10,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
 
-from .views import (
-    home,
-    product_category,
-    product_search,
-    bad_request,
-    permission_denied,
-    page_not_found,
-    server_error,
-)
+from .views import home, product_category, product_search, bad_request, permission_denied, page_not_found, server_error
 from accounts.views import dashboard, change_info, account_detail
 from markets.views import product_detail, product_upload, product_manage, product_change, product_delete, \
     product_order_manage, product_profit_manage
@@ -32,7 +24,8 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     url(r'^$', home, name='home'),
-    url(r'category/(?P<category>\w+)/$', product_category, name='category'),
+    # url(r'category/(?P<category>\w+)/$', product_category, name='category'),
+    url(r'category$', product_category, name='category'),
     url(r'search/$', product_search, name='search'),
     # admin app urls
     url(r'^admin/', admin.site.urls),

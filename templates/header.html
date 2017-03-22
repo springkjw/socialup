@@ -76,30 +76,10 @@
 </div>
 <div class="header_navigation">
     <ul>
-        <li>
-            <a href="{% url 'category' 'all' %}">
-                전체
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'category' 'blog' %}">
-                블로그
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'category' 'facebook' %}">
-                페이스북
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'category' 'instagram' %}">
-                인스타그램
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'category' 'youtube' %}">
-                유튜브
-            </a>
-        </li>
+        <li><a href="{% url 'category' %}?category=all">전체</a></li>
+        <li><a href="{% url 'category' %}?category=blog">블로그</a></li>
+        <li><a href="{% url 'category' %}?category=facebook">페이스북</a></li>
+        <li><a href="{% url 'category' %}?category=instagram">인스타그램</a></li>
+        <li><a href="{% url 'category' %}?category=youtube">유튜브</a></li>
     </ul>
 </div>
