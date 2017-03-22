@@ -17,29 +17,31 @@ import json
 
 
 def home(request):
-    template = 'home.html'
+    order = request.GET.get('order') or 'rating'
 
-    # 처음 상품
-    # 평점순
-    products_by_rating = Product.objects.active().order_by('-rating')[:20]
-    # 최신순
-    products_by_created = Product.objects.active().order_by('-created')[:20]
-    # 가격순
-    products_by_price = Product.objects.active().order_by('-price')[:20]
+    products = Product.objects.active().order_by('-' + order)
 
-    if products_by_price.exists():
-        highest_price = products_by_price.first().price
-        lowest_price = products_by_price.reverse().first().price
-        high_low = [highest_price, lowest_price]
+    if products.exists():
+        try:
+            highest_price = products.order_by('price').reverse()[0].price
+            lowest_price = products.order_by('price')[0].price
+        except IndexError:
+            highest_price = 10000
+            lowest_price = 0
+
+        if highest_price == lowest_price:
+            high_low = [highest_price, 0]
+        else:
+            high_low = [highest_price, lowest_price]
     else:
         highest_price = 0
         lowest_price = 0
         high_low = [highest_price, lowest_price]
 
+    products = products[:12]
+    template = 'home.html'
     context = {
-        "products_rating": products_by_rating,
-        "products_created": products_by_created,
-        "products_price": products_by_price,
+        "products": products,
         "high_low": high_low,
     }
 
